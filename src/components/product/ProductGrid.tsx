@@ -1,0 +1,47 @@
+import { Product } from '@/types';
+import { ProductCard } from './ProductCard';
+import { ProductCardSkeleton } from '@/components/ui/loading-skeletons';
+
+interface ProductGridProps {
+  products: Product[];
+  isLoading?: boolean;
+  showWholesale?: boolean;
+}
+
+export const ProductGrid = ({ products, isLoading = false, showWholesale = false }: ProductGridProps) => {
+  if (isLoading) {
+    return (
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        {Array.from({ length: 8 }).map((_, i) => (
+          <div key={i} style={{ animationDelay: `${i * 100}ms` }} className="animate-fade-in opacity-0">
+            <ProductCardSkeleton />
+          </div>
+        ))}
+      </div>
+    );
+  }
+
+  if (products.length === 0) {
+    return (
+      <div className="text-center py-16">
+        <div className="text-6xl mb-4">🍃</div>
+        <p className="text-xl font-medium text-muted-foreground">Không tìm thấy sản phẩm nào.</p>
+        <p className="text-muted-foreground mt-2">Thử thay đổi bộ lọc hoặc từ khóa tìm kiếm.</p>
+      </div>
+    );
+  }
+
+  return (
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+      {products.map((product, index) => (
+        <div 
+          key={product.id} 
+          className="animate-fade-in-up opacity-0"
+          style={{ animationDelay: `${index * 50}ms` }}
+        >
+          <ProductCard product={product} showWholesale={showWholesale} />
+        </div>
+      ))}
+    </div>
+  );
+};
