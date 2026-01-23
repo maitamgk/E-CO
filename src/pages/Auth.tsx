@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { Layout } from '@/components/layout/Layout';
 import { Button } from '@/components/ui/button';
@@ -14,36 +14,42 @@ const Auth = () => {
   const navigate = useNavigate();
   const { login, register, user } = useAuth();
   const { toast } = useToast();
-  
+
   const [isLoading, setIsLoading] = useState(false);
   const [loginForm, setLoginForm] = useState({ email: '', password: '' });
   const [registerForm, setRegisterForm] = useState({ email: '', password: '', confirmPassword: '' });
   const [errors, setErrors] = useState<Record<string, string>>({});
 
-  // Redirect if already logged in
+  // Redirect if already logged in - using useEffect for proper React pattern
+  useEffect(() => {
+    if (user) {
+      navigate('/', { replace: true });
+    }
+  }, [user, navigate]);
+
+  // Show nothing while redirecting
   if (user) {
-    navigate('/');
     return null;
   }
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrors({});
-    
+
     if (!validateEmail(loginForm.email)) {
       setErrors({ email: 'Email không hợp lệ' });
       return;
     }
-    
+
     setIsLoading(true);
     try {
       await login(loginForm.email, loginForm.password);
       toast({ title: 'Đăng nhập thành công!' });
       navigate('/');
-    } catch (error: any) {
+    } catch (error) {
       toast({
         title: 'Đăng nhập thất bại',
-        description: error.message,
+        description: error instanceof Error ? error.message : 'Có lỗi xảy ra',
         variant: 'destructive',
       });
     } finally {
@@ -54,9 +60,9 @@ const Auth = () => {
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrors({});
-    
+
     const newErrors: Record<string, string> = {};
-    
+
     if (!validateEmail(registerForm.email)) {
       newErrors.email = 'Email không hợp lệ';
     }
@@ -66,21 +72,21 @@ const Auth = () => {
     if (registerForm.password !== registerForm.confirmPassword) {
       newErrors.confirmPassword = 'Mật khẩu xác nhận không khớp';
     }
-    
+
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
       return;
     }
-    
+
     setIsLoading(true);
     try {
       await register(registerForm.email, registerForm.password);
       toast({ title: 'Đăng ký thành công!' });
       navigate('/');
-    } catch (error: any) {
+    } catch (error) {
       toast({
         title: 'Đăng ký thất bại',
-        description: error.message,
+        description: error instanceof Error ? error.message : 'Có lỗi xảy ra',
         variant: 'destructive',
       });
     } finally {
@@ -93,7 +99,7 @@ const Auth = () => {
       {/* Hero Section */}
       <div className="relative bg-gradient-to-br from-green-950 via-emerald-900 to-teal-950 text-white overflow-hidden">
         {/* Background Image */}
-        <div 
+        <div
           className="absolute inset-0 opacity-35"
           style={{
             backgroundImage: 'url(https://images.unsplash.com/photo-1542601098-3adb3e4c6df9?w=1920&q=80)',
@@ -103,11 +109,11 @@ const Auth = () => {
         />
         {/* Gradient Overlay */}
         <div className="absolute inset-0 bg-gradient-to-br from-green-950/60 via-emerald-900/65 to-teal-950/70" />
-        
+
         {/* Glowing Orbs */}
         <div className="absolute top-20 -left-20 w-72 h-72 bg-emerald-500/8 rounded-full blur-3xl" />
         <div className="absolute bottom-20 -right-20 w-96 h-96 bg-teal-500/8 rounded-full blur-3xl" />
-        
+
         <div className="container mx-auto px-4 py-12 relative">
           <h1 className="text-4xl md:text-5xl font-black italic mb-4 bg-gradient-to-r from-emerald-400 via-green-300 to-teal-400 bg-clip-text text-transparent text-center">
             Tài khoản

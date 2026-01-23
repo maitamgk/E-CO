@@ -7,11 +7,10 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Switch } from '@/components/ui/switch';
-import { Label } from '@/components/ui/label';
 import { Skeleton } from '@/components/ui/skeleton';
 import { categories } from '@/data/mockProducts';
-import { 
-  Percent, Sparkles, ShoppingBag, Search, X, Filter, 
+import {
+  Percent, Sparkles, ShoppingBag, Search, X, Filter,
   Grid3X3, LayoutGrid, SlidersHorizontal, Leaf, ChevronDown,
   Package, Tag, Boxes
 } from 'lucide-react';
@@ -52,26 +51,26 @@ const Shop = () => {
             className="w-full h-full object-cover"
           />
           <div className="absolute inset-0 bg-gradient-to-br from-green-950/60 via-emerald-900/55 to-teal-950/60" />
-          
+
           {/* Floating orbs */}
           <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-emerald-500/10 rounded-full blur-[120px] animate-float" />
           <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-green-500/10 rounded-full blur-[100px] animate-float" style={{ animationDelay: '2s' }} />
         </div>
-        
+
         <div className="container mx-auto px-4 relative z-10">
           <div className="text-center max-w-3xl mx-auto">
             <Badge className="mb-6 px-5 py-2.5 bg-emerald-500/20 text-emerald-300 border-emerald-500/40 backdrop-blur-xl animate-fade-in">
               <ShoppingBag className="h-4 w-4 mr-2" />
               {stats.total} sản phẩm có sẵn
             </Badge>
-            
+
             <h1 className="text-5xl lg:text-6xl xl:text-7xl font-black italic text-white mb-6 animate-fade-in-up drop-shadow-[0_0_30px_rgba(16,185,129,0.3)]" style={{ animationDelay: '0.1s' }}>
               Cửa hàng{' '}
               <span className="bg-gradient-to-r from-emerald-300 via-green-300 to-teal-300 bg-clip-text text-transparent">
                 B-ECO
               </span>
             </h1>
-            
+
             <p className="text-xl text-emerald-100 mb-10 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
               Gieo mầm xanh - Từ chiếc lá nhỏ
             </p>
@@ -117,7 +116,7 @@ const Shop = () => {
                 <div className="absolute -right-20 -top-20 w-60 h-60 bg-background rounded-full" />
                 <div className="absolute -left-10 -bottom-10 w-40 h-40 bg-background rounded-full" />
               </div>
-              
+
               <div className="relative flex flex-col lg:flex-row items-center gap-6">
                 <div className="p-4 bg-background/20 rounded-2xl backdrop-blur-xl group-hover:scale-110 transition-transform duration-300">
                   <Percent className="h-10 w-10" />
@@ -160,8 +159,8 @@ const Shop = () => {
                     onClick={() => setCategory(cat.id)}
                     className={cn(
                       "rounded-full px-5 h-10 transition-all duration-300",
-                      category === cat.id 
-                        ? 'shadow-lg shadow-primary/25 scale-105' 
+                      category === cat.id
+                        ? 'shadow-lg shadow-primary/25 scale-105'
                         : 'hover:scale-105'
                     )}
                   >
@@ -234,7 +233,7 @@ const Shop = () => {
                     <Tag className="h-5 w-5 text-primary" />
                     Loại giá
                   </h3>
-                  <div 
+                  <div
                     className={cn(
                       "flex items-center justify-between p-4 rounded-xl border-2 cursor-pointer transition-all duration-300",
                       showWholesale ? "border-primary bg-primary/5" : "border-border hover:border-primary/50"
@@ -289,8 +288,8 @@ const Shop = () => {
               {isLoading ? (
                 <div className={cn(
                   "grid gap-6",
-                  gridSize === 'normal' 
-                    ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3" 
+                  gridSize === 'normal'
+                    ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
                     : "grid-cols-1 sm:grid-cols-2"
                 )}>
                   {[...Array(6)].map((_, i) => (
@@ -319,8 +318,8 @@ const Shop = () => {
               ) : (
                 <div className={cn(
                   "grid gap-6",
-                  gridSize === 'normal' 
-                    ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3" 
+                  gridSize === 'normal'
+                    ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
                     : "grid-cols-1 sm:grid-cols-2"
                 )}>
                   {filteredProducts.map((product, idx) => (

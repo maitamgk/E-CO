@@ -5,12 +5,11 @@ import { Layout } from '@/components/layout/Layout';
 import { ProductGrid } from '@/components/product/ProductGrid';
 import { ScrollAnimate } from '@/components/ui/scroll-animate';
 import { useProducts } from '@/context/ProductsContext';
-import { Leaf, ShieldCheck, Recycle, Heart, ArrowRight, Percent, Truck, Sparkles, Star, Play, Zap, Award, Users, Package, TreeDeciduous, Waves, Search } from 'lucide-react';
+import { Leaf, ShieldCheck, Recycle, Heart, ArrowRight, Percent, Truck, Sparkles, Star, Play, Zap, Award, Users, Package, TreeDeciduous, Waves } from 'lucide-react';
 
 // Import real product images
 import collectionDisplay1 from '@/assets/products/collection-display-1.jpg';
 import exhibitionDisplay from '@/assets/products/exhibition-display.jpg';
-import customLogoBeco from '@/assets/products/custom-logo-beco.jpg';
 
 const Home = () => {
   const { products, isLoading } = useProducts();
@@ -28,12 +27,12 @@ const Home = () => {
             alt="Sea Almond Tree"
             className="w-full h-full object-cover"
           />
-          
+
           {/* Gradient Overlay */}
           <div className="absolute inset-0 bg-gradient-to-br from-green-950/60 via-emerald-900/55 to-teal-950/60" />
-          
+
           {/* Network mesh pattern overlay */}
-          <div 
+          <div
             className="absolute inset-0 opacity-15"
             style={{
               backgroundImage: `
@@ -43,12 +42,12 @@ const Home = () => {
               backgroundSize: '80px 80px',
             }}
           />
-          
+
           {/* Glowing orbs */}
           <div className="absolute top-20 left-20 w-96 h-96 bg-emerald-500/15 rounded-full blur-[120px] animate-float" />
           <div className="absolute bottom-20 right-20 w-80 h-80 bg-green-500/15 rounded-full blur-[100px] animate-float" style={{ animationDelay: '2s' }} />
           <div className="absolute top-1/2 left-1/2 w-64 h-64 bg-teal-500/15 rounded-full blur-[80px] animate-float" style={{ animationDelay: '4s' }} />
-          
+
           {/* Network nodes */}
           <div className="absolute inset-0 overflow-hidden pointer-events-none">
             {[...Array(30)].map((_, i) => (
@@ -65,7 +64,7 @@ const Home = () => {
               />
             ))}
           </div>
-          
+
           {/* Connection lines effect */}
           <svg className="absolute inset-0 w-full h-full opacity-20">
             <defs>
@@ -89,7 +88,7 @@ const Home = () => {
             ))}
           </svg>
         </div>
-        
+
         <div className="container mx-auto px-4 relative z-10">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             {/* Left content */}
@@ -100,7 +99,7 @@ const Home = () => {
                   Sản phẩm xanh từ Phú Yên
                 </Badge>
               </div>
-              
+
               <h1 className="text-5xl lg:text-7xl xl:text-8xl font-black italic leading-[1.1] tracking-tight mb-8 animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
                 <span className="block text-white mb-2">CHÉN DĨA</span>
                 <span className="block bg-gradient-to-r from-emerald-300 via-green-300 to-teal-300 bg-clip-text text-transparent drop-shadow-[0_0_40px_rgba(16,185,129,0.6)]">
@@ -108,11 +107,11 @@ const Home = () => {
                 </span>
                 <span className="block text-white/90 text-4xl lg:text-5xl xl:text-6xl mt-4">từ lá bàng</span>
               </h1>
-              
+
               <p className="text-lg lg:text-xl text-emerald-200 mb-12 leading-relaxed max-w-lg animate-fade-in-up font-medium" style={{ animationDelay: '0.6s' }}>
                 Gieo mầm xanh - Từ chiếc lá nhỏ
               </p>
-              
+
               <div className="flex flex-wrap gap-4 animate-fade-in-up" style={{ animationDelay: '0.8s' }}>
                 <Link to="/shop">
                   <Button size="lg" className="gap-3 px-10 h-14 text-base font-bold rounded-full shadow-2xl shadow-emerald-500/40 hover:shadow-emerald-500/60 hover:scale-105 transition-all duration-300 group bg-gradient-to-r from-emerald-500 to-green-500 hover:from-emerald-400 hover:to-green-400 border-0">
@@ -133,7 +132,7 @@ const Home = () => {
               <div className="mt-16 flex flex-wrap items-center gap-8 animate-fade-in" style={{ animationDelay: '1s' }}>
                 <div className="flex items-center gap-3 bg-white/10 backdrop-blur-xl rounded-full px-6 py-3 border border-emerald-400/30 shadow-lg shadow-emerald-500/10">
                   <div className="flex -space-x-1">
-                    {[1,2,3,4,5].map(i => (
+                    {[1, 2, 3, 4, 5].map(i => (
                       <Star key={i} className="h-5 w-5 fill-emerald-400 text-emerald-400 drop-shadow-[0_0_8px_rgba(52,211,153,0.6)]" />
                     ))}
                   </div>
@@ -145,24 +144,24 @@ const Home = () => {
                 </div>
               </div>
             </div>
-            
+
             {/* Right - Product image with tech overlay */}
             <div className="relative animate-fade-in" style={{ animationDelay: '0.6s' }}>
               <div className="relative">
                 {/* Glowing frame */}
                 <div className="absolute -inset-4 bg-gradient-to-br from-emerald-500/30 via-green-500/20 to-teal-500/30 rounded-3xl blur-2xl" />
-                
+
                 {/* Main product card */}
                 <div className="relative bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl rounded-3xl p-2 border border-white/20 shadow-2xl overflow-hidden">
                   {/* Tech scan lines effect */}
                   <div className="absolute inset-0 bg-gradient-to-b from-emerald-500/10 via-transparent to-transparent animate-pulse" />
-                  
+
                   <img
                     src={collectionDisplay1}
                     alt="B-ECO Leaf Plates Collection"
                     className="w-full rounded-2xl"
                   />
-                  
+
                   {/* Floating badges */}
                   <div className="absolute top-6 right-6 bg-emerald-500 text-white px-5 py-3 rounded-2xl shadow-xl animate-float font-semibold">
                     <span className="flex items-center gap-2">
@@ -170,12 +169,12 @@ const Home = () => {
                       Eco-friendly
                     </span>
                   </div>
-                  
+
                   <div className="absolute bottom-6 right-6 bg-white/95 text-gray-900 px-6 py-4 rounded-2xl shadow-xl animate-float border border-gray-200" style={{ animationDelay: '1s' }}>
                     <div className="text-3xl font-bold text-emerald-600">100%</div>
                     <div className="text-sm text-gray-600">Tự nhiên</div>
                   </div>
-                  
+
                   <div className="absolute top-1/2 -translate-y-1/2 -right-4 bg-gradient-to-r from-emerald-500 to-teal-500 text-white px-5 py-3 rounded-xl shadow-lg animate-float font-semibold" style={{ animationDelay: '2s' }}>
                     -10% Wholesale
                   </div>
@@ -226,7 +225,7 @@ const Home = () => {
           <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-primary/5 rounded-full blur-[150px]" />
           <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-accent/10 rounded-full blur-[100px]" />
         </div>
-        
+
         <div className="container mx-auto px-4 relative">
           <ScrollAnimate animation="fade-in-up" className="text-center mb-16">
             <Badge variant="secondary" className="mb-4 px-4 py-2">Tại sao chọn B-CO?</Badge>
@@ -240,7 +239,7 @@ const Home = () => {
               Cam kết mang đến những sản phẩm chất lượng cao, an toàn và thân thiện với môi trường
             </p>
           </ScrollAnimate>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
               { icon: Leaf, title: '100% Tự nhiên', desc: 'Làm từ lá bàng tự nhiên, phân hủy sinh học hoàn toàn trong 45 ngày' },
@@ -252,7 +251,7 @@ const Home = () => {
                 <div className="group relative h-full">
                   {/* Card glow effect on hover */}
                   <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-accent/10 rounded-3xl opacity-0 group-hover:opacity-100 blur-xl transition-opacity duration-500" />
-                  
+
                   <div className="relative h-full p-8 bg-card rounded-3xl border border-border hover:border-primary/50 transition-all duration-500 hover:shadow-2xl hover:-translate-y-2">
                     <div className="p-4 bg-gradient-to-br from-primary/20 to-primary/5 rounded-2xl inline-block mb-6 group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
                       <item.icon className="h-8 w-8 text-primary" />
@@ -270,19 +269,19 @@ const Home = () => {
       {/* Discount Banner - Gradient */}
       <section className="py-16 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-primary via-primary to-accent-foreground" />
-        
+
         {/* Animated wave pattern */}
         <div className="absolute inset-0 opacity-20">
           <svg className="absolute bottom-0 w-full h-32" viewBox="0 0 1440 120" preserveAspectRatio="none">
             <path fill="currentColor" className="text-background" d="M0,64 C240,120 480,0 720,64 C960,128 1200,32 1440,80 L1440,120 L0,120 Z" />
           </svg>
         </div>
-        
+
         <div className="absolute inset-0 overflow-hidden">
           <div className="absolute -left-20 -top-20 w-60 h-60 bg-background/10 rounded-full blur-3xl animate-float" />
           <div className="absolute -right-20 -bottom-20 w-60 h-60 bg-background/10 rounded-full blur-3xl animate-float" style={{ animationDelay: '2s' }} />
         </div>
-        
+
         <div className="container mx-auto px-4 relative">
           <ScrollAnimate animation="scale-in">
             <div className="flex flex-col lg:flex-row items-center justify-center gap-8 text-center lg:text-left text-primary-foreground">
@@ -322,7 +321,7 @@ const Home = () => {
               </Link>
             </div>
           </ScrollAnimate>
-          
+
           <ScrollAnimate animation="fade-in-up" delay={200}>
             <ProductGrid products={featuredProducts} isLoading={isLoading} />
           </ScrollAnimate>
@@ -337,14 +336,14 @@ const Home = () => {
               <div className="relative">
                 {/* Decorative elements */}
                 <div className="absolute -inset-8 bg-gradient-to-br from-primary/10 via-transparent to-accent/10 rounded-[4rem] blur-2xl" />
-                
+
                 <div className="relative">
                   <img
                     src={exhibitionDisplay}
                     alt="B-CO Exhibition Display"
                     className="rounded-[2rem] shadow-2xl w-full object-cover hover:scale-[1.02] transition-transform duration-700"
                   />
-                  
+
                   {/* Floating card */}
                   <div className="absolute -bottom-8 -right-8 bg-card p-6 rounded-2xl shadow-2xl border border-border max-w-xs animate-float">
                     <div className="flex items-center gap-4">
@@ -357,7 +356,7 @@ const Home = () => {
                       </div>
                     </div>
                   </div>
-                  
+
                   <div className="absolute -top-6 -left-6 bg-primary text-primary-foreground p-5 rounded-2xl shadow-xl animate-float" style={{ animationDelay: '1.5s' }}>
                     <div className="text-4xl font-bold">45</div>
                     <div className="text-sm opacity-90">ngày phân hủy</div>
@@ -365,7 +364,7 @@ const Home = () => {
                 </div>
               </div>
             </ScrollAnimate>
-            
+
             <ScrollAnimate animation="fade-in-right" delay={200}>
               <div>
                 <Badge variant="secondary" className="mb-6 px-4 py-2">Về chúng tôi</Badge>
@@ -376,10 +375,10 @@ const Home = () => {
                   </span>
                 </h2>
                 <p className="text-xl text-muted-foreground mb-8 leading-relaxed">
-                  B-CO ra đời với sứ mệnh thay thế sản phẩm nhựa dùng một lần bằng các giải pháp từ thiên nhiên, 
+                  B-CO ra đời với sứ mệnh thay thế sản phẩm nhựa dùng một lần bằng các giải pháp từ thiên nhiên,
                   góp phần bảo vệ môi trường biển và hệ sinh thái Việt Nam.
                 </p>
-                
+
                 <div className="space-y-4 mb-10">
                   {[
                     'Lá bàng thu hoạch 100% từ Phú Yên',
@@ -395,7 +394,7 @@ const Home = () => {
                     </div>
                   ))}
                 </div>
-                
+
                 <Link to="/about">
                   <Button size="lg" variant="outline" className="gap-3 h-14 px-8 rounded-2xl text-lg group">
                     Khám phá câu chuyện
@@ -416,7 +415,7 @@ const Home = () => {
               {/* Background decoration */}
               <div className="absolute top-0 right-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl" />
               <div className="absolute bottom-0 left-0 w-64 h-64 bg-accent/10 rounded-full blur-2xl" />
-              
+
               <div className="relative flex flex-col lg:flex-row items-center justify-between gap-10">
                 <div className="flex items-center gap-8">
                   <div className="p-6 bg-primary/10 rounded-3xl group-hover:bg-primary/20 group-hover:scale-110 transition-all duration-500">
@@ -449,7 +448,7 @@ const Home = () => {
           />
           <div className="absolute inset-0 bg-gradient-to-t from-foreground via-foreground/90 to-foreground/70" />
         </div>
-        
+
         {/* Floating particles */}
         <div className="absolute inset-0 overflow-hidden">
           {[...Array(15)].map((_, i) => (
@@ -465,7 +464,7 @@ const Home = () => {
             />
           ))}
         </div>
-        
+
         <div className="container mx-auto px-4 relative z-10">
           <ScrollAnimate animation="scale-in">
             <div className="text-center max-w-4xl mx-auto">
@@ -473,18 +472,18 @@ const Home = () => {
                 <Leaf className="h-4 w-4 mr-2" />
                 Bắt đầu hành trình xanh
               </Badge>
-              
+
               <h2 className="text-4xl lg:text-6xl xl:text-7xl font-bold text-background mb-8 leading-tight">
                 Cùng B-CO{' '}
                 <span className="bg-gradient-to-r from-primary to-accent-foreground bg-clip-text text-transparent">
                   bảo vệ môi trường
                 </span>
               </h2>
-              
+
               <p className="text-xl lg:text-2xl text-background/70 mb-12 max-w-2xl mx-auto leading-relaxed">
                 Mỗi sản phẩm bạn sử dụng là một bước tiến đến tương lai xanh hơn
               </p>
-              
+
               <div className="flex flex-wrap justify-center gap-6">
                 <Link to="/shop">
                   <Button size="lg" className="h-16 px-12 text-xl font-semibold rounded-2xl shadow-2xl shadow-primary/40 hover:shadow-primary/60 hover:scale-105 transition-all group">
