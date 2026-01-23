@@ -5,12 +5,13 @@ import { Layout } from '@/components/layout/Layout';
 import { ProductGrid } from '@/components/product/ProductGrid';
 import { ScrollAnimate } from '@/components/ui/scroll-animate';
 import { useProducts } from '@/context/ProductsContext';
-import { Leaf, ShieldCheck, Recycle, Heart, ArrowRight, Percent, Truck, Sparkles, Star, Play, Zap, Award, Users, Package, TreeDeciduous, Waves, Search } from 'lucide-react';
+import { Leaf, ShieldCheck, Recycle, Heart, ArrowRight, Percent, Truck, Sparkles, Star, Play, Zap, Award, Users, Package, TreeDeciduous, Waves, Search, ShoppingCart } from 'lucide-react';
 
 // Import real product images
 import collectionDisplay1 from '@/assets/products/collection-display-1.jpg';
 import exhibitionDisplay from '@/assets/products/exhibition-display.jpg';
 import customLogoBeco from '@/assets/products/custom-logo-beco.jpg';
+import seaAlmondTree from '@/assets/products/sea-almond-tree.jpg';
 
 const Home = () => {
   const { products, isLoading } = useProducts();
@@ -24,7 +25,7 @@ const Home = () => {
         <div className="absolute inset-0">
           {/* Background image - Sea Almond Tree */}
           <img
-            src="https://bienvietnam.vn/wp-content/uploads/2023/07/Picture1.jpg"
+            src={seaAlmondTree}
             alt="Sea Almond Tree"
             className="w-full h-full object-cover"
           />
@@ -95,18 +96,25 @@ const Home = () => {
             {/* Left content */}
             <div className="text-white">
               <div className="animate-fade-in" style={{ animationDelay: '0.2s' }}>
-                <Badge className="mb-8 px-6 py-3 bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 backdrop-blur-xl text-sm font-medium rounded-full shadow-lg shadow-emerald-500/20">
-                  <Leaf className="h-4 w-4 mr-2" />
-                  Sản phẩm xanh từ Phú Yên
+                <Badge className="mb-8 px-8 py-4 bg-gradient-to-r from-emerald-400/40 to-green-400/40 text-white border-2 border-emerald-300/50 backdrop-blur-xl text-base font-bold rounded-full shadow-lg shadow-emerald-400/25 hover:scale-105 transition-transform duration-300">
+                  <Sparkles className="h-5 w-5 mr-3 animate-pulse" />
+                  100% TỰ NHIÊN - THÂN THIỆN MÔI TRƯỜNG
                 </Badge>
               </div>
               
-              <h1 className="text-5xl lg:text-7xl xl:text-8xl font-black italic leading-[1.1] tracking-tight mb-8 animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
-                <span className="block text-white mb-2">CHÉN DĨA</span>
-                <span className="block bg-gradient-to-r from-emerald-300 via-green-300 to-teal-300 bg-clip-text text-transparent drop-shadow-[0_0_40px_rgba(16,185,129,0.6)]">
-                  SINH HỌC
+              <h1 className="text-3xl lg:text-5xl xl:text-6xl font-black italic mb-8 animate-fade-in-up whitespace-nowrap" style={{ 
+                animationDelay: '0.4s', 
+                fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif', 
+                letterSpacing: '0.02em',
+                lineHeight: '1.6',
+                paddingTop: '0.5rem'
+              }}>
+                <span className="block bg-gradient-to-r from-white via-emerald-100 to-white bg-clip-text text-transparent drop-shadow-[0_0_50px_rgba(255,255,255,0.8)] mb-8 uppercase" style={{ paddingTop: '0.5rem', paddingBottom: '0.5rem' }}>
+                  CHÉN ĐĨA SINH HỌC
                 </span>
-                <span className="block text-white/90 text-4xl lg:text-5xl xl:text-6xl mt-4">từ lá bàng</span>
+                <span className="block bg-gradient-to-r from-emerald-200 via-green-300 to-teal-200 bg-clip-text text-transparent drop-shadow-[0_0_60px_rgba(16,185,129,0.8)] uppercase" style={{ paddingTop: '0.5rem', paddingBottom: '0.5rem' }}>
+                  TỪ LÁ BÀNG BIỂN
+                </span>
               </h1>
               
               <p className="text-lg lg:text-xl text-emerald-200 mb-12 leading-relaxed max-w-lg animate-fade-in-up font-medium" style={{ animationDelay: '0.6s' }}>
@@ -116,7 +124,7 @@ const Home = () => {
               <div className="flex flex-wrap gap-4 animate-fade-in-up" style={{ animationDelay: '0.8s' }}>
                 <Link to="/shop">
                   <Button size="lg" className="gap-3 px-10 h-14 text-base font-bold rounded-full shadow-2xl shadow-emerald-500/40 hover:shadow-emerald-500/60 hover:scale-105 transition-all duration-300 group bg-gradient-to-r from-emerald-500 to-green-500 hover:from-emerald-400 hover:to-green-400 border-0">
-                    <Zap className="h-5 w-5" />
+                    <ShoppingCart className="h-5 w-5" />
                     Mua ngay
                     <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
                   </Button>
@@ -229,7 +237,7 @@ const Home = () => {
         
         <div className="container mx-auto px-4 relative">
           <ScrollAnimate animation="fade-in-up" className="text-center mb-16">
-            <Badge variant="secondary" className="mb-4 px-4 py-2">Tại sao chọn B-CO?</Badge>
+            <Badge variant="secondary" className="mb-4 px-4 py-2">Tại sao chọn B-ECO?</Badge>
             <h2 className="text-4xl lg:text-5xl font-bold mb-4">
               Sản phẩm xanh,{' '}
               <span className="bg-gradient-to-r from-primary to-accent-foreground bg-clip-text text-transparent">
@@ -341,7 +349,7 @@ const Home = () => {
                 <div className="relative">
                   <img
                     src={exhibitionDisplay}
-                    alt="B-CO Exhibition Display"
+                    alt="B-ECO Exhibition Display"
                     className="rounded-[2rem] shadow-2xl w-full object-cover hover:scale-[1.02] transition-transform duration-700"
                   />
                   
@@ -376,7 +384,7 @@ const Home = () => {
                   </span>
                 </h2>
                 <p className="text-xl text-muted-foreground mb-8 leading-relaxed">
-                  B-CO ra đời với sứ mệnh thay thế sản phẩm nhựa dùng một lần bằng các giải pháp từ thiên nhiên, 
+                  B-ECO ra đời với sứ mệnh thay thế sản phẩm nhựa dùng một lần bằng các giải pháp từ thiên nhiên, 
                   góp phần bảo vệ môi trường biển và hệ sinh thái Việt Nam.
                 </p>
                 
@@ -475,7 +483,7 @@ const Home = () => {
               </Badge>
               
               <h2 className="text-4xl lg:text-6xl xl:text-7xl font-bold text-background mb-8 leading-tight">
-                Cùng B-CO{' '}
+                Cùng B-ECO{' '}
                 <span className="bg-gradient-to-r from-primary to-accent-foreground bg-clip-text text-transparent">
                   bảo vệ môi trường
                 </span>

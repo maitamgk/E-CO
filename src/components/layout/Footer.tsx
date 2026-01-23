@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { Leaf, Phone, Mail, MapPin, Send, Heart } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import logo from '@/assets/products/logo.jpg';
 
 export const Footer = () => {
   return (
@@ -15,10 +16,10 @@ export const Footer = () => {
           {/* Brand */}
           <div className="space-y-4">
             <Link to="/" className="flex items-center gap-2 font-bold text-2xl text-primary group">
-              <div className="p-2 bg-primary/10 rounded-xl group-hover:bg-primary/20 transition-colors">
-                <Leaf className="h-6 w-6" />
+              <div className="rounded-xl overflow-hidden group-hover:scale-110 transition-transform duration-300">
+                <img src={logo} alt="B-ECO Logo" className="h-10 w-10 object-cover" />
               </div>
-              <span>B-CO</span>
+              <span>B-ECO</span>
             </Link>
             <p className="text-muted-foreground leading-relaxed">
               Gieo mầm xanh - Từ chiếc lá nhỏ
@@ -43,7 +44,7 @@ export const Footer = () => {
               {[
                 { to: '/shop', label: 'Cửa hàng' },
                 { to: '/pricing', label: 'Bảng giá' },
-                { to: '/about', label: 'Về B-CO' },
+                { to: '/about', label: 'Về B-ECO' },
                 { to: '/policies', label: 'Chính sách' },
               ].map(link => (
                 <li key={link.to}>
@@ -64,19 +65,19 @@ export const Footer = () => {
             <h4 className="font-bold text-lg mb-6">Liên hệ</h4>
             <ul className="space-y-4">
               <li>
-                <a href="tel:0123456789" className="flex items-center gap-3 text-muted-foreground hover:text-primary transition-colors group">
+                <a href="tel:0385959294" className="flex items-center gap-3 text-muted-foreground hover:text-primary transition-colors group">
                   <div className="p-2 bg-muted rounded-lg group-hover:bg-primary/10 transition-colors">
                     <Phone className="h-4 w-4" />
                   </div>
-                  <span>0123 456 789</span>
+                  <span>0385 959 294</span>
                 </a>
               </li>
               <li>
-                <a href="mailto:info@bco.vn" className="flex items-center gap-3 text-muted-foreground hover:text-primary transition-colors group">
+                <a href="mailto:tranbieu25@gmail.com" className="flex items-center gap-3 text-muted-foreground hover:text-primary transition-colors group">
                   <div className="p-2 bg-muted rounded-lg group-hover:bg-primary/10 transition-colors">
                     <Mail className="h-4 w-4" />
                   </div>
-                  <span>info@bco.vn</span>
+                  <span>tranbieu25@gmail.com</span>
                 </a>
               </li>
               <li className="flex items-start gap-3 text-muted-foreground">
@@ -109,7 +110,7 @@ export const Footer = () => {
 
         <div className="border-t border-border mt-12 pt-8">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-muted-foreground">
-            <p>© {new Date().getFullYear()} B-CO. Bảo vệ môi trường, bảo vệ cuộc sống.</p>
+            <p>© {new Date().getFullYear()} B-ECO. Bảo vệ môi trường, bảo vệ cuộc sống.</p>
             <p className="flex items-center gap-1">
               Made with <Heart className="h-4 w-4 text-red-500 fill-red-500" /> in Phú Yên
             </p>

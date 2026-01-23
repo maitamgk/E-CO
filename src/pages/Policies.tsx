@@ -89,14 +89,14 @@ const Policies = () => {
                 <ol className="list-decimal list-inside mt-2 space-y-1">
                   <li>Liên hệ hotline hoặc email để yêu cầu đổi trả</li>
                   <li>Gửi hình ảnh sản phẩm lỗi (nếu có)</li>
-                  <li>Chờ xác nhận từ B-CO (trong vòng 24h)</li>
+                  <li>Chờ xác nhận từ B-ECO (trong vòng 24h)</li>
                   <li>Gửi trả sản phẩm theo hướng dẫn</li>
                   <li>Nhận sản phẩm mới hoặc hoàn tiền trong 3-5 ngày làm việc</li>
                 </ol>
               </div>
 
               <p>
-                <strong className="text-foreground">Phí đổi trả:</strong> B-CO chịu phí vận chuyển 
+                <strong className="text-foreground">Phí đổi trả:</strong> B-ECO chịu phí vận chuyển 
                 nếu lỗi từ nhà sản xuất. Khách hàng chịu phí nếu đổi trả vì lý do cá nhân.
               </p>
             </div>

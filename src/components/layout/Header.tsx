@@ -5,12 +5,12 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { useCart } from '@/context/CartContext';
 import { useAuth } from '@/context/AuthContext';
-
+import logo from '@/assets/products/logo.jpg';
 const navLinks = [
   { to: '/', label: 'Trang chủ' },
   { to: '/shop', label: 'Cửa hàng' },
   { to: '/pricing', label: 'Bảng giá' },
-  { to: '/about', label: 'Về B-CO' },
+  { to: '/about', label: 'Về B-ECO' },
   { to: '/policies', label: 'Chính sách' },
 ];
 
@@ -38,13 +38,13 @@ export const Header = () => {
         <div className="flex items-center justify-between h-16 lg:h-20">
           {/* Logo - Enhanced */}
           <Link to="/" className="flex items-center gap-3 font-bold text-xl group">
-            <div className={`relative p-2.5 rounded-2xl transition-all duration-300 ${
+            <div className={`relative rounded-2xl transition-all duration-300 overflow-hidden ${
               scrolled 
-                ? 'bg-gradient-to-br from-emerald-500 to-teal-500 shadow-lg shadow-emerald-500/30' 
-                : 'bg-gradient-to-br from-emerald-400 to-teal-400 shadow-md shadow-emerald-400/20'
+                ? 'shadow-lg shadow-emerald-500/30' 
+                : 'shadow-md shadow-emerald-400/20'
             }`}>
-              <Leaf className="h-6 w-6 text-white group-hover:rotate-12 transition-transform duration-300" />
-              <div className="absolute inset-0 bg-white/20 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity" />
+              <img src={logo} alt="B-ECO Logo" className="h-12 w-12 object-cover group-hover:scale-110 transition-transform duration-300" />
+              <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
             </div>
             <span className="hidden sm:inline bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent font-black text-2xl tracking-tight">
               B-ECO
@@ -57,7 +57,7 @@ export const Header = () => {
               <Link
                 key={link.to}
                 to={link.to}
-                className="relative px-5 py-2.5 text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-emerald-600 dark:hover:text-emerald-400 transition-all duration-300 rounded-full hover:bg-white dark:hover:bg-gray-800 group"
+                className="relative px-5 py-2.5 text-base font-bold text-gray-700 dark:text-gray-300 hover:text-emerald-600 dark:hover:text-emerald-400 transition-all duration-300 rounded-full hover:bg-white dark:hover:bg-gray-800 group"
               >
                 {link.label}
                 <span className="absolute bottom-1 left-1/2 -translate-x-1/2 w-0 h-1 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-full group-hover:w-8 transition-all duration-300" />

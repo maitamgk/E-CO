@@ -1,63 +1,36 @@
 import { Layout } from '@/components/layout/Layout';
 import { Leaf, Heart, Globe, Users } from 'lucide-react';
+import anh1 from '@/assets/products/anh1.jpg';
+import anh2 from '@/assets/products/anh2.jpg';
+import anh3 from '@/assets/products/anh3.jpg';
+import anh4 from '@/assets/products/anh4.jpeg';
 
 const About = () => {
   return (
     <Layout>
-      {/* Hero with Modern Background */}
-      <section className="relative py-24 overflow-hidden">
-        {/* Animated tech grid background */}
+      {/* Entire page with light background */}
+      <div className="bg-gradient-to-br from-primary/10 to-primary/5 min-h-screen">`
+        {/* Hero Section */}
+        <section className="relative py-24 overflow-hidden">
+        {/* Background elements */}
         <div className="absolute inset-0">
-          {/* Background image - Tropical Leaves */}
+          {/* Background Image */}
           <img
-            src="https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?w=1920&h=800&fit=crop"
-            alt="Tropical Leaves"
-            className="w-full h-full object-cover"
+            src={anh4}
+            alt="B-ECO Background"
+            className="w-full h-full object-cover opacity-50"
           />
           
-          {/* Gradient Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-br from-green-950/60 via-emerald-900/55 to-teal-950/60" />
-          
-          {/* Network mesh pattern overlay */}
-          <div 
-            className="absolute inset-0 opacity-10"
-            style={{
-              backgroundImage: `
-                linear-gradient(to right, rgba(16, 185, 129, 0.3) 1px, transparent 1px),
-                linear-gradient(to bottom, rgba(16, 185, 129, 0.3) 1px, transparent 1px)
-              `,
-              backgroundSize: '60px 60px',
-            }}
-          />
-          
-          {/* Glowing orbs */}
-          <div className="absolute top-10 left-10 w-96 h-96 bg-emerald-500/8 rounded-full blur-[100px] animate-float" />
-          <div className="absolute bottom-10 right-10 w-80 h-80 bg-green-500/8 rounded-full blur-[90px] animate-float" style={{ animationDelay: '2s' }} />
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-teal-500/8 rounded-full blur-[80px] animate-float" style={{ animationDelay: '4s' }} />
-          
-          {/* Floating particles */}
-          <div className="absolute inset-0 overflow-hidden pointer-events-none">
-            {[...Array(15)].map((_, i) => (
-              <div
-                key={i}
-                className="absolute w-1.5 h-1.5 bg-emerald-400/40 rounded-full animate-pulse"
-                style={{
-                  left: `${Math.random() * 100}%`,
-                  top: `${Math.random() * 100}%`,
-                  animationDelay: `${Math.random() * 3}s`,
-                  animationDuration: `${2 + Math.random() * 3}s`,
-                }}
-              />
-            ))}
-          </div>
+          {/* Gradient overlay */}
+          <div className="absolute inset-0 bg-gradient-to-br from-white/50 via-emerald-50/30 to-white/40" />
         </div>
         
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-2xl">
-            <h1 className="text-4xl lg:text-6xl font-black italic text-white mb-6 drop-shadow-[0_0_30px_rgba(16,185,129,0.3)]">
-              Về <span className="bg-gradient-to-r from-emerald-300 via-green-300 to-teal-300 bg-clip-text text-transparent">B-ECO</span>
+            <h1 className="text-4xl lg:text-6xl font-black italic text-gray-800 mb-6">
+              Về <span className="bg-gradient-to-r from-emerald-600 via-green-600 to-teal-600 bg-clip-text text-transparent">B-ECO</span>
             </h1>
-            <p className="text-xl text-emerald-100 leading-relaxed">
+            <p className="text-xl text-gray-600 leading-relaxed">
               Câu chuyện về hành trình biến lá bàng thành giải pháp thay thế nhựa dùng một lần
             </p>
           </div>
@@ -74,7 +47,7 @@ const About = () => {
             </div>
             <h2 className="text-3xl font-bold mb-4">Khởi nguồn từ Phú Yên</h2>
             <p className="text-muted-foreground leading-relaxed text-lg">
-              B-CO ra đời tại vùng đất Phú Yên xinh đẹp, nơi những cây bàng cổ thụ đứng 
+              B-ECO ra đời tại vùng đất Phú Yên xinh đẹp, nơi những cây bàng cổ thụ đứng 
               sừng sững bên bờ biển trong xanh. Chúng tôi nhận thấy lá bàng rụng xuống 
               mỗi mùa là một nguồn tài nguyên quý giá, có thể biến thành những sản phẩm 
               hữu ích thay thế cho nhựa dùng một lần.
@@ -82,7 +55,7 @@ const About = () => {
           </div>
           <div className="relative">
             <img
-              src="https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?w=600&h=400&fit=crop"
+              src={anh1}
               alt="Lá bàng"
               className="rounded-2xl shadow-2xl w-full"
             />
@@ -96,7 +69,7 @@ const About = () => {
         <section className="grid md:grid-cols-2 gap-12 items-center">
           <div className="order-2 md:order-1 relative">
             <img
-              src="https://images.unsplash.com/photo-1559827291-72ee739d0d9a?w=600&h=400&fit=crop"
+              src={anh2}
               alt="Biển sạch"
               className="rounded-2xl shadow-2xl w-full"
             />
@@ -111,7 +84,7 @@ const About = () => {
             <h2 className="text-3xl font-bold mb-4">Sứ mệnh của chúng tôi</h2>
             <p className="text-muted-foreground leading-relaxed text-lg">
               Chúng tôi tin rằng mỗi chiếc chén, mỗi chiếc dĩa từ lá bàng là một bước 
-              nhỏ nhưng ý nghĩa trong hành trình bảo vệ môi trường. B-CO cam kết mang 
+              nhỏ nhưng ý nghĩa trong hành trình bảo vệ môi trường. B-ECO cam kết mang 
               đến những sản phẩm an toàn cho sức khỏe, thân thiện với thiên nhiên, và 
               góp phần giảm thiểu rác thải nhựa tràn lan.
             </p>
@@ -127,14 +100,14 @@ const About = () => {
             <h2 className="text-3xl font-bold mb-4">Bảo vệ biển Phú Yên</h2>
             <p className="text-muted-foreground leading-relaxed text-lg">
               Biển Phú Yên với vẻ đẹp hoang sơ đang đối mặt với nguy cơ ô nhiễm từ 
-              rác thải nhựa. Mỗi sản phẩm B-CO bạn sử dụng là một lần bạn nói "không" 
+              rác thải nhựa. Mỗi sản phẩm B-ECO bạn sử dụng là một lần bạn nói "không" 
               với nhựa dùng một lần, góp phần giữ gìn vẻ đẹp của biển cả và bảo vệ 
               hệ sinh thái biển cho thế hệ tương lai.
             </p>
           </div>
           <div className="relative">
             <img
-              src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=600&h=400&fit=crop"
+              src={anh3}
               alt="Biển Phú Yên"
               className="rounded-2xl shadow-2xl w-full"
             />
@@ -162,7 +135,7 @@ const About = () => {
             </div>
             <h2 className="text-3xl font-bold mb-4">Cộng đồng bền vững</h2>
             <p className="text-muted-foreground leading-relaxed text-lg">
-              B-CO không chỉ là một thương hiệu, mà là một cộng đồng những người yêu 
+              B-ECO không chỉ là một thương hiệu, mà là một cộng đồng những người yêu 
               thiên nhiên. Chúng tôi tạo công ăn việc làm cho người dân địa phương, 
               hỗ trợ các hộ gia đình thu gom lá bàng, và chia sẻ kiến thức về lối 
               sống xanh đến mọi người.
@@ -172,7 +145,7 @@ const About = () => {
       </div>
 
       {/* Values */}
-      <section className="py-20 bg-gradient-to-br from-primary/10 to-primary/5">
+      <section className="py-20">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-center mb-12">Giá trị cốt lõi</h2>
           <div className="grid md:grid-cols-3 gap-8">
@@ -190,6 +163,7 @@ const About = () => {
           </div>
         </div>
       </section>
+      </div>
     </Layout>
   );
 };
