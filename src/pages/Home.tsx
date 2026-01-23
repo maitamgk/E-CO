@@ -97,20 +97,21 @@ const Home = () => {
             {/* Left content */}
             <div className="text-white">
               <div className="animate-fade-in" style={{ animationDelay: '0.2s' }}>
-                <Badge className="mb-8 px-8 py-4 bg-gradient-to-r from-emerald-400/40 to-green-400/40 text-white border-2 border-emerald-300/50 backdrop-blur-xl text-base font-bold rounded-full shadow-lg shadow-emerald-400/25 hover:scale-105 transition-transform duration-300">
-                  <Sparkles className="h-5 w-5 mr-3 animate-pulse" />
-                  100% TỰ NHIÊN - THÂN THIỆN MÔI TRƯỜNG
+                <Badge className="mb-6 lg:mb-8 px-4 py-2 lg:px-8 lg:py-4 bg-gradient-to-r from-emerald-400/40 to-green-400/40 text-white border-2 border-emerald-300/50 backdrop-blur-xl text-xs sm:text-sm lg:text-base font-bold rounded-full shadow-lg shadow-emerald-400/25 hover:scale-105 transition-transform duration-300">
+                  <Sparkles className="h-4 w-4 lg:h-5 lg:w-5 mr-2 lg:mr-3 animate-pulse" />
+                  <span className="hidden sm:inline">100% TỰ NHIÊN - THÂN THIỆN MÔI TRƯỜNG</span>
+                  <span className="sm:hidden">100% TỰ NHIÊN</span>
                 </Badge>
               </div>
               
-              <h1 className="text-3xl lg:text-5xl xl:text-6xl font-black italic mb-8 animate-fade-in-up whitespace-nowrap" style={{ 
+              <h1 className="text-2xl sm:text-3xl lg:text-5xl xl:text-6xl font-black italic mb-6 lg:mb-8 animate-fade-in-up" style={{ 
                 animationDelay: '0.4s', 
                 fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif', 
                 letterSpacing: '0.02em',
-                lineHeight: '1.6',
+                lineHeight: '1.4',
                 paddingTop: '0.5rem'
               }}>
-                <span className="block bg-gradient-to-r from-white via-emerald-100 to-white bg-clip-text text-transparent drop-shadow-[0_0_50px_rgba(255,255,255,0.8)] mb-8 uppercase" style={{ paddingTop: '0.5rem', paddingBottom: '0.5rem' }}>
+                <span className="block bg-gradient-to-r from-white via-emerald-100 to-white bg-clip-text text-transparent drop-shadow-[0_0_50px_rgba(255,255,255,0.8)] mb-4 lg:mb-8 uppercase" style={{ paddingTop: '0.5rem', paddingBottom: '0.5rem' }}>
                   CHÉN ĐĨA SINH HỌC
                 </span>
                 <span className="block bg-gradient-to-r from-emerald-200 via-green-300 to-teal-200 bg-clip-text text-transparent drop-shadow-[0_0_60px_rgba(16,185,129,0.8)] uppercase" style={{ paddingTop: '0.5rem', paddingBottom: '0.5rem' }}>
@@ -122,41 +123,42 @@ const Home = () => {
                 Gieo mầm xanh - Từ chiếc lá nhỏ
               </p>
 
-              <div className="flex flex-wrap gap-4 animate-fade-in-up" style={{ animationDelay: '0.8s' }}>
-                <Link to="/shop">
-                  <Button size="lg" className="gap-3 px-10 h-14 text-base font-bold rounded-full shadow-2xl shadow-emerald-500/40 hover:shadow-emerald-500/60 hover:scale-105 transition-all duration-300 group bg-gradient-to-r from-emerald-500 to-green-500 hover:from-emerald-400 hover:to-green-400 border-0">
-                    <ShoppingCart className="h-5 w-5" />
+              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 animate-fade-in-up" style={{ animationDelay: '0.8s' }}>
+                <Link to="/shop" className="w-full sm:w-auto">
+                  <Button size="lg" className="w-full sm:w-auto gap-2 sm:gap-3 px-6 sm:px-10 h-12 sm:h-14 text-sm sm:text-base font-bold rounded-full shadow-2xl shadow-emerald-500/40 hover:shadow-emerald-500/60 hover:scale-105 transition-all duration-300 group bg-gradient-to-r from-emerald-500 to-green-500 hover:from-emerald-400 hover:to-green-400 border-0">
+                    <ShoppingCart className="h-4 w-4 sm:h-5 sm:w-5" />
                     Mua ngay
-                    <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                    <ArrowRight className="h-4 w-4 sm:h-5 sm:w-5 group-hover:translate-x-1 transition-transform" />
                   </Button>
                 </Link>
-                <Link to="/about">
-                  <Button size="lg" variant="outline" className="h-14 px-8 text-base font-semibold rounded-full border-2 border-white/30 text-white bg-white/5 backdrop-blur-xl hover:bg-white/10 hover:border-white/50 hover:scale-105 transition-all duration-300 group">
-                    <Play className="h-5 w-5 mr-2 group-hover:scale-110 transition-transform" />
-                    Xem câu chuyện
+                <Link to="/about" className="w-full sm:w-auto">
+                  <Button size="lg" variant="outline" className="w-full sm:w-auto h-12 sm:h-14 px-6 sm:px-8 text-sm sm:text-base font-semibold rounded-full border-2 border-white/30 text-white bg-white/5 backdrop-blur-xl hover:bg-white/10 hover:border-white/50 hover:scale-105 transition-all duration-300 group">
+                    <Play className="h-4 w-4 sm:h-5 sm:w-5 mr-2 group-hover:scale-110 transition-transform" />
+                    <span className="hidden sm:inline">Xem câu chuyện</span>
+                    <span className="sm:hidden">Câu chuyện</span>
                   </Button>
                 </Link>
               </div>
 
               {/* Trust indicators */}
-              <div className="mt-16 flex flex-wrap items-center gap-8 animate-fade-in" style={{ animationDelay: '1s' }}>
-                <div className="flex items-center gap-3 bg-white/10 backdrop-blur-xl rounded-full px-6 py-3 border border-emerald-400/30 shadow-lg shadow-emerald-500/10">
+              <div className="mt-8 lg:mt-16 flex flex-col sm:flex-row flex-wrap items-start sm:items-center gap-3 sm:gap-8 animate-fade-in" style={{ animationDelay: '1s' }}>
+                <div className="flex items-center gap-2 sm:gap-3 bg-white/10 backdrop-blur-xl rounded-full px-4 py-2 sm:px-6 sm:py-3 border border-emerald-400/30 shadow-lg shadow-emerald-500/10">
                   <div className="flex -space-x-1">
                     {[1, 2, 3, 4, 5].map(i => (
-                      <Star key={i} className="h-5 w-5 fill-emerald-400 text-emerald-400 drop-shadow-[0_0_8px_rgba(52,211,153,0.6)]" />
+                      <Star key={i} className="h-3 w-3 sm:h-5 sm:w-5 fill-emerald-400 text-emerald-400 drop-shadow-[0_0_8px_rgba(52,211,153,0.6)]" />
                     ))}
                   </div>
-                  <span className="text-white font-semibold">5.0 <span className="text-white/70 font-normal">(500+ reviews)</span></span>
+                  <span className="text-white text-xs sm:text-base font-semibold">5.0 <span className="text-white/70 font-normal hidden sm:inline">(500+ reviews)</span></span>
                 </div>
-                <div className="flex items-center gap-3 text-white/80 bg-white/10 backdrop-blur-xl rounded-full px-6 py-3 border border-white/20">
-                  <Truck className="h-5 w-5 text-emerald-400" />
-                  <span className="font-medium">Free ship từ 500K</span>
+                <div className="flex items-center gap-2 sm:gap-3 text-white/80 bg-white/10 backdrop-blur-xl rounded-full px-4 py-2 sm:px-6 sm:py-3 border border-white/20">
+                  <Truck className="h-4 w-4 sm:h-5 sm:w-5 text-emerald-400" />
+                  <span className="text-xs sm:text-base font-medium">Free ship từ 500K</span>
                 </div>
               </div>
             </div>
 
             {/* Right - Product image with tech overlay */}
-            <div className="relative animate-fade-in" style={{ animationDelay: '0.6s' }}>
+            <div className="relative animate-fade-in hidden md:block" style={{ animationDelay: '0.6s' }}>
               <div className="relative">
                 {/* Glowing frame */}
                 <div className="absolute -inset-4 bg-gradient-to-br from-emerald-500/30 via-green-500/20 to-teal-500/30 rounded-3xl blur-2xl" />
@@ -173,20 +175,20 @@ const Home = () => {
                   />
 
                   {/* Floating badges */}
-                  <div className="absolute top-6 right-6 bg-emerald-500 text-white px-5 py-3 rounded-2xl shadow-xl animate-float font-semibold">
-                    <span className="flex items-center gap-2">
-                      <Leaf className="h-5 w-5" />
+                  <div className="absolute top-3 md:top-6 right-3 md:right-6 bg-emerald-500 text-white px-3 py-2 md:px-5 md:py-3 rounded-xl md:rounded-2xl shadow-xl animate-float text-xs md:text-base font-semibold">
+                    <span className="flex items-center gap-1 md:gap-2">
+                      <Leaf className="h-3 w-3 md:h-5 md:w-5" />
                       Eco-friendly
                     </span>
                   </div>
 
-                  <div className="absolute bottom-6 right-6 bg-white/95 text-gray-900 px-6 py-4 rounded-2xl shadow-xl animate-float border border-gray-200" style={{ animationDelay: '1s' }}>
-                    <div className="text-3xl font-bold text-emerald-600">100%</div>
-                    <div className="text-sm text-gray-600">Tự nhiên</div>
+                  <div className="absolute bottom-3 md:bottom-6 right-3 md:right-6 bg-white/95 text-gray-900 px-4 py-2 md:px-6 md:py-4 rounded-xl md:rounded-2xl shadow-xl animate-float border border-gray-200" style={{ animationDelay: '1s' }}>
+                    <div className="text-xl md:text-3xl font-bold text-emerald-600">100%</div>
+                    <div className="text-xs md:text-sm text-gray-600">Tự nhiên</div>
                   </div>
 
-                  <div className="absolute top-1/2 -translate-y-1/2 -right-4 bg-gradient-to-r from-emerald-500 to-teal-500 text-white px-5 py-3 rounded-xl shadow-lg animate-float font-semibold" style={{ animationDelay: '2s' }}>
-                    -10% Wholesale
+                  <div className="absolute top-1/2 -translate-y-1/2 -right-2 md:-right-4 bg-gradient-to-r from-emerald-500 to-teal-500 text-white px-3 py-2 md:px-5 md:py-3 rounded-lg md:rounded-xl shadow-lg animate-float text-xs md:text-base font-semibold" style={{ animationDelay: '2s' }}>
+                    -10% Sale
                   </div>
                 </div>
               </div>
@@ -203,10 +205,10 @@ const Home = () => {
       </section>
 
       {/* Stats Bar - Glassmorphism */}
-      <section className="relative -mt-20 z-20 pb-10">
+      <section className="relative -mt-10 md:-mt-20 z-20 pb-6 md:pb-10">
         <div className="container mx-auto px-4">
-          <div className="bg-card/80 backdrop-blur-2xl rounded-3xl shadow-2xl border border-border/50 p-8 lg:p-10">
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="bg-card/80 backdrop-blur-2xl rounded-2xl md:rounded-3xl shadow-2xl border border-border/50 p-4 sm:p-6 lg:p-10">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
               {[
                 { value: '500K+', label: 'Sản phẩm đã bán', icon: Package, color: 'text-primary' },
                 { value: '1000+', label: 'Khách hàng', icon: Users, color: 'text-primary' },
@@ -215,11 +217,11 @@ const Home = () => {
               ].map((stat, idx) => (
                 <ScrollAnimate key={idx} animation="fade-in-up" delay={idx * 100}>
                   <div className="text-center group cursor-default">
-                    <div className="inline-flex p-4 rounded-2xl bg-primary/10 mb-4 group-hover:bg-primary/20 group-hover:scale-110 transition-all duration-300">
-                      <stat.icon className={`h-7 w-7 ${stat.color}`} />
+                    <div className="inline-flex p-2 sm:p-3 md:p-4 rounded-xl md:rounded-2xl bg-primary/10 mb-2 sm:mb-3 md:mb-4 group-hover:bg-primary/20 group-hover:scale-110 transition-all duration-300">
+                      <stat.icon className={`h-5 w-5 sm:h-6 sm:w-6 md:h-7 md:w-7 ${stat.color}`} />
                     </div>
-                    <div className="text-3xl lg:text-4xl font-bold text-foreground mb-1 group-hover:text-primary transition-colors">{stat.value}</div>
-                    <div className="text-sm text-muted-foreground">{stat.label}</div>
+                    <div className="text-xl sm:text-2xl lg:text-3xl xl:text-4xl font-bold text-foreground mb-1 group-hover:text-primary transition-colors">{stat.value}</div>
+                    <div className="text-xs sm:text-sm text-muted-foreground">{stat.label}</div>
                   </div>
                 </ScrollAnimate>
               ))}
@@ -237,15 +239,15 @@ const Home = () => {
         </div>
 
         <div className="container mx-auto px-4 relative">
-          <ScrollAnimate animation="fade-in-up" className="text-center mb-16">
-            <Badge variant="secondary" className="mb-4 px-4 py-2">Tại sao chọn B-ECO?</Badge>
-            <h2 className="text-4xl lg:text-5xl font-bold mb-4">
+          <ScrollAnimate animation="fade-in-up" className="text-center mb-10 md:mb-16">
+            <Badge variant="secondary" className="mb-3 md:mb-4 px-3 py-1.5 md:px-4 md:py-2 text-xs md:text-sm">Tại sao chọn B-ECO?</Badge>
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold mb-3 md:mb-4 px-4">
               Sản phẩm xanh,{' '}
               <span className="bg-gradient-to-r from-primary to-accent-foreground bg-clip-text text-transparent">
                 cuộc sống xanh
               </span>
             </h2>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+            <p className="text-base sm:text-lg lg:text-xl text-muted-foreground max-w-2xl mx-auto px-4">
               Cam kết mang đến những sản phẩm chất lượng cao, an toàn và thân thiện với môi trường
             </p>
           </ScrollAnimate>
@@ -262,12 +264,12 @@ const Home = () => {
                   {/* Card glow effect on hover */}
                   <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-accent/10 rounded-3xl opacity-0 group-hover:opacity-100 blur-xl transition-opacity duration-500" />
 
-                  <div className="relative h-full p-8 bg-card rounded-3xl border border-border hover:border-primary/50 transition-all duration-500 hover:shadow-2xl hover:-translate-y-2">
-                    <div className="p-4 bg-gradient-to-br from-primary/20 to-primary/5 rounded-2xl inline-block mb-6 group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
-                      <item.icon className="h-8 w-8 text-primary" />
+                  <div className="relative h-full p-4 sm:p-6 lg:p-8 bg-card rounded-2xl lg:rounded-3xl border border-border hover:border-primary/50 transition-all duration-500 hover:shadow-2xl hover:-translate-y-2">
+                    <div className="p-2.5 sm:p-3 lg:p-4 bg-gradient-to-br from-primary/20 to-primary/5 rounded-xl lg:rounded-2xl inline-block mb-4 sm:mb-5 lg:mb-6 group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
+                      <item.icon className="h-6 w-6 sm:h-7 sm:w-7 lg:h-8 lg:w-8 text-primary" />
                     </div>
-                    <h3 className="font-bold text-xl mb-3 group-hover:text-primary transition-colors">{item.title}</h3>
-                    <p className="text-muted-foreground leading-relaxed">{item.desc}</p>
+                    <h3 className="font-bold text-base sm:text-lg lg:text-xl mb-2 sm:mb-3 group-hover:text-primary transition-colors">{item.title}</h3>
+                    <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">{item.desc}</p>
                   </div>
                 </div>
               </ScrollAnimate>
@@ -277,7 +279,7 @@ const Home = () => {
       </section>
 
       {/* Discount Banner - Gradient */}
-      <section className="py-16 relative overflow-hidden">
+      <section className="py-10 md:py-16 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-primary via-primary to-accent-foreground" />
 
         {/* Animated wave pattern */}
@@ -294,18 +296,18 @@ const Home = () => {
 
         <div className="container mx-auto px-4 relative">
           <ScrollAnimate animation="scale-in">
-            <div className="flex flex-col lg:flex-row items-center justify-center gap-8 text-center lg:text-left text-primary-foreground">
-              <div className="p-5 bg-background/20 rounded-3xl backdrop-blur-xl animate-pulse-glow">
-                <Percent className="h-12 w-12" />
+            <div className="flex flex-col lg:flex-row items-center justify-center gap-4 sm:gap-6 lg:gap-8 text-center lg:text-left text-primary-foreground">
+              <div className="p-3 sm:p-4 lg:p-5 bg-background/20 rounded-2xl lg:rounded-3xl backdrop-blur-xl animate-pulse-glow">
+                <Percent className="h-8 w-8 sm:h-10 sm:w-10 lg:h-12 lg:w-12" />
               </div>
               <div>
-                <div className="text-4xl lg:text-5xl font-bold mb-2">GIẢM 10%</div>
-                <div className="text-xl opacity-90">cho đơn hàng từ 1000 sản phẩm trở lên</div>
+                <div className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold mb-1 sm:mb-2">GIẢM 10%</div>
+                <div className="text-sm sm:text-base lg:text-xl opacity-90">cho đơn hàng từ 1000 sản phẩm trở lên</div>
               </div>
               <Link to="/pricing">
-                <Button size="lg" variant="secondary" className="h-14 px-8 text-lg font-semibold rounded-2xl shadow-2xl hover:scale-105 transition-all">
+                <Button size="lg" variant="secondary" className="h-12 sm:h-14 px-6 sm:px-8 text-base sm:text-lg font-semibold rounded-xl sm:rounded-2xl shadow-2xl hover:scale-105 transition-all">
                   Xem bảng giá
-                  <ArrowRight className="ml-2 h-5 w-5" />
+                  <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5" />
                 </Button>
               </Link>
             </div>
@@ -317,16 +319,17 @@ const Home = () => {
       <section className="py-24 bg-muted/30 relative overflow-hidden">
         <div className="container mx-auto px-4">
           <ScrollAnimate animation="fade-in-up">
-            <div className="flex flex-col lg:flex-row items-start lg:items-end justify-between mb-16 gap-6">
+            <div className="flex flex-col lg:flex-row items-start lg:items-end justify-between mb-10 md:mb-16 gap-4 sm:gap-6">
               <div>
-                <Badge variant="secondary" className="mb-4 px-4 py-2">🔥 Bán chạy nhất</Badge>
-                <h2 className="text-4xl lg:text-5xl font-bold mb-3">Sản phẩm nổi bật</h2>
-                <p className="text-xl text-muted-foreground">Được hàng nghìn khách hàng tin dùng</p>
+                <Badge variant="secondary" className="mb-3 md:mb-4 px-3 py-1.5 md:px-4 md:py-2 text-xs md:text-sm">🔥 Bán chạy nhất</Badge>
+                <h2 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold mb-2 sm:mb-3">Sản phẩm nổi bật</h2>
+                <p className="text-base sm:text-lg lg:text-xl text-muted-foreground">Được hàng nghìn khách hàng tin dùng</p>
               </div>
               <Link to="/shop">
-                <Button variant="outline" size="lg" className="gap-3 group h-14 px-8 rounded-2xl text-lg">
-                  Xem tất cả sản phẩm
-                  <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                <Button variant="outline" size="lg" className="gap-2 sm:gap-3 group h-12 sm:h-14 px-6 sm:px-8 rounded-xl sm:rounded-2xl text-sm sm:text-base lg:text-lg">
+                  <span className="hidden sm:inline">Xem tất cả sản phẩm</span>
+                  <span className="sm:hidden">Xem tất cả</span>
+                  <ArrowRight className="h-4 w-4 sm:h-5 sm:w-5 group-hover:translate-x-1 transition-transform" />
                 </Button>
               </Link>
             </div>
@@ -339,9 +342,9 @@ const Home = () => {
       </section>
 
       {/* About Section - Split */}
-      <section className="py-24 bg-background relative overflow-hidden">
+      <section className="py-16 md:py-24 bg-background relative overflow-hidden">
         <div className="container mx-auto px-4">
-          <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
+          <div className="grid lg:grid-cols-2 gap-10 md:gap-16 lg:gap-24 items-center">
             <ScrollAnimate animation="fade-in-left">
               <div className="relative">
                 {/* Decorative elements */}
@@ -377,30 +380,30 @@ const Home = () => {
 
             <ScrollAnimate animation="fade-in-right" delay={200}>
               <div>
-                <Badge variant="secondary" className="mb-6 px-4 py-2">Về chúng tôi</Badge>
-                <h2 className="text-4xl lg:text-5xl font-bold mb-6 leading-tight">
+                <Badge variant="secondary" className="mb-4 sm:mb-6 px-3 py-1.5 sm:px-4 sm:py-2 text-xs sm:text-sm">Về chúng tôi</Badge>
+                <h2 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold mb-4 sm:mb-6 leading-tight">
                   Từ thiên nhiên,{' '}
                   <span className="bg-gradient-to-r from-primary to-accent-foreground bg-clip-text text-transparent">
                     cho thiên nhiên
                   </span>
                 </h2>
-                <p className="text-xl text-muted-foreground mb-8 leading-relaxed">
+                <p className="text-base sm:text-lg lg:text-xl text-muted-foreground mb-6 sm:mb-8 leading-relaxed">
                   B-ECO ra đời với sứ mệnh thay thế sản phẩm nhựa dùng một lần bằng các giải pháp từ thiên nhiên, 
                   góp phần bảo vệ môi trường biển và hệ sinh thái Việt Nam.
                 </p>
 
-                <div className="space-y-4 mb-10">
+                <div className="space-y-3 sm:space-y-4 mb-8 sm:mb-10">
                   {[
                     'Lá bàng thu hoạch 100% từ Phú Yên',
-                    'Phân hủy sinh học trong 45 ngày',
+                    'Phân huỷ sinh học trong 45 ngày',
                     'Chịu nhiệt tốt, an toàn thực phẩm',
                     'Giá ưu đãi cho doanh nghiệp F&B',
                   ].map((item, idx) => (
-                    <div key={idx} className="flex items-center gap-4 group">
-                      <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0 group-hover:bg-primary group-hover:scale-110 transition-all duration-300">
-                        <Leaf className="h-5 w-5 text-primary group-hover:text-primary-foreground transition-colors" />
+                    <div key={idx} className="flex items-center gap-3 sm:gap-4 group">
+                      <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0 group-hover:bg-primary group-hover:scale-110 transition-all duration-300">
+                        <Leaf className="h-4 w-4 sm:h-5 sm:w-5 text-primary group-hover:text-primary-foreground transition-colors" />
                       </div>
-                      <span className="text-lg text-muted-foreground group-hover:text-foreground transition-colors">{item}</span>
+                      <span className="text-sm sm:text-base lg:text-lg text-muted-foreground group-hover:text-foreground transition-colors">{item}</span>
                     </div>
                   ))}
                 </div>
@@ -421,28 +424,28 @@ const Home = () => {
       <Testimonials />
 
       {/* COD Banner */}
-      <section className="py-20 bg-muted/30">
+      <section className="py-12 md:py-20 bg-muted/30">
         <div className="container mx-auto px-4">
           <ScrollAnimate animation="scale-in">
-            <div className="relative overflow-hidden bg-gradient-to-br from-card to-muted/50 rounded-[2.5rem] p-10 lg:p-16 border border-border/50 group hover:border-primary/30 transition-all duration-500 hover:shadow-2xl">
+            <div className="relative overflow-hidden bg-gradient-to-br from-card to-muted/50 rounded-2xl md:rounded-[2.5rem] p-6 sm:p-8 lg:p-16 border border-border/50 group hover:border-primary/30 transition-all duration-500 hover:shadow-2xl">
               {/* Background decoration */}
               <div className="absolute top-0 right-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl" />
               <div className="absolute bottom-0 left-0 w-64 h-64 bg-accent/10 rounded-full blur-2xl" />
 
-              <div className="relative flex flex-col lg:flex-row items-center justify-between gap-10">
-                <div className="flex items-center gap-8">
-                  <div className="p-6 bg-primary/10 rounded-3xl group-hover:bg-primary/20 group-hover:scale-110 transition-all duration-500">
-                    <Truck className="h-14 w-14 text-primary" />
+              <div className="relative flex flex-col lg:flex-row items-center justify-between gap-6 sm:gap-8 lg:gap-10">
+                <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 lg:gap-8 text-center sm:text-left">
+                  <div className="p-4 sm:p-5 lg:p-6 bg-primary/10 rounded-2xl lg:rounded-3xl group-hover:bg-primary/20 group-hover:scale-110 transition-all duration-500">
+                    <Truck className="h-10 w-10 sm:h-12 sm:w-12 lg:h-14 lg:w-14 text-primary" />
                   </div>
                   <div>
-                    <h3 className="text-3xl lg:text-4xl font-bold mb-3">Thanh toán khi nhận hàng</h3>
-                    <p className="text-xl text-muted-foreground">Giao hàng toàn quốc • Nhận hàng rồi mới thanh toán • An tâm mua sắm</p>
+                    <h3 className="text-xl sm:text-2xl lg:text-3xl xl:text-4xl font-bold mb-2 sm:mb-3">Thanh toán khi nhận hàng</h3>
+                    <p className="text-sm sm:text-base lg:text-xl text-muted-foreground">Giao hàng toàn quốc • Nhận hàng rồi mới thanh toán • An tâm mua sắm</p>
                   </div>
                 </div>
-                <Link to="/shop">
-                  <Button size="lg" className="h-16 px-10 text-xl font-semibold rounded-2xl shadow-xl hover:shadow-2xl hover:scale-105 transition-all group">
+                <Link to="/shop" className="w-full sm:w-auto">
+                  <Button size="lg" className="w-full sm:w-auto h-12 sm:h-14 lg:h-16 px-8 sm:px-10 text-base sm:text-lg lg:text-xl font-semibold rounded-xl sm:rounded-2xl shadow-xl hover:shadow-2xl hover:scale-105 transition-all group">
                     Đặt hàng ngay
-                    <ArrowRight className="ml-3 h-6 w-6 group-hover:translate-x-1 transition-transform" />
+                    <ArrowRight className="ml-2 sm:ml-3 h-5 w-5 sm:h-6 sm:w-6 group-hover:translate-x-1 transition-transform" />
                   </Button>
                 </Link>
               </div>
@@ -452,7 +455,7 @@ const Home = () => {
       </section>
 
       {/* Final CTA */}
-      <section className="relative py-32 overflow-hidden bg-foreground">
+      <section className="relative py-20 md:py-32 overflow-hidden bg-foreground">
         <div className="absolute inset-0">
           <img
             src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=1920&h=600&fit=crop"
@@ -481,33 +484,34 @@ const Home = () => {
         <div className="container mx-auto px-4 relative z-10">
           <ScrollAnimate animation="scale-in">
             <div className="text-center max-w-4xl mx-auto">
-              <Badge className="mb-8 px-5 py-2.5 bg-primary/20 text-primary border-primary/40 backdrop-blur-xl text-base">
-                <Leaf className="h-4 w-4 mr-2" />
+              <Badge className="mb-6 sm:mb-8 px-3 py-2 sm:px-5 sm:py-2.5 bg-primary/20 text-primary border-primary/40 backdrop-blur-xl text-xs sm:text-sm lg:text-base">
+                <Leaf className="h-3 w-3 sm:h-4 sm:w-4 mr-1.5 sm:mr-2" />
                 Bắt đầu hành trình xanh
               </Badge>
 
-              <h2 className="text-4xl lg:text-6xl xl:text-7xl font-bold text-background mb-8 leading-tight">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-7xl font-bold text-background mb-6 sm:mb-8 leading-tight px-4">
                 Cùng B-ECO{' '}
                 <span className="bg-gradient-to-r from-primary to-accent-foreground bg-clip-text text-transparent">
                   bảo vệ môi trường
                 </span>
               </h2>
 
-              <p className="text-xl lg:text-2xl text-background/70 mb-12 max-w-2xl mx-auto leading-relaxed">
+              <p className="text-base sm:text-lg lg:text-xl xl:text-2xl text-background/70 mb-8 sm:mb-12 max-w-2xl mx-auto leading-relaxed px-4">
                 Mỗi sản phẩm bạn sử dụng là một bước tiến đến tương lai xanh hơn
               </p>
 
-              <div className="flex flex-wrap justify-center gap-6">
-                <Link to="/shop">
-                  <Button size="lg" className="h-16 px-12 text-xl font-semibold rounded-2xl shadow-2xl shadow-primary/40 hover:shadow-primary/60 hover:scale-105 transition-all group">
-                    <Sparkles className="h-6 w-6 mr-3" />
+              <div className="flex flex-col sm:flex-row flex-wrap justify-center gap-3 sm:gap-4 lg:gap-6 px-4">
+                <Link to="/shop" className="w-full sm:w-auto">
+                  <Button size="lg" className="w-full sm:w-auto h-12 sm:h-14 lg:h-16 px-8 sm:px-10 lg:px-12 text-base sm:text-lg lg:text-xl font-semibold rounded-xl sm:rounded-2xl shadow-2xl shadow-primary/40 hover:shadow-primary/60 hover:scale-105 transition-all group">
+                    <Sparkles className="h-5 w-5 sm:h-6 sm:w-6 mr-2 sm:mr-3" />
                     Khám phá ngay
-                    <ArrowRight className="ml-3 h-6 w-6 group-hover:translate-x-1 transition-transform" />
+                    <ArrowRight className="ml-2 sm:ml-3 h-5 w-5 sm:h-6 sm:w-6 group-hover:translate-x-1 transition-transform" />
                   </Button>
                 </Link>
-                <Link to="/pricing">
-                  <Button size="lg" variant="outline" className="h-16 px-10 text-xl font-semibold rounded-2xl border-2 border-background/30 text-background bg-background/5 backdrop-blur-xl hover:bg-background/10 hover:border-background/50 transition-all">
-                    Báo giá doanh nghiệp
+                <Link to="/pricing" className="w-full sm:w-auto">
+                  <Button size="lg" variant="outline" className="w-full sm:w-auto h-12 sm:h-14 lg:h-16 px-6 sm:px-8 lg:px-10 text-base sm:text-lg lg:text-xl font-semibold rounded-xl sm:rounded-2xl border-2 border-background/30 text-background bg-background/5 backdrop-blur-xl hover:bg-background/10 hover:border-background/50 transition-all">
+                    <span className="hidden sm:inline">Báo giá doanh nghiệp</span>
+                    <span className="sm:hidden">Báo giá B2B</span>
                   </Button>
                 </Link>
               </div>
