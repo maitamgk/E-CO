@@ -42,7 +42,7 @@ const Shop = () => {
   return (
     <Layout>
       {/* Hero Banner - with Almond Tree Background */}
-      <section className="relative overflow-hidden py-20 lg:py-28">
+      <section className="relative overflow-hidden py-12 sm:py-16 lg:py-28">
         {/* Background with leaf canopy */}
         <div className="absolute inset-0">
           <img
@@ -59,19 +59,19 @@ const Shop = () => {
 
         <div className="container mx-auto px-4 relative z-10">
           <div className="text-center max-w-3xl mx-auto">
-            <Badge className="mb-6 px-5 py-2.5 bg-emerald-500/20 text-emerald-300 border-emerald-500/40 backdrop-blur-xl animate-fade-in">
-              <ShoppingBag className="h-4 w-4 mr-2" />
+            <Badge className="mb-4 lg:mb-6 px-3 py-1.5 lg:px-5 lg:py-2.5 text-xs lg:text-sm bg-emerald-500/20 text-emerald-300 border-emerald-500/40 backdrop-blur-xl animate-fade-in">
+              <ShoppingBag className="h-3 w-3 lg:h-4 lg:w-4 mr-1.5 lg:mr-2" />
               {stats.total} sản phẩm có sẵn
             </Badge>
 
-            <h1 className="text-5xl lg:text-6xl xl:text-7xl font-black italic text-white mb-6 animate-fade-in-up drop-shadow-[0_0_30px_rgba(16,185,129,0.3)]" style={{ animationDelay: '0.1s' }}>
+            <h1 className="text-3xl sm:text-4xl lg:text-6xl xl:text-7xl font-black italic text-white mb-4 lg:mb-6 animate-fade-in-up drop-shadow-[0_0_30px_rgba(16,185,129,0.3)]" style={{ animationDelay: '0.1s' }}>
               Cửa hàng{' '}
               <span className="bg-gradient-to-r from-emerald-300 via-green-300 to-teal-300 bg-clip-text text-transparent">
                 B-ECO
               </span>
             </h1>
 
-            <p className="text-xl text-emerald-100 mb-10 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
+            <p className="text-base sm:text-lg lg:text-xl text-emerald-100 mb-6 lg:mb-10 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
               Gieo mầm xanh - Từ chiếc lá nhỏ
             </p>
 
@@ -79,24 +79,25 @@ const Shop = () => {
             <div className="max-w-2xl mx-auto animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
               <div className="relative group">
                 <div className="absolute -inset-1 bg-gradient-to-r from-emerald-500/50 to-teal-500/50 rounded-2xl blur-lg opacity-50 group-hover:opacity-75 transition-opacity" />
-                <div className="relative flex items-center bg-white dark:bg-gray-950 rounded-2xl shadow-2xl border border-emerald-500/20 overflow-hidden">
-                  <Search className="h-5 w-5 text-muted-foreground ml-5" />
+                <div className="relative flex items-center bg-white dark:bg-gray-950 rounded-xl lg:rounded-2xl shadow-2xl border border-emerald-500/20 overflow-hidden">
+                  <Search className="h-4 w-4 lg:h-5 lg:w-5 text-muted-foreground ml-3 lg:ml-5" />
                   <Input
                     placeholder="Tìm kiếm sản phẩm..."
                     value={search}
                     onChange={e => setSearch(e.target.value)}
-                    className="flex-1 h-14 text-lg border-0 focus-visible:ring-0 bg-transparent px-4"
+                    className="flex-1 h-10 sm:h-12 lg:h-14 text-sm lg:text-lg border-0 focus-visible:ring-0 bg-transparent px-2 lg:px-4"
                   />
                   {search && (
                     <button
                       onClick={() => setSearch('')}
-                      className="p-2 mr-2 text-muted-foreground hover:text-foreground hover:bg-muted rounded-lg transition-all"
+                      className="p-1.5 lg:p-2 mr-1 lg:mr-2 text-muted-foreground hover:text-foreground hover:bg-muted rounded-lg transition-all"
                     >
-                      <X className="h-5 w-5" />
+                      <X className="h-4 w-4 lg:h-5 lg:w-5" />
                     </button>
                   )}
-                  <Button className="h-12 px-6 mr-1 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600">
-                    Tìm kiếm
+                  <Button className="h-8 sm:h-10 lg:h-12 px-3 sm:px-4 lg:px-6 mr-1 rounded-lg lg:rounded-xl text-xs sm:text-sm lg:text-base bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600">
+                    <span className="hidden sm:inline">Tìm kiếm</span>
+                    <Search className="h-4 w-4 sm:hidden" />
                   </Button>
                 </div>
               </div>
@@ -110,25 +111,26 @@ const Shop = () => {
         <div className="container mx-auto px-4 py-8">
           {/* Discount Banner */}
           <ScrollAnimate animation="fade-in-up">
-            <div className="relative overflow-hidden bg-gradient-to-r from-primary via-primary to-accent-foreground rounded-3xl p-6 lg:p-8 mb-8 text-primary-foreground group hover:shadow-2xl transition-shadow">
+            <div className="relative overflow-hidden bg-gradient-to-r from-primary via-primary to-accent-foreground rounded-2xl lg:rounded-3xl p-4 sm:p-5 lg:p-8 mb-6 lg:mb-8 text-primary-foreground group hover:shadow-2xl transition-shadow">
               {/* Background pattern */}
               <div className="absolute inset-0 opacity-10">
                 <div className="absolute -right-20 -top-20 w-60 h-60 bg-background rounded-full" />
                 <div className="absolute -left-10 -bottom-10 w-40 h-40 bg-background rounded-full" />
               </div>
 
-              <div className="relative flex flex-col lg:flex-row items-center gap-6">
-                <div className="p-4 bg-background/20 rounded-2xl backdrop-blur-xl group-hover:scale-110 transition-transform duration-300">
-                  <Percent className="h-10 w-10" />
+              <div className="relative flex flex-col lg:flex-row items-center gap-3 sm:gap-4 lg:gap-6">
+                <div className="p-2.5 sm:p-3 lg:p-4 bg-background/20 rounded-xl lg:rounded-2xl backdrop-blur-xl group-hover:scale-110 transition-transform duration-300">
+                  <Percent className="h-6 w-6 sm:h-8 sm:w-8 lg:h-10 lg:w-10" />
                 </div>
                 <div className="text-center lg:text-left flex-1">
-                  <div className="text-2xl lg:text-3xl font-bold mb-1">
-                    Giảm 10% cho đơn hàng từ 1000 sản phẩm
+                  <div className="text-base sm:text-lg lg:text-3xl font-bold mb-1">
+                    <span className="hidden sm:inline">Giảm 10% cho đơn hàng từ 1000 sản phẩm</span>
+                    <span className="sm:hidden">Giảm 10% từ 1000sp</span>
                   </div>
-                  <p className="opacity-90">Giảm giá được tính tự động khi thanh toán</p>
+                  <p className="text-xs sm:text-sm lg:text-base opacity-90">Giảm giá được tính tự động khi thanh toán</p>
                 </div>
-                <Badge className="bg-background/20 text-primary-foreground border-background/30 px-4 py-2 text-base animate-pulse-glow">
-                  <Sparkles className="h-4 w-4 mr-2" />
+                <Badge className="bg-background/20 text-primary-foreground border-background/30 px-3 py-1.5 lg:px-4 lg:py-2 text-xs sm:text-sm lg:text-base animate-pulse-glow">
+                  <Sparkles className="h-3 w-3 sm:h-4 sm:w-4 mr-1.5 sm:mr-2" />
                   Hot Deal
                 </Badge>
               </div>
@@ -137,20 +139,20 @@ const Shop = () => {
 
           {/* Filter Bar */}
           <ScrollAnimate animation="fade-in-up" delay={100}>
-            <div className="flex flex-wrap items-center gap-4 mb-8">
+            <div className="flex flex-wrap items-center gap-2 sm:gap-3 lg:gap-4 mb-6 lg:mb-8">
               {/* Toggle Sidebar */}
               <Button
                 variant={sidebarOpen ? 'default' : 'outline'}
                 onClick={() => setSidebarOpen(!sidebarOpen)}
-                className="gap-2 rounded-xl h-12"
+                className="gap-1.5 sm:gap-2 rounded-lg sm:rounded-xl h-9 sm:h-10 lg:h-12 text-xs sm:text-sm px-3 sm:px-4"
               >
-                <Filter className="h-4 w-4" />
+                <Filter className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
                 Bộ lọc
-                <ChevronDown className={cn("h-4 w-4 transition-transform", sidebarOpen && "rotate-180")} />
+                <ChevronDown className={cn("h-3.5 w-3.5 sm:h-4 sm:w-4 transition-transform", sidebarOpen && "rotate-180")} />
               </Button>
 
               {/* Categories - Quick Access */}
-              <div className="flex-1 flex flex-wrap gap-2">
+              <div className="flex-1 flex flex-wrap gap-1.5 sm:gap-2">
                 {categories.map(cat => (
                   <Button
                     key={cat.id}
@@ -158,7 +160,7 @@ const Shop = () => {
                     size="sm"
                     onClick={() => setCategory(cat.id)}
                     className={cn(
-                      "rounded-full px-5 h-10 transition-all duration-300",
+                      "rounded-full px-3 sm:px-4 lg:px-5 h-8 sm:h-9 lg:h-10 text-xs sm:text-sm transition-all duration-300",
                       category === cat.id
                         ? 'shadow-lg shadow-primary/25 scale-105'
                         : 'hover:scale-105'
@@ -170,7 +172,7 @@ const Shop = () => {
               </div>
 
               {/* Grid Toggle */}
-              <div className="flex items-center gap-1 bg-card rounded-xl p-1 border border-border">
+              <div className="hidden sm:flex items-center gap-1 bg-card rounded-xl p-1 border border-border">
                 <button
                   onClick={() => setGridSize('normal')}
                   className={cn(
@@ -193,34 +195,34 @@ const Shop = () => {
             </div>
           </ScrollAnimate>
 
-          <div className="flex gap-8">
+          <div className="flex gap-4 lg:gap-8">
             {/* Sidebar */}
             <aside
               className={cn(
-                "w-72 flex-shrink-0 transition-all duration-500 ease-out",
-                sidebarOpen ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-full w-0 overflow-hidden"
+                "w-full lg:w-72 flex-shrink-0 transition-all duration-500 ease-out",
+                sidebarOpen ? "opacity-100 translate-x-0" : "hidden lg:opacity-0 lg:-translate-x-full lg:w-0 lg:overflow-hidden"
               )}
             >
-              <div className="sticky top-24 space-y-6">
+              <div className="sticky top-24 space-y-4 lg:space-y-6">
                 {/* Stats Cards */}
-                <div className="bg-card rounded-2xl border border-border p-5 space-y-4">
-                  <h3 className="font-bold flex items-center gap-2 text-lg">
-                    <SlidersHorizontal className="h-5 w-5 text-primary" />
+                <div className="bg-card rounded-xl lg:rounded-2xl border border-border p-4 lg:p-5 space-y-3 lg:space-y-4">
+                  <h3 className="font-bold flex items-center gap-2 text-base lg:text-lg">
+                    <SlidersHorizontal className="h-4 w-4 lg:h-5 lg:w-5 text-primary" />
                     Thống kê
                   </h3>
-                  <div className="space-y-3">
+                  <div className="grid grid-cols-3 lg:grid-cols-1 gap-2 lg:gap-3">
                     {[
                       { label: 'Tổng sản phẩm', value: stats.total, icon: Package, color: 'bg-primary/10 text-primary' },
                       { label: 'Còn hàng', value: stats.inStock, icon: Boxes, color: 'bg-accent text-accent-foreground' },
                       { label: 'Sắp hết', value: stats.lowStock, icon: Tag, color: 'bg-destructive/10 text-destructive' },
                     ].map((stat, idx) => (
-                      <div key={idx} className="flex items-center gap-3 p-3 bg-muted/50 rounded-xl group hover:bg-muted transition-colors">
-                        <div className={cn("p-2 rounded-lg", stat.color)}>
-                          <stat.icon className="h-4 w-4" />
+                      <div key={idx} className="flex flex-col lg:flex-row items-center gap-2 lg:gap-3 p-2.5 lg:p-3 bg-muted/50 rounded-lg lg:rounded-xl group hover:bg-muted transition-colors">
+                        <div className={cn("p-1.5 lg:p-2 rounded-lg", stat.color)}>
+                          <stat.icon className="h-3.5 w-3.5 lg:h-4 lg:w-4" />
                         </div>
-                        <div className="flex-1">
-                          <div className="text-sm text-muted-foreground">{stat.label}</div>
-                          <div className="font-bold text-lg">{stat.value}</div>
+                        <div className="flex-1 text-center lg:text-left">
+                          <div className="text-xs lg:text-sm text-muted-foreground">{stat.label}</div>
+                          <div className="font-bold text-base lg:text-lg">{stat.value}</div>
                         </div>
                       </div>
                     ))}
@@ -228,28 +230,28 @@ const Shop = () => {
                 </div>
 
                 {/* Wholesale Toggle */}
-                <div className="bg-card rounded-2xl border border-border p-5">
-                  <h3 className="font-bold flex items-center gap-2 text-lg mb-4">
-                    <Tag className="h-5 w-5 text-primary" />
+                <div className="bg-card rounded-xl lg:rounded-2xl border border-border p-4 lg:p-5">
+                  <h3 className="font-bold flex items-center gap-2 text-base lg:text-lg mb-3 lg:mb-4">
+                    <Tag className="h-4 w-4 lg:h-5 lg:w-5 text-primary" />
                     Loại giá
                   </h3>
                   <div
                     className={cn(
-                      "flex items-center justify-between p-4 rounded-xl border-2 cursor-pointer transition-all duration-300",
+                      "flex items-center justify-between p-3 lg:p-4 rounded-xl border-2 cursor-pointer transition-all duration-300",
                       showWholesale ? "border-primary bg-primary/5" : "border-border hover:border-primary/50"
                     )}
                     onClick={() => setShowWholesale(!showWholesale)}
                   >
-                    <div className="flex items-center gap-3">
+                    <div className="flex items-center gap-2 lg:gap-3">
                       <div className={cn(
-                        "p-2 rounded-lg transition-colors",
+                        "p-1.5 lg:p-2 rounded-lg transition-colors",
                         showWholesale ? "bg-primary text-primary-foreground" : "bg-muted"
                       )}>
-                        <Percent className="h-5 w-5" />
+                        <Percent className="h-4 w-4 lg:h-5 lg:w-5" />
                       </div>
                       <div>
-                        <div className="font-semibold">Giá sỉ</div>
-                        <div className="text-sm text-muted-foreground">Tiết kiệm đến 15%</div>
+                        <div className="font-semibold text-sm lg:text-base">Giá sỉ</div>
+                        <div className="text-xs lg:text-sm text-muted-foreground">Tiết kiệm đến 15%</div>
                       </div>
                     </div>
                     <Switch
@@ -260,12 +262,12 @@ const Shop = () => {
                 </div>
 
                 {/* Eco Badge */}
-                <div className="bg-gradient-to-br from-primary/10 to-accent/10 rounded-2xl border border-primary/20 p-5 text-center">
-                  <div className="p-4 bg-primary/10 rounded-2xl inline-block mb-3">
-                    <Leaf className="h-8 w-8 text-primary" />
+                <div className="bg-gradient-to-br from-primary/10 to-accent/10 rounded-xl lg:rounded-2xl border border-primary/20 p-4 lg:p-5 text-center">
+                  <div className="p-3 lg:p-4 bg-primary/10 rounded-xl lg:rounded-2xl inline-block mb-2 lg:mb-3">
+                    <Leaf className="h-6 w-6 lg:h-8 lg:w-8 text-primary" />
                   </div>
-                  <h4 className="font-bold mb-2">100% Sinh học</h4>
-                  <p className="text-sm text-muted-foreground">
+                  <h4 className="font-bold mb-1.5 lg:mb-2 text-sm lg:text-base">100% Sinh học</h4>
+                  <p className="text-xs lg:text-sm text-muted-foreground">
                     Tất cả sản phẩm đều làm từ lá bàng tự nhiên, phân hủy trong 45 ngày
                   </p>
                 </div>
@@ -275,11 +277,11 @@ const Shop = () => {
             {/* Products Grid */}
             <main className="flex-1 min-w-0">
               {/* Results count */}
-              <div className="flex items-center justify-between mb-6">
-                <p className="text-muted-foreground">
+              <div className="flex items-center justify-between mb-4 lg:mb-6">
+                <p className="text-sm lg:text-base text-muted-foreground">
                   Hiển thị <span className="font-semibold text-foreground">{filteredProducts.length}</span> sản phẩm
                   {category !== 'all' && (
-                    <span> trong <Badge variant="secondary" className="ml-1">{categories.find(c => c.id === category)?.name}</Badge></span>
+                    <span className="hidden sm:inline"> trong <Badge variant="secondary" className="ml-1">{categories.find(c => c.id === category)?.name}</Badge></span>
                   )}
                 </p>
               </div>
@@ -287,7 +289,7 @@ const Shop = () => {
               {/* Grid */}
               {isLoading ? (
                 <div className={cn(
-                  "grid gap-6",
+                  "grid gap-4 sm:gap-5 lg:gap-6",
                   gridSize === 'normal'
                     ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
                     : "grid-cols-1 sm:grid-cols-2"
@@ -305,19 +307,19 @@ const Shop = () => {
                   ))}
                 </div>
               ) : filteredProducts.length === 0 ? (
-                <div className="text-center py-20">
-                  <div className="p-6 bg-muted/50 rounded-full inline-block mb-6">
-                    <Search className="h-12 w-12 text-muted-foreground" />
+                <div className="text-center py-12 lg:py-20">
+                  <div className="p-4 lg:p-6 bg-muted/50 rounded-full inline-block mb-4 lg:mb-6">
+                    <Search className="h-8 w-8 lg:h-12 lg:w-12 text-muted-foreground" />
                   </div>
-                  <h3 className="text-2xl font-bold mb-2">Không tìm thấy sản phẩm</h3>
-                  <p className="text-muted-foreground mb-6">Thử thay đổi từ khóa hoặc bộ lọc</p>
+                  <h3 className="text-xl lg:text-2xl font-bold mb-2">Không tìm thấy sản phẩm</h3>
+                  <p className="text-sm lg:text-base text-muted-foreground mb-4 lg:mb-6">Thử thay đổi từ khóa hoặc bộ lọc</p>
                   <Button onClick={() => { setSearch(''); setCategory('all'); }}>
                     Xóa bộ lọc
                   </Button>
                 </div>
               ) : (
                 <div className={cn(
-                  "grid gap-6",
+                  "grid gap-4 sm:gap-5 lg:gap-6",
                   gridSize === 'normal'
                     ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
                     : "grid-cols-1 sm:grid-cols-2"
