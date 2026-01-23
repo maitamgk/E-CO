@@ -14,12 +14,12 @@ const About = () => {
             alt="Tropical Leaves"
             className="w-full h-full object-cover"
           />
-          
+
           {/* Gradient Overlay */}
           <div className="absolute inset-0 bg-gradient-to-br from-green-950/60 via-emerald-900/55 to-teal-950/60" />
-          
+
           {/* Network mesh pattern overlay */}
-          <div 
+          <div
             className="absolute inset-0 opacity-10"
             style={{
               backgroundImage: `
@@ -29,12 +29,12 @@ const About = () => {
               backgroundSize: '60px 60px',
             }}
           />
-          
+
           {/* Glowing orbs */}
           <div className="absolute top-10 left-10 w-96 h-96 bg-emerald-500/8 rounded-full blur-[100px] animate-float" />
           <div className="absolute bottom-10 right-10 w-80 h-80 bg-green-500/8 rounded-full blur-[90px] animate-float" style={{ animationDelay: '2s' }} />
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-teal-500/8 rounded-full blur-[80px] animate-float" style={{ animationDelay: '4s' }} />
-          
+
           {/* Floating particles */}
           <div className="absolute inset-0 overflow-hidden pointer-events-none">
             {[...Array(15)].map((_, i) => (
@@ -51,7 +51,7 @@ const About = () => {
             ))}
           </div>
         </div>
-        
+
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-2xl">
             <h1 className="text-4xl lg:text-6xl font-black italic text-white mb-6 drop-shadow-[0_0_30px_rgba(16,185,129,0.3)]">
@@ -74,9 +74,9 @@ const About = () => {
             </div>
             <h2 className="text-3xl font-bold mb-4">Khởi nguồn từ Phú Yên</h2>
             <p className="text-muted-foreground leading-relaxed text-lg">
-              B-CO ra đời tại vùng đất Phú Yên xinh đẹp, nơi những cây bàng cổ thụ đứng 
-              sừng sững bên bờ biển trong xanh. Chúng tôi nhận thấy lá bàng rụng xuống 
-              mỗi mùa là một nguồn tài nguyên quý giá, có thể biến thành những sản phẩm 
+              B-ECO ra đời tại vùng đất Phú Yên xinh đẹp, nơi những cây bàng cổ thụ đứng
+              sừng sững bên bờ biển trong xanh. Chúng tôi nhận thấy lá bàng rụng xuống
+              mỗi mùa là một nguồn tài nguyên quý giá, có thể biến thành những sản phẩm
               hữu ích thay thế cho nhựa dùng một lần.
             </p>
           </div>
@@ -110,9 +110,9 @@ const About = () => {
             </div>
             <h2 className="text-3xl font-bold mb-4">Sứ mệnh của chúng tôi</h2>
             <p className="text-muted-foreground leading-relaxed text-lg">
-              Chúng tôi tin rằng mỗi chiếc chén, mỗi chiếc dĩa từ lá bàng là một bước 
-              nhỏ nhưng ý nghĩa trong hành trình bảo vệ môi trường. B-CO cam kết mang 
-              đến những sản phẩm an toàn cho sức khỏe, thân thiện với thiên nhiên, và 
+              Chúng tôi tin rằng mỗi chiếc chén, mỗi chiếc dĩa từ lá bàng là một bước
+              nhỏ nhưng ý nghĩa trong hành trình bảo vệ môi trường. B-ECO cam kết mang
+              đến những sản phẩm an toàn cho sức khỏe, thân thiện với thiên nhiên, và
               góp phần giảm thiểu rác thải nhựa tràn lan.
             </p>
           </div>
@@ -126,9 +126,9 @@ const About = () => {
             </div>
             <h2 className="text-3xl font-bold mb-4">Bảo vệ biển Phú Yên</h2>
             <p className="text-muted-foreground leading-relaxed text-lg">
-              Biển Phú Yên với vẻ đẹp hoang sơ đang đối mặt với nguy cơ ô nhiễm từ 
-              rác thải nhựa. Mỗi sản phẩm B-CO bạn sử dụng là một lần bạn nói "không" 
-              với nhựa dùng một lần, góp phần giữ gìn vẻ đẹp của biển cả và bảo vệ 
+              Biển Phú Yên với vẻ đẹp hoang sơ đang đối mặt với nguy cơ ô nhiễm từ
+              rác thải nhựa. Mỗi sản phẩm B-ECO bạn sử dụng là một lần bạn nói "không"
+              với nhựa dùng một lần, góp phần giữ gìn vẻ đẹp của biển cả và bảo vệ
               hệ sinh thái biển cho thế hệ tương lai.
             </p>
           </div>
@@ -162,9 +162,9 @@ const About = () => {
             </div>
             <h2 className="text-3xl font-bold mb-4">Cộng đồng bền vững</h2>
             <p className="text-muted-foreground leading-relaxed text-lg">
-              B-CO không chỉ là một thương hiệu, mà là một cộng đồng những người yêu 
-              thiên nhiên. Chúng tôi tạo công ăn việc làm cho người dân địa phương, 
-              hỗ trợ các hộ gia đình thu gom lá bàng, và chia sẻ kiến thức về lối 
+              B-ECO không chỉ là một thương hiệu, mà là một cộng đồng những người yêu
+              thiên nhiên. Chúng tôi tạo công ăn việc làm cho người dân địa phương,
+              hỗ trợ các hộ gia đình thu gom lá bàng, và chia sẻ kiến thức về lối
               sống xanh đến mọi người.
             </p>
           </div>

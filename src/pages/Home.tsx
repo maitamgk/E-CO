@@ -228,7 +228,7 @@ const Home = () => {
 
         <div className="container mx-auto px-4 relative">
           <ScrollAnimate animation="fade-in-up" className="text-center mb-16">
-            <Badge variant="secondary" className="mb-4 px-4 py-2">Tại sao chọn B-CO?</Badge>
+            <Badge variant="secondary" className="mb-4 px-4 py-2">Tại sao chọn B-ECO?</Badge>
             <h2 className="text-4xl lg:text-5xl font-bold mb-4">
               Sản phẩm xanh,{' '}
               <span className="bg-gradient-to-r from-primary to-accent-foreground bg-clip-text text-transparent">
@@ -340,7 +340,7 @@ const Home = () => {
                 <div className="relative">
                   <img
                     src={exhibitionDisplay}
-                    alt="B-CO Exhibition Display"
+                    alt="B-ECO Exhibition Display"
                     className="rounded-[2rem] shadow-2xl w-full object-cover hover:scale-[1.02] transition-transform duration-700"
                   />
 
@@ -375,7 +375,7 @@ const Home = () => {
                   </span>
                 </h2>
                 <p className="text-xl text-muted-foreground mb-8 leading-relaxed">
-                  B-CO ra đời với sứ mệnh thay thế sản phẩm nhựa dùng một lần bằng các giải pháp từ thiên nhiên,
+                  B-ECO ra đời với sứ mệnh thay thế sản phẩm nhựa dùng một lần bằng các giải pháp từ thiên nhiên,
                   góp phần bảo vệ môi trường biển và hệ sinh thái Việt Nam.
                 </p>
 
@@ -474,7 +474,7 @@ const Home = () => {
               </Badge>
 
               <h2 className="text-4xl lg:text-6xl xl:text-7xl font-bold text-background mb-8 leading-tight">
-                Cùng B-CO{' '}
+                Cùng B-ECO{' '}
                 <span className="bg-gradient-to-r from-primary to-accent-foreground bg-clip-text text-transparent">
                   bảo vệ môi trường
                 </span>

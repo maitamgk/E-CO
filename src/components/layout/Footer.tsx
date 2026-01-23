@@ -9,7 +9,7 @@ export const Footer = () => {
       {/* Decorative elements */}
       <div className="absolute top-0 left-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl" />
       <div className="absolute bottom-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl" />
-      
+
       <div className="container mx-auto px-4 py-16 relative">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
           {/* Brand */}
@@ -18,7 +18,7 @@ export const Footer = () => {
               <div className="p-2 bg-primary/10 rounded-xl group-hover:bg-primary/20 transition-colors">
                 <Leaf className="h-6 w-6" />
               </div>
-              <span>B-CO</span>
+              <span>B-ECO</span>
             </Link>
             <p className="text-muted-foreground leading-relaxed">
               Gieo mầm xanh - Từ chiếc lá nhỏ
@@ -43,12 +43,12 @@ export const Footer = () => {
               {[
                 { to: '/shop', label: 'Cửa hàng' },
                 { to: '/pricing', label: 'Bảng giá' },
-                { to: '/about', label: 'Về B-CO' },
+                { to: '/about', label: 'Về B-ECO' },
                 { to: '/policies', label: 'Chính sách' },
               ].map(link => (
                 <li key={link.to}>
-                  <Link 
-                    to={link.to} 
+                  <Link
+                    to={link.to}
                     className="text-muted-foreground hover:text-primary transition-colors inline-flex items-center gap-2 group"
                   >
                     <span className="w-0 h-0.5 bg-primary group-hover:w-4 transition-all duration-300" />
@@ -109,7 +109,7 @@ export const Footer = () => {
 
         <div className="border-t border-border mt-12 pt-8">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-muted-foreground">
-            <p>© {new Date().getFullYear()} B-CO. Bảo vệ môi trường, bảo vệ cuộc sống.</p>
+            <p>© {new Date().getFullYear()} B-ECO. Bảo vệ môi trường, bảo vệ cuộc sống.</p>
             <p className="flex items-center gap-1">
               Made with <Heart className="h-4 w-4 text-red-500 fill-red-500" /> in Phú Yên
             </p>

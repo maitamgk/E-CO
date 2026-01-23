@@ -10,7 +10,7 @@ const navLinks = [
   { to: '/', label: 'Trang chủ' },
   { to: '/shop', label: 'Cửa hàng' },
   { to: '/pricing', label: 'Bảng giá' },
-  { to: '/about', label: 'Về B-CO' },
+  { to: '/about', label: 'Về B-ECO' },
   { to: '/policies', label: 'Chính sách' },
 ];
 
@@ -29,20 +29,18 @@ export const Header = () => {
   }, []);
 
   return (
-    <header className={`sticky top-0 z-50 transition-all duration-500 ${
-      scrolled 
-        ? 'bg-white/90 dark:bg-gray-950/90 backdrop-blur-2xl shadow-xl shadow-emerald-500/5 border-b border-emerald-500/20' 
+    <header className={`sticky top-0 z-50 transition-all duration-500 ${scrolled
+        ? 'bg-white/90 dark:bg-gray-950/90 backdrop-blur-2xl shadow-xl shadow-emerald-500/5 border-b border-emerald-500/20'
         : 'bg-white/70 dark:bg-gray-950/70 backdrop-blur-md border-b border-emerald-500/10'
-    }`}>
+      }`}>
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16 lg:h-20">
           {/* Logo - Enhanced */}
           <Link to="/" className="flex items-center gap-3 font-bold text-xl group">
-            <div className={`relative p-2.5 rounded-2xl transition-all duration-300 ${
-              scrolled 
-                ? 'bg-gradient-to-br from-emerald-500 to-teal-500 shadow-lg shadow-emerald-500/30' 
+            <div className={`relative p-2.5 rounded-2xl transition-all duration-300 ${scrolled
+                ? 'bg-gradient-to-br from-emerald-500 to-teal-500 shadow-lg shadow-emerald-500/30'
                 : 'bg-gradient-to-br from-emerald-400 to-teal-400 shadow-md shadow-emerald-400/20'
-            }`}>
+              }`}>
               <Leaf className="h-6 w-6 text-white group-hover:rotate-12 transition-transform duration-300" />
               <div className="absolute inset-0 bg-white/20 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity" />
             </div>
@@ -68,9 +66,9 @@ export const Header = () => {
           {/* Actions - Enhanced */}
           <div className="flex items-center gap-2">
             <Link to="/cart">
-              <Button 
-                variant="ghost" 
-                size="icon" 
+              <Button
+                variant="ghost"
+                size="icon"
                 className="relative group hover:bg-emerald-50 dark:hover:bg-emerald-950/30 rounded-full h-11 w-11 transition-all duration-300"
               >
                 <ShoppingCart className="h-5 w-5 text-gray-700 dark:text-gray-300 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 group-hover:scale-110 transition-all duration-300" />
@@ -85,9 +83,9 @@ export const Header = () => {
             {user ? (
               <div className="hidden md:flex items-center gap-2">
                 <Link to="/orders">
-                  <Button 
-                    variant="ghost" 
-                    size="sm" 
+                  <Button
+                    variant="ghost"
+                    size="sm"
                     className="group rounded-full hover:bg-emerald-50 dark:hover:bg-emerald-950/30 font-medium"
                   >
                     <Sparkles className="h-4 w-4 mr-2 text-emerald-500 opacity-0 group-hover:opacity-100 transition-all duration-300 group-hover:rotate-12" />
@@ -96,17 +94,17 @@ export const Header = () => {
                 </Link>
                 {isAdmin && (
                   <Link to="/admin">
-                    <Button 
-                      size="sm" 
+                    <Button
+                      size="sm"
                       className="rounded-full bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 shadow-md shadow-emerald-500/30 hover:shadow-lg hover:shadow-emerald-500/40 transition-all duration-300"
                     >
                       Admin
                     </Button>
                   </Link>
                 )}
-                <Button 
-                  variant="ghost" 
-                  size="sm" 
+                <Button
+                  variant="ghost"
+                  size="sm"
                   onClick={logout}
                   className="rounded-full hover:bg-gray-100 dark:hover:bg-gray-800"
                 >
@@ -115,9 +113,9 @@ export const Header = () => {
               </div>
             ) : (
               <Link to="/auth" className="hidden md:block">
-                <Button 
-                  variant="ghost" 
-                  size="icon" 
+                <Button
+                  variant="ghost"
+                  size="icon"
                   className="group hover:bg-emerald-50 dark:hover:bg-emerald-950/30 rounded-full h-11 w-11 transition-all duration-300"
                 >
                   <User className="h-5 w-5 text-gray-700 dark:text-gray-300 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 group-hover:scale-110 transition-all duration-300" />

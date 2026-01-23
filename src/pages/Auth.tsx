@@ -130,7 +130,7 @@ const Auth = () => {
           <div className="text-center mb-8">
             <Link to="/" className="inline-flex items-center gap-2 font-bold text-2xl text-primary">
               <Leaf className="h-8 w-8" />
-              <span>B-CO</span>
+              <span>B-ECO</span>
             </Link>
             <p className="text-muted-foreground mt-2">Đăng nhập để quản lý đơn hàng</p>
           </div>
