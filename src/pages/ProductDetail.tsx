@@ -8,14 +8,15 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { ProductReviews } from '@/components/product/ProductReviews';
-import { 
-  ShoppingCart, 
-  Plus, 
-  Minus, 
-  Check, 
-  ArrowLeft, 
-  Sparkles, 
-  Heart, 
+import { RelatedProducts } from '@/components/product/RelatedProducts';
+import {
+  ShoppingCart,
+  Plus,
+  Minus,
+  Check,
+  ArrowLeft,
+  Sparkles,
+  Heart,
   Share2,
   Truck,
   Shield,
@@ -47,12 +48,12 @@ const galleryImages = [
 const ProductDetail = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const { getProduct, isLoading } = useProducts();
+  const { getProduct, isLoading, products } = useProducts();
   const { addToCart, items, updateQuantity } = useCart();
-  
+
   const product = getProduct(id || '');
   const cartItem = items[product?.id || ''];
-  
+
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const [isZoomed, setIsZoomed] = useState(false);
   const [zoomPosition, setZoomPosition] = useState({ x: 50, y: 50 });
@@ -60,7 +61,7 @@ const ProductDetail = () => {
   const [isAdding, setIsAdding] = useState(false);
   const [quantity, setQuantity] = useState(1);
   const [showLightbox, setShowLightbox] = useState(false);
-  
+
   const imageContainerRef = useRef<HTMLDivElement>(null);
 
   // Generate gallery from product image + related images
@@ -125,7 +126,7 @@ const ProductDetail = () => {
       {/* Hero Section */}
       <div className="relative bg-gradient-to-br from-green-950 via-emerald-900 to-teal-950 text-white overflow-hidden">
         {/* Background Image */}
-        <div 
+        <div
           className="absolute inset-0 opacity-35"
           style={{
             backgroundImage: 'url(https://images.unsplash.com/photo-1470058869958-2a77ade41c02?w=1920&q=80)',
@@ -135,14 +136,14 @@ const ProductDetail = () => {
         />
         {/* Gradient Overlay */}
         <div className="absolute inset-0 bg-gradient-to-br from-green-950/60 via-emerald-900/65 to-teal-950/70" />
-        
+
         {/* Glowing Orbs */}
         <div className="absolute top-20 -left-20 w-72 h-72 bg-emerald-500/8 rounded-full blur-3xl" />
         <div className="absolute bottom-20 -right-20 w-96 h-96 bg-teal-500/8 rounded-full blur-3xl" />
-        
+
         <div className="container mx-auto px-4 py-12 relative">
-          <Link 
-            to="/shop" 
+          <Link
+            to="/shop"
             className="inline-flex items-center gap-2 text-emerald-100 hover:text-emerald-50 transition-colors mb-4"
           >
             <ArrowLeft className="h-4 w-4" />
@@ -159,18 +160,18 @@ const ProductDetail = () => {
 
       {/* Lightbox */}
       {showLightbox && (
-        <div 
+        <div
           className="fixed inset-0 z-50 bg-background/95 backdrop-blur-xl flex items-center justify-center"
           onClick={() => setShowLightbox(false)}
         >
-          <button 
+          <button
             className="absolute top-6 right-6 p-3 bg-card rounded-full hover:bg-muted transition-colors"
             onClick={() => setShowLightbox(false)}
           >
             <X className="h-6 w-6" />
           </button>
-          <img 
-            src={productGallery[selectedImageIndex]} 
+          <img
+            src={productGallery[selectedImageIndex]}
             alt={product.name}
             className="max-w-[90vw] max-h-[90vh] object-contain rounded-2xl"
             onClick={(e) => e.stopPropagation()}
@@ -186,8 +187,8 @@ const ProductDetail = () => {
                 }}
                 className={cn(
                   "w-16 h-16 rounded-xl overflow-hidden border-2 transition-all",
-                  selectedImageIndex === index 
-                    ? "border-primary scale-110" 
+                  selectedImageIndex === index
+                    ? "border-primary scale-110"
                     : "border-transparent opacity-60 hover:opacity-100"
                 )}
               >
@@ -212,7 +213,7 @@ const ProductDetail = () => {
           {/* Left - Gallery */}
           <div className="space-y-4">
             {/* Main Image with Zoom */}
-            <div 
+            <div
               ref={imageContainerRef}
               className="relative aspect-square rounded-3xl overflow-hidden bg-muted cursor-zoom-in group"
               onMouseEnter={() => setIsZoomed(true)}
@@ -231,7 +232,7 @@ const ProductDetail = () => {
                   transformOrigin: `${zoomPosition.x}% ${zoomPosition.y}%`
                 } : undefined}
               />
-              
+
               {/* Zoom indicator */}
               <div className="absolute bottom-4 right-4 p-2 bg-background/80 backdrop-blur-sm rounded-lg opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-2 text-sm">
                 <ZoomIn className="h-4 w-4" />
@@ -261,13 +262,13 @@ const ProductDetail = () => {
                   onClick={() => setSelectedImageIndex(index)}
                   className={cn(
                     "flex-shrink-0 w-20 h-20 lg:w-24 lg:h-24 rounded-xl overflow-hidden border-2 transition-all duration-300",
-                    selectedImageIndex === index 
-                      ? "border-primary ring-2 ring-primary/20 scale-105" 
+                    selectedImageIndex === index
+                      ? "border-primary ring-2 ring-primary/20 scale-105"
                       : "border-border hover:border-primary/50"
                   )}
                 >
-                  <img 
-                    src={img} 
+                  <img
+                    src={img}
                     alt={`${product.name} - ${index + 1}`}
                     className="w-full h-full object-cover"
                   />
@@ -288,8 +289,8 @@ const ProductDetail = () => {
                   onClick={() => setIsLiked(!isLiked)}
                   className={cn(
                     "p-3 rounded-xl border transition-all duration-300 hover:scale-110",
-                    isLiked 
-                      ? "bg-destructive text-destructive-foreground border-destructive" 
+                    isLiked
+                      ? "bg-destructive text-destructive-foreground border-destructive"
                       : "border-border hover:border-primary/50"
                   )}
                 >
@@ -319,7 +320,7 @@ const ProductDetail = () => {
                 </span>
                 <span className="text-muted-foreground mb-1">/ cái</span>
               </div>
-              
+
               <div className="flex items-center gap-2 text-sm">
                 <Sparkles className="h-4 w-4 text-primary" />
                 <span className="text-muted-foreground">Giá sỉ từ {product.wholesaleMinQty} cái:</span>
@@ -384,7 +385,7 @@ const ProductDetail = () => {
                       </Button>
                     </div>
                   </div>
-                  
+
                   <Button
                     size="lg"
                     className="w-full h-16 text-lg font-semibold rounded-2xl shadow-xl shadow-primary/20 hover:shadow-2xl hover:shadow-primary/30 hover:scale-[1.02] transition-all duration-300"
@@ -406,9 +407,9 @@ const ProductDetail = () => {
                 </>
               )}
 
-              <Button 
-                variant="outline" 
-                size="lg" 
+              <Button
+                variant="outline"
+                size="lg"
                 className="w-full h-14 text-base rounded-2xl"
                 onClick={() => navigate('/cart')}
               >
@@ -533,6 +534,13 @@ const ProductDetail = () => {
             </TabsContent>
           </Tabs>
         </div>
+
+        {/* Related Products */}
+        <RelatedProducts
+          currentProductId={product.id}
+          category={product.category}
+          products={products}
+        />
       </div>
     </Layout>
   );

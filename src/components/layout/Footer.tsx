@@ -44,6 +44,7 @@ export const Footer = () => {
                 { to: '/shop', label: 'Cửa hàng' },
                 { to: '/pricing', label: 'Bảng giá' },
                 { to: '/about', label: 'Về B-ECO' },
+                { to: '/contact', label: 'Liên hệ' },
                 { to: '/policies', label: 'Chính sách' },
               ].map(link => (
                 <li key={link.to}>
@@ -72,11 +73,11 @@ export const Footer = () => {
                 </a>
               </li>
               <li>
-                <a href="mailto:info@bco.vn" className="flex items-center gap-3 text-muted-foreground hover:text-primary transition-colors group">
+                <a href="mailto:info@b-eco.vn" className="flex items-center gap-3 text-muted-foreground hover:text-primary transition-colors group">
                   <div className="p-2 bg-muted rounded-lg group-hover:bg-primary/10 transition-colors">
                     <Mail className="h-4 w-4" />
                   </div>
-                  <span>info@bco.vn</span>
+                  <span>info@b-eco.vn</span>
                 </a>
               </li>
               <li className="flex items-start gap-3 text-muted-foreground">

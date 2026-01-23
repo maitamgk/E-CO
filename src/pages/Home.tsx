@@ -5,6 +5,7 @@ import { Layout } from '@/components/layout/Layout';
 import { ProductGrid } from '@/components/product/ProductGrid';
 import { ScrollAnimate } from '@/components/ui/scroll-animate';
 import { useProducts } from '@/context/ProductsContext';
+import { Testimonials } from '@/components/home/Testimonials';
 import { Leaf, ShieldCheck, Recycle, Heart, ArrowRight, Percent, Truck, Sparkles, Star, Play, Zap, Award, Users, Package, TreeDeciduous, Waves } from 'lucide-react';
 
 // Import real product images
@@ -406,6 +407,9 @@ const Home = () => {
           </div>
         </div>
       </section>
+
+      {/* Testimonials */}
+      <Testimonials />
 
       {/* COD Banner */}
       <section className="py-20 bg-muted/30">

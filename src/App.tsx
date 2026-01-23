@@ -21,6 +21,7 @@ const Policies = lazy(() => import("./pages/Policies"));
 const Auth = lazy(() => import("./pages/Auth"));
 const Orders = lazy(() => import("./pages/Orders"));
 const ProductDetail = lazy(() => import("./pages/ProductDetail"));
+const Contact = lazy(() => import("./pages/Contact"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 const queryClient = new QueryClient({
@@ -55,6 +56,7 @@ const App = () => (
                     <Route path="/auth" element={<Auth />} />
                     <Route path="/orders" element={<Orders />} />
                     <Route path="/product/:id" element={<ProductDetail />} />
+                    <Route path="/contact" element={<Contact />} />
                     <Route path="*" element={<NotFound />} />
                   </Routes>
                 </Suspense>

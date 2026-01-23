@@ -180,7 +180,7 @@ const Policies = () => {
               </div>
               <div className="flex items-center gap-2">
                 <Mail className="h-4 w-4 text-primary" />
-                <span>support@bco.vn</span>
+                <span>support@b-eco.vn</span>
               </div>
             </div>
           </section>
