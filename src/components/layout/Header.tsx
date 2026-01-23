@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { ShoppingCart, User, Menu, X, Leaf, Sparkles } from 'lucide-react';
+import { ShoppingCart, User, Menu, X, Leaf, Sparkles, Moon, Sun } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -11,6 +11,7 @@ const navLinks = [
   { to: '/shop', label: 'Cửa hàng' },
   { to: '/pricing', label: 'Bảng giá' },
   { to: '/about', label: 'Về B-ECO' },
+  { to: '/contact', label: 'Liên hệ' },
   { to: '/policies', label: 'Chính sách' },
 ];
 
@@ -19,6 +20,24 @@ export const Header = () => {
   const [scrolled, setScrolled] = useState(false);
   const { itemCount } = useCart();
   const { user, isAdmin, logout } = useAuth();
+  const [isDark, setIsDark] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return document.documentElement.classList.contains('dark');
+    }
+    return false;
+  });
+
+  const toggleDarkMode = () => {
+    const newDark = !isDark;
+    setIsDark(newDark);
+    if (newDark) {
+      document.documentElement.classList.add('dark');
+      localStorage.setItem('theme', 'dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+      localStorage.setItem('theme', 'light');
+    }
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -29,11 +48,10 @@ export const Header = () => {
   }, []);
 
   return (
-    <header className={`sticky top-0 z-50 transition-all duration-500 ${
-      scrolled 
-        ? 'bg-white/90 dark:bg-gray-950/90 backdrop-blur-2xl shadow-xl shadow-emerald-500/5 border-b border-emerald-500/20' 
-        : 'bg-white/70 dark:bg-gray-950/70 backdrop-blur-md border-b border-emerald-500/10'
-    }`}>
+    <header className={`sticky top-0 z-50 transition-all duration-500 ${scrolled
+      ? 'bg-white/90 dark:bg-gray-950/90 backdrop-blur-2xl shadow-xl shadow-emerald-500/5 border-b border-emerald-500/20'
+      : 'bg-white/70 dark:bg-gray-950/70 backdrop-blur-md border-b border-emerald-500/10'
+      }`}>
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16 lg:h-20">
           {/* Logo - Enhanced */}
@@ -68,9 +86,9 @@ export const Header = () => {
           {/* Actions - Enhanced */}
           <div className="flex items-center gap-2">
             <Link to="/cart">
-              <Button 
-                variant="ghost" 
-                size="icon" 
+              <Button
+                variant="ghost"
+                size="icon"
                 className="relative group hover:bg-emerald-50 dark:hover:bg-emerald-950/30 rounded-full h-11 w-11 transition-all duration-300"
               >
                 <ShoppingCart className="h-5 w-5 text-gray-700 dark:text-gray-300 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 group-hover:scale-110 transition-all duration-300" />
@@ -82,12 +100,26 @@ export const Header = () => {
               </Button>
             </Link>
 
+            {/* Dark Mode Toggle */}
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={toggleDarkMode}
+              className="group hover:bg-emerald-50 dark:hover:bg-emerald-950/30 rounded-full h-11 w-11 transition-all duration-300"
+            >
+              {isDark ? (
+                <Sun className="h-5 w-5 text-yellow-500 group-hover:rotate-45 transition-all duration-300" />
+              ) : (
+                <Moon className="h-5 w-5 text-gray-700 group-hover:text-emerald-600 transition-all duration-300" />
+              )}
+            </Button>
+
             {user ? (
               <div className="hidden md:flex items-center gap-2">
                 <Link to="/orders">
-                  <Button 
-                    variant="ghost" 
-                    size="sm" 
+                  <Button
+                    variant="ghost"
+                    size="sm"
                     className="group rounded-full hover:bg-emerald-50 dark:hover:bg-emerald-950/30 font-medium"
                   >
                     <Sparkles className="h-4 w-4 mr-2 text-emerald-500 opacity-0 group-hover:opacity-100 transition-all duration-300 group-hover:rotate-12" />
@@ -96,17 +128,17 @@ export const Header = () => {
                 </Link>
                 {isAdmin && (
                   <Link to="/admin">
-                    <Button 
-                      size="sm" 
+                    <Button
+                      size="sm"
                       className="rounded-full bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 shadow-md shadow-emerald-500/30 hover:shadow-lg hover:shadow-emerald-500/40 transition-all duration-300"
                     >
                       Admin
                     </Button>
                   </Link>
                 )}
-                <Button 
-                  variant="ghost" 
-                  size="sm" 
+                <Button
+                  variant="ghost"
+                  size="sm"
                   onClick={logout}
                   className="rounded-full hover:bg-gray-100 dark:hover:bg-gray-800"
                 >
@@ -115,9 +147,9 @@ export const Header = () => {
               </div>
             ) : (
               <Link to="/auth" className="hidden md:block">
-                <Button 
-                  variant="ghost" 
-                  size="icon" 
+                <Button
+                  variant="ghost"
+                  size="icon"
                   className="group hover:bg-emerald-50 dark:hover:bg-emerald-950/30 rounded-full h-11 w-11 transition-all duration-300"
                 >
                   <User className="h-5 w-5 text-gray-700 dark:text-gray-300 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 group-hover:scale-110 transition-all duration-300" />

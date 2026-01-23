@@ -14,7 +14,7 @@ const Policies = () => {
           />
           <div className="absolute inset-0 bg-gradient-to-b from-green-950/60 via-emerald-900/65 to-teal-950/70" />
         </div>
-        
+
         <div className="container mx-auto px-4 relative z-10 text-center">
           <h1 className="text-4xl lg:text-5xl font-black italic text-white mb-4 drop-shadow-[0_0_30px_rgba(16,185,129,0.3)]">
             <span className="bg-gradient-to-r from-emerald-300 via-green-300 to-teal-300 bg-clip-text text-transparent">Chính sách</span> B-ECO
@@ -35,12 +35,12 @@ const Policies = () => {
               </div>
               <h2 className="text-xl font-bold">Chính sách bảo hành</h2>
             </div>
-            
+
             <div className="space-y-4 text-muted-foreground">
               <p>
                 <strong className="text-foreground">Thời hạn bảo hành:</strong> 3 tháng kể từ ngày mua hàng.
               </p>
-              
+
               <div>
                 <strong className="text-foreground">Điều kiện bảo hành:</strong>
                 <ul className="list-disc list-inside mt-2 space-y-1">
@@ -69,12 +69,12 @@ const Policies = () => {
               </div>
               <h2 className="text-xl font-bold">Chính sách đổi trả</h2>
             </div>
-            
+
             <div className="space-y-4 text-muted-foreground">
               <p>
                 <strong className="text-foreground">Thời hạn đổi trả:</strong> 7 ngày kể từ ngày nhận hàng.
               </p>
-              
+
               <div>
                 <strong className="text-foreground">Điều kiện đổi trả:</strong>
                 <ul className="list-disc list-inside mt-2 space-y-1">
@@ -110,13 +110,13 @@ const Policies = () => {
               </div>
               <h2 className="text-xl font-bold">Chính sách bảo mật</h2>
             </div>
-            
+
             <div className="space-y-4 text-muted-foreground">
               <div>
                 <strong className="text-foreground">1. Mục đích thu thập thông tin</strong>
                 <p className="mt-2">
-                  Chúng tôi thu thập thông tin cá nhân để: xử lý đơn hàng, giao hàng, 
-                  liên hệ xác nhận, hỗ trợ khách hàng, và gửi thông tin khuyến mãi 
+                  Chúng tôi thu thập thông tin cá nhân để: xử lý đơn hàng, giao hàng,
+                  liên hệ xác nhận, hỗ trợ khách hàng, và gửi thông tin khuyến mãi
                   (nếu bạn đồng ý).
                 </p>
               </div>
@@ -124,7 +124,7 @@ const Policies = () => {
               <div>
                 <strong className="text-foreground">2. Phạm vi thu thập</strong>
                 <p className="mt-2">
-                  Chúng tôi thu thập: họ tên, số điện thoại, địa chỉ giao hàng, email 
+                  Chúng tôi thu thập: họ tên, số điện thoại, địa chỉ giao hàng, email
                   (nếu có), lịch sử đơn hàng.
                 </p>
               </div>
@@ -132,7 +132,7 @@ const Policies = () => {
               <div>
                 <strong className="text-foreground">3. Thời gian lưu trữ</strong>
                 <p className="mt-2">
-                  Thông tin được lưu trữ trong suốt thời gian bạn là khách hàng và 
+                  Thông tin được lưu trữ trong suốt thời gian bạn là khách hàng và
                   thêm 3 năm sau giao dịch cuối cùng để phục vụ bảo hành và hỗ trợ.
                 </p>
               </div>
@@ -140,8 +140,8 @@ const Policies = () => {
               <div>
                 <strong className="text-foreground">4. Chia sẻ thông tin</strong>
                 <p className="mt-2">
-                  Chúng tôi không bán hoặc chia sẻ thông tin cá nhân với bên thứ ba, 
-                  ngoại trừ: đơn vị vận chuyển (để giao hàng), cơ quan pháp luật 
+                  Chúng tôi không bán hoặc chia sẻ thông tin cá nhân với bên thứ ba,
+                  ngoại trừ: đơn vị vận chuyển (để giao hàng), cơ quan pháp luật
                   (khi có yêu cầu hợp pháp).
                 </p>
               </div>
@@ -160,7 +160,7 @@ const Policies = () => {
               <div>
                 <strong className="text-foreground">6. Bảo mật</strong>
                 <p className="mt-2">
-                  Chúng tôi sử dụng các biện pháp bảo mật kỹ thuật và tổ chức để bảo vệ 
+                  Chúng tôi sử dụng các biện pháp bảo mật kỹ thuật và tổ chức để bảo vệ
                   thông tin của bạn khỏi truy cập trái phép, mất mát, hoặc tiết lộ.
                 </p>
               </div>
@@ -180,7 +180,7 @@ const Policies = () => {
               </div>
               <div className="flex items-center gap-2">
                 <Mail className="h-4 w-4 text-primary" />
-                <span>support@bco.vn</span>
+                <span>support@b-eco.vn</span>
               </div>
             </div>
           </section>

@@ -10,7 +10,7 @@ export const Footer = () => {
       {/* Decorative elements */}
       <div className="absolute top-0 left-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl" />
       <div className="absolute bottom-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl" />
-      
+
       <div className="container mx-auto px-4 py-16 relative">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
           {/* Brand */}
@@ -45,11 +45,12 @@ export const Footer = () => {
                 { to: '/shop', label: 'Cửa hàng' },
                 { to: '/pricing', label: 'Bảng giá' },
                 { to: '/about', label: 'Về B-ECO' },
+                { to: '/contact', label: 'Liên hệ' },
                 { to: '/policies', label: 'Chính sách' },
               ].map(link => (
                 <li key={link.to}>
-                  <Link 
-                    to={link.to} 
+                  <Link
+                    to={link.to}
                     className="text-muted-foreground hover:text-primary transition-colors inline-flex items-center gap-2 group"
                   >
                     <span className="w-0 h-0.5 bg-primary group-hover:w-4 transition-all duration-300" />

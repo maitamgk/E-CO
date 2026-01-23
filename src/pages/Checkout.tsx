@@ -15,20 +15,20 @@ import { Truck, CreditCard, ArrowLeft, Check, Loader2 } from 'lucide-react';
 const Checkout = () => {
   const navigate = useNavigate();
   const { items, itemCount, getSubtotal, getTotalQty, clearCart } = useCart();
-  const { user } = useAuth();
+  const _auth = useAuth(); // Keep context connection for future user sync
   const { toast } = useToast();
-  
+
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [orderPlaced, setOrderPlaced] = useState(false);
   const [orderCode, setOrderCode] = useState('');
-  
+
   const [form, setForm] = useState({
     fullName: '',
     phone: '',
     address: '',
     note: '',
   });
-  
+
   const [errors, setErrors] = useState<Record<string, string>>({});
 
   const subtotal = getSubtotal();
@@ -45,7 +45,7 @@ const Checkout = () => {
 
   const validate = () => {
     const newErrors: Record<string, string> = {};
-    
+
     if (!validateRequired(form.fullName)) {
       newErrors.fullName = 'Vui lòng nhập họ tên';
     }
@@ -55,35 +55,35 @@ const Checkout = () => {
     if (!validateRequired(form.address)) {
       newErrors.address = 'Vui lòng nhập địa chỉ giao hàng';
     }
-    
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!validate()) return;
-    
+
     setIsSubmitting(true);
-    
+
     try {
       // Simulate API call - In real app, this calls Firebase Cloud Function
       await new Promise(resolve => setTimeout(resolve, 1500));
-      
+
       // Generate order code
       const code = 'BCO' + Date.now().toString(36).toUpperCase();
       setOrderCode(code);
-      
+
       // Clear cart and show success
       clearCart();
       setOrderPlaced(true);
-      
+
       toast({
         title: 'Đặt hàng thành công!',
         description: `Mã đơn hàng: ${code}`,
       });
-    } catch (error) {
+    } catch {
       toast({
         title: 'Có lỗi xảy ra',
         description: 'Vui lòng thử lại sau',
@@ -134,7 +134,7 @@ const Checkout = () => {
       {/* Hero Section */}
       <div className="relative bg-gradient-to-br from-green-950 via-emerald-900 to-teal-950 text-white overflow-hidden">
         {/* Background Image */}
-        <div 
+        <div
           className="absolute inset-0 opacity-35"
           style={{
             backgroundImage: 'url(https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=1920&q=80)',
@@ -144,11 +144,11 @@ const Checkout = () => {
         />
         {/* Gradient Overlay */}
         <div className="absolute inset-0 bg-gradient-to-br from-green-950/60 via-emerald-900/65 to-teal-950/70" />
-        
+
         {/* Glowing Orbs */}
         <div className="absolute top-20 -left-20 w-72 h-72 bg-emerald-500/8 rounded-full blur-3xl" />
         <div className="absolute bottom-20 -right-20 w-96 h-96 bg-teal-500/8 rounded-full blur-3xl" />
-        
+
         <div className="container mx-auto px-4 py-12 relative">
           <Link to="/cart" className="inline-flex items-center gap-2 text-emerald-100 hover:text-emerald-50 transition-colors mb-4">
             <ArrowLeft className="h-4 w-4" />
@@ -171,7 +171,7 @@ const Checkout = () => {
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="bg-card border border-border rounded-lg p-6">
                 <h2 className="text-lg font-semibold mb-4">Thông tin giao hàng</h2>
-                
+
                 <div className="space-y-4">
                   <div>
                     <Label htmlFor="fullName">Họ và tên *</Label>
@@ -267,7 +267,7 @@ const Checkout = () => {
           <div>
             <div className="bg-card border border-border rounded-lg p-6 sticky top-20">
               <h2 className="text-lg font-semibold mb-4">Đơn hàng của bạn</h2>
-              
+
               <div className="space-y-3 max-h-64 overflow-y-auto mb-4">
                 {Object.values(items).map(item => (
                   <div key={item.productId} className="flex gap-3">

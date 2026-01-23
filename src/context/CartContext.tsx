@@ -32,8 +32,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   // When user logs in, we could sync with server here
   useEffect(() => {
     if (user) {
-      // TODO: Sync cart with Firestore when Firebase is integrated
-      console.log('User logged in, sync cart with server');
+      // TODO: Sync cart with Firestore/Backend when authentication is integrated
     }
   }, [user]);
 
@@ -43,7 +42,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     setItems(prev => {
       const existing = prev[product.id];
       const newQty = existing ? existing.qty + qty : qty;
-      
+
       return {
         ...prev,
         [product.id]: {
@@ -60,7 +59,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   const updateQuantity = useCallback((productId: string, qty: number) => {
     if (qty <= 0) {
       setItems(prev => {
-        const { [productId]: removed, ...rest } = prev;
+        const { [productId]: _removed, ...rest } = prev;
         return rest;
       });
     } else {
@@ -76,7 +75,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
 
   const removeFromCart = useCallback((productId: string) => {
     setItems(prev => {
-      const { [productId]: removed, ...rest } = prev;
+      const { [productId]: _removed, ...rest } = prev;
       return rest;
     });
   }, []);

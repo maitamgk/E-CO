@@ -9,7 +9,7 @@ const About = () => {
   return (
     <Layout>
       {/* Entire page with light background */}
-      <div className="bg-gradient-to-br from-primary/10 to-primary/5 min-h-screen">`
+      <div className="bg-gradient-to-br from-primary/10 to-primary/5 min-h-screen">
         {/* Hero Section */}
         <section className="relative py-24 overflow-hidden">
         {/* Background elements */}
@@ -24,7 +24,7 @@ const About = () => {
           {/* Gradient overlay */}
           <div className="absolute inset-0 bg-gradient-to-br from-white/50 via-emerald-50/30 to-white/40" />
         </div>
-        
+
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-2xl">
             <h1 className="text-4xl lg:text-6xl font-black italic text-gray-800 mb-6">
