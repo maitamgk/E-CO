@@ -21,7 +21,7 @@ const Shop = () => {
   const [search, setSearch] = useState('');
   const [category, setCategory] = useState('all');
   const [showWholesale, setShowWholesale] = useState(false);
-  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const [gridSize, setGridSize] = useState<'normal' | 'large'>('normal');
 
   const filteredProducts = useMemo(() => {
