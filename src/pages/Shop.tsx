@@ -42,7 +42,7 @@ const Shop = () => {
   return (
     <Layout>
       {/* Hero Banner - with Almond Tree Background */}
-      <section className="relative overflow-hidden py-12 sm:py-16 lg:py-28">
+      <section className="relative overflow-hidden py-8 sm:py-12 lg:py-28">
         {/* Background with leaf canopy */}
         <div className="absolute inset-0">
           <img
@@ -65,14 +65,14 @@ const Shop = () => {
               {stats.total} sản phẩm có sẵn
             </Badge>
 
-            <h1 className="text-3xl sm:text-4xl lg:text-6xl xl:text-7xl font-black italic text-white mb-4 lg:mb-6 animate-fade-in-up drop-shadow-[0_0_30px_rgba(16,185,129,0.3)]" style={{ animationDelay: '0.1s' }}>
+            <h1 className="text-2xl sm:text-3xl lg:text-5xl xl:text-6xl font-black italic text-white mb-3 lg:mb-4 animate-fade-in-up drop-shadow-[0_0_30px_rgba(16,185,129,0.3)]" style={{ animationDelay: '0.1s' }}>
               Cửa hàng{' '}
               <span className="bg-gradient-to-r from-emerald-300 via-green-300 to-teal-300 bg-clip-text text-transparent">
                 B-ECO
               </span>
             </h1>
 
-            <p className="text-base sm:text-lg lg:text-xl text-emerald-100 mb-6 lg:mb-10 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
+            <p className="text-sm sm:text-base lg:text-lg text-emerald-100 mb-4 sm:mb-6 lg:mb-8 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
               Gieo mầm xanh - Từ chiếc lá nhỏ
             </p>
 
@@ -112,27 +112,26 @@ const Shop = () => {
         <div className="container mx-auto px-4 py-8">
           {/* Discount Banner */}
           <ScrollAnimate animation="fade-in-up">
-            <div className="relative overflow-hidden bg-gradient-to-r from-primary via-primary to-accent-foreground rounded-2xl lg:rounded-3xl p-4 sm:p-5 lg:p-8 mb-6 lg:mb-8 text-primary-foreground group hover:shadow-2xl transition-shadow">
+            <div className="relative overflow-hidden bg-gradient-to-r from-primary via-primary to-accent-foreground rounded-xl lg:rounded-2xl p-3 sm:p-4 lg:p-6 mb-4 sm:mb-6 lg:mb-8 text-primary-foreground group hover:shadow-2xl transition-shadow">
               {/* Background pattern */}
               <div className="absolute inset-0 opacity-10">
                 <div className="absolute -right-20 -top-20 w-60 h-60 bg-background rounded-full" />
                 <div className="absolute -left-10 -bottom-10 w-40 h-40 bg-background rounded-full" />
               </div>
 
-              <div className="relative flex flex-col lg:flex-row items-center gap-3 sm:gap-4 lg:gap-6">
-                <div className="p-2.5 sm:p-3 lg:p-4 bg-background/20 rounded-xl lg:rounded-2xl backdrop-blur-xl group-hover:scale-110 transition-transform duration-300">
-                  <Percent className="h-6 w-6 sm:h-8 sm:w-8 lg:h-10 lg:w-10" />
+              <div className="relative flex flex-col sm:flex-row items-center gap-2 sm:gap-3 lg:gap-4">
+                <div className="p-2 sm:p-2.5 lg:p-3 bg-background/20 rounded-lg lg:rounded-xl backdrop-blur-xl group-hover:scale-110 transition-transform duration-300">
+                  <Percent className="h-5 w-5 sm:h-6 sm:w-6 lg:h-8 lg:w-8" />
                 </div>
-                <div className="text-center lg:text-left flex-1">
-                  <div className="text-base sm:text-lg lg:text-3xl font-bold mb-1">
-                    <span className="hidden sm:inline">Giảm 10% cho đơn hàng từ 1000 sản phẩm</span>
-                    <span className="sm:hidden">Giảm 10% từ 1000sp</span>
+                <div className="text-center sm:text-left flex-1">
+                  <div className="text-sm sm:text-base lg:text-2xl font-bold mb-0.5">
+                    Giảm 10% từ 1000sp
                   </div>
-                  <p className="text-xs sm:text-sm lg:text-base opacity-90">Giảm giá được tính tự động khi thanh toán</p>
+                  <p className="text-xs lg:text-sm opacity-90">Tự động khi thanh toán</p>
                 </div>
-                <Badge className="bg-background/20 text-primary-foreground border-background/30 px-3 py-1.5 lg:px-4 lg:py-2 text-xs sm:text-sm lg:text-base animate-pulse-glow">
-                  <Sparkles className="h-3 w-3 sm:h-4 sm:w-4 mr-1.5 sm:mr-2" />
-                  Hot Deal
+                <Badge className="bg-background/20 text-primary-foreground border-background/30 px-2.5 py-1 lg:px-3 lg:py-1.5 text-xs lg:text-sm animate-pulse-glow">
+                  <Sparkles className="h-3 w-3 mr-1" />
+                  Hot
                 </Badge>
               </div>
             </div>
@@ -140,16 +139,16 @@ const Shop = () => {
 
           {/* Filter Bar */}
           <ScrollAnimate animation="fade-in-up" delay={100}>
-            <div className="flex flex-wrap items-center gap-2 sm:gap-3 lg:gap-4 mb-6 lg:mb-8">
+            <div className="flex flex-wrap items-center gap-2 mb-4 sm:mb-6">
               {/* Toggle Sidebar */}
               <Button
                 variant={sidebarOpen ? 'default' : 'outline'}
                 onClick={() => setSidebarOpen(!sidebarOpen)}
-                className="gap-1.5 sm:gap-2 rounded-lg sm:rounded-xl h-9 sm:h-10 lg:h-12 text-xs sm:text-sm px-3 sm:px-4"
+                className="gap-1.5 rounded-lg h-9 text-xs px-3 flex-shrink-0"
               >
-                <Filter className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
-                Bộ lọc
-                <ChevronDown className={cn("h-3.5 w-3.5 sm:h-4 sm:w-4 transition-transform", sidebarOpen && "rotate-180")} />
+                <Filter className="h-3.5 w-3.5" />
+                <span className="hidden xs:inline">Bộ lọc</span>
+                <ChevronDown className={cn("h-3.5 w-3.5 transition-transform", sidebarOpen && "rotate-180")} />
               </Button>
 
               {/* Categories - Quick Access */}
@@ -167,9 +166,9 @@ const Shop = () => {
                       }
                     }}
                     className={cn(
-                      "rounded-full px-3 sm:px-4 lg:px-5 h-8 sm:h-9 lg:h-10 text-xs sm:text-sm transition-all duration-300",
+                      "rounded-full px-2.5 sm:px-3 lg:px-4 h-8 lg:h-9 text-xs transition-all duration-300",
                       category === cat.id
-                        ? 'shadow-lg shadow-primary/25 scale-105'
+                        ? 'shadow-md shadow-primary/20'
                         : 'hover:scale-105'
                     )}
                   >
@@ -179,7 +178,7 @@ const Shop = () => {
               </div>
 
               {/* Grid Toggle */}
-              <div className="hidden sm:flex items-center gap-1 bg-card rounded-xl p-1 border border-border">
+              <div className="hidden md:flex items-center gap-1 bg-card rounded-lg p-1 border border-border">
                 <button
                   onClick={() => setGridSize('normal')}
                   className={cn(
