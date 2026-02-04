@@ -10,7 +10,8 @@ const Policies = () => {
           <img
             src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=1920&h=600&fit=crop"
             alt="Forest Canopy"
-            className="w-full h-full object-cover opacity-35"
+            className="w-full h-full object-cover object-center opacity-35"
+            loading="eager"
           />
           <div className="absolute inset-0 bg-gradient-to-b from-green-950/60 via-emerald-900/65 to-teal-950/70" />
         </div>

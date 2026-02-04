@@ -60,11 +60,12 @@ export const ProductCard = ({ product, showWholesale = false }: ProductCardProps
               src={product.imageUrl}
               alt={product.name}
               className={cn(
-                "w-full h-full object-cover transition-all duration-700 ease-out",
+                "w-full h-full object-cover object-center transition-all duration-700 ease-out",
                 "group-hover:scale-110 group-hover:rotate-1",
                 imageLoaded ? 'opacity-100' : 'opacity-0'
               )}
               onLoad={() => setImageLoaded(true)}
+              loading="lazy"
             />
             
             {/* Gradient overlays */}
@@ -142,7 +143,7 @@ export const ProductCard = ({ product, showWholesale = false }: ProductCardProps
           </div>
 
           {/* Content */}
-          <div className="p-6 space-y-4">
+          <div className="p-4 sm:p-5 lg:p-6 space-y-3 sm:space-y-4">
             {/* Category tag */}
             <div className="flex items-center gap-2">
               <span className="text-xs font-medium text-primary bg-primary/10 px-2 py-1 rounded-md">
@@ -153,7 +154,7 @@ export const ProductCard = ({ product, showWholesale = false }: ProductCardProps
             {/* Title - Clickable */}
             <h3 
               onClick={() => navigate(`/product/${product.id}`)}
-              className="font-bold text-xl text-foreground line-clamp-1 group-hover:text-primary transition-colors duration-300 cursor-pointer hover:underline"
+              className="font-bold text-lg sm:text-xl text-foreground line-clamp-1 group-hover:text-primary transition-colors duration-300 cursor-pointer hover:underline"
             >
               {product.name}
             </h3>
@@ -164,12 +165,12 @@ export const ProductCard = ({ product, showWholesale = false }: ProductCardProps
             </p>
 
             {/* Prices */}
-            <div className="flex items-end gap-3">
-              <span className="text-3xl font-bold bg-gradient-to-r from-primary to-accent-foreground bg-clip-text text-transparent">
+            <div className="flex items-end gap-2 sm:gap-3">
+              <span className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-primary to-accent-foreground bg-clip-text text-transparent">
                 {formatMoney(displayPrice)}
               </span>
               {showWholesale && (
-                <span className="text-base text-muted-foreground line-through mb-1">
+                <span className="text-sm sm:text-base text-muted-foreground line-through mb-1">
                   {formatMoney(product.priceRetail)}
                 </span>
               )}
@@ -208,18 +209,18 @@ export const ProductCard = ({ product, showWholesale = false }: ProductCardProps
               </div>
             ) : (
               <Button
-                className="w-full h-14 text-base font-semibold rounded-2xl shadow-xl shadow-primary/20 hover:shadow-2xl hover:shadow-primary/30 hover:scale-[1.02] transition-all duration-300 group/btn"
+                className="w-full h-12 sm:h-14 text-sm sm:text-base font-semibold rounded-2xl shadow-xl shadow-primary/20 hover:shadow-2xl hover:shadow-primary/30 hover:scale-[1.02] transition-all duration-300 group/btn"
                 onClick={handleAddToCart}
                 disabled={product.stock === 0 || isAdding}
               >
                 {isAdding ? (
                   <>
-                    <Check className="h-5 w-5 mr-2 animate-bounce" />
+                    <Check className="h-4 w-4 sm:h-5 sm:w-5 mr-2 animate-bounce" />
                     Đã thêm!
                   </>
                 ) : (
                   <>
-                    <ShoppingCart className="h-5 w-5 mr-2 group-hover/btn:animate-wiggle" />
+                    <ShoppingCart className="h-4 w-4 sm:h-5 sm:w-5 mr-2 group-hover/btn:animate-wiggle" />
                     Thêm vào giỏ hàng
                   </>
                 )}

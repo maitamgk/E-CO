@@ -18,7 +18,8 @@ const About = () => {
           <img
             src={anh4}
             alt="B-ECO Background"
-            className="w-full h-full object-cover opacity-50"
+            className="w-full h-full object-cover object-center opacity-50"
+            loading="eager"
           />
           
           {/* Gradient overlay */}
@@ -57,7 +58,8 @@ const About = () => {
             <img
               src={anh1}
               alt="Lá bàng"
-              className="rounded-2xl shadow-2xl w-full"
+              className="rounded-2xl shadow-2xl w-full h-auto object-cover object-center"
+              loading="lazy"
             />
             <div className="absolute -bottom-4 -left-4 bg-primary text-primary-foreground p-4 rounded-xl shadow-lg">
               <Leaf className="h-8 w-8" />
@@ -71,7 +73,8 @@ const About = () => {
             <img
               src={anh2}
               alt="Biển sạch"
-              className="rounded-2xl shadow-2xl w-full"
+              className="rounded-2xl shadow-2xl w-full h-auto object-cover object-center"
+              loading="lazy"
             />
             <div className="absolute -bottom-4 -right-4 bg-primary text-primary-foreground p-4 rounded-xl shadow-lg">
               <Heart className="h-8 w-8" />
@@ -109,7 +112,8 @@ const About = () => {
             <img
               src={anh3}
               alt="Biển Phú Yên"
-              className="rounded-2xl shadow-2xl w-full"
+              className="rounded-2xl shadow-2xl w-full h-auto object-cover object-center"
+              loading="lazy"
             />
             <div className="absolute -bottom-4 -left-4 bg-primary text-primary-foreground p-4 rounded-xl shadow-lg">
               <Globe className="h-8 w-8" />
@@ -123,7 +127,8 @@ const About = () => {
             <img
               src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=600&h=400&fit=crop"
               alt="Cộng đồng"
-              className="rounded-2xl shadow-2xl w-full"
+              className="rounded-2xl shadow-2xl w-full h-auto object-cover object-center"
+              loading="lazy"
             />
             <div className="absolute -bottom-4 -right-4 bg-primary text-primary-foreground p-4 rounded-xl shadow-lg">
               <Users className="h-8 w-8" />

@@ -12,7 +12,7 @@ import { Leaf, ShieldCheck, Recycle, Heart, ArrowRight, Percent, Truck, Sparkles
 import collectionDisplay1 from '@/assets/products/collection-display-1.jpg';
 import exhibitionDisplay from '@/assets/products/exhibition-display.jpg';
 import customLogoBeco from '@/assets/products/custom-logo-beco.jpg';
-import seaAlmondTree from '@/assets/products/sea-almond-tree.jpg';
+import leafPlatesVariety from '@/assets/products/leaf-plates-variety.jpg';
 
 const Home = () => {
   const { products, isLoading } = useProducts();
@@ -21,14 +21,15 @@ const Home = () => {
   return (
     <Layout>
       {/* Hero Section - Modern Tech Style */}
-      <section className="relative min-h-screen flex items-center overflow-hidden">
+      <section className="relative min-h-[100dvh] flex items-center overflow-hidden">
         {/* Animated tech grid background */}
         <div className="absolute inset-0">
           {/* Background image - Sea Almond Tree */}
           <img
-            src={seaAlmondTree}
-            alt="Sea Almond Tree"
-            className="w-full h-full object-cover"
+            src={leafPlatesVariety}
+            alt="B-ECO Leaf Plates"
+            className="w-full h-full object-cover object-center"
+            loading="eager"
           />
 
           {/* Gradient Overlay */}
@@ -92,10 +93,10 @@ const Home = () => {
           </svg>
         </div>
 
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
             {/* Left content */}
-            <div className="text-white">
+            <div className="text-white pt-16 sm:pt-20 lg:pt-0">
               <div className="animate-fade-in" style={{ animationDelay: '0.2s' }}>
                 <Badge className="mb-6 lg:mb-8 px-4 py-2 lg:px-8 lg:py-4 bg-gradient-to-r from-emerald-400/40 to-green-400/40 text-white border-2 border-emerald-300/50 backdrop-blur-xl text-xs sm:text-sm lg:text-base font-bold rounded-full shadow-lg shadow-emerald-400/25 hover:scale-105 transition-transform duration-300">
                   <Sparkles className="h-4 w-4 lg:h-5 lg:w-5 mr-2 lg:mr-3 animate-pulse" />
@@ -104,14 +105,14 @@ const Home = () => {
                 </Badge>
               </div>
               
-              <h1 className="text-2xl sm:text-3xl lg:text-5xl xl:text-6xl font-black italic mb-6 lg:mb-8 animate-fade-in-up" style={{ 
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-5xl xl:text-6xl font-black italic mb-6 lg:mb-8 animate-fade-in-up" style={{ 
                 animationDelay: '0.4s', 
                 fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif', 
                 letterSpacing: '0.02em',
-                lineHeight: '1.4',
+                lineHeight: '1.2',
                 paddingTop: '0.5rem'
               }}>
-                <span className="block bg-gradient-to-r from-white via-emerald-100 to-white bg-clip-text text-transparent drop-shadow-[0_0_50px_rgba(255,255,255,0.8)] mb-4 lg:mb-8 uppercase" style={{ paddingTop: '0.5rem', paddingBottom: '0.5rem' }}>
+                <span className="block bg-gradient-to-r from-white via-emerald-100 to-white bg-clip-text text-transparent drop-shadow-[0_0_50px_rgba(255,255,255,0.8)] mb-3 sm:mb-4 lg:mb-8 uppercase" style={{ paddingTop: '0.5rem', paddingBottom: '0.5rem' }}>
                   CHÉN ĐĨA SINH HỌC
                 </span>
                 <span className="block bg-gradient-to-r from-emerald-200 via-green-300 to-teal-200 bg-clip-text text-transparent drop-shadow-[0_0_60px_rgba(16,185,129,0.8)] uppercase" style={{ paddingTop: '0.5rem', paddingBottom: '0.5rem' }}>
@@ -119,7 +120,7 @@ const Home = () => {
                 </span>
               </h1>
 
-              <p className="text-lg lg:text-xl text-emerald-200 mb-12 leading-relaxed max-w-lg animate-fade-in-up font-medium" style={{ animationDelay: '0.6s' }}>
+              <p className="text-base sm:text-lg lg:text-xl text-emerald-200 mb-8 lg:mb-12 leading-relaxed max-w-lg animate-fade-in-up font-medium" style={{ animationDelay: '0.6s' }}>
                 Gieo mầm xanh - Từ chiếc lá nhỏ
               </p>
 
@@ -158,7 +159,7 @@ const Home = () => {
             </div>
 
             {/* Right - Product image with tech overlay */}
-            <div className="relative animate-fade-in hidden md:block" style={{ animationDelay: '0.6s' }}>
+            <div className="relative animate-fade-in hidden lg:block" style={{ animationDelay: '0.6s' }}>
               <div className="relative">
                 {/* Glowing frame */}
                 <div className="absolute -inset-4 bg-gradient-to-br from-emerald-500/30 via-green-500/20 to-teal-500/30 rounded-3xl blur-2xl" />
@@ -171,7 +172,8 @@ const Home = () => {
                   <img
                     src={collectionDisplay1}
                     alt="B-ECO Leaf Plates Collection"
-                    className="w-full rounded-2xl"
+                    className="w-full rounded-2xl object-cover"
+                    loading="lazy"
                   />
 
                   {/* Floating badges */}
@@ -206,7 +208,7 @@ const Home = () => {
 
       {/* Stats Bar - Glassmorphism */}
       <section className="relative -mt-10 md:-mt-20 z-20 pb-6 md:pb-10">
-        <div className="container mx-auto px-4">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="bg-card/80 backdrop-blur-2xl rounded-2xl md:rounded-3xl shadow-2xl border border-border/50 p-4 sm:p-6 lg:p-10">
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
               {[
@@ -231,14 +233,14 @@ const Home = () => {
       </section>
 
       {/* Features - Modern Cards */}
-      <section className="py-24 bg-background relative overflow-hidden">
+      <section className="py-12 sm:py-16 lg:py-24 bg-background relative overflow-hidden">
         {/* Subtle background decoration */}
         <div className="absolute inset-0">
           <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-primary/5 rounded-full blur-[150px]" />
           <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-accent/10 rounded-full blur-[100px]" />
         </div>
 
-        <div className="container mx-auto px-4 relative">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative">
           <ScrollAnimate animation="fade-in-up" className="text-center mb-10 md:mb-16">
             <Badge variant="secondary" className="mb-3 md:mb-4 px-3 py-1.5 md:px-4 md:py-2 text-xs md:text-sm">Tại sao chọn B-ECO?</Badge>
             <h2 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold mb-3 md:mb-4 px-4">
@@ -252,7 +254,7 @@ const Home = () => {
             </p>
           </ScrollAnimate>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 lg:gap-6">
             {[
               { icon: Leaf, title: '100% Tự nhiên', desc: 'Làm từ lá bàng tự nhiên, phân hủy sinh học hoàn toàn trong 45 ngày' },
               { icon: ShieldCheck, title: 'An toàn tuyệt đối', desc: 'Không chứa hóa chất độc hại, chịu nhiệt đến 80°C' },
@@ -316,8 +318,8 @@ const Home = () => {
       </section>
 
       {/* Featured Products */}
-      <section className="py-24 bg-muted/30 relative overflow-hidden">
-        <div className="container mx-auto px-4">
+      <section className="py-12 sm:py-16 lg:py-24 bg-muted/30 relative overflow-hidden">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <ScrollAnimate animation="fade-in-up">
             <div className="flex flex-col lg:flex-row items-start lg:items-end justify-between mb-10 md:mb-16 gap-4 sm:gap-6">
               <div>
@@ -342,9 +344,9 @@ const Home = () => {
       </section>
 
       {/* About Section - Split */}
-      <section className="py-16 md:py-24 bg-background relative overflow-hidden">
-        <div className="container mx-auto px-4">
-          <div className="grid lg:grid-cols-2 gap-10 md:gap-16 lg:gap-24 items-center">
+      <section className="py-12 sm:py-16 lg:py-24 bg-background relative overflow-hidden">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid lg:grid-cols-2 gap-8 md:gap-12 lg:gap-24 items-center">
             <ScrollAnimate animation="fade-in-left">
               <div className="relative">
                 {/* Decorative elements */}
@@ -354,25 +356,26 @@ const Home = () => {
                   <img
                     src={exhibitionDisplay}
                     alt="B-ECO Exhibition Display"
-                    className="rounded-[2rem] shadow-2xl w-full object-cover hover:scale-[1.02] transition-transform duration-700"
+                    className="rounded-[2rem] shadow-2xl w-full h-auto object-cover hover:scale-[1.02] transition-transform duration-700"
+                    loading="lazy"
                   />
 
                   {/* Floating card */}
-                  <div className="absolute -bottom-8 -right-8 bg-card p-6 rounded-2xl shadow-2xl border border-border max-w-xs animate-float">
-                    <div className="flex items-center gap-4">
-                      <div className="p-3 bg-primary/10 rounded-xl">
-                        <Waves className="h-8 w-8 text-primary" />
+                  <div className="absolute -bottom-4 sm:-bottom-8 -right-4 sm:-right-8 bg-card p-4 sm:p-6 rounded-2xl shadow-2xl border border-border max-w-[200px] sm:max-w-xs animate-float">
+                    <div className="flex items-center gap-2 sm:gap-4">
+                      <div className="p-2 sm:p-3 bg-primary/10 rounded-xl">
+                        <Waves className="h-5 w-5 sm:h-8 sm:w-8 text-primary" />
                       </div>
                       <div>
-                        <div className="font-bold text-lg">Bảo vệ biển</div>
-                        <div className="text-sm text-muted-foreground">Phú Yên, Việt Nam</div>
+                        <div className="font-bold text-sm sm:text-lg">Bảo vệ biển</div>
+                        <div className="text-xs sm:text-sm text-muted-foreground">Phú Yên, VN</div>
                       </div>
                     </div>
                   </div>
 
-                  <div className="absolute -top-6 -left-6 bg-primary text-primary-foreground p-5 rounded-2xl shadow-xl animate-float" style={{ animationDelay: '1.5s' }}>
-                    <div className="text-4xl font-bold">45</div>
-                    <div className="text-sm opacity-90">ngày phân hủy</div>
+                  <div className="absolute -top-4 sm:-top-6 -left-4 sm:-left-6 bg-primary text-primary-foreground p-3 sm:p-5 rounded-2xl shadow-xl animate-float" style={{ animationDelay: '1.5s' }}>
+                    <div className="text-2xl sm:text-4xl font-bold">45</div>
+                    <div className="text-xs sm:text-sm opacity-90">ngày phân hủy</div>
                   </div>
                 </div>
               </div>
@@ -425,7 +428,7 @@ const Home = () => {
 
       {/* COD Banner */}
       <section className="py-12 md:py-20 bg-muted/30">
-        <div className="container mx-auto px-4">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <ScrollAnimate animation="scale-in">
             <div className="relative overflow-hidden bg-gradient-to-br from-card to-muted/50 rounded-2xl md:rounded-[2.5rem] p-6 sm:p-8 lg:p-16 border border-border/50 group hover:border-primary/30 transition-all duration-500 hover:shadow-2xl">
               {/* Background decoration */}
@@ -455,12 +458,13 @@ const Home = () => {
       </section>
 
       {/* Final CTA */}
-      <section className="relative py-20 md:py-32 overflow-hidden bg-foreground">
+      <section className="relative py-16 sm:py-20 md:py-32 overflow-hidden bg-foreground">
         <div className="absolute inset-0">
           <img
             src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=1920&h=600&fit=crop"
             alt="Forest"
-            className="w-full h-full object-cover opacity-30"
+            className="w-full h-full object-cover object-center opacity-30"
+            loading="lazy"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-foreground via-foreground/90 to-foreground/70" />
         </div>

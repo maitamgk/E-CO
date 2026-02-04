@@ -90,7 +90,8 @@ const Contact = () => {
                     <img
                         src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1920&h=600&fit=crop"
                         alt="Contact"
-                        className="w-full h-full object-cover opacity-20"
+                        className="w-full h-full object-cover object-center opacity-20"
+                        loading="eager"
                     />
                     <div className="absolute inset-0 bg-gradient-to-b from-green-950/60 via-emerald-900/65 to-teal-950/70" />
                 </div>
@@ -264,7 +265,8 @@ const Contact = () => {
                                 <img
                                     src="https://images.unsplash.com/photo-1542601098-3adb3e4c6df9?w=800&h=400&fit=crop"
                                     alt="B-ECO Location"
-                                    className="w-full h-full object-cover"
+                                    className="w-full h-full object-cover object-center"
+                                    loading="lazy"
                                 />
                                 <div className="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent" />
                                 <div className="absolute bottom-0 left-0 right-0 p-6">

@@ -173,7 +173,7 @@ const ProductDetail = () => {
           <img
             src={productGallery[selectedImageIndex]}
             alt={product.name}
-            className="max-w-[90vw] max-h-[90vh] object-contain rounded-2xl"
+            className="max-w-[90vw] max-h-[90vh] object-contain object-center rounded-2xl"
             onClick={(e) => e.stopPropagation()}
           />
           {/* Lightbox thumbnails */}
@@ -192,7 +192,7 @@ const ProductDetail = () => {
                     : "border-transparent opacity-60 hover:opacity-100"
                 )}
               >
-                <img src={img} alt="" className="w-full h-full object-cover" />
+                <img src={img} alt="" className="w-full h-full object-cover object-center" />
               </button>
             ))}
           </div>
@@ -225,7 +225,7 @@ const ProductDetail = () => {
                 src={productGallery[selectedImageIndex]}
                 alt={product.name}
                 className={cn(
-                  "w-full h-full object-cover transition-transform duration-300",
+                  "w-full h-full object-cover object-center transition-transform duration-300",
                   isZoomed && "scale-150"
                 )}
                 style={isZoomed ? {

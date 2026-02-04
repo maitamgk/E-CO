@@ -275,7 +275,8 @@ const Checkout = () => {
                       <img
                         src={item.imageUrlSnapshot}
                         alt={item.nameSnapshot}
-                        className="w-full h-full object-cover"
+                        className="w-full h-full object-cover object-center"
+                        loading="lazy"
                       />
                     </div>
                     <div className="flex-1 min-w-0">

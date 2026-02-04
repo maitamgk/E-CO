@@ -25,7 +25,8 @@ const Pricing = () => {
           <img
             src="https://images.unsplash.com/photo-1505934346881-b72b27e84530?w=1920&h=600&fit=crop"
             alt="Green Forest"
-            className="w-full h-full object-cover opacity-40"
+            className="w-full h-full object-cover object-center opacity-40"
+            loading="eager"
           />
           <div className="absolute inset-0 bg-gradient-to-b from-green-950/55 via-emerald-900/60 to-teal-950/65" />
         </div>

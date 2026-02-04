@@ -48,7 +48,8 @@ const Shop = () => {
           <img
             src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=1920&h=800&fit=crop"
             alt="Leaf Canopy"
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover object-center"
+            loading="eager"
           />
           <div className="absolute inset-0 bg-gradient-to-br from-green-950/60 via-emerald-900/55 to-teal-950/60" />
 
@@ -158,7 +159,13 @@ const Shop = () => {
                     key={cat.id}
                     variant={category === cat.id ? 'default' : 'secondary'}
                     size="sm"
-                    onClick={() => setCategory(cat.id)}
+                    onClick={() => {
+                      setCategory(cat.id);
+                      // Close sidebar on mobile after selection
+                      if (window.innerWidth < 1024) {
+                        setSidebarOpen(false);
+                      }
+                    }}
                     className={cn(
                       "rounded-full px-3 sm:px-4 lg:px-5 h-8 sm:h-9 lg:h-10 text-xs sm:text-sm transition-all duration-300",
                       category === cat.id
@@ -195,15 +202,41 @@ const Shop = () => {
             </div>
           </ScrollAnimate>
 
-          <div className="flex gap-4 lg:gap-8">
-            {/* Sidebar */}
+          <div className="flex gap-4 lg:gap-8 relative">
+            {/* Sidebar - Mobile Overlay */}
+            {sidebarOpen && (
+              <div 
+                className="fixed inset-0 bg-background/80 backdrop-blur-sm z-40 lg:hidden"
+                onClick={() => setSidebarOpen(false)}
+              />
+            )}
+            
             <aside
               className={cn(
-                "w-full lg:w-72 flex-shrink-0 transition-all duration-500 ease-out",
-                sidebarOpen ? "opacity-100 translate-x-0" : "hidden lg:opacity-0 lg:-translate-x-full lg:w-0 lg:overflow-hidden"
+                "transition-all duration-500 ease-out z-50",
+                "lg:w-72 lg:flex-shrink-0 lg:relative lg:translate-x-0 lg:opacity-100",
+                // Mobile styles - fixed overlay
+                "fixed lg:static top-0 left-0 bottom-0 w-80 max-w-[85vw] bg-background lg:bg-transparent",
+                "overflow-y-auto lg:overflow-visible border-r lg:border-0 border-border",
+                sidebarOpen 
+                  ? "translate-x-0 opacity-100 shadow-2xl lg:shadow-none" 
+                  : "-translate-x-full opacity-0 lg:opacity-0 lg:-translate-x-full lg:w-0 lg:overflow-hidden"
               )}
             >
-              <div className="sticky top-24 space-y-4 lg:space-y-6">
+              {/* Mobile Close Button */}
+              <div className="lg:hidden sticky top-0 bg-background z-10 p-4 border-b border-border flex items-center justify-between">
+                <h3 className="font-bold text-lg">Bộ lọc</h3>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => setSidebarOpen(false)}
+                  className="h-8 w-8"
+                >
+                  <X className="h-5 w-5" />
+                </Button>
+              </div>
+              
+              <div className="lg:sticky lg:top-24 space-y-4 lg:space-y-6 p-4 lg:p-0">
                 {/* Stats Cards */}
                 <div className="bg-card rounded-xl lg:rounded-2xl border border-border p-4 lg:p-5 space-y-3 lg:space-y-4">
                   <h3 className="font-bold flex items-center gap-2 text-base lg:text-lg">
@@ -240,7 +273,13 @@ const Shop = () => {
                       "flex items-center justify-between p-3 lg:p-4 rounded-xl border-2 cursor-pointer transition-all duration-300",
                       showWholesale ? "border-primary bg-primary/5" : "border-border hover:border-primary/50"
                     )}
-                    onClick={() => setShowWholesale(!showWholesale)}
+                    onClick={() => {
+                      setShowWholesale(!showWholesale);
+                      // Close sidebar on mobile after selection
+                      if (window.innerWidth < 1024) {
+                        setTimeout(() => setSidebarOpen(false), 300);
+                      }
+                    }}
                   >
                     <div className="flex items-center gap-2 lg:gap-3">
                       <div className={cn(

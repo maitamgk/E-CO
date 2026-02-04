@@ -11,7 +11,7 @@ interface ProductGridProps {
 export const ProductGrid = ({ products, isLoading = false, showWholesale = false }: ProductGridProps) => {
   if (isLoading) {
     return (
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-5 lg:gap-6">
         {Array.from({ length: 8 }).map((_, i) => (
           <div key={i} style={{ animationDelay: `${i * 100}ms` }} className="animate-fade-in opacity-0">
             <ProductCardSkeleton />
@@ -23,16 +23,16 @@ export const ProductGrid = ({ products, isLoading = false, showWholesale = false
 
   if (products.length === 0) {
     return (
-      <div className="text-center py-16">
-        <div className="text-6xl mb-4">🍃</div>
-        <p className="text-xl font-medium text-muted-foreground">Không tìm thấy sản phẩm nào.</p>
-        <p className="text-muted-foreground mt-2">Thử thay đổi bộ lọc hoặc từ khóa tìm kiếm.</p>
+      <div className="text-center py-12 sm:py-16 px-4">
+        <div className="text-5xl sm:text-6xl mb-4">🍃</div>
+        <p className="text-lg sm:text-xl font-medium text-muted-foreground">Không tìm thấy sản phẩm nào.</p>
+        <p className="text-sm sm:text-base text-muted-foreground mt-2">Thử thay đổi bộ lọc hoặc từ khóa tìm kiếm.</p>
       </div>
     );
   }
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-5 lg:gap-6">
       {products.map((product, index) => (
         <div 
           key={product.id} 
