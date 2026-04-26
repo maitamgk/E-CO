@@ -1,18 +1,20 @@
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 import { Layout } from '@/components/layout/Layout';
 import { ProductGrid } from '@/components/product/ProductGrid';
-import { ScrollAnimate } from '@/components/ui/scroll-animate';
 import { useProducts } from '@/context/ProductsContext';
 import { Testimonials } from '@/components/home/Testimonials';
-import { Leaf, ShieldCheck, Recycle, Heart, ArrowRight, Percent, Truck, Sparkles, Star, Play, Zap, Award, Users, Package, TreeDeciduous, Waves, Search, ShoppingCart } from 'lucide-react';
+import { Leaf, ShieldCheck, Recycle, Heart, ArrowRight, Sparkles, ShoppingCart, Percent, Truck, Thermometer, Palette, Factory, CheckCircle2, ChevronRight } from 'lucide-react';
 
-// Import real product images
 import collectionDisplay1 from '@/assets/products/collection-display-1.jpg';
+import collectionDisplay2 from '@/assets/products/collection-display-2.jpg';
 import exhibitionDisplay from '@/assets/products/exhibition-display.jpg';
 import customLogoBeco from '@/assets/products/custom-logo-beco.jpg';
 import leafPlatesVariety from '@/assets/products/leaf-plates-variety.jpg';
+import leafPlatesCloseup from '@/assets/products/leaf-plates-closeup.jpg';
+import anh1 from '@/assets/products/anh1.jpg';
+import anh2 from '@/assets/products/anh2.jpg';
+import anh3 from '@/assets/products/anh3.jpg';
 
 const Home = () => {
   const { products, isLoading } = useProducts();
@@ -20,507 +22,267 @@ const Home = () => {
 
   return (
     <Layout>
-      {/* Hero Section - Modern Tech Style */}
-      <section className="relative min-h-[100dvh] flex items-center overflow-hidden">
-        {/* Animated tech grid background */}
-        <div className="absolute inset-0">
-          {/* Background image - Sea Almond Tree */}
-          <img
-            src={leafPlatesVariety}
-            alt="B-ECO Leaf Plates"
-            className="w-full h-full object-cover object-center"
-            loading="eager"
-          />
+      {/* ============ HERO — Full-width BG + text bên phải (giống mockup 100%) ============ */}
+      <section className="relative min-h-[80vh] lg:min-h-[85vh] flex items-center overflow-hidden">
+        {/* Ảnh nền full-width */}
+        <img
+          src={collectionDisplay1}
+          alt="B-ECO Leaf Plates"
+          className="absolute inset-0 w-full h-full object-cover"
+          style={{ objectPosition: 'center center' }}
+          loading="eager"
+        />
 
-          {/* Gradient Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-br from-green-950/60 via-emerald-900/55 to-teal-950/60" />
+        {/* Overlay: Trái trong suốt thấy ảnh rõ, phải tối đậm cho text */}
+        <div className="absolute inset-0" style={{
+          background: 'linear-gradient(to right, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.08) 35%, rgba(30,51,42,0.6) 45%, rgba(30,51,42,0.92) 55%, rgba(30,51,42,0.97) 65%, rgba(30,51,42,0.99) 100%)'
+        }} />
 
-          {/* Network mesh pattern overlay */}
-          <div
-            className="absolute inset-0 opacity-15"
-            style={{
-              backgroundImage: `
-                linear-gradient(to right, rgba(16, 185, 129, 0.3) 1px, transparent 1px),
-                linear-gradient(to bottom, rgba(16, 185, 129, 0.3) 1px, transparent 1px)
-              `,
-              backgroundSize: '80px 80px',
-            }}
-          />
-
-          {/* Glowing orbs */}
-          <div className="absolute top-20 left-20 w-96 h-96 bg-emerald-500/15 rounded-full blur-[120px] animate-float" />
-          <div className="absolute bottom-20 right-20 w-80 h-80 bg-green-500/15 rounded-full blur-[100px] animate-float" style={{ animationDelay: '2s' }} />
-          <div className="absolute top-1/2 left-1/2 w-64 h-64 bg-teal-500/15 rounded-full blur-[80px] animate-float" style={{ animationDelay: '4s' }} />
-
-          {/* Network nodes */}
-          <div className="absolute inset-0 overflow-hidden pointer-events-none">
-            {[...Array(30)].map((_, i) => (
-              <div
-                key={i}
-                className="absolute w-2 h-2 bg-emerald-400/60 rounded-full animate-pulse"
-                style={{
-                  left: `${Math.random() * 100}%`,
-                  top: `${Math.random() * 100}%`,
-                  animationDelay: `${Math.random() * 3}s`,
-                  animationDuration: `${2 + Math.random() * 3}s`,
-                  boxShadow: '0 0 20px rgba(52, 211, 153, 0.6)'
-                }}
-              />
-            ))}
-          </div>
-
-          {/* Connection lines effect */}
-          <svg className="absolute inset-0 w-full h-full opacity-20">
-            <defs>
-              <linearGradient id="line-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="#10b981" />
-                <stop offset="100%" stopColor="#14b8a6" />
-              </linearGradient>
-            </defs>
-            {[...Array(15)].map((_, i) => (
-              <line
-                key={i}
-                x1={`${Math.random() * 100}%`}
-                y1={`${Math.random() * 100}%`}
-                x2={`${Math.random() * 100}%`}
-                y2={`${Math.random() * 100}%`}
-                stroke="url(#line-gradient)"
-                strokeWidth="1"
-                className="animate-pulse"
-                style={{ animationDelay: `${i * 0.3}s` }}
-              />
-            ))}
-          </svg>
-        </div>
-
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
-            {/* Left content */}
-            <div className="text-white pt-16 sm:pt-20 lg:pt-0">
-              <div className="animate-fade-in" style={{ animationDelay: '0.2s' }}>
-                <Badge className="mb-6 lg:mb-8 px-4 py-2 lg:px-8 lg:py-4 bg-gradient-to-r from-emerald-400/40 to-green-400/40 text-white border-2 border-emerald-300/50 backdrop-blur-xl text-xs sm:text-sm lg:text-base font-bold rounded-full shadow-lg shadow-emerald-400/25 hover:scale-105 transition-transform duration-300">
-                  <Sparkles className="h-4 w-4 lg:h-5 lg:w-5 mr-2 lg:mr-3 animate-pulse" />
-                  <span className="hidden sm:inline">100% TỰ NHIÊN - THÂN THIỆN MÔI TRƯỜNG</span>
-                  <span className="sm:hidden">100% TỰ NHIÊN</span>
-                </Badge>
-              </div>
-              
-              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-5xl xl:text-6xl font-black italic mb-6 lg:mb-8 animate-fade-in-up" style={{ 
-                animationDelay: '0.4s', 
-                fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif', 
-                letterSpacing: '0.02em',
-                lineHeight: '1.2',
-                paddingTop: '0.5rem'
-              }}>
-                <span className="block bg-gradient-to-r from-white via-emerald-100 to-white bg-clip-text text-transparent drop-shadow-[0_0_50px_rgba(255,255,255,0.8)] mb-3 sm:mb-4 lg:mb-8 uppercase" style={{ paddingTop: '0.5rem', paddingBottom: '0.5rem' }}>
-                  CHÉN ĐĨA SINH HỌC
-                </span>
-                <span className="block bg-gradient-to-r from-emerald-200 via-green-300 to-teal-200 bg-clip-text text-transparent drop-shadow-[0_0_60px_rgba(16,185,129,0.8)] uppercase" style={{ paddingTop: '0.5rem', paddingBottom: '0.5rem' }}>
-                  TỪ LÁ BÀNG BIỂN
-                </span>
-              </h1>
-
-              <p className="text-base sm:text-lg lg:text-xl text-emerald-200 mb-8 lg:mb-12 leading-relaxed max-w-lg animate-fade-in-up font-medium" style={{ animationDelay: '0.6s' }}>
-                Gieo mầm xanh - Từ chiếc lá nhỏ
-              </p>
-
-              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 animate-fade-in-up" style={{ animationDelay: '0.8s' }}>
-                <Link to="/shop" className="w-full sm:w-auto">
-                  <Button size="lg" className="w-full sm:w-auto gap-2 sm:gap-3 px-6 sm:px-10 h-12 sm:h-14 text-sm sm:text-base font-bold rounded-full shadow-2xl shadow-emerald-500/40 hover:shadow-emerald-500/60 hover:scale-105 transition-all duration-300 group bg-gradient-to-r from-emerald-500 to-green-500 hover:from-emerald-400 hover:to-green-400 border-0">
-                    <ShoppingCart className="h-4 w-4 sm:h-5 sm:w-5" />
-                    Mua ngay
-                    <ArrowRight className="h-4 w-4 sm:h-5 sm:w-5 group-hover:translate-x-1 transition-transform" />
-                  </Button>
-                </Link>
-                <Link to="/about" className="w-full sm:w-auto">
-                  <Button size="lg" variant="outline" className="w-full sm:w-auto h-12 sm:h-14 px-6 sm:px-8 text-sm sm:text-base font-semibold rounded-full border-2 border-white/30 text-white bg-white/5 backdrop-blur-xl hover:bg-white/10 hover:border-white/50 hover:scale-105 transition-all duration-300 group">
-                    <Play className="h-4 w-4 sm:h-5 sm:w-5 mr-2 group-hover:scale-110 transition-transform" />
-                    <span className="hidden sm:inline">Xem câu chuyện</span>
-                    <span className="sm:hidden">Câu chuyện</span>
-                  </Button>
-                </Link>
-              </div>
-
-              {/* Trust indicators */}
-              <div className="mt-8 lg:mt-16 flex flex-col sm:flex-row flex-wrap items-start sm:items-center gap-3 sm:gap-8 animate-fade-in" style={{ animationDelay: '1s' }}>
-                <div className="flex items-center gap-2 sm:gap-3 bg-white/10 backdrop-blur-xl rounded-full px-4 py-2 sm:px-6 sm:py-3 border border-emerald-400/30 shadow-lg shadow-emerald-500/10">
-                  <div className="flex -space-x-1">
-                    {[1, 2, 3, 4, 5].map(i => (
-                      <Star key={i} className="h-3 w-3 sm:h-5 sm:w-5 fill-emerald-400 text-emerald-400 drop-shadow-[0_0_8px_rgba(52,211,153,0.6)]" />
-                    ))}
-                  </div>
-                  <span className="text-white text-xs sm:text-base font-semibold">5.0 <span className="text-white/70 font-normal hidden sm:inline">(500+ reviews)</span></span>
-                </div>
-                <div className="flex items-center gap-2 sm:gap-3 text-white/80 bg-white/10 backdrop-blur-xl rounded-full px-4 py-2 sm:px-6 sm:py-3 border border-white/20">
-                  <Truck className="h-4 w-4 sm:h-5 sm:w-5 text-emerald-400" />
-                  <span className="text-xs sm:text-base font-medium">Free ship từ 500K</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Right - Product image with tech overlay */}
-            <div className="relative animate-fade-in hidden lg:block" style={{ animationDelay: '0.6s' }}>
-              <div className="relative">
-                {/* Glowing frame */}
-                <div className="absolute -inset-4 bg-gradient-to-br from-emerald-500/30 via-green-500/20 to-teal-500/30 rounded-3xl blur-2xl" />
-
-                {/* Main product card */}
-                <div className="relative bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl rounded-3xl p-2 border border-white/20 shadow-2xl overflow-hidden">
-                  {/* Tech scan lines effect */}
-                  <div className="absolute inset-0 bg-gradient-to-b from-emerald-500/10 via-transparent to-transparent animate-pulse" />
-
-                  <img
-                    src={collectionDisplay1}
-                    alt="B-ECO Leaf Plates Collection"
-                    className="w-full rounded-2xl object-cover"
-                    loading="lazy"
-                  />
-
-                  {/* Floating badges */}
-                  <div className="absolute top-3 md:top-6 right-3 md:right-6 bg-emerald-500 text-white px-3 py-2 md:px-5 md:py-3 rounded-xl md:rounded-2xl shadow-xl animate-float text-xs md:text-base font-semibold">
-                    <span className="flex items-center gap-1 md:gap-2">
-                      <Leaf className="h-3 w-3 md:h-5 md:w-5" />
-                      Eco-friendly
-                    </span>
-                  </div>
-
-                  <div className="absolute bottom-3 md:bottom-6 right-3 md:right-6 bg-white/95 text-gray-900 px-4 py-2 md:px-6 md:py-4 rounded-xl md:rounded-2xl shadow-xl animate-float border border-gray-200" style={{ animationDelay: '1s' }}>
-                    <div className="text-xl md:text-3xl font-bold text-emerald-600">100%</div>
-                    <div className="text-xs md:text-sm text-gray-600">Tự nhiên</div>
-                  </div>
-
-                  <div className="absolute top-1/2 -translate-y-1/2 -right-2 md:-right-4 bg-gradient-to-r from-emerald-500 to-teal-500 text-white px-3 py-2 md:px-5 md:py-3 rounded-lg md:rounded-xl shadow-lg animate-float text-xs md:text-base font-semibold" style={{ animationDelay: '2s' }}>
-                    -10% Sale
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Scroll indicator */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
-          <div className="w-8 h-14 rounded-full border-2 border-white/30 flex items-start justify-center p-2">
-            <div className="w-1.5 h-3 bg-emerald-400 rounded-full animate-bounce shadow-lg shadow-emerald-400/50" />
-          </div>
-        </div>
-      </section>
-
-      {/* Stats Bar - Glassmorphism */}
-      <section className="relative -mt-10 md:-mt-20 z-20 pb-6 md:pb-10">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-card/80 backdrop-blur-2xl rounded-2xl md:rounded-3xl shadow-2xl border border-border/50 p-4 sm:p-6 lg:p-10">
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
-              {[
-                { value: '500K+', label: 'Sản phẩm đã bán', icon: Package, color: 'text-primary' },
-                { value: '1000+', label: 'Khách hàng', icon: Users, color: 'text-primary' },
-                { value: '50+', label: 'Đối tác F&B', icon: Award, color: 'text-primary' },
-                { value: '0', label: 'Gram nhựa thải', icon: TreeDeciduous, color: 'text-primary' },
-              ].map((stat, idx) => (
-                <ScrollAnimate key={idx} animation="fade-in-up" delay={idx * 100}>
-                  <div className="text-center group cursor-default">
-                    <div className="inline-flex p-2 sm:p-3 md:p-4 rounded-xl md:rounded-2xl bg-primary/10 mb-2 sm:mb-3 md:mb-4 group-hover:bg-primary/20 group-hover:scale-110 transition-all duration-300">
-                      <stat.icon className={`h-5 w-5 sm:h-6 sm:w-6 md:h-7 md:w-7 ${stat.color}`} />
-                    </div>
-                    <div className="text-xl sm:text-2xl lg:text-3xl xl:text-4xl font-bold text-foreground mb-1 group-hover:text-primary transition-colors">{stat.value}</div>
-                    <div className="text-xs sm:text-sm text-muted-foreground">{stat.label}</div>
-                  </div>
-                </ScrollAnimate>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Features - Modern Cards */}
-      <section className="py-12 sm:py-16 lg:py-24 bg-background relative overflow-hidden">
-        {/* Subtle background decoration */}
-        <div className="absolute inset-0">
-          <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-primary/5 rounded-full blur-[150px]" />
-          <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-accent/10 rounded-full blur-[100px]" />
-        </div>
-
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative">
-          <ScrollAnimate animation="fade-in-up" className="text-center mb-10 md:mb-16">
-            <Badge variant="secondary" className="mb-3 md:mb-4 px-3 py-1.5 md:px-4 md:py-2 text-xs md:text-sm">Tại sao chọn B-ECO?</Badge>
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold mb-3 md:mb-4 px-4">
-              Sản phẩm xanh,{' '}
-              <span className="bg-gradient-to-r from-primary to-accent-foreground bg-clip-text text-transparent">
-                cuộc sống xanh
-              </span>
-            </h2>
-            <p className="text-base sm:text-lg lg:text-xl text-muted-foreground max-w-2xl mx-auto px-4">
-              Cam kết mang đến những sản phẩm chất lượng cao, an toàn và thân thiện với môi trường
-            </p>
-          </ScrollAnimate>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 lg:gap-6">
-            {[
-              { icon: Leaf, title: '100% Tự nhiên', desc: 'Làm từ lá bàng tự nhiên, phân hủy sinh học hoàn toàn trong 45 ngày' },
-              { icon: ShieldCheck, title: 'An toàn tuyệt đối', desc: 'Không chứa hóa chất độc hại, chịu nhiệt đến 80°C' },
-              { icon: Recycle, title: 'Bền vững', desc: 'Góp phần giảm hàng triệu tấn rác thải nhựa mỗi năm' },
-              { icon: Heart, title: 'Made in Việt Nam', desc: 'Sản xuất thủ công tại Phú Yên, tạo công ăn việc làm địa phương' },
-            ].map((item, idx) => (
-              <ScrollAnimate key={idx} animation="fade-in-up" delay={idx * 100}>
-                <div className="group relative h-full">
-                  {/* Card glow effect on hover */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-accent/10 rounded-3xl opacity-0 group-hover:opacity-100 blur-xl transition-opacity duration-500" />
-
-                  <div className="relative h-full p-4 sm:p-6 lg:p-8 bg-card rounded-2xl lg:rounded-3xl border border-border hover:border-primary/50 transition-all duration-500 hover:shadow-2xl hover:-translate-y-2">
-                    <div className="p-2.5 sm:p-3 lg:p-4 bg-gradient-to-br from-primary/20 to-primary/5 rounded-xl lg:rounded-2xl inline-block mb-4 sm:mb-5 lg:mb-6 group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
-                      <item.icon className="h-6 w-6 sm:h-7 sm:w-7 lg:h-8 lg:w-8 text-primary" />
-                    </div>
-                    <h3 className="font-bold text-base sm:text-lg lg:text-xl mb-2 sm:mb-3 group-hover:text-primary transition-colors">{item.title}</h3>
-                    <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">{item.desc}</p>
-                  </div>
-                </div>
-              </ScrollAnimate>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Discount Banner - Gradient */}
-      <section className="py-10 md:py-16 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-primary via-primary to-accent-foreground" />
-
-        {/* Animated wave pattern */}
-        <div className="absolute inset-0 opacity-20">
-          <svg className="absolute bottom-0 w-full h-32" viewBox="0 0 1440 120" preserveAspectRatio="none">
-            <path fill="currentColor" className="text-background" d="M0,64 C240,120 480,0 720,64 C960,128 1200,32 1440,80 L1440,120 L0,120 Z" />
-          </svg>
-        </div>
-
-        <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute -left-20 -top-20 w-60 h-60 bg-background/10 rounded-full blur-3xl animate-float" />
-          <div className="absolute -right-20 -bottom-20 w-60 h-60 bg-background/10 rounded-full blur-3xl animate-float" style={{ animationDelay: '2s' }} />
-        </div>
-
-        <div className="container mx-auto px-4 relative">
-          <ScrollAnimate animation="scale-in">
-            <div className="flex flex-col lg:flex-row items-center justify-center gap-4 sm:gap-6 lg:gap-8 text-center lg:text-left text-primary-foreground">
-              <div className="p-3 sm:p-4 lg:p-5 bg-background/20 rounded-2xl lg:rounded-3xl backdrop-blur-xl animate-pulse-glow">
-                <Percent className="h-8 w-8 sm:h-10 sm:w-10 lg:h-12 lg:w-12" />
-              </div>
-              <div>
-                <div className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold mb-1 sm:mb-2">GIẢM 10%</div>
-                <div className="text-sm sm:text-base lg:text-xl opacity-90">cho đơn hàng từ 1000 sản phẩm trở lên</div>
-              </div>
-              <Link to="/pricing">
-                <Button size="lg" variant="secondary" className="h-12 sm:h-14 px-6 sm:px-8 text-base sm:text-lg font-semibold rounded-xl sm:rounded-2xl shadow-2xl hover:scale-105 transition-all">
-                  Xem bảng giá
-                  <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5" />
-                </Button>
-              </Link>
-            </div>
-          </ScrollAnimate>
-        </div>
-      </section>
-
-      {/* Featured Products */}
-      <section className="py-12 sm:py-16 lg:py-24 bg-muted/30 relative overflow-hidden">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <ScrollAnimate animation="fade-in-up">
-            <div className="flex flex-col lg:flex-row items-start lg:items-end justify-between mb-10 md:mb-16 gap-4 sm:gap-6">
-              <div>
-                <Badge variant="secondary" className="mb-3 md:mb-4 px-3 py-1.5 md:px-4 md:py-2 text-xs md:text-sm">🔥 Bán chạy nhất</Badge>
-                <h2 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold mb-2 sm:mb-3">Sản phẩm nổi bật</h2>
-                <p className="text-base sm:text-lg lg:text-xl text-muted-foreground">Được hàng nghìn khách hàng tin dùng</p>
-              </div>
-              <Link to="/shop">
-                <Button variant="outline" size="lg" className="gap-2 sm:gap-3 group h-12 sm:h-14 px-6 sm:px-8 rounded-xl sm:rounded-2xl text-sm sm:text-base lg:text-lg">
-                  <span className="hidden sm:inline">Xem tất cả sản phẩm</span>
-                  <span className="sm:hidden">Xem tất cả</span>
-                  <ArrowRight className="h-4 w-4 sm:h-5 sm:w-5 group-hover:translate-x-1 transition-transform" />
-                </Button>
-              </Link>
-            </div>
-          </ScrollAnimate>
-
-          <ScrollAnimate animation="fade-in-up" delay={200}>
-            <ProductGrid products={featuredProducts} isLoading={isLoading} />
-          </ScrollAnimate>
-        </div>
-      </section>
-
-      {/* About Section - Split */}
-      <section className="py-12 sm:py-16 lg:py-24 bg-background relative overflow-hidden">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-8 md:gap-12 lg:gap-24 items-center">
-            <ScrollAnimate animation="fade-in-left">
-              <div className="relative">
-                {/* Decorative elements */}
-                <div className="absolute -inset-8 bg-gradient-to-br from-primary/10 via-transparent to-accent/10 rounded-[4rem] blur-2xl" />
-
-                <div className="relative">
-                  <img
-                    src={exhibitionDisplay}
-                    alt="B-ECO Exhibition Display"
-                    className="rounded-[2rem] shadow-2xl w-full h-auto object-cover hover:scale-[1.02] transition-transform duration-700"
-                    loading="lazy"
-                  />
-
-                  {/* Floating card */}
-                  <div className="absolute -bottom-4 sm:-bottom-8 -right-4 sm:-right-8 bg-card p-4 sm:p-6 rounded-2xl shadow-2xl border border-border max-w-[200px] sm:max-w-xs animate-float">
-                    <div className="flex items-center gap-2 sm:gap-4">
-                      <div className="p-2 sm:p-3 bg-primary/10 rounded-xl">
-                        <Waves className="h-5 w-5 sm:h-8 sm:w-8 text-primary" />
-                      </div>
-                      <div>
-                        <div className="font-bold text-sm sm:text-lg">Bảo vệ biển</div>
-                        <div className="text-xs sm:text-sm text-muted-foreground">Phú Yên, VN</div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="absolute -top-4 sm:-top-6 -left-4 sm:-left-6 bg-primary text-primary-foreground p-3 sm:p-5 rounded-2xl shadow-xl animate-float" style={{ animationDelay: '1.5s' }}>
-                    <div className="text-2xl sm:text-4xl font-bold">45</div>
-                    <div className="text-xs sm:text-sm opacity-90">ngày phân hủy</div>
-                  </div>
-                </div>
-              </div>
-            </ScrollAnimate>
-
-            <ScrollAnimate animation="fade-in-right" delay={200}>
-              <div>
-                <Badge variant="secondary" className="mb-4 sm:mb-6 px-3 py-1.5 sm:px-4 sm:py-2 text-xs sm:text-sm">Về chúng tôi</Badge>
-                <h2 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold mb-4 sm:mb-6 leading-tight">
-                  Từ thiên nhiên,{' '}
-                  <span className="bg-gradient-to-r from-primary to-accent-foreground bg-clip-text text-transparent">
-                    cho thiên nhiên
+        {/* Content — căn giữa trong vùng tối bên phải */}
+        <div className="absolute inset-0 z-10 flex items-center">
+          <div className="w-full flex justify-end">
+            <div className="w-[60%] flex items-center justify-center px-4 lg:px-8">
+              <div className="text-center">
+                <h1 className="font-heading font-extrabold mb-6" style={{ textShadow: '0 2px 30px rgba(0,0,0,0.4)' }}>
+                  <span className="block text-3xl md:text-4xl lg:text-5xl xl:text-[3.5rem] whitespace-nowrap text-white leading-[1.1] font-heading" style={{ letterSpacing: '0.04em' }}>
+                    CHÉN ĐĨA SINH HỌC
                   </span>
-                </h2>
-                <p className="text-base sm:text-lg lg:text-xl text-muted-foreground mb-6 sm:mb-8 leading-relaxed">
-                  B-ECO ra đời với sứ mệnh thay thế sản phẩm nhựa dùng một lần bằng các giải pháp từ thiên nhiên, 
-                  góp phần bảo vệ môi trường biển và hệ sinh thái Việt Nam.
+                  <span className="block text-lg md:text-xl lg:text-2xl xl:text-3xl mt-3 font-semibold text-emerald-300 leading-[1.2] font-heading" style={{ letterSpacing: '0.1em', textShadow: '0 2px 20px rgba(52,211,153,0.3)' }}>
+                    TỪ LÁ BÀNG BIỂN
+                  </span>
+                </h1>
+
+                <p className="text-white/80 text-base md:text-lg lg:text-xl mb-8 leading-relaxed mx-auto max-w-md" style={{ fontStyle: 'italic', textShadow: '0 1px 10px rgba(0,0,0,0.3)' }}>
+                  Gieo mầm xanh — Từ chiếc lá nhỏ
                 </p>
 
-                <div className="space-y-3 sm:space-y-4 mb-8 sm:mb-10">
-                  {[
-                    'Lá bàng thu hoạch 100% từ Phú Yên',
-                    'Phân huỷ sinh học trong 45 ngày',
-                    'Chịu nhiệt tốt, an toàn thực phẩm',
-                    'Giá ưu đãi cho doanh nghiệp F&B',
-                  ].map((item, idx) => (
-                    <div key={idx} className="flex items-center gap-3 sm:gap-4 group">
-                      <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0 group-hover:bg-primary group-hover:scale-110 transition-all duration-300">
-                        <Leaf className="h-4 w-4 sm:h-5 sm:w-5 text-primary group-hover:text-primary-foreground transition-colors" />
-                      </div>
-                      <span className="text-sm sm:text-base lg:text-lg text-muted-foreground group-hover:text-foreground transition-colors">{item}</span>
-                    </div>
-                  ))}
-                </div>
-
-                <Link to="/about">
-                  <Button size="lg" variant="outline" className="gap-3 h-14 px-8 rounded-2xl text-lg group">
-                    Khám phá câu chuyện
-                    <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                <Link to="/shop">
+                  <Button className="h-12 px-8 rounded-none text-sm font-bold uppercase tracking-[0.25em] bg-[#2d4a3e]/80 backdrop-blur-sm border border-white/50 text-white hover:bg-white hover:text-[#2d4a3e] hover:border-white transition-all duration-300 shadow-lg">
+                    KHÁM PHÁ NGAY
                   </Button>
                 </Link>
               </div>
-            </ScrollAnimate>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Testimonials */}
-      <Testimonials />
+      {/* ============ VÌ SAO CHỌN B-ECO? — 6 cards ngang hàng ============ */}
+      <section className="py-20 bg-background">
+        <div className="container mx-auto px-6 lg:px-12">
+          <h2 className="text-2xl md:text-3xl font-bold uppercase tracking-wider mb-12">
+            VÌ SAO CHỌN B-ECO?
+          </h2>
 
-      {/* COD Banner */}
-      <section className="py-12 md:py-20 bg-muted/30">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <ScrollAnimate animation="scale-in">
-            <div className="relative overflow-hidden bg-gradient-to-br from-card to-muted/50 rounded-2xl md:rounded-[2.5rem] p-6 sm:p-8 lg:p-16 border border-border/50 group hover:border-primary/30 transition-all duration-500 hover:shadow-2xl">
-              {/* Background decoration */}
-              <div className="absolute top-0 right-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl" />
-              <div className="absolute bottom-0 left-0 w-64 h-64 bg-accent/10 rounded-full blur-2xl" />
-
-              <div className="relative flex flex-col lg:flex-row items-center justify-between gap-6 sm:gap-8 lg:gap-10">
-                <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 lg:gap-8 text-center sm:text-left">
-                  <div className="p-4 sm:p-5 lg:p-6 bg-primary/10 rounded-2xl lg:rounded-3xl group-hover:bg-primary/20 group-hover:scale-110 transition-all duration-500">
-                    <Truck className="h-10 w-10 sm:h-12 sm:w-12 lg:h-14 lg:w-14 text-primary" />
-                  </div>
-                  <div>
-                    <h3 className="text-xl sm:text-2xl lg:text-3xl xl:text-4xl font-bold mb-2 sm:mb-3">Thanh toán khi nhận hàng</h3>
-                    <p className="text-sm sm:text-base lg:text-xl text-muted-foreground">Giao hàng toàn quốc • Nhận hàng rồi mới thanh toán • An tâm mua sắm</p>
-                  </div>
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+            {[
+              { icon: Leaf, title: '100% Tự nhiên', desc: 'Làm từ lá bàng tự nhiên, phân hủy sinh học hoàn toàn trong 45 ngày.' },
+              { icon: ShieldCheck, title: 'An toàn sức khỏe', desc: 'Không chứa hóa chất độc hại, an toàn cho sức khỏe người dùng.' },
+              { icon: Recycle, title: 'Bền vững & Phân hủy', desc: 'Sản phẩm từ lá bàng biển tự phân hủy, thân thiện môi trường.' },
+              { icon: Thermometer, title: 'Chịu nhiệt tốt', desc: 'Chịu nhiệt tốt, bàng dẻo nén, chịu nhiệt tốt.' },
+              { icon: Palette, title: 'Mẫu mã đa dạng', desc: 'Mẫu mã đa dạng, nhiều màu sắc và các mẫu mã đa dạng.' },
+              { icon: Factory, title: 'Quy trình hiện đại', desc: 'Quy trình hiện đại, sản xuất tại Phú Yên, Việt Nam.' },
+            ].map((item, idx) => (
+              <div key={idx} className="bg-card border border-border p-5 text-center hover:border-primary/40 hover:shadow-md transition-all duration-300 group">
+                <div className="w-12 h-12 mx-auto mb-4 rounded-full bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-300">
+                  <item.icon className="w-5 h-5" />
                 </div>
-                <Link to="/shop" className="w-full sm:w-auto">
-                  <Button size="lg" className="w-full sm:w-auto h-12 sm:h-14 lg:h-16 px-8 sm:px-10 text-base sm:text-lg lg:text-xl font-semibold rounded-xl sm:rounded-2xl shadow-xl hover:shadow-2xl hover:scale-105 transition-all group">
-                    Đặt hàng ngay
-                    <ArrowRight className="ml-2 sm:ml-3 h-5 w-5 sm:h-6 sm:w-6 group-hover:translate-x-1 transition-transform" />
-                  </Button>
-                </Link>
+                <h3 className="text-xs font-bold uppercase tracking-wider mb-2">{item.title}</h3>
+                <p className="text-[11px] text-muted-foreground leading-relaxed">{item.desc}</p>
               </div>
-            </div>
-          </ScrollAnimate>
+            ))}
+          </div>
         </div>
       </section>
 
-      {/* Final CTA */}
-      <section className="relative py-16 sm:py-20 md:py-32 overflow-hidden bg-foreground">
-        <div className="absolute inset-0">
-          <img
-            src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=1920&h=600&fit=crop"
-            alt="Forest"
-            className="w-full h-full object-cover object-center opacity-30"
-            loading="lazy"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-foreground via-foreground/90 to-foreground/70" />
-        </div>
+      {/* ============ SẢN PHẨM NỔI BẬT — 3 cards + 1 ảnh lớn (giống mockup) ============ */}
+      <section className="py-20 bg-background border-t border-border">
+        <div className="container mx-auto px-6 lg:px-12">
+          <h2 className="text-2xl md:text-3xl font-bold uppercase tracking-wider mb-12">
+            SẢN PHẨM NỔI BẬT
+          </h2>
 
-        {/* Floating particles */}
-        <div className="absolute inset-0 overflow-hidden">
-          {[...Array(15)].map((_, i) => (
-            <div
-              key={i}
-              className="absolute w-2 h-2 bg-primary/40 rounded-full animate-float"
-              style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-                animationDelay: `${Math.random() * 5}s`,
-                animationDuration: `${4 + Math.random() * 4}s`
-              }}
-            />
-          ))}
-        </div>
+          <div className="grid lg:grid-cols-4 gap-4">
+            {/* 3 product cards bên trái */}
+            {[
+              { img: anh1, name: 'Dĩa lá bàng', size: '20cm' },
+              { img: anh2, name: 'Chén lá bàng', size: '15cm' },
+              { img: anh3, name: 'Khay lá bàng', size: '25cm' },
+            ].map((product, idx) => (
+              <div key={idx} className="border border-border bg-card group hover:border-primary/40 hover:shadow-md transition-all duration-300">
+                <div className="aspect-square overflow-hidden">
+                  <img
+                    src={product.img}
+                    alt={product.name}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
+                </div>
+                <div className="p-4">
+                  <h3 className="font-bold text-sm uppercase tracking-wider">{product.name}</h3>
+                  <p className="text-xs text-muted-foreground mb-3">{product.size}</p>
+                  <Link to="/shop" className="text-xs font-bold uppercase tracking-widest text-primary hover:underline inline-flex items-center gap-1">
+                    XEM CHI TIẾT
+                    <ChevronRight className="w-3 h-3" />
+                  </Link>
+                </div>
+              </div>
+            ))}
 
-        <div className="container mx-auto px-4 relative z-10">
-          <ScrollAnimate animation="scale-in">
-            <div className="text-center max-w-4xl mx-auto">
-              <Badge className="mb-6 sm:mb-8 px-3 py-2 sm:px-5 sm:py-2.5 bg-primary/20 text-primary border-primary/40 backdrop-blur-xl text-xs sm:text-sm lg:text-base">
-                <Leaf className="h-3 w-3 sm:h-4 sm:w-4 mr-1.5 sm:mr-2" />
-                Bắt đầu hành trình xanh
-              </Badge>
-
-              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-7xl font-bold text-background mb-6 sm:mb-8 leading-tight px-4">
-                Cùng B-ECO{' '}
-                <span className="bg-gradient-to-r from-primary to-accent-foreground bg-clip-text text-transparent">
-                  bảo vệ môi trường
-                </span>
-              </h2>
-
-              <p className="text-base sm:text-lg lg:text-xl xl:text-2xl text-background/70 mb-8 sm:mb-12 max-w-2xl mx-auto leading-relaxed px-4">
-                Mỗi sản phẩm bạn sử dụng là một bước tiến đến tương lai xanh hơn
-              </p>
-
-              <div className="flex flex-col sm:flex-row flex-wrap justify-center gap-3 sm:gap-4 lg:gap-6 px-4">
-                <Link to="/shop" className="w-full sm:w-auto">
-                  <Button size="lg" className="w-full sm:w-auto h-12 sm:h-14 lg:h-16 px-8 sm:px-10 lg:px-12 text-base sm:text-lg lg:text-xl font-semibold rounded-xl sm:rounded-2xl shadow-2xl shadow-primary/40 hover:shadow-primary/60 hover:scale-105 transition-all group">
-                    <Sparkles className="h-5 w-5 sm:h-6 sm:w-6 mr-2 sm:mr-3" />
-                    Khám phá ngay
-                    <ArrowRight className="ml-2 sm:ml-3 h-5 w-5 sm:h-6 sm:w-6 group-hover:translate-x-1 transition-transform" />
-                  </Button>
-                </Link>
-                <Link to="/pricing" className="w-full sm:w-auto">
-                  <Button size="lg" variant="outline" className="w-full sm:w-auto h-12 sm:h-14 lg:h-16 px-6 sm:px-8 lg:px-10 text-base sm:text-lg lg:text-xl font-semibold rounded-xl sm:rounded-2xl border-2 border-background/30 text-background bg-background/5 backdrop-blur-xl hover:bg-background/10 hover:border-background/50 transition-all">
-                    <span className="hidden sm:inline">Báo giá doanh nghiệp</span>
-                    <span className="sm:hidden">Báo giá B2B</span>
-                  </Button>
+            {/* 1 ảnh lớn bên phải */}
+            <div className="border border-border bg-card group hover:border-primary/40 hover:shadow-md transition-all duration-300 relative overflow-hidden">
+              <img
+                src={leafPlatesCloseup}
+                alt="B-ECO Lá bàng biển"
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+              />
+              <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/60 to-transparent">
+                <Link to="/shop" className="text-xs font-bold uppercase tracking-widest text-white hover:underline inline-flex items-center gap-1">
+                  XEM CHI TIẾT
+                  <ChevronRight className="w-3 h-3" />
                 </Link>
               </div>
             </div>
-          </ScrollAnimate>
+          </div>
+        </div>
+      </section>
+
+      {/* ============ VỀ CHÚNG TÔI — grid ảnh + text ============ */}
+      <section className="py-20 bg-secondary/30 border-t border-border">
+        <div className="container mx-auto px-6 lg:px-12">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            {/* Ảnh */}
+            <div className="grid grid-cols-2 gap-3">
+              <img src={exhibitionDisplay} alt="B-ECO" className="w-full aspect-square object-cover border border-border" />
+              <img src={customLogoBeco} alt="B-ECO" className="w-full aspect-square object-cover border border-border mt-8" />
+              <img src={collectionDisplay2} alt="B-ECO" className="w-full aspect-square object-cover border border-border -mt-8" />
+              <img src={collectionDisplay1} alt="B-ECO" className="w-full aspect-square object-cover border border-border" />
+            </div>
+
+            {/* Text */}
+            <div>
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 border border-primary/20 bg-primary/5 text-primary text-[10px] font-bold uppercase tracking-[0.25em] mb-6">
+                Về chúng tôi
+              </div>
+              <h2 className="text-3xl md:text-4xl font-bold mb-6 leading-tight">
+                Từ thiên nhiên, <span className="text-primary">cho thiên nhiên</span>
+              </h2>
+              <p className="text-muted-foreground mb-8 leading-relaxed">
+                B-ECO ra đời với sứ mệnh thay thế sản phẩm nhựa dùng một lần bằng các giải pháp từ thiên nhiên,
+                góp phần bảo vệ môi trường biển và hệ sinh thái Việt Nam.
+              </p>
+              <ul className="space-y-3 mb-8">
+                {['Lá bàng thu hoạch 100% từ Phú Yên', 'Phân huỷ sinh học trong 45 ngày', 'Chịu nhiệt tốt, an toàn thực phẩm', 'Giá ưu đãi cho doanh nghiệp F&B'].map((item, idx) => (
+                  <li key={idx} className="flex items-start gap-3">
+                    <CheckCircle2 className="w-4 h-4 text-primary flex-shrink-0 mt-0.5" />
+                    <span className="text-sm font-medium">{item}</span>
+                  </li>
+                ))}
+              </ul>
+              <Link to="/about">
+                <Button className="h-12 px-8 rounded-none text-sm font-bold uppercase tracking-[0.15em] border-2 border-foreground bg-transparent text-foreground hover:bg-foreground hover:text-background transition-all">
+                  Khám phá câu chuyện
+                  <ArrowRight className="h-4 w-4 ml-3" />
+                </Button>
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ============ GIẢM GIÁ BANNER ============ */}
+      <section className="eco-dark-bg py-14">
+        <div className="container mx-auto px-6 lg:px-12">
+          <div className="flex flex-col lg:flex-row items-center justify-between gap-6">
+            <div className="flex items-center gap-5 text-center lg:text-left">
+              <div className="p-3 border border-white/20 hidden sm:flex">
+                <Percent className="h-8 w-8 text-white" />
+              </div>
+              <div className="text-white">
+                <div className="text-3xl md:text-4xl font-extrabold uppercase tracking-tight">GIẢM 10%</div>
+                <div className="text-sm text-white/60 mt-1">cho đơn hàng từ 1.000 sản phẩm trở lên</div>
+              </div>
+            </div>
+            <Link to="/pricing">
+              <Button className="h-12 px-8 rounded-none text-sm font-bold uppercase tracking-[0.15em] bg-white text-[#2d4a3e] hover:bg-emerald-100 border-0 transition-all">
+                Xem bảng giá
+                <ArrowRight className="ml-3 h-4 w-4" />
+              </Button>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* ============ PRODUCT GRID — hiện tại ============ */}
+      <section className="py-20 bg-background border-t border-border">
+        <div className="container mx-auto px-6 lg:px-12">
+          <div className="flex flex-col md:flex-row justify-between items-end mb-10 gap-4 border-b border-border pb-6">
+            <div>
+              <h2 className="text-2xl md:text-3xl font-bold uppercase tracking-wider mb-2">Tất cả sản phẩm</h2>
+              <p className="text-muted-foreground">Được hàng nghìn khách hàng tin dùng</p>
+            </div>
+            <Link to="/shop" className="group flex items-center gap-1 text-sm font-bold uppercase tracking-widest text-primary hover:underline">
+              Xem tất cả <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            </Link>
+          </div>
+          <ProductGrid products={featuredProducts} isLoading={isLoading} />
+        </div>
+      </section>
+
+      {/* ============ COD BANNER ============ */}
+      <section className="py-14 bg-secondary/30 border-t border-border">
+        <div className="container mx-auto px-6 lg:px-12">
+          <div className="border-2 border-border bg-card p-8 lg:p-10 flex flex-col lg:flex-row items-center justify-between gap-6">
+            <div className="flex flex-col sm:flex-row items-center gap-5 text-center sm:text-left">
+              <div className="p-3 border-2 border-primary/20 bg-primary/5">
+                <Truck className="h-8 w-8 text-primary" />
+              </div>
+              <div>
+                <h3 className="text-xl md:text-2xl font-bold mb-1">Thanh toán khi nhận hàng</h3>
+                <p className="text-sm text-muted-foreground">Giao hàng toàn quốc · Nhận hàng rồi mới thanh toán · An tâm mua sắm</p>
+              </div>
+            </div>
+            <Link to="/shop">
+              <Button className="h-12 px-8 rounded-none text-sm font-bold uppercase tracking-[0.15em]">
+                Đặt hàng ngay <ArrowRight className="ml-3 h-4 w-4" />
+              </Button>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* ============ TESTIMONIALS ============ */}
+      <Testimonials />
+
+      {/* ============ FINAL CTA ============ */}
+      <section className="eco-dark-bg relative py-20 overflow-hidden">
+        <div className="absolute inset-0 opacity-10">
+          <img src={exhibitionDisplay} alt="" className="w-full h-full object-cover" />
+        </div>
+        <div className="container mx-auto px-6 lg:px-12 relative z-10">
+          <div className="max-w-3xl">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 border border-emerald-300/30 text-emerald-300 text-[10px] font-bold uppercase tracking-[0.25em] mb-8">
+              <Leaf className="h-3 w-3" />
+              Bắt đầu hành trình xanh
+            </div>
+            <h2 className="text-4xl md:text-5xl font-extrabold text-white mb-6 leading-tight uppercase tracking-tight">
+              Cùng B-ECO <br /><span className="text-emerald-300">bảo vệ môi trường</span>
+            </h2>
+            <p className="text-lg text-white/60 mb-10 max-w-xl">
+              Mỗi sản phẩm bạn sử dụng là một bước tiến đến tương lai xanh hơn.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4">
+              <Link to="/shop">
+                <Button className="h-12 px-8 rounded-none text-sm font-bold uppercase tracking-[0.15em] bg-white text-[#2d4a3e] hover:bg-emerald-100 border-0">
+                  <Sparkles className="h-4 w-4 mr-3" /> Khám phá ngay
+                </Button>
+              </Link>
+              <Link to="/pricing">
+                <Button className="h-12 px-8 rounded-none text-sm font-bold uppercase tracking-[0.15em] bg-transparent border-2 border-white/30 text-white hover:bg-white/10 hover:border-white/60">
+                  Báo giá doanh nghiệp
+                </Button>
+              </Link>
+            </div>
+          </div>
         </div>
       </section>
     </Layout>
