@@ -64,6 +64,19 @@ export const orderService = {
       return false;
     }
     return true;
+  },
+
+  deleteOrder: async (orderId: string): Promise<boolean> => {
+    const { error } = await supabase
+      .from('orders')
+      .delete()
+      .eq('id', orderId);
+
+    if (error) {
+      console.error('Error deleting order:', error);
+      return false;
+    }
+    return true;
   }
 };
 

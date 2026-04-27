@@ -49,6 +49,15 @@ const Admin = () => {
     }
   };
 
+  const deleteOrder = async (orderId: string) => {
+    if (window.confirm('Bạn có chắc chắn muốn xóa đơn hàng này? Hành động này không thể hoàn tác.')) {
+      const success = await orderService.deleteOrder(orderId);
+      if (success) {
+        await fetchOrders();
+      }
+    }
+  };
+
   if (!user || !isAdmin) {
     return (
       <Layout>
@@ -184,6 +193,13 @@ const Admin = () => {
                               Hủy
                             </Button>
                           )}
+                          <Button 
+                            size="sm" variant="destructive"
+                            onClick={() => deleteOrder(order.id)}
+                            className="bg-red-700 hover:bg-red-800 text-white rounded-none shadow-[2px_2px_0px_0px_rgba(30,51,42,1)] hover:shadow-none hover:translate-y-[2px] hover:translate-x-[2px] text-xs font-bold uppercase px-3"
+                          >
+                            Xóa
+                          </Button>
                         </td>
                       </tr>
                     );

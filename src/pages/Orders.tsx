@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { Layout } from '@/components/layout/Layout';
 import { Badge } from '@/components/ui/badge';
@@ -24,17 +24,27 @@ const Orders = () => {
   const [orders, setOrders] = useState<Order[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
+  const fetchOrders = useCallback(async () => {
+    if (!user) return;
+    const data = await orderService.getOrdersByUser(user.uid);
+    setOrders(data);
+    setIsLoading(false);
+  }, [user]);
+
   useEffect(() => {
-    const fetchOrders = async () => {
-      if (!user) return;
-      const data = await orderService.getOrdersByUser(user.uid);
-      setOrders(data);
-      setIsLoading(false);
-    };
     if (user) {
       fetchOrders();
     }
-  }, [user]);
+  }, [user, fetchOrders]);
+
+  const cancelOrder = async (orderId: string) => {
+    if (window.confirm('Bạn có chắc chắn muốn hủy đơn hàng này?')) {
+      const success = await orderService.updateOrderStatus(orderId, 'cancelled');
+      if (success) {
+        await fetchOrders();
+      }
+    }
+  };
 
   if (!user) {
     return (
@@ -156,6 +166,18 @@ const Orders = () => {
                         </p>
                       )}
                     </div>
+                    {order.status === 'pending' && (
+                      <div className="mt-4 pt-4 border-t border-border flex justify-end">
+                        <Button 
+                          variant="destructive" 
+                          size="sm"
+                          onClick={() => cancelOrder(order.id)}
+                          className="rounded-none shadow-[2px_2px_0px_0px_rgba(30,51,42,1)] hover:shadow-none hover:translate-y-[2px] hover:translate-x-[2px] text-xs font-bold uppercase px-3"
+                        >
+                          Hủy đơn hàng
+                        </Button>
+                      </div>
+                    )}
                   </div>
                 </div>
               );
