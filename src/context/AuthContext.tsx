@@ -18,7 +18,9 @@ const getMockUsers = (): Record<string, { uid: string; password: string; role: U
   try {
     const saved = localStorage.getItem(MOCK_USERS_KEY);
     if (saved) return JSON.parse(saved);
-  } catch {}
+  } catch {
+    // Ignore error and fall back to default
+  }
   return {
     'admin@bco.vn': { uid: 'admin-uid-123', password: 'admin123', role: 'admin' },
     'user@bco.vn': { uid: 'user-uid-123', password: 'user123', role: 'user' },

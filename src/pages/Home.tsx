@@ -4,7 +4,7 @@ import { Layout } from '@/components/layout/Layout';
 import { ProductGrid } from '@/components/product/ProductGrid';
 import { useProducts } from '@/context/ProductsContext';
 import { Testimonials } from '@/components/home/Testimonials';
-import { Leaf, ShieldCheck, Recycle, Heart, ArrowRight, Sparkles, ShoppingCart, Percent, Truck, Thermometer, Palette, Factory, CheckCircle2, ChevronRight } from 'lucide-react';
+import { Leaf, ShieldCheck, Recycle, ArrowRight, Sparkles, Percent, Truck, Thermometer, Palette, Factory, CheckCircle2, ChevronRight } from 'lucide-react';
 import { ScrollAnimate } from '@/components/ui/scroll-animate';
 
 import collectionDisplay1 from '@/assets/products/collection-display-1.jpg';
@@ -13,9 +13,7 @@ import exhibitionDisplay from '@/assets/products/exhibition-display.jpg';
 import customLogoBeco from '@/assets/products/custom-logo-beco.jpg';
 import leafPlatesVariety from '@/assets/products/leaf-plates-variety.jpg';
 import leafPlatesCloseup from '@/assets/products/leaf-plates-closeup.jpg';
-import anh1 from '@/assets/products/anh1.jpg';
-import anh2 from '@/assets/products/anh2.jpg';
-import anh3 from '@/assets/products/anh3.jpg';
+
 
 const Home = () => {
   const { products, isLoading } = useProducts();

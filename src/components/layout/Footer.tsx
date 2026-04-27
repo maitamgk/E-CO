@@ -1,7 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Phone, Mail, MapPin, Send, Heart } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
+import { Heart } from 'lucide-react';
 import logo from '@/assets/products/logo.jpg';
 
 export const Footer = () => {

@@ -7,6 +7,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Package, CheckCircle, Truck, XCircle, Clock } from 'lucide-react';
 import { orderService } from '@/services/orderService';
+import { supabase } from '@/lib/supabase';
 
 const statusConfig: Record<OrderStatus, { label: string; color: string; icon: React.ElementType }> = {
   pending: { label: 'Chờ xác nhận', color: 'bg-yellow-500', icon: Clock },
@@ -23,6 +24,17 @@ const Admin = () => {
 
   useEffect(() => {
     fetchOrders();
+
+    const subscription = supabase
+      .channel('orders-channel')
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'orders' }, () => {
+        fetchOrders();
+      })
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(subscription);
+    };
   }, []);
 
   const fetchOrders = async () => {
@@ -91,7 +103,7 @@ const Admin = () => {
                 <select 
                   className="bg-card border-2 border-border px-4 py-2 text-sm font-bold uppercase outline-none focus:border-primary shadow-hard-sm"
                   value={filter}
-                  onChange={(e) => setFilter(e.target.value as any)}
+                  onChange={(e) => setFilter(e.target.value as OrderStatus | 'all')}
                 >
                   <option value="all">Tất cả trạng thái</option>
                   <option value="pending">Chờ xác nhận</option>
@@ -124,7 +136,8 @@ const Admin = () => {
                         <td className="p-4 font-bold">{order.orderCode}</td>
                         <td className="p-4">
                           <p className="font-bold">{order.customer.fullName}</p>
-                          <p className="text-xs text-muted-foreground">{order.customer.phone}</p>
+                          <p className="text-xs font-semibold text-muted-foreground">{order.customer.phone}</p>
+                          <p className="text-xs text-muted-foreground mt-1 line-clamp-2 max-w-[250px]">{order.customer.address}</p>
                         </td>
                         <td className="p-4 text-sm">{order.createdAt.toLocaleDateString('vi-VN')}</td>
                         <td className="p-4 font-bold text-primary">{formatMoney(order.totals.total)}</td>

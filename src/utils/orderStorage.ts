@@ -53,7 +53,7 @@ export const orderStorage = {
         return mockInitialOrders;
       }
       const parsed = JSON.parse(data);
-      return parsed.map((o: any) => ({
+      return parsed.map((o: Order & { createdAt: string; updatedAt: string }) => ({
         ...o,
         createdAt: new Date(o.createdAt),
         updatedAt: new Date(o.updatedAt)
