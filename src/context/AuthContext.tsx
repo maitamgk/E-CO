@@ -12,10 +12,21 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-// Mock users for demo
-const mockUsers: Record<string, { password: string; role: UserRole }> = {
-  'admin@bco.vn': { password: 'admin123', role: 'admin' },
-  'user@bco.vn': { password: 'user123', role: 'user' },
+const MOCK_USERS_KEY = 'bco_mock_users';
+
+const getMockUsers = (): Record<string, { uid: string; password: string; role: UserRole }> => {
+  try {
+    const saved = localStorage.getItem(MOCK_USERS_KEY);
+    if (saved) return JSON.parse(saved);
+  } catch {}
+  return {
+    'admin@bco.vn': { uid: 'admin-uid-123', password: 'admin123', role: 'admin' },
+    'user@bco.vn': { uid: 'user-uid-123', password: 'user123', role: 'user' },
+  };
+};
+
+const saveMockUsers = (users: Record<string, { uid: string; password: string; role: UserRole }>) => {
+  localStorage.setItem(MOCK_USERS_KEY, JSON.stringify(users));
 };
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
@@ -33,13 +44,14 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 500));
       
+      const mockUsers = getMockUsers();
       const mockUser = mockUsers[email];
       if (!mockUser || mockUser.password !== password) {
         throw new Error('Email hoặc mật khẩu không đúng');
       }
 
       const newUser: User = {
-        uid: crypto.randomUUID(),
+        uid: mockUser.uid,
         email,
         role: mockUser.role,
         createdAt: new Date(),
@@ -58,19 +70,21 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 500));
       
+      const mockUsers = getMockUsers();
       if (mockUsers[email]) {
         throw new Error('Email đã được sử dụng');
       }
 
+      const newUid = crypto.randomUUID();
       const newUser: User = {
-        uid: crypto.randomUUID(),
+        uid: newUid,
         email,
-        role: 'user',
+        role: 'user', // Default to user, admin logic can be added if needed
         createdAt: new Date(),
       };
 
-      // In real app, this would be saved to Firebase
-      mockUsers[email] = { password, role: 'user' };
+      mockUsers[email] = { uid: newUid, password, role: 'user' };
+      saveMockUsers(mockUsers);
 
       setUser(newUser);
       localStorage.setItem('bco_user', JSON.stringify(newUser));

@@ -67,8 +67,22 @@ export const orderService = {
   }
 };
 
+interface OrderRow {
+  id: string;
+  order_code: string;
+  user_id: string;
+  customer_info: Order['customer'];
+  items: Order['items'];
+  totals: Order['totals'];
+  payment_method: 'COD';
+  status: OrderStatus;
+  notes: string;
+  created_at: string;
+  updated_at: string;
+}
+
 // Helper to convert DB snake_case back to camelCase Order type
-const parseOrder = (data: any): Order => ({
+const parseOrder = (data: OrderRow): Order => ({
   id: data.id,
   orderCode: data.order_code,
   userId: data.user_id,
