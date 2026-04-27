@@ -45,7 +45,7 @@ const Pricing = () => {
           </div>
 
           {/* Discount Highlight */}
-          <div className="bg-[#1e332a] text-white rounded-none p-8 mb-12 text-center shadow-2xl border border-[#2d4a3e]">
+          <div className="bg-primary text-white rounded-none p-8 mb-12 text-center shadow-2xl border border-secondary">
             <div className="flex items-center justify-center gap-3 mb-4">
               <Percent className="h-10 w-10" />
               <span className="text-4xl font-bold">GIẢM 10%</span>
@@ -109,7 +109,7 @@ const Pricing = () => {
             </div>
 
             {/* Wholesale Card - Featured */}
-            <div className="group relative overflow-hidden border border-[#2d4a3e] rounded-none bg-[#1e332a] hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 hover:scale-[1.02]">
+            <div className="group relative overflow-hidden border border-secondary rounded-none bg-primary hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 hover:scale-[1.02]">
               {/* Popular Badge */}
               <div className="relative z-10 flex justify-center pt-3">
                 <Badge className="px-6 py-2 bg-emerald-600 rounded-none text-white border-0 shadow-lg font-bold text-xs uppercase tracking-widest">
@@ -162,7 +162,7 @@ const Pricing = () => {
                   </ul>
                   
                   <Link to="/shop" className="block">
-                    <Button className="w-full rounded-none bg-white text-[#1e332a] hover:bg-[#1e332a] hover:text-white border border-white transition-all duration-300 font-bold text-sm uppercase tracking-widest h-12">
+                    <Button className="w-full rounded-none bg-white text-foreground hover:bg-primary hover:text-white border border-white transition-all duration-300 font-bold text-sm uppercase tracking-widest h-12">
                       Đặt hàng ngay
                       <ArrowRight className="h-4 w-4 ml-2 group-hover:translate-x-1 transition-transform" />
                     </Button>

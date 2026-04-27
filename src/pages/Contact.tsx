@@ -114,19 +114,19 @@ const Contact = () => {
                 </div>
             </section>
 
-            <div className="bg-[#fdfaf5] min-h-screen">
+            <div className="bg-background min-h-screen">
             <div className="container mx-auto px-4 py-16">
                 <div className="grid lg:grid-cols-2 gap-12">
                     {/* Contact Form */}
                     <ScrollAnimate animation="fade-in-left">
-                        <div className="bg-white border-2 border-[#1e332a] rounded-none p-8 lg:p-12 relative shadow-[8px_8px_0px_0px_rgba(30,51,42,1)]">
-                            <div className="absolute top-0 right-0 w-16 h-16 bg-[#1e332a]/5 border-l-2 border-b-2 border-[#1e332a]" />
-                            <div className="flex items-center gap-4 mb-8 border-b-2 border-[#1e332a]/20 pb-6 relative z-10">
-                                <div className="p-4 bg-[#1e332a] text-white rounded-none shrink-0 shadow-[4px_4px_0px_0px_rgba(45,74,62,1)]">
+                        <div className="bg-white border-2 border-border rounded-none p-8 lg:p-12 relative shadow-[8px_8px_0px_0px_rgba(30,51,42,1)]">
+                            <div className="absolute top-0 right-0 w-16 h-16 bg-primary/5 border-l-2 border-b-2 border-border" />
+                            <div className="flex items-center gap-4 mb-8 border-b-2 border-border/20 pb-6 relative z-10">
+                                <div className="p-4 bg-primary text-white rounded-none shrink-0 shadow-[4px_4px_0px_0px_rgba(45,74,62,1)]">
                                     <Send className="h-6 w-6" />
                                 </div>
                                 <div>
-                                    <h2 className="text-4xl font-heading font-bold text-[#1e332a]">Gửi tin nhắn</h2>
+                                    <h2 className="text-4xl font-heading font-bold text-foreground">Gửi tin nhắn</h2>
                                     <p className="text-gray-500 font-medium tracking-wide mt-1">Điền thông tin bên dưới</p>
                                 </div>
                             </div>
@@ -156,7 +156,7 @@ const Contact = () => {
                                                 onChange={handleChange}
                                                 placeholder="Nguyễn Văn A"
                                                 required
-                                                className="h-14 rounded-none border-2 border-[#1e332a]/20 focus-visible:border-[#1e332a] focus-visible:ring-0 bg-[#fdfaf5]"
+                                                className="h-14 rounded-none border-2 border-border/20 focus-visible:border-border focus-visible:ring-0 bg-background"
                                             />
                                         </div>
                                         <div className="space-y-2">
@@ -168,7 +168,7 @@ const Contact = () => {
                                                 onChange={handleChange}
                                                 placeholder="0901234567"
                                                 required
-                                                className="h-14 rounded-none border-2 border-[#1e332a]/20 focus-visible:border-[#1e332a] focus-visible:ring-0 bg-[#fdfaf5]"
+                                                className="h-14 rounded-none border-2 border-border/20 focus-visible:border-border focus-visible:ring-0 bg-background"
                                             />
                                         </div>
                                     </div>
@@ -182,7 +182,7 @@ const Contact = () => {
                                             value={form.email}
                                             onChange={handleChange}
                                             placeholder="email@example.com"
-                                            className="h-14 rounded-none border-2 border-[#1e332a]/20 focus-visible:border-[#1e332a] focus-visible:ring-0 bg-[#fdfaf5]"
+                                            className="h-14 rounded-none border-2 border-border/20 focus-visible:border-border focus-visible:ring-0 bg-background"
                                         />
                                     </div>
 
@@ -194,7 +194,7 @@ const Contact = () => {
                                             value={form.subject}
                                             onChange={handleChange}
                                             placeholder="VD: Hỏi về đơn hàng sỉ"
-                                            className="h-14 rounded-none border-2 border-[#1e332a]/20 focus-visible:border-[#1e332a] focus-visible:ring-0 bg-[#fdfaf5]"
+                                            className="h-14 rounded-none border-2 border-border/20 focus-visible:border-border focus-visible:ring-0 bg-background"
                                         />
                                     </div>
 
@@ -208,14 +208,14 @@ const Contact = () => {
                                             placeholder="Nhập nội dung tin nhắn..."
                                             required
                                             rows={5}
-                                            className="rounded-none border-2 border-[#1e332a]/20 focus-visible:border-[#1e332a] focus-visible:ring-0 resize-none bg-[#fdfaf5]"
+                                            className="rounded-none border-2 border-border/20 focus-visible:border-border focus-visible:ring-0 resize-none bg-background"
                                         />
                                     </div>
 
                                     <Button
                                         type="submit"
                                         size="lg"
-                                        className="w-full h-14 text-sm font-bold uppercase tracking-widest rounded-none bg-[#2d4a3e] border border-[#2d4a3e] text-white hover:bg-white hover:text-[#2d4a3e] transition-all duration-300"
+                                        className="w-full h-14 text-sm font-bold uppercase tracking-widest rounded-none bg-secondary border border-secondary text-white hover:bg-white hover:text-[#2d4a3e] transition-all duration-300"
                                         disabled={isSubmitting}
                                     >
                                         {isSubmitting ? (
@@ -244,15 +244,15 @@ const Contact = () => {
                                     <a
                                         key={idx}
                                         href={info.href}
-                                        className="group p-6 bg-white border-2 border-[#1e332a] rounded-none hover:-translate-y-1 hover:shadow-[4px_4px_0px_0px_rgba(30,51,42,1)] transition-all duration-300"
+                                        className="group p-6 bg-white border-2 border-border rounded-none hover:-translate-y-1 hover:shadow-[4px_4px_0px_0px_rgba(30,51,42,1)] transition-all duration-300"
                                     >
                                         <div className="flex items-start gap-4">
-                                            <div className="p-4 bg-[#fdfaf5] text-[#1e332a] border border-[#1e332a]/10 rounded-none shrink-0 group-hover:bg-[#1e332a] group-hover:text-white transition-colors">
+                                            <div className="p-4 bg-background text-foreground border border-border/10 rounded-none shrink-0 group-hover:bg-primary group-hover:text-white transition-colors">
                                                 <info.icon className="h-6 w-6" />
                                             </div>
                                             <div>
                                                 <p className="text-sm font-medium tracking-wider uppercase text-gray-500 mb-1">{info.label}</p>
-                                                <p className="font-bold text-[#1e332a] text-lg">{info.value}</p>
+                                                <p className="font-bold text-foreground text-lg">{info.value}</p>
                                                 <p className="text-xs text-gray-500 mt-1">{info.description}</p>
                                             </div>
                                         </div>
@@ -261,7 +261,7 @@ const Contact = () => {
                             </div>
 
                             {/* Map or Image */}
-                            <div className="relative overflow-hidden rounded-none border-2 border-[#1e332a] h-[300px] shadow-[8px_8px_0px_0px_rgba(30,51,42,1)]">
+                            <div className="relative overflow-hidden rounded-none border-2 border-border h-[300px] shadow-[8px_8px_0px_0px_rgba(30,51,42,1)]">
                                 <img
                                     src="https://images.unsplash.com/photo-1542601098-3adb3e4c6df9?w=800&h=400&fit=crop"
                                     alt="B-ECO Location"
@@ -271,7 +271,7 @@ const Contact = () => {
                                 <div className="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent" />
                                 <div className="absolute bottom-0 left-0 right-0 p-6">
                                     <div className="flex items-center gap-3">
-                                        <div className="p-3 bg-[#1e332a] text-white rounded-none shadow-[2px_2px_0px_0px_rgba(45,74,62,1)]">
+                                        <div className="p-3 bg-primary text-white rounded-none shadow-[2px_2px_0px_0px_rgba(45,74,62,1)]">
                                             <Leaf className="h-6 w-6" />
                                         </div>
                                         <div>
@@ -283,14 +283,14 @@ const Contact = () => {
                             </div>
 
                             {/* Social Links */}
-                            <div className="p-6 bg-[#1e332a] text-white rounded-none border border-[#2d4a3e] shadow-xl">
+                            <div className="p-6 bg-primary text-white rounded-none border border-secondary shadow-xl">
                                 <h3 className="font-heading font-bold text-2xl mb-4">Kết nối với chúng tôi</h3>
                                 <div className="flex gap-3">
                                     {['Facebook', 'Instagram', 'Zalo', 'YouTube'].map((social) => (
                                         <a
                                             key={social}
                                             href="#"
-                                            className="flex-1 py-3 px-4 bg-white/10 rounded-none text-center font-bold uppercase tracking-wider text-xs hover:bg-white hover:text-[#1e332a] transition-all duration-300 hover:-translate-y-1"
+                                            className="flex-1 py-3 px-4 bg-white/10 rounded-none text-center font-bold uppercase tracking-wider text-xs hover:bg-white hover:text-foreground transition-all duration-300 hover:-translate-y-1"
                                         >
                                             {social}
                                         </a>

@@ -11,6 +11,8 @@ import { formatMoney } from '@/utils/money';
 import { validatePhone, validateRequired } from '@/utils/validators';
 import { useToast } from '@/hooks/use-toast';
 import { Truck, CreditCard, ArrowLeft, Check, Loader2 } from 'lucide-react';
+import { orderService } from '@/services/orderService';
+import { Order } from '@/types';
 
 const Checkout = () => {
   const navigate = useNavigate();
@@ -68,11 +70,40 @@ const Checkout = () => {
     setIsSubmitting(true);
 
     try {
-      // Simulate API call - In real app, this calls Firebase Cloud Function
-      await new Promise(resolve => setTimeout(resolve, 1500));
-
       // Generate order code
       const code = 'BCO' + Date.now().toString(36).toUpperCase();
+
+      const newOrder: Order = {
+        id: crypto.randomUUID(),
+        orderCode: code,
+        userId: _auth.user?.uid || 'guest',
+        customer: {
+          fullName: form.fullName,
+          phone: form.phone,
+          address: form.address,
+        },
+        items: Object.values(items),
+        totals: {
+          subtotal,
+          discountRate,
+          discountAmount,
+          total,
+          totalQty,
+        },
+        paymentMethod: 'COD',
+        status: 'pending',
+        notes: form.note,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      };
+
+      // Save to Supabase
+      const success = await orderService.addOrder(newOrder);
+
+      if (!success) {
+        throw new Error('Failed to save order');
+      }
+
       setOrderCode(code);
 
       // Clear cart and show success

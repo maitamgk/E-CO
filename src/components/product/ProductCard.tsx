@@ -209,7 +209,7 @@ export const ProductCard = ({ product, showWholesale = false }: ProductCardProps
               </div>
             ) : (
               <Button
-                className="w-full h-12 sm:h-14 text-xs sm:text-sm uppercase tracking-widest font-bold rounded-none bg-[#2d4a3e] border border-[#2d4a3e] text-white hover:bg-white hover:text-[#2d4a3e] transition-all duration-300 group/btn"
+                className="w-full h-12 sm:h-14 text-xs sm:text-sm uppercase tracking-widest font-bold rounded-none bg-secondary border border-secondary text-white hover:bg-white hover:text-[#2d4a3e] transition-all duration-300 group/btn"
                 onClick={handleAddToCart}
                 disabled={product.stock === 0 || isAdding}
               >

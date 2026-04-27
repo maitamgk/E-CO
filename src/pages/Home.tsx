@@ -59,12 +59,12 @@ const Home = () => {
 
                 <div className="flex flex-col sm:flex-row gap-5 justify-center items-center">
                   <Link to="/about">
-                    <Button className="w-full sm:w-auto h-12 px-8 rounded-none text-sm font-bold uppercase tracking-[0.2em] bg-transparent text-white border-2 border-white hover:bg-white hover:text-[#1e332a] transition-all duration-300 shadow-[6px_6px_0px_0px_rgba(52,211,153,1)] hover:shadow-none hover:translate-y-[6px] hover:translate-x-[6px]">
+                    <Button className="w-full sm:w-auto h-12 px-8 rounded-none text-sm font-bold uppercase tracking-[0.2em] bg-transparent text-white border-2 border-white hover:bg-white hover:text-foreground transition-all duration-300 shadow-[6px_6px_0px_0px_rgba(52,211,153,1)] hover:shadow-none hover:translate-y-[6px] hover:translate-x-[6px]">
                       KHÁM PHÁ NGAY
                     </Button>
                   </Link>
                   <Link to="/shop">
-                    <Button className="w-full sm:w-auto h-12 px-8 rounded-none text-sm font-bold uppercase tracking-[0.2em] bg-[#fdfaf5] text-[#1e332a] border-2 border-[#fdfaf5] hover:bg-emerald-400 hover:border-emerald-400 transition-all duration-300 shadow-[6px_6px_0px_0px_rgba(52,211,153,1)] hover:shadow-none hover:translate-y-[6px] hover:translate-x-[6px]">
+                    <Button className="w-full sm:w-auto h-12 px-8 rounded-none text-sm font-bold uppercase tracking-[0.2em] bg-background text-foreground border-2 border-primary-foreground hover:bg-emerald-400 hover:border-emerald-400 transition-all duration-300 shadow-[6px_6px_0px_0px_rgba(52,211,153,1)] hover:shadow-none hover:translate-y-[6px] hover:translate-x-[6px]">
                       ĐẶT HÀNG NGAY
                     </Button>
                   </Link>
@@ -76,7 +76,7 @@ const Home = () => {
       </section>
 
       {/* ============ VÌ SAO CHỌN B-ECO? — 6 cards ngang hàng ============ */}
-      <section className="py-20 bg-[#fdfaf5]">
+      <section className="py-20 bg-background">
         <div className="container mx-auto px-6 lg:px-12">
           <ScrollAnimate animation="fade-in-up">
             <h2 className="text-2xl md:text-3xl font-bold uppercase tracking-wider mb-12">
@@ -92,8 +92,8 @@ const Home = () => {
                 { icon: Palette, title: 'Mẫu mã đa dạng', desc: 'Mẫu mã đa dạng, nhiều màu sắc và các mẫu mã đa dạng.' },
                 { icon: Factory, title: 'Quy trình hiện đại', desc: 'Quy trình hiện đại, sản xuất tại Phú Yên, Việt Nam.' },
               ].map((item, idx) => (
-                <div key={idx} className="bg-white border-2 border-[#1e332a] p-6 text-center hover:-translate-y-1 hover:shadow-[6px_6px_0px_0px_rgba(30,51,42,1)] transition-all duration-300 group rounded-none">
-                  <div className="w-14 h-14 mx-auto mb-5 rounded-none border border-[#1e332a]/10 bg-[#fdfaf5] flex items-center justify-center text-[#1e332a] group-hover:bg-[#1e332a] group-hover:text-white transition-all duration-300">
+                <div key={idx} className="bg-white border-2 border-border p-6 text-center hover:-translate-y-1 hover:shadow-[6px_6px_0px_0px_rgba(30,51,42,1)] transition-all duration-300 group rounded-none">
+                  <div className="w-14 h-14 mx-auto mb-5 rounded-none border border-border/10 bg-background flex items-center justify-center text-foreground group-hover:bg-primary group-hover:text-white transition-all duration-300">
                     <item.icon className="w-6 h-6" />
                   </div>
                   <h3 className="text-xs font-bold uppercase tracking-wider mb-2">{item.title}</h3>
@@ -106,7 +106,7 @@ const Home = () => {
       </section>
 
       {/* ============ SẢN PHẨM NỔI BẬT — 3 cards + 1 ảnh lớn (giống mockup) ============ */}
-      <section className="py-20 bg-white border-t-2 border-[#1e332a]">
+      <section className="py-20 bg-white border-t-2 border-border">
         <div className="container mx-auto px-6 lg:px-12">
           <ScrollAnimate animation="fade-in-up">
             <h2 className="text-2xl md:text-3xl font-bold uppercase tracking-wider mb-12">
@@ -116,11 +116,11 @@ const Home = () => {
             <div className="grid lg:grid-cols-4 gap-4">
               {/* 3 product cards bên trái */}
               {[
-                { img: anh1, name: 'Dĩa lá bàng', size: '20cm' },
-                { img: anh2, name: 'Chén lá bàng', size: '15cm' },
-                { img: anh3, name: 'Khay lá bàng', size: '25cm' },
+                { img: leafPlatesVariety, name: 'Dĩa lá bàng', size: '20cm' },
+                { img: exhibitionDisplay, name: 'Chén lá bàng', size: '15cm' },
+                { img: customLogoBeco, name: 'Khay lá bàng', size: '25cm' },
               ].map((product, idx) => (
-                <div key={idx} className="border-2 border-[#1e332a] bg-white group hover:-translate-y-1 hover:shadow-[6px_6px_0px_0px_rgba(30,51,42,1)] transition-all duration-300 rounded-none flex flex-col">
+                <div key={idx} className="border-2 border-border bg-white group hover:-translate-y-1 hover:shadow-[6px_6px_0px_0px_rgba(30,51,42,1)] transition-all duration-300 rounded-none flex flex-col">
                   <div className="aspect-square overflow-hidden">
                     <img
                       src={product.img}
@@ -140,7 +140,7 @@ const Home = () => {
               ))}
 
               {/* 1 ảnh lớn bên phải */}
-              <div className="border-2 border-[#1e332a] bg-white group hover:-translate-y-1 hover:shadow-[6px_6px_0px_0px_rgba(30,51,42,1)] transition-all duration-300 relative overflow-hidden rounded-none">
+              <div className="border-2 border-border bg-white group hover:-translate-y-1 hover:shadow-[6px_6px_0px_0px_rgba(30,51,42,1)] transition-all duration-300 relative overflow-hidden rounded-none">
                 <img
                   src={leafPlatesCloseup}
                   alt="B-ECO Lá bàng biển"
@@ -159,18 +159,18 @@ const Home = () => {
       </section>
 
       {/* ============ VỀ CHÚNG TÔI — grid ảnh + text ============ */}
-      <section className="py-20 bg-[#fdfaf5] border-t-2 border-[#1e332a]">
+      <section className="py-20 bg-background border-t-2 border-border">
         <div className="container mx-auto px-6 lg:px-12">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             {/* Ảnh */}
             <ScrollAnimate animation="fade-in-left">
               <div className="grid grid-cols-2 gap-4 relative">
-                <img src={exhibitionDisplay} alt="B-ECO" className="w-full aspect-square object-cover border-2 border-[#1e332a] shadow-[4px_4px_0px_0px_rgba(30,51,42,1)]" />
-                <img src={customLogoBeco} alt="B-ECO" className="w-full aspect-square object-cover border-2 border-[#1e332a] shadow-[4px_4px_0px_0px_rgba(30,51,42,1)] mt-12" />
-                <img src={collectionDisplay2} alt="B-ECO" className="w-full aspect-square object-cover border-2 border-[#1e332a] shadow-[4px_4px_0px_0px_rgba(30,51,42,1)] -mt-12" />
-                <img src={collectionDisplay1} alt="B-ECO" className="w-full aspect-square object-cover border-2 border-[#1e332a] shadow-[4px_4px_0px_0px_rgba(30,51,42,1)]" />
+                <img src={exhibitionDisplay} alt="B-ECO" className="w-full aspect-square object-cover border-2 border-border shadow-[4px_4px_0px_0px_rgba(30,51,42,1)]" />
+                <img src={customLogoBeco} alt="B-ECO" className="w-full aspect-square object-cover border-2 border-border shadow-[4px_4px_0px_0px_rgba(30,51,42,1)] mt-12" />
+                <img src={collectionDisplay2} alt="B-ECO" className="w-full aspect-square object-cover border-2 border-border shadow-[4px_4px_0px_0px_rgba(30,51,42,1)] -mt-12" />
+                <img src={collectionDisplay1} alt="B-ECO" className="w-full aspect-square object-cover border-2 border-border shadow-[4px_4px_0px_0px_rgba(30,51,42,1)]" />
                 {/* Decorative block */}
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#1e332a] text-white p-4 border-2 border-white rounded-none shadow-xl z-10">
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-primary text-white p-4 border-2 border-white rounded-none shadow-xl z-10">
                   <Leaf className="w-8 h-8" />
                 </div>
               </div>
@@ -179,10 +179,10 @@ const Home = () => {
             {/* Text */}
             <ScrollAnimate animation="fade-in-right" delay={200}>
               <div>
-                <div className="inline-flex items-center gap-2 px-3 py-1.5 border border-[#1e332a]/20 bg-[#1e332a]/5 text-[#1e332a] text-[10px] font-bold uppercase tracking-[0.25em] mb-6">
+                <div className="inline-flex items-center gap-2 px-3 py-1.5 border border-border/20 bg-primary/5 text-foreground text-[10px] font-bold uppercase tracking-[0.25em] mb-6">
                   Về chúng tôi
                 </div>
-                <h2 className="text-3xl md:text-4xl font-bold mb-6 leading-tight text-[#1e332a]">
+                <h2 className="text-3xl md:text-4xl font-bold mb-6 leading-tight text-foreground">
                   Từ thiên nhiên, <span className="text-emerald-700">cho thiên nhiên</span>
                 </h2>
                 <p className="text-gray-600 mb-8 leading-relaxed">
@@ -198,7 +198,7 @@ const Home = () => {
                   ))}
                 </ul>
                 <Link to="/about">
-                  <Button className="h-12 px-8 rounded-none text-sm font-bold uppercase tracking-[0.15em] border-2 border-[#1e332a] bg-transparent text-[#1e332a] hover:bg-[#1e332a] hover:text-white transition-all shadow-[4px_4px_0px_0px_rgba(30,51,42,1)] hover:-translate-y-1">
+                  <Button className="h-12 px-8 rounded-none text-sm font-bold uppercase tracking-[0.15em] border-2 border-border bg-transparent text-foreground hover:bg-primary hover:text-white transition-all shadow-[4px_4px_0px_0px_rgba(30,51,42,1)] hover:-translate-y-1">
                     Khám phá câu chuyện
                     <ArrowRight className="h-4 w-4 ml-3" />
                   </Button>
@@ -235,15 +235,15 @@ const Home = () => {
       </section>
 
       {/* ============ PRODUCT GRID — hiện tại ============ */}
-      <section className="py-20 bg-white border-t-2 border-[#1e332a]">
+      <section className="py-20 bg-white border-t-2 border-border">
         <div className="container mx-auto px-6 lg:px-12">
           <ScrollAnimate animation="fade-in-up">
-            <div className="flex flex-col md:flex-row justify-between items-end mb-10 gap-4 border-b-2 border-[#1e332a]/20 pb-6">
+            <div className="flex flex-col md:flex-row justify-between items-end mb-10 gap-4 border-b-2 border-border/20 pb-6">
               <div>
-                <h2 className="text-2xl md:text-3xl font-bold uppercase tracking-wider mb-2 text-[#1e332a]">Tất cả sản phẩm</h2>
+                <h2 className="text-2xl md:text-3xl font-bold uppercase tracking-wider mb-2 text-foreground">Tất cả sản phẩm</h2>
                 <p className="text-gray-500 font-medium">Được hàng nghìn khách hàng tin dùng</p>
               </div>
-              <Link to="/shop" className="group flex items-center gap-1 text-sm font-bold uppercase tracking-widest text-[#1e332a] hover:underline">
+              <Link to="/shop" className="group flex items-center gap-1 text-sm font-bold uppercase tracking-widest text-foreground hover:underline">
                 Xem tất cả <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </Link>
             </div>
@@ -253,22 +253,22 @@ const Home = () => {
       </section>
 
       {/* ============ COD BANNER ============ */}
-      <section className="py-14 bg-[#fdfaf5] border-t-2 border-[#1e332a]">
+      <section className="py-14 bg-background border-t-2 border-border">
         <div className="container mx-auto px-6 lg:px-12">
           <ScrollAnimate animation="fade-in-up">
-            <div className="border-2 border-[#1e332a] bg-white p-8 lg:p-10 flex flex-col lg:flex-row items-center justify-between gap-6 shadow-[8px_8px_0px_0px_rgba(30,51,42,1)] relative">
-              <div className="absolute top-0 right-0 w-16 h-16 bg-[#1e332a]/5 border-l-2 border-b-2 border-[#1e332a]" />
+            <div className="border-2 border-border bg-white p-8 lg:p-10 flex flex-col lg:flex-row items-center justify-between gap-6 shadow-[8px_8px_0px_0px_rgba(30,51,42,1)] relative">
+              <div className="absolute top-0 right-0 w-16 h-16 bg-primary/5 border-l-2 border-b-2 border-border" />
               <div className="flex flex-col sm:flex-row items-center gap-5 text-center sm:text-left relative z-10">
-                <div className="p-4 bg-[#1e332a] text-white shadow-[4px_4px_0px_0px_rgba(45,74,62,1)]">
+                <div className="p-4 bg-primary text-white shadow-[4px_4px_0px_0px_rgba(45,74,62,1)]">
                   <Truck className="h-8 w-8" />
                 </div>
                 <div>
-                  <h3 className="text-xl md:text-2xl font-bold mb-1 text-[#1e332a]">Thanh toán khi nhận hàng</h3>
+                  <h3 className="text-xl md:text-2xl font-bold mb-1 text-foreground">Thanh toán khi nhận hàng</h3>
                   <p className="text-sm text-gray-500 font-medium">Giao hàng toàn quốc · Nhận hàng rồi mới thanh toán · An tâm mua sắm</p>
                 </div>
               </div>
               <Link to="/shop">
-                <Button className="h-12 px-8 rounded-none text-sm font-bold uppercase tracking-[0.15em] bg-[#1e332a] text-white hover:bg-white hover:text-[#1e332a] border-2 border-[#1e332a] transition-all">
+                <Button className="h-12 px-8 rounded-none text-sm font-bold uppercase tracking-[0.15em] bg-primary text-white hover:bg-white hover:text-foreground border-2 border-border transition-all">
                   Đặt hàng ngay <ArrowRight className="ml-3 h-4 w-4" />
                 </Button>
               </Link>
@@ -305,7 +305,7 @@ const Home = () => {
                   </Button>
                 </Link>
                 <Link to="/pricing">
-                  <Button className="h-12 px-8 rounded-none text-sm font-bold uppercase tracking-[0.15em] bg-transparent border-2 border-white text-white hover:bg-white hover:text-[#1e332a] transition-all shadow-[4px_4px_0px_0px_rgba(255,255,255,0.2)] hover:shadow-[4px_4px_0px_0px_rgba(255,255,255,1)]">
+                  <Button className="h-12 px-8 rounded-none text-sm font-bold uppercase tracking-[0.15em] bg-transparent border-2 border-white text-white hover:bg-white hover:text-foreground transition-all shadow-[4px_4px_0px_0px_rgba(255,255,255,0.2)] hover:shadow-[4px_4px_0px_0px_rgba(255,255,255,1)]">
                     Báo giá doanh nghiệp
                   </Button>
                 </Link>

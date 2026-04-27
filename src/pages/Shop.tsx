@@ -96,7 +96,7 @@ const Shop = () => {
                       <X className="h-4 w-4 lg:h-5 lg:w-5" />
                     </button>
                   )}
-                  <Button className="h-8 sm:h-10 lg:h-12 px-3 sm:px-4 lg:px-6 mr-1 rounded-none text-xs sm:text-sm lg:text-base bg-[#2d4a3e] border border-[#2d4a3e] text-white hover:bg-white hover:text-[#2d4a3e] uppercase tracking-widest font-bold">
+                  <Button className="h-8 sm:h-10 lg:h-12 px-3 sm:px-4 lg:px-6 mr-1 rounded-none text-xs sm:text-sm lg:text-base bg-secondary border border-secondary text-white hover:bg-white hover:text-[#2d4a3e] uppercase tracking-widest font-bold">
                     <span className="hidden sm:inline">Tìm kiếm</span>
                     <Search className="h-4 w-4 sm:hidden" />
                   </Button>
@@ -112,7 +112,7 @@ const Shop = () => {
         <div className="container mx-auto px-4 py-8">
           {/* Discount Banner */}
           <ScrollAnimate animation="fade-in-up">
-            <div className="relative overflow-hidden bg-[#1e332a] border border-[#2d4a3e] p-3 sm:p-4 lg:p-6 mb-4 sm:mb-6 lg:mb-8 text-primary-foreground group hover:shadow-2xl transition-shadow">
+            <div className="relative overflow-hidden bg-primary border border-secondary p-3 sm:p-4 lg:p-6 mb-4 sm:mb-6 lg:mb-8 text-primary-foreground group hover:shadow-2xl transition-shadow">
               {/* Background pattern */}
               <div className="absolute inset-0 opacity-10">
                 <div className="absolute -right-20 -top-20 w-60 h-60 bg-background rounded-full" />
@@ -300,7 +300,7 @@ const Shop = () => {
                 </div>
 
                 {/* Eco Badge */}
-                <div className="bg-[#1e332a] border border-[#2d4a3e] p-4 lg:p-5 text-center text-white">
+                <div className="bg-primary border border-secondary p-4 lg:p-5 text-center text-white">
                   <div className="p-3 lg:p-4 bg-white/10 inline-block mb-2 lg:mb-3">
                     <Leaf className="h-6 w-6 lg:h-8 lg:w-8 text-primary" />
                   </div>
