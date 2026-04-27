@@ -60,12 +60,12 @@ const Shop = () => {
 
         <div className="container mx-auto px-4 relative z-10">
           <div className="text-center max-w-3xl mx-auto">
-            <Badge className="mb-4 lg:mb-6 px-3 py-1.5 lg:px-5 lg:py-2.5 text-xs lg:text-sm bg-emerald-500/20 text-emerald-300 border-emerald-500/40 backdrop-blur-xl animate-fade-in">
+            <Badge className="mb-4 lg:mb-6 px-3 py-1.5 lg:px-5 lg:py-2.5 text-xs lg:text-sm bg-emerald-500/20 text-emerald-300 border-emerald-500/40 backdrop-blur-xl animate-fade-in rounded-none">
               <ShoppingBag className="h-3 w-3 lg:h-4 lg:w-4 mr-1.5 lg:mr-2" />
               {stats.total} sản phẩm có sẵn
             </Badge>
 
-            <h1 className="text-2xl sm:text-3xl lg:text-5xl xl:text-6xl font-black italic text-white mb-3 lg:mb-4 animate-fade-in-up drop-shadow-[0_0_30px_rgba(16,185,129,0.3)]" style={{ animationDelay: '0.1s' }}>
+            <h1 className="text-3xl sm:text-4xl lg:text-6xl xl:text-7xl font-heading font-bold text-white mb-3 lg:mb-4 animate-fade-in-up drop-shadow-[0_2px_20px_rgba(0,0,0,0.5)]" style={{ animationDelay: '0.1s' }}>
               Cửa hàng{' '}
               <span className="bg-gradient-to-r from-emerald-300 via-green-300 to-teal-300 bg-clip-text text-transparent">
                 B-ECO
@@ -79,8 +79,8 @@ const Shop = () => {
             {/* Search Bar - Floating */}
             <div className="max-w-2xl mx-auto animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
               <div className="relative group">
-                <div className="absolute -inset-1 bg-gradient-to-r from-emerald-500/50 to-teal-500/50 rounded-2xl blur-lg opacity-50 group-hover:opacity-75 transition-opacity" />
-                <div className="relative flex items-center bg-white dark:bg-gray-950 rounded-xl lg:rounded-2xl shadow-2xl border border-emerald-500/20 overflow-hidden">
+                <div className="absolute -inset-1 bg-gradient-to-r from-emerald-500/50 to-teal-500/50 blur-lg opacity-50 group-hover:opacity-75 transition-opacity" />
+                <div className="relative flex items-center bg-white dark:bg-gray-950 shadow-2xl border border-emerald-500/20 overflow-hidden">
                   <Search className="h-4 w-4 lg:h-5 lg:w-5 text-muted-foreground ml-3 lg:ml-5" />
                   <Input
                     placeholder="Tìm kiếm sản phẩm..."
@@ -91,12 +91,12 @@ const Shop = () => {
                   {search && (
                     <button
                       onClick={() => setSearch('')}
-                      className="p-1.5 lg:p-2 mr-1 lg:mr-2 text-muted-foreground hover:text-foreground hover:bg-muted rounded-lg transition-all"
+                      className="p-1.5 lg:p-2 mr-1 lg:mr-2 text-muted-foreground hover:text-foreground hover:bg-muted transition-all"
                     >
                       <X className="h-4 w-4 lg:h-5 lg:w-5" />
                     </button>
                   )}
-                  <Button className="h-8 sm:h-10 lg:h-12 px-3 sm:px-4 lg:px-6 mr-1 rounded-lg lg:rounded-xl text-xs sm:text-sm lg:text-base bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600">
+                  <Button className="h-8 sm:h-10 lg:h-12 px-3 sm:px-4 lg:px-6 mr-1 rounded-none text-xs sm:text-sm lg:text-base bg-[#2d4a3e] border border-[#2d4a3e] text-white hover:bg-white hover:text-[#2d4a3e] uppercase tracking-widest font-bold">
                     <span className="hidden sm:inline">Tìm kiếm</span>
                     <Search className="h-4 w-4 sm:hidden" />
                   </Button>
@@ -112,7 +112,7 @@ const Shop = () => {
         <div className="container mx-auto px-4 py-8">
           {/* Discount Banner */}
           <ScrollAnimate animation="fade-in-up">
-            <div className="relative overflow-hidden bg-gradient-to-r from-primary via-primary to-accent-foreground rounded-xl lg:rounded-2xl p-3 sm:p-4 lg:p-6 mb-4 sm:mb-6 lg:mb-8 text-primary-foreground group hover:shadow-2xl transition-shadow">
+            <div className="relative overflow-hidden bg-[#1e332a] border border-[#2d4a3e] p-3 sm:p-4 lg:p-6 mb-4 sm:mb-6 lg:mb-8 text-primary-foreground group hover:shadow-2xl transition-shadow">
               {/* Background pattern */}
               <div className="absolute inset-0 opacity-10">
                 <div className="absolute -right-20 -top-20 w-60 h-60 bg-background rounded-full" />
@@ -120,7 +120,7 @@ const Shop = () => {
               </div>
 
               <div className="relative flex flex-col sm:flex-row items-center gap-2 sm:gap-3 lg:gap-4">
-                <div className="p-2 sm:p-2.5 lg:p-3 bg-background/20 rounded-lg lg:rounded-xl backdrop-blur-xl group-hover:scale-110 transition-transform duration-300">
+                <div className="p-2 sm:p-2.5 lg:p-3 bg-white/10 backdrop-blur-xl group-hover:scale-110 transition-transform duration-300">
                   <Percent className="h-5 w-5 sm:h-6 sm:w-6 lg:h-8 lg:w-8" />
                 </div>
                 <div className="text-center sm:text-left flex-1">
@@ -144,7 +144,7 @@ const Shop = () => {
               <Button
                 variant={sidebarOpen ? 'default' : 'outline'}
                 onClick={() => setSidebarOpen(!sidebarOpen)}
-                className="gap-1.5 rounded-lg h-9 text-xs px-3 flex-shrink-0"
+                className="gap-1.5 rounded-none h-9 text-xs px-3 flex-shrink-0"
               >
                 <Filter className="h-3.5 w-3.5" />
                 <span className="hidden xs:inline">Bộ lọc</span>
@@ -166,7 +166,7 @@ const Shop = () => {
                       }
                     }}
                     className={cn(
-                      "rounded-full px-2.5 sm:px-3 lg:px-4 h-8 lg:h-9 text-xs transition-all duration-300",
+                      "rounded-none px-2.5 sm:px-3 lg:px-4 h-8 lg:h-9 text-xs transition-all duration-300 uppercase tracking-wider font-semibold",
                       category === cat.id
                         ? 'shadow-md shadow-primary/20'
                         : 'hover:scale-105'
@@ -178,11 +178,11 @@ const Shop = () => {
               </div>
 
               {/* Grid Toggle */}
-              <div className="hidden md:flex items-center gap-1 bg-card rounded-lg p-1 border border-border">
+              <div className="hidden md:flex items-center gap-1 bg-card p-1 border border-border">
                 <button
                   onClick={() => setGridSize('normal')}
                   className={cn(
-                    "p-2 rounded-lg transition-all",
+                    "p-2 rounded-none transition-all",
                     gridSize === 'normal' ? 'bg-primary text-primary-foreground' : 'hover:bg-muted'
                   )}
                 >
@@ -191,7 +191,7 @@ const Shop = () => {
                 <button
                   onClick={() => setGridSize('large')}
                   className={cn(
-                    "p-2 rounded-lg transition-all",
+                    "p-2 rounded-none transition-all",
                     gridSize === 'large' ? 'bg-primary text-primary-foreground' : 'hover:bg-muted'
                   )}
                 >
@@ -237,7 +237,7 @@ const Shop = () => {
               
               <div className="lg:sticky lg:top-24 space-y-4 lg:space-y-6 p-4 lg:p-0">
                 {/* Stats Cards */}
-                <div className="bg-card rounded-xl lg:rounded-2xl border border-border p-4 lg:p-5 space-y-3 lg:space-y-4">
+                <div className="bg-card border border-border p-4 lg:p-5 space-y-3 lg:space-y-4">
                   <h3 className="font-bold flex items-center gap-2 text-base lg:text-lg">
                     <SlidersHorizontal className="h-4 w-4 lg:h-5 lg:w-5 text-primary" />
                     Thống kê
@@ -248,8 +248,8 @@ const Shop = () => {
                       { label: 'Còn hàng', value: stats.inStock, icon: Boxes, color: 'bg-accent text-accent-foreground' },
                       { label: 'Sắp hết', value: stats.lowStock, icon: Tag, color: 'bg-destructive/10 text-destructive' },
                     ].map((stat, idx) => (
-                      <div key={idx} className="flex flex-col lg:flex-row items-center gap-2 lg:gap-3 p-2.5 lg:p-3 bg-muted/50 rounded-lg lg:rounded-xl group hover:bg-muted transition-colors">
-                        <div className={cn("p-1.5 lg:p-2 rounded-lg", stat.color)}>
+                      <div key={idx} className="flex flex-col lg:flex-row items-center gap-2 lg:gap-3 p-2.5 lg:p-3 bg-muted/50 group hover:bg-muted transition-colors">
+                        <div className={cn("p-1.5 lg:p-2", stat.color)}>
                           <stat.icon className="h-3.5 w-3.5 lg:h-4 lg:w-4" />
                         </div>
                         <div className="flex-1 text-center lg:text-left">
@@ -262,14 +262,14 @@ const Shop = () => {
                 </div>
 
                 {/* Wholesale Toggle */}
-                <div className="bg-card rounded-xl lg:rounded-2xl border border-border p-4 lg:p-5">
+                <div className="bg-card border border-border p-4 lg:p-5">
                   <h3 className="font-bold flex items-center gap-2 text-base lg:text-lg mb-3 lg:mb-4">
                     <Tag className="h-4 w-4 lg:h-5 lg:w-5 text-primary" />
                     Loại giá
                   </h3>
                   <div
                     className={cn(
-                      "flex items-center justify-between p-3 lg:p-4 rounded-xl border-2 cursor-pointer transition-all duration-300",
+                      "flex items-center justify-between p-3 lg:p-4 border-2 cursor-pointer transition-all duration-300",
                       showWholesale ? "border-primary bg-primary/5" : "border-border hover:border-primary/50"
                     )}
                     onClick={() => {
@@ -282,7 +282,7 @@ const Shop = () => {
                   >
                     <div className="flex items-center gap-2 lg:gap-3">
                       <div className={cn(
-                        "p-1.5 lg:p-2 rounded-lg transition-colors",
+                        "p-1.5 lg:p-2 transition-colors",
                         showWholesale ? "bg-primary text-primary-foreground" : "bg-muted"
                       )}>
                         <Percent className="h-4 w-4 lg:h-5 lg:w-5" />
@@ -300,8 +300,8 @@ const Shop = () => {
                 </div>
 
                 {/* Eco Badge */}
-                <div className="bg-gradient-to-br from-primary/10 to-accent/10 rounded-xl lg:rounded-2xl border border-primary/20 p-4 lg:p-5 text-center">
-                  <div className="p-3 lg:p-4 bg-primary/10 rounded-xl lg:rounded-2xl inline-block mb-2 lg:mb-3">
+                <div className="bg-[#1e332a] border border-[#2d4a3e] p-4 lg:p-5 text-center text-white">
+                  <div className="p-3 lg:p-4 bg-white/10 inline-block mb-2 lg:mb-3">
                     <Leaf className="h-6 w-6 lg:h-8 lg:w-8 text-primary" />
                   </div>
                   <h4 className="font-bold mb-1.5 lg:mb-2 text-sm lg:text-base">100% Sinh học</h4>
@@ -333,7 +333,7 @@ const Shop = () => {
                     : "grid-cols-1 sm:grid-cols-2"
                 )}>
                   {[...Array(6)].map((_, i) => (
-                    <div key={i} className="bg-card rounded-2xl border border-border overflow-hidden">
+                    <div key={i} className="bg-card border border-border overflow-hidden">
                       <Skeleton className="aspect-square" />
                       <div className="p-5 space-y-3">
                         <Skeleton className="h-6 w-3/4" />
@@ -346,7 +346,7 @@ const Shop = () => {
                 </div>
               ) : filteredProducts.length === 0 ? (
                 <div className="text-center py-12 lg:py-20">
-                  <div className="p-4 lg:p-6 bg-muted/50 rounded-full inline-block mb-4 lg:mb-6">
+                  <div className="p-4 lg:p-6 bg-muted/50 inline-block mb-4 lg:mb-6">
                     <Search className="h-8 w-8 lg:h-12 lg:w-12 text-muted-foreground" />
                   </div>
                   <h3 className="text-xl lg:text-2xl font-bold mb-2">Không tìm thấy sản phẩm</h3>

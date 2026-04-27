@@ -101,14 +101,12 @@ const Contact = () => {
                 <div className="absolute bottom-20 right-20 w-96 h-96 bg-teal-500/10 rounded-full blur-[100px] animate-float" style={{ animationDelay: '2s' }} />
 
                 <div className="container mx-auto px-4 relative z-10 text-center">
-                    <Badge className="mb-6 px-5 py-2.5 bg-emerald-500/20 text-emerald-300 border-emerald-500/40 backdrop-blur-xl">
+                    <Badge className="mb-6 px-5 py-2.5 bg-emerald-500/20 text-emerald-300 border-emerald-500/40 backdrop-blur-xl rounded-none">
                         <MessageCircle className="h-4 w-4 mr-2" />
                         Liên hệ với chúng tôi
                     </Badge>
-                    <h1 className="text-5xl lg:text-6xl font-black italic text-white mb-4 drop-shadow-[0_0_30px_rgba(16,185,129,0.3)]">
-                        <span className="bg-gradient-to-r from-emerald-300 via-green-300 to-teal-300 bg-clip-text text-transparent">
-                            Liên hệ
-                        </span>
+                    <h1 className="text-6xl lg:text-7xl font-heading font-bold text-white mb-4 drop-shadow-[0_2px_20px_rgba(0,0,0,0.5)]">
+                        Liên hệ
                     </h1>
                     <p className="text-emerald-100 text-lg max-w-2xl mx-auto">
                         Hãy để lại thông tin, chúng tôi sẽ liên hệ tư vấn cho bạn
@@ -116,24 +114,26 @@ const Contact = () => {
                 </div>
             </section>
 
+            <div className="bg-[#fdfaf5] min-h-screen">
             <div className="container mx-auto px-4 py-16">
                 <div className="grid lg:grid-cols-2 gap-12">
                     {/* Contact Form */}
                     <ScrollAnimate animation="fade-in-left">
-                        <div className="bg-card border border-border rounded-3xl p-8">
-                            <div className="flex items-center gap-3 mb-6">
-                                <div className="p-3 bg-primary/10 rounded-xl">
-                                    <Send className="h-6 w-6 text-primary" />
+                        <div className="bg-white border-2 border-[#1e332a] rounded-none p-8 lg:p-12 relative shadow-[8px_8px_0px_0px_rgba(30,51,42,1)]">
+                            <div className="absolute top-0 right-0 w-16 h-16 bg-[#1e332a]/5 border-l-2 border-b-2 border-[#1e332a]" />
+                            <div className="flex items-center gap-4 mb-8 border-b-2 border-[#1e332a]/20 pb-6 relative z-10">
+                                <div className="p-4 bg-[#1e332a] text-white rounded-none shrink-0 shadow-[4px_4px_0px_0px_rgba(45,74,62,1)]">
+                                    <Send className="h-6 w-6" />
                                 </div>
                                 <div>
-                                    <h2 className="text-2xl font-bold">Gửi tin nhắn</h2>
-                                    <p className="text-muted-foreground">Điền thông tin bên dưới</p>
+                                    <h2 className="text-4xl font-heading font-bold text-[#1e332a]">Gửi tin nhắn</h2>
+                                    <p className="text-gray-500 font-medium tracking-wide mt-1">Điền thông tin bên dưới</p>
                                 </div>
                             </div>
 
                             {isSubmitted ? (
                                 <div className="text-center py-12">
-                                    <div className="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6">
+                                    <div className="w-20 h-20 bg-primary/10 rounded-none border border-primary/20 flex items-center justify-center mx-auto mb-6">
                                         <CheckCircle className="h-10 w-10 text-primary" />
                                     </div>
                                     <h3 className="text-2xl font-bold mb-2">Cảm ơn bạn!</h3>
@@ -156,7 +156,7 @@ const Contact = () => {
                                                 onChange={handleChange}
                                                 placeholder="Nguyễn Văn A"
                                                 required
-                                                className="h-12 rounded-xl"
+                                                className="h-14 rounded-none border-2 border-[#1e332a]/20 focus-visible:border-[#1e332a] focus-visible:ring-0 bg-[#fdfaf5]"
                                             />
                                         </div>
                                         <div className="space-y-2">
@@ -168,7 +168,7 @@ const Contact = () => {
                                                 onChange={handleChange}
                                                 placeholder="0901234567"
                                                 required
-                                                className="h-12 rounded-xl"
+                                                className="h-14 rounded-none border-2 border-[#1e332a]/20 focus-visible:border-[#1e332a] focus-visible:ring-0 bg-[#fdfaf5]"
                                             />
                                         </div>
                                     </div>
@@ -182,7 +182,7 @@ const Contact = () => {
                                             value={form.email}
                                             onChange={handleChange}
                                             placeholder="email@example.com"
-                                            className="h-12 rounded-xl"
+                                            className="h-14 rounded-none border-2 border-[#1e332a]/20 focus-visible:border-[#1e332a] focus-visible:ring-0 bg-[#fdfaf5]"
                                         />
                                     </div>
 
@@ -194,7 +194,7 @@ const Contact = () => {
                                             value={form.subject}
                                             onChange={handleChange}
                                             placeholder="VD: Hỏi về đơn hàng sỉ"
-                                            className="h-12 rounded-xl"
+                                            className="h-14 rounded-none border-2 border-[#1e332a]/20 focus-visible:border-[#1e332a] focus-visible:ring-0 bg-[#fdfaf5]"
                                         />
                                     </div>
 
@@ -208,14 +208,14 @@ const Contact = () => {
                                             placeholder="Nhập nội dung tin nhắn..."
                                             required
                                             rows={5}
-                                            className="rounded-xl resize-none"
+                                            className="rounded-none border-2 border-[#1e332a]/20 focus-visible:border-[#1e332a] focus-visible:ring-0 resize-none bg-[#fdfaf5]"
                                         />
                                     </div>
 
                                     <Button
                                         type="submit"
                                         size="lg"
-                                        className="w-full h-14 text-lg rounded-2xl shadow-xl"
+                                        className="w-full h-14 text-sm font-bold uppercase tracking-widest rounded-none bg-[#2d4a3e] border border-[#2d4a3e] text-white hover:bg-white hover:text-[#2d4a3e] transition-all duration-300"
                                         disabled={isSubmitting}
                                     >
                                         {isSubmitting ? (
@@ -244,16 +244,16 @@ const Contact = () => {
                                     <a
                                         key={idx}
                                         href={info.href}
-                                        className="group p-6 bg-card border border-border rounded-2xl hover:border-primary/50 hover:shadow-xl hover:shadow-primary/5 transition-all duration-300"
+                                        className="group p-6 bg-white border-2 border-[#1e332a] rounded-none hover:-translate-y-1 hover:shadow-[4px_4px_0px_0px_rgba(30,51,42,1)] transition-all duration-300"
                                     >
                                         <div className="flex items-start gap-4">
-                                            <div className="p-3 bg-primary/10 rounded-xl group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
+                                            <div className="p-4 bg-[#fdfaf5] text-[#1e332a] border border-[#1e332a]/10 rounded-none shrink-0 group-hover:bg-[#1e332a] group-hover:text-white transition-colors">
                                                 <info.icon className="h-6 w-6" />
                                             </div>
                                             <div>
-                                                <p className="text-sm text-muted-foreground">{info.label}</p>
-                                                <p className="font-semibold text-foreground">{info.value}</p>
-                                                <p className="text-xs text-muted-foreground mt-1">{info.description}</p>
+                                                <p className="text-sm font-medium tracking-wider uppercase text-gray-500 mb-1">{info.label}</p>
+                                                <p className="font-bold text-[#1e332a] text-lg">{info.value}</p>
+                                                <p className="text-xs text-gray-500 mt-1">{info.description}</p>
                                             </div>
                                         </div>
                                     </a>
@@ -261,7 +261,7 @@ const Contact = () => {
                             </div>
 
                             {/* Map or Image */}
-                            <div className="relative overflow-hidden rounded-3xl border border-border h-[300px]">
+                            <div className="relative overflow-hidden rounded-none border-2 border-[#1e332a] h-[300px] shadow-[8px_8px_0px_0px_rgba(30,51,42,1)]">
                                 <img
                                     src="https://images.unsplash.com/photo-1542601098-3adb3e4c6df9?w=800&h=400&fit=crop"
                                     alt="B-ECO Location"
@@ -271,26 +271,26 @@ const Contact = () => {
                                 <div className="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent" />
                                 <div className="absolute bottom-0 left-0 right-0 p-6">
                                     <div className="flex items-center gap-3">
-                                        <div className="p-3 bg-primary text-primary-foreground rounded-xl">
+                                        <div className="p-3 bg-[#1e332a] text-white rounded-none shadow-[2px_2px_0px_0px_rgba(45,74,62,1)]">
                                             <Leaf className="h-6 w-6" />
                                         </div>
                                         <div>
-                                            <p className="font-bold text-foreground">B-ECO</p>
-                                            <p className="text-sm text-muted-foreground">Phú Yên, Việt Nam</p>
+                                            <p className="font-bold text-white text-lg">B-ECO</p>
+                                            <p className="text-sm text-gray-200">Phú Yên, Việt Nam</p>
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
                             {/* Social Links */}
-                            <div className="p-6 bg-gradient-to-br from-primary/10 to-accent/10 rounded-3xl border border-primary/20">
-                                <h3 className="font-bold text-lg mb-4">Kết nối với chúng tôi</h3>
+                            <div className="p-6 bg-[#1e332a] text-white rounded-none border border-[#2d4a3e] shadow-xl">
+                                <h3 className="font-heading font-bold text-2xl mb-4">Kết nối với chúng tôi</h3>
                                 <div className="flex gap-3">
                                     {['Facebook', 'Instagram', 'Zalo', 'YouTube'].map((social) => (
                                         <a
                                             key={social}
                                             href="#"
-                                            className="flex-1 py-3 px-4 bg-background rounded-xl text-center font-medium hover:bg-primary hover:text-primary-foreground transition-all duration-300 hover:scale-105"
+                                            className="flex-1 py-3 px-4 bg-white/10 rounded-none text-center font-bold uppercase tracking-wider text-xs hover:bg-white hover:text-[#1e332a] transition-all duration-300 hover:-translate-y-1"
                                         >
                                             {social}
                                         </a>
@@ -300,6 +300,7 @@ const Contact = () => {
                         </div>
                     </ScrollAnimate>
                 </div>
+            </div>
             </div>
         </Layout>
     );

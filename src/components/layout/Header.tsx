@@ -49,15 +49,15 @@ export const Header = () => {
   }, []);
 
   return (
-    <header className={`sticky top-0 z-50 eco-dark-bg text-white transition-all duration-300 ${scrolled ? 'shadow-lg' : ''}`}>
+    <header className={`sticky top-0 z-50 bg-[#fdfaf5] border-b-2 border-[#1e332a] transition-all duration-300 ${scrolled ? 'shadow-[0_4px_0px_0px_rgba(30,51,42,0.1)]' : ''}`}>
       <div className="container mx-auto px-6 lg:px-12">
         <div className="flex items-center justify-between h-16 lg:h-[72px]">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-3 group">
-            <div className="overflow-hidden border border-white/20 rounded-full">
+            <div className="overflow-hidden border-2 border-[#1e332a] rounded-none bg-white">
               <img src={logo} alt="B-ECO Logo" className="h-10 w-10 object-cover" />
             </div>
-            <span className="font-heading font-extrabold text-xl tracking-tight text-white">
+            <span className="font-heading font-extrabold text-xl tracking-tight text-[#1e332a]">
               B-ECO
             </span>
           </Link>
@@ -68,7 +68,7 @@ export const Header = () => {
               <Link
                 key={link.to}
                 to={link.to}
-                className="px-4 py-2 text-sm font-medium text-white/80 hover:text-white transition-colors uppercase tracking-wider"
+                className="px-4 py-2 text-sm font-bold text-[#1e332a]/80 hover:text-[#1e332a] transition-colors uppercase tracking-wider relative after:content-[''] after:absolute after:bottom-1 after:left-4 after:right-4 after:h-[2px] after:bg-[#1e332a] after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300"
               >
                 {link.label}
               </Link>
@@ -78,7 +78,7 @@ export const Header = () => {
           {/* Actions */}
           <div className="flex items-center gap-2">
             <Link to="/shop">
-              <Button className="hidden sm:flex h-9 px-5 rounded-none text-xs font-bold uppercase tracking-widest bg-transparent border border-white text-white hover:bg-white hover:text-[#2d4a3e] transition-all">
+              <Button className="hidden sm:flex h-9 px-5 rounded-none text-xs font-bold uppercase tracking-widest bg-[#1e332a] border-2 border-[#1e332a] text-white hover:bg-[#fdfaf5] hover:text-[#1e332a] transition-all shadow-[3px_3px_0px_0px_rgba(30,51,42,1)] hover:shadow-none hover:translate-y-[3px] hover:translate-x-[3px]">
                 Đặt hàng
               </Button>
             </Link>
@@ -87,11 +87,11 @@ export const Header = () => {
               <Button
                 variant="ghost"
                 size="icon"
-                className="relative rounded-none h-9 w-9 text-white hover:bg-white/10"
+                className="relative rounded-none h-9 w-9 text-[#1e332a] hover:bg-[#1e332a]/10"
               >
-                <ShoppingCart className="h-4 w-4" />
+                <ShoppingCart className="h-5 w-5" />
                 {itemCount > 0 && (
-                  <Badge className="absolute -top-1 -right-1 h-4 min-w-4 flex items-center justify-center p-0 text-[9px] bg-orange-500 text-white rounded-full border-0">
+                  <Badge className="absolute -top-1 -right-1 h-5 min-w-5 flex items-center justify-center p-0 text-[10px] font-bold bg-emerald-500 text-white rounded-none border border-[#1e332a]">
                     {itemCount > 99 ? '99+' : itemCount}
                   </Badge>
                 )}
@@ -102,33 +102,33 @@ export const Header = () => {
               variant="ghost"
               size="icon"
               onClick={toggleDarkMode}
-              className="rounded-none h-9 w-9 text-white hover:bg-white/10"
+              className="rounded-none h-9 w-9 text-[#1e332a] hover:bg-[#1e332a]/10"
             >
-              {isDark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+              {isDark ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
             </Button>
 
             {user ? (
               <div className="hidden md:flex items-center gap-1">
                 <Link to="/orders">
-                  <Button variant="ghost" size="sm" className="rounded-none text-white/80 hover:text-white hover:bg-white/10 text-xs uppercase tracking-wider">
+                  <Button variant="ghost" size="sm" className="rounded-none text-[#1e332a]/80 hover:text-[#1e332a] hover:bg-[#1e332a]/10 text-xs font-bold uppercase tracking-wider">
                     Đơn hàng
                   </Button>
                 </Link>
                 {isAdmin && (
                   <Link to="/admin">
-                    <Button size="sm" className="rounded-none bg-white/20 text-white text-xs uppercase tracking-wider hover:bg-white/30">
+                    <Button size="sm" className="rounded-none bg-[#1e332a]/10 text-[#1e332a] border border-[#1e332a]/20 text-xs font-bold uppercase tracking-wider hover:bg-[#1e332a]/20">
                       Admin
                     </Button>
                   </Link>
                 )}
-                <Button variant="ghost" size="sm" onClick={logout} className="rounded-none text-white/60 hover:text-white hover:bg-white/10 text-xs">
+                <Button variant="ghost" size="sm" onClick={logout} className="rounded-none text-[#1e332a]/60 hover:text-[#1e332a] hover:bg-[#1e332a]/10 text-xs font-bold uppercase tracking-wider">
                   Đăng xuất
                 </Button>
               </div>
             ) : (
               <Link to="/auth" className="hidden md:block">
-                <Button variant="ghost" size="icon" className="rounded-none h-9 w-9 text-white hover:bg-white/10">
-                  <User className="h-4 w-4" />
+                <Button variant="ghost" size="icon" className="rounded-none h-9 w-9 text-[#1e332a] hover:bg-[#1e332a]/10">
+                  <User className="h-5 w-5" />
                 </Button>
               </Link>
             )}
@@ -136,23 +136,23 @@ export const Header = () => {
             <Button
               variant="ghost"
               size="icon"
-              className="md:hidden rounded-none h-9 w-9 text-white hover:bg-white/10"
+              className="md:hidden rounded-none h-9 w-9 text-[#1e332a] hover:bg-[#1e332a]/10"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             >
-              {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+              {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             </Button>
           </div>
         </div>
 
         {/* Mobile Menu */}
         {mobileMenuOpen && (
-          <div className="md:hidden py-4 border-t border-white/10">
+          <div className="md:hidden py-4 border-t-2 border-[#1e332a]">
             <nav className="flex flex-col">
               {navLinks.map(link => (
                 <Link
                   key={link.to}
                   to={link.to}
-                  className="px-4 py-3 text-sm uppercase tracking-wider text-white/80 hover:text-white hover:bg-white/5 border-b border-white/5 transition-colors"
+                  className="px-4 py-3 text-sm font-bold uppercase tracking-wider text-[#1e332a]/80 hover:text-[#1e332a] hover:bg-[#1e332a]/5 border-b border-[#1e332a]/10 transition-colors"
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   {link.label}
@@ -160,15 +160,15 @@ export const Header = () => {
               ))}
               {user ? (
                 <>
-                  <Link to="/orders" className="px-4 py-3 text-sm text-white/80 hover:text-white hover:bg-white/5" onClick={() => setMobileMenuOpen(false)}>
+                  <Link to="/orders" className="px-4 py-3 text-sm font-bold uppercase tracking-wider text-[#1e332a]/80 hover:text-[#1e332a] hover:bg-[#1e332a]/5 border-b border-[#1e332a]/10" onClick={() => setMobileMenuOpen(false)}>
                     Đơn hàng
                   </Link>
-                  <button className="px-4 py-3 text-left text-sm text-white/60 hover:text-white hover:bg-white/5" onClick={() => { logout(); setMobileMenuOpen(false); }}>
+                  <button className="px-4 py-3 text-left text-sm font-bold uppercase tracking-wider text-[#1e332a]/80 hover:text-[#1e332a] hover:bg-[#1e332a]/5" onClick={() => { logout(); setMobileMenuOpen(false); }}>
                     Đăng xuất
                   </button>
                 </>
               ) : (
-                <Link to="/auth" className="px-4 py-3 text-sm text-white/80 hover:text-white hover:bg-white/5 flex items-center gap-2" onClick={() => setMobileMenuOpen(false)}>
+                <Link to="/auth" className="px-4 py-3 text-sm font-bold uppercase tracking-wider text-[#1e332a]/80 hover:text-[#1e332a] hover:bg-[#1e332a]/5 flex items-center gap-2" onClick={() => setMobileMenuOpen(false)}>
                   <User className="h-4 w-4" /> Đăng nhập
                 </Link>
               )}

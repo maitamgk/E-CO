@@ -34,14 +34,14 @@ export const ProductCard = ({ product, showWholesale = false }: ProductCardProps
     <div className="group relative">
       {/* 3D Card Container */}
       <div 
-        className="relative bg-card rounded-3xl border border-border overflow-hidden transition-all duration-500 ease-out group-hover:shadow-2xl group-hover:shadow-primary/20"
+        className="relative bg-white dark:bg-gray-950 border border-border overflow-hidden transition-all duration-500 ease-out hover:shadow-2xl hover:border-primary/50"
         style={{
           transformStyle: 'preserve-3d',
           transform: 'perspective(1000px)',
         }}
       >
         {/* Animated gradient border */}
-        <div className="absolute -inset-[1px] bg-gradient-to-r from-primary/0 via-primary/50 to-primary/0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10 blur-sm" />
+        <div className="absolute -inset-[1px] bg-gradient-to-r from-primary/0 via-primary/50 to-primary/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10 blur-sm" />
         
         {/* 3D Tilt Effect Container */}
         <div className="group-hover:translate-y-[-8px] transition-transform duration-500 ease-out">
@@ -97,7 +97,7 @@ export const ProductCard = ({ product, showWholesale = false }: ProductCardProps
               <button
                 onClick={() => setIsLiked(!isLiked)}
                 className={cn(
-                  "p-3 rounded-xl backdrop-blur-xl shadow-lg transition-all duration-300 hover:scale-110",
+                  "p-3 rounded-none backdrop-blur-xl shadow-lg transition-all duration-300 hover:scale-110",
                   isLiked 
                     ? "bg-destructive text-destructive-foreground" 
                     : "bg-background/90 text-foreground hover:bg-background"
@@ -107,7 +107,7 @@ export const ProductCard = ({ product, showWholesale = false }: ProductCardProps
               </button>
               <button 
                 onClick={() => navigate(`/product/${product.id}`)}
-                className="p-3 bg-background/90 rounded-xl backdrop-blur-xl shadow-lg hover:bg-background hover:scale-110 transition-all duration-300"
+                className="p-3 bg-background/90 rounded-none backdrop-blur-xl shadow-lg hover:bg-background hover:scale-110 transition-all duration-300"
               >
                 <Eye className="h-5 w-5" />
               </button>
@@ -120,7 +120,7 @@ export const ProductCard = ({ product, showWholesale = false }: ProductCardProps
                   onClick={handleAddToCart}
                   disabled={isAdding}
                   className={cn(
-                    "w-full h-14 text-base font-semibold rounded-2xl shadow-2xl transition-all duration-300",
+                    "w-full h-14 text-sm font-bold uppercase tracking-widest rounded-none shadow-2xl transition-all duration-300",
                     isAdding 
                       ? "bg-accent-foreground" 
                       : "bg-background/90 backdrop-blur-xl text-foreground hover:bg-background"
@@ -146,7 +146,7 @@ export const ProductCard = ({ product, showWholesale = false }: ProductCardProps
           <div className="p-4 sm:p-5 lg:p-6 space-y-3 sm:space-y-4">
             {/* Category tag */}
             <div className="flex items-center gap-2">
-              <span className="text-xs font-medium text-primary bg-primary/10 px-2 py-1 rounded-md">
+              <span className="text-xs font-semibold uppercase tracking-wider text-primary bg-primary/10 px-2 py-1 rounded-none border border-primary/20">
                 {product.category === 'chen' ? 'Chén' : product.category === 'dia' ? 'Dĩa' : 'Combo'}
               </span>
             </div>
@@ -154,7 +154,7 @@ export const ProductCard = ({ product, showWholesale = false }: ProductCardProps
             {/* Title - Clickable */}
             <h3 
               onClick={() => navigate(`/product/${product.id}`)}
-              className="font-bold text-lg sm:text-xl text-foreground line-clamp-1 group-hover:text-primary transition-colors duration-300 cursor-pointer hover:underline"
+              className="font-heading font-bold text-xl sm:text-2xl text-foreground line-clamp-1 group-hover:text-primary transition-colors duration-300 cursor-pointer hover:underline"
             >
               {product.name}
             </h3>
@@ -185,11 +185,11 @@ export const ProductCard = ({ product, showWholesale = false }: ProductCardProps
 
             {/* Cart Actions */}
             {cartItem ? (
-              <div className="flex items-center justify-between bg-primary/5 rounded-2xl p-2 border-2 border-primary/20">
+              <div className="flex items-center justify-between bg-primary/5 rounded-none p-2 border border-primary/20">
                 <Button
                   variant="ghost"
                   size="icon"
-                  className="h-12 w-12 rounded-xl hover:bg-primary/10 hover:text-primary transition-all duration-300 hover:scale-110"
+                  className="h-12 w-12 rounded-none hover:bg-primary/10 hover:text-primary transition-all duration-300 hover:scale-110"
                   onClick={() => updateQuantity(product.id, cartItem.qty - 1)}
                 >
                   <Minus className="h-5 w-5" />
@@ -200,7 +200,7 @@ export const ProductCard = ({ product, showWholesale = false }: ProductCardProps
                 <Button
                   variant="ghost"
                   size="icon"
-                  className="h-12 w-12 rounded-xl hover:bg-primary/10 hover:text-primary transition-all duration-300 hover:scale-110"
+                  className="h-12 w-12 rounded-none hover:bg-primary/10 hover:text-primary transition-all duration-300 hover:scale-110"
                   onClick={() => updateQuantity(product.id, cartItem.qty + 1)}
                   disabled={cartItem.qty >= product.stock}
                 >
@@ -209,7 +209,7 @@ export const ProductCard = ({ product, showWholesale = false }: ProductCardProps
               </div>
             ) : (
               <Button
-                className="w-full h-12 sm:h-14 text-sm sm:text-base font-semibold rounded-2xl shadow-xl shadow-primary/20 hover:shadow-2xl hover:shadow-primary/30 hover:scale-[1.02] transition-all duration-300 group/btn"
+                className="w-full h-12 sm:h-14 text-xs sm:text-sm uppercase tracking-widest font-bold rounded-none bg-[#2d4a3e] border border-[#2d4a3e] text-white hover:bg-white hover:text-[#2d4a3e] transition-all duration-300 group/btn"
                 onClick={handleAddToCart}
                 disabled={product.stock === 0 || isAdding}
               >
