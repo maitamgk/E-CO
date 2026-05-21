@@ -6,13 +6,6 @@ export const discordService = {
    * Sends a formatted rich Embed notification message to the configured Discord webhook.
    */
   async sendOrderNotification(order: Order): Promise<boolean> {
-    const webhookUrl = import.meta.env.VITE_DISCORD_WEBHOOK_URL;
-    
-    if (!webhookUrl) {
-      console.warn('Discord Webhook URL is not configured in environment variables.');
-      return false;
-    }
-
     try {
       const itemsList = order.items
         .map(item => `▫️ **${item.nameSnapshot}**\n   ↳ Số lượng: ${item.qty} | Đơn giá: ${formatMoney(item.priceSnapshot)}\n   ↳ Thành tiền: ${formatMoney(item.priceSnapshot * item.qty)}`)
@@ -66,7 +59,7 @@ export const discordService = {
         inline: false
       });
 
-      const response = await fetch(webhookUrl, {
+      const response = await fetch('/api/send-discord', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
