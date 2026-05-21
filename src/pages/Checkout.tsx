@@ -13,6 +13,7 @@ import { useToast } from '@/hooks/use-toast';
 import { Truck, CreditCard, ArrowLeft, Check, Loader2 } from 'lucide-react';
 import { orderService } from '@/services/orderService';
 import { telegramService } from '@/services/telegramService';
+import { discordService } from '@/services/discordService';
 
 const Checkout = () => {
   const navigate = useNavigate();
@@ -103,11 +104,18 @@ const Checkout = () => {
         throw new Error('Không thể tạo đơn hàng trên hệ thống');
       }
 
-      // Send notification to Telegram Bot (non-blocking)
+      // Send notification to Telegram Bot and Discord Webhook (non-blocking)
       try {
-        await telegramService.sendOrderNotification(newOrder);
+        await Promise.all([
+          telegramService.sendOrderNotification(newOrder).catch(err => {
+            console.error('Failed to send Telegram notification:', err);
+          }),
+          discordService.sendOrderNotification(newOrder).catch(err => {
+            console.error('Failed to send Discord notification:', err);
+          })
+        ]);
       } catch (err) {
-        console.error('Failed to send Telegram notification:', err);
+        console.error('Failed to send notifications:', err);
       }
 
       setOrderCode(code);
