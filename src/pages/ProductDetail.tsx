@@ -7,6 +7,7 @@ import { formatMoney } from '@/utils/money';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { toast } from 'sonner';
 import { ProductReviews } from '@/components/product/ProductReviews';
 import { RelatedProducts } from '@/components/product/RelatedProducts';
 import {
@@ -82,6 +83,13 @@ const ProductDetail = () => {
     if (!product) return;
     setIsAdding(true);
     addToCart(product, quantity);
+    toast.success('Đã thêm sản phẩm vào giỏ', {
+      action: {
+        label: 'Xem giỏ hàng',
+        onClick: () => navigate('/cart')
+      },
+      duration: 3000
+    });
     setTimeout(() => setIsAdding(false), 600);
   };
 

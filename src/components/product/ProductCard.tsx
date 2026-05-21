@@ -7,6 +7,7 @@ import { useCart } from '@/context/CartContext';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { cn } from '@/lib/utils';
+import { toast } from 'sonner';
 
 interface ProductCardProps {
   product: Product;
@@ -27,6 +28,13 @@ export const ProductCard = ({ product, showWholesale = false }: ProductCardProps
   const handleAddToCart = () => {
     setIsAdding(true);
     addToCart(product, 1);
+    toast.success('Đã thêm sản phẩm vào giỏ', {
+      action: {
+        label: 'Xem giỏ hàng',
+        onClick: () => navigate('/cart')
+      },
+      duration: 3000
+    });
     setTimeout(() => setIsAdding(false), 600);
   };
 
