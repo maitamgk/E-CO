@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Package, CheckCircle, Truck, XCircle, Clock } from 'lucide-react';
 import { orderService } from '@/services/orderService';
 import { supabase } from '@/lib/supabase';
+import { cn } from '@/lib/utils';
 
 const statusConfig: Record<OrderStatus, { label: string; color: string; icon: React.ElementType }> = {
   pending: { label: 'Chờ xác nhận', color: 'bg-yellow-500', icon: Clock },
