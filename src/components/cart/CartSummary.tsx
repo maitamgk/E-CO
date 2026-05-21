@@ -22,7 +22,7 @@ export const CartSummary = ({ discountRate = 0, discountAmount = 0, total }: Car
     <div className="bg-muted/50 rounded-lg p-4 space-y-3">
       {/* Discount Info */}
       {!qualifiesForDiscount && totalQty > 0 && (
-        <div className="flex items-center gap-2 text-sm text-muted-foreground bg-primary/10 p-3 rounded-md">
+        <div className="flex items-center gap-2 text-sm text-muted-foreground bg-gradient-eco-soft border border-primary/10 p-3 rounded-md">
           <Percent className="h-4 w-4 text-primary" />
           <span>
             Thêm <strong>{1000 - totalQty}</strong> sản phẩm để được giảm <strong>10%</strong>
@@ -32,7 +32,7 @@ export const CartSummary = ({ discountRate = 0, discountAmount = 0, total }: Car
 
       {qualifiesForDiscount && (
         <div className="flex items-center gap-2">
-          <Badge variant="default" className="bg-primary">
+          <Badge variant="default" className="bg-gradient-eco border-none hover:bg-gradient-eco-hover transition-all duration-300">
             <Percent className="h-3 w-3 mr-1" />
             Giảm 10%
           </Badge>

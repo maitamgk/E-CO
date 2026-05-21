@@ -38,32 +38,32 @@ const heroSlides = [
     title: "Vẻ đẹp từ\nthiên nhiên",
     subtitle: "SẢN PHẨM MỚI TỪ LÁ BÀNG BIỂN",
     desc: "Sản phẩm thân thiện với môi trường, được làm hoàn toàn từ lá bàng biển tự nhiên. An toàn, thẩm mỹ và bền vững.",
-    bgColor: "bg-[#e8e2d2]",
-    textColor: "text-[#3d362d]",
+    bgColor: "bg-gradient-eco-soft",
+    textColor: "text-foreground",
   },
   {
     image: hero2,
     title: "In logo\nthương hiệu",
     subtitle: "DẤU ẤN RIÊNG CỦA BẠN",
     desc: "Khẳng định giá trị thương hiệu với dịch vụ in logo trực tiếp lên đĩa lá. Tinh tế và chuyên nghiệp.",
-    bgColor: "bg-[#d6e0d9]",
-    textColor: "text-[#2c3e32]",
+    bgColor: "bg-gradient-eco-soft",
+    textColor: "text-foreground",
   },
   {
     image: hero3,
     title: "Sự lựa chọn\nhoàn hảo",
     subtitle: "COMBO DÀNH CHO TIỆC CƯỚI",
     desc: "Đồng hành cùng những sự kiện quan trọng với vẻ đẹp mộc mạc và thân thiện với môi trường.",
-    bgColor: "bg-[#e5d9c5]",
-    textColor: "text-[#4a3a24]",
+    bgColor: "bg-gradient-eco-soft",
+    textColor: "text-foreground",
   },
   {
     image: hero4,
     title: "Giảm thiểu\nrác thải nhựa",
     subtitle: "HÀNH ĐỘNG XANH VÌ TƯƠNG LAI",
     desc: "Cùng B-ECO kiến tạo một tương lai xanh và bền vững hơn bằng cách sử dụng các sản phẩm thay thế nhựa.",
-    bgColor: "bg-[#d4dcd2]",
-    textColor: "text-[#2f3d2e]",
+    bgColor: "bg-gradient-eco-soft",
+    textColor: "text-foreground",
   }
 ];
 
@@ -191,7 +191,7 @@ const Home = () => {
                   <div>
                     <Link 
                       to="/shop" 
-                      className="inline-flex items-center gap-4 border border-current hover:bg-[#1f1c17] hover:text-white hover:border-[#1f1c17] transition-all duration-300 px-6 py-3 tracking-widest text-[11px] uppercase font-barlow font-semibold group"
+                      className="inline-flex items-center gap-4 border border-primary text-primary hover:bg-gradient-eco hover:text-white hover:border-transparent transition-all duration-300 px-6 py-3 tracking-widest text-[11px] uppercase font-barlow font-semibold group"
                     >
                       XEM NGAY <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform duration-300" />
                     </Link>
@@ -230,9 +230,9 @@ const Home = () => {
                 <p className="text-[11px] tracking-[0.25em] font-barlow font-bold text-muted-foreground uppercase mb-3">
                   SẢN PHẨM KHỞI NGUỒN
                 </p>
-                <h2 className="text-4xl md:text-5xl font-heading text-primary leading-tight mb-6">
+                <h2 className="text-4xl md:text-5xl font-heading text-gradient-eco leading-tight mb-6 font-bold">
                   Đĩa lá bàng biển <br/>
-                  <span className="italic font-light font-vollkorn">Phú Yên mộc mạc</span>
+                  <span className="italic font-light font-vollkorn text-gradient-eco">Phú Yên mộc mạc</span>
                 </h2>
                 <p className="text-sm md:text-base text-muted-foreground font-nunito font-light leading-relaxed mb-8">
                   Sản phẩm sở hữu những đường gân lá tự nhiên độc bản, tạo nét thẩm mỹ mộc mạc tinh tế trên bàn ăn. 
@@ -283,10 +283,10 @@ const Home = () => {
         <div className="relative z-10 container mx-auto px-4 max-w-2xl">
           <ScrollAnimate animation="scale-in">
             <div className="bg-background/95 dark:bg-[#242b26]/95 backdrop-blur-md p-10 md:p-14 text-center rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.15)] border border-[#d6cfbe]/30">
-              <p className="font-vollkorn italic text-2xl md:text-3xl text-primary/80 font-normal mb-1">
+              <p className="font-vollkorn italic text-2xl md:text-3xl text-gradient-eco font-normal mb-1">
                 Triết lý
               </p>
-              <h2 className="font-barlow-condensed text-xl md:text-2xl tracking-[0.25em] font-medium text-primary uppercase mt-1">
+              <h2 className="font-barlow-condensed text-xl md:text-2xl tracking-[0.25em] font-semibold text-gradient-eco uppercase mt-1">
                 THƯƠNG HIỆU
               </h2>
               
@@ -299,7 +299,7 @@ const Home = () => {
               <div>
                 <Link 
                   to="/about" 
-                  className="inline-flex items-center gap-3 bg-[#1f1c17] text-white hover:bg-[#322d25] dark:bg-background dark:text-[#242b26] dark:hover:bg-[#f5ebd6] px-8 py-3 rounded-full tracking-[0.15em] text-[10px] uppercase font-barlow font-bold shadow-sm transition-all duration-300 group"
+                  className="inline-flex items-center gap-3 bg-gradient-eco text-white hover:bg-gradient-eco-hover px-8 py-3 rounded-full tracking-[0.15em] text-[10px] uppercase font-barlow font-bold shadow-md shadow-primary/10 hover:shadow-primary/20 transition-all duration-300 group"
                 >
                   TÌM HIỂU THÊM <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-1 transition-transform duration-300" />
                 </Link>
@@ -408,9 +408,9 @@ const Home = () => {
                   <span className="h-px w-8 bg-primary"></span>
                   <span className="text-xs tracking-widest text-primary font-barlow font-bold">QUY TRÌNH & CHẤT LƯỢNG</span>
                 </div>
-                <h2 className="text-4xl md:text-5xl font-heading text-primary mb-6 leading-tight">
+                <h2 className="text-4xl md:text-5xl font-heading text-gradient-eco mb-6 leading-tight font-bold">
                   Hành trình từ lá rụng <br/> 
-                  <span className="italic font-light font-vollkorn">đến bàn ăn của bạn</span>
+                  <span className="italic font-light font-vollkorn text-gradient-eco">đến bàn ăn của bạn</span>
                 </h2>
                 <p className="text-sm md:text-base text-muted-foreground mb-10 font-nunito font-light leading-relaxed">
                   Chúng tôi kiểm soát nghiêm ngặt từ khâu thu hoạch đến thành phẩm, 
@@ -444,7 +444,7 @@ const Home = () => {
             <p className="text-[11px] tracking-[0.25em] font-barlow font-bold text-muted-foreground uppercase mb-3">
               DANH MỤC LỰA CHỌN
             </p>
-            <h2 className="text-3xl md:text-4xl font-heading text-primary font-bold mb-12">Khám phá sản phẩm</h2>
+            <h2 className="text-3xl md:text-4xl font-heading text-gradient-eco font-bold mb-12">Khám phá sản phẩm</h2>
             
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 max-w-4xl mx-auto">
               {categories.map((cat, idx) => (
@@ -476,7 +476,7 @@ const Home = () => {
                 <span className="text-xs tracking-widest text-primary font-barlow font-bold">KHÁM PHÁ B-ECO</span>
                 <span className="h-px w-8 bg-primary"></span>
               </div>
-              <h2 className="text-3xl md:text-4xl font-heading text-primary uppercase tracking-widest font-bold">Flagship Series</h2>
+              <h2 className="text-3xl md:text-4xl font-heading text-gradient-eco uppercase tracking-widest font-bold">Flagship Series</h2>
             </div>
             
             <ProductGrid products={featuredProducts} isLoading={isLoading} />
@@ -484,7 +484,7 @@ const Home = () => {
             <div className="mt-16 text-center">
               <Link 
                 to="/shop" 
-                className="inline-flex items-center gap-3 bg-[#1f1c17] text-white hover:bg-[#1f1c17]/90 dark:bg-background dark:text-[#242b26] dark:hover:bg-background/90 px-10 py-4 tracking-widest text-xs uppercase font-barlow font-bold transition-all duration-300"
+                className="inline-flex items-center gap-3 bg-gradient-eco text-white hover:bg-gradient-eco-hover px-10 py-4 tracking-widest text-xs uppercase font-barlow font-bold shadow-md shadow-primary/10 hover:shadow-primary/20 transition-all duration-300"
               >
                 XEM TẤT CẢ SẢN PHẨM <ArrowRight className="h-4 w-4" />
               </Link>
@@ -500,7 +500,7 @@ const Home = () => {
             <p className="text-[11px] tracking-[0.25em] font-barlow font-bold text-muted-foreground uppercase mb-3">
               CÂU CHUYỆN SẢN PHẨM
             </p>
-            <h2 className="text-3xl md:text-4xl font-heading text-primary leading-tight font-bold">
+            <h2 className="text-3xl md:text-4xl font-heading text-gradient-eco leading-tight font-bold">
               Từ B-ECO's Journal
             </h2>
           </ScrollAnimate>

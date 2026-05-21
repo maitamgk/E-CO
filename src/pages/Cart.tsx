@@ -35,7 +35,7 @@ const Cart = () => {
       {/* Hero Section */}
       <div className="relative bg-background border-b border-border/40 py-16 text-center">
         <div className="container mx-auto px-4 relative z-10">
-          <h1 className="text-3xl md:text-4xl font-heading text-primary mb-4">
+          <h1 className="text-3xl md:text-4xl font-heading text-gradient-eco mb-4 font-bold">
             Giỏ hàng của bạn
           </h1>
           <p className="text-muted-foreground font-light max-w-2xl mx-auto">
@@ -68,7 +68,7 @@ const Cart = () => {
 
             <div className="mt-4">
               <Link to="/shop">
-                <Button variant="outline" className="gap-2">
+                <Button variant="outline" className="gap-2 border-primary/20 hover:border-primary hover:bg-gradient-eco hover:text-white transition-all duration-300">
                   Tiếp tục mua sắm
                 </Button>
               </Link>

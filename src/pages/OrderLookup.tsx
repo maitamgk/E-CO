@@ -121,7 +121,7 @@ const OrderLookup = () => {
               <p className="text-[11px] tracking-[0.25em] font-barlow font-bold text-muted-foreground uppercase mb-3">
                 TRA CỨU HÀNH TRÌNH
               </p>
-              <h1 className="text-4xl md:text-5xl font-heading font-bold mb-4">
+              <h1 className="text-4xl md:text-5xl font-heading font-bold text-gradient-eco mb-4">
                 Theo dõi đơn hàng
               </h1>
               <p className="text-sm text-muted-foreground font-light leading-relaxed">
@@ -160,7 +160,7 @@ const OrderLookup = () => {
                   <Button 
                     type="submit" 
                     disabled={isLoading}
-                    className="w-full h-12 bg-[#1f1c17] text-white hover:bg-[#322d25] dark:bg-background dark:text-[#242b26] dark:hover:bg-[#f5ebd6] font-barlow font-bold tracking-widest text-xs rounded-xl uppercase flex items-center justify-center gap-2 shadow-sm transition-all duration-300"
+                    className="w-full h-12 bg-gradient-eco text-white hover:bg-gradient-eco-hover font-barlow font-bold tracking-widest text-xs rounded-xl uppercase flex items-center justify-center gap-2 shadow-sm transition-all duration-300"
                   >
                     <Search className="w-4 h-4" />
                     {isLoading ? 'Đang tìm...' : 'Tra cứu'}
@@ -192,7 +192,7 @@ const OrderLookup = () => {
                   <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b border-border/10 pb-6 mb-8 gap-4">
                     <div>
                       <span className="text-[10px] font-barlow font-bold uppercase tracking-widest text-muted-foreground">Mã đơn hàng</span>
-                      <h2 className="text-2xl font-heading font-bold text-primary">{order.orderCode}</h2>
+                      <h2 className="text-2xl font-heading font-bold text-gradient-eco">{order.orderCode}</h2>
                     </div>
                     <div className="text-right sm:text-right">
                       <span className="text-[10px] font-barlow font-bold uppercase tracking-widest text-muted-foreground block">Cập nhật lúc</span>
@@ -263,7 +263,7 @@ const OrderLookup = () => {
                 {/* Delivery details left */}
                 <ScrollAnimate animation="fade-in-up" className="md:col-span-5 space-y-6">
                   <div className="bg-white dark:bg-[#2c332d] p-6 sm:p-8 border border-border/10 shadow-sm rounded-2xl space-y-6">
-                    <h3 className="font-heading text-lg font-bold border-b border-border/10 pb-3">Thông tin nhận hàng</h3>
+                    <h3 className="font-heading text-lg font-bold text-gradient-eco border-b border-border/10 pb-3">Thông tin nhận hàng</h3>
                     
                     <div className="space-y-4">
                       <div className="flex gap-3">
@@ -293,7 +293,7 @@ const OrderLookup = () => {
                   </div>
 
                   <div className="bg-white dark:bg-[#2c332d] p-6 sm:p-8 border border-border/10 shadow-sm rounded-2xl space-y-4">
-                    <h3 className="font-heading text-lg font-bold border-b border-border/10 pb-3">Thanh toán & Ghi chú</h3>
+                    <h3 className="font-heading text-lg font-bold text-gradient-eco border-b border-border/10 pb-3">Thanh toán & Ghi chú</h3>
                     
                     <div className="space-y-3">
                       <div className="flex justify-between text-sm">
@@ -317,7 +317,7 @@ const OrderLookup = () => {
                 {/* Items grid right */}
                 <ScrollAnimate animation="fade-in-up" className="md:col-span-7">
                   <div className="bg-white dark:bg-[#2c332d] p-6 sm:p-8 border border-border/10 shadow-sm rounded-2xl flex flex-col h-full">
-                    <h3 className="font-heading text-lg font-bold border-b border-border/10 pb-3 mb-6">Chi tiết sản phẩm</h3>
+                    <h3 className="font-heading text-lg font-bold text-gradient-eco border-b border-border/10 pb-3 mb-6">Chi tiết sản phẩm</h3>
                     
                     {/* Products list */}
                     <div className="space-y-4 flex-grow">
@@ -359,7 +359,7 @@ const OrderLookup = () => {
                           <span>-{formatMoney(order.totals.discountAmount)}</span>
                         </div>
                       )}
-                      <div className="flex justify-between font-heading text-base font-bold text-primary pt-3 border-t border-border/5">
+                      <div className="flex justify-between font-heading text-base font-bold text-gradient-eco pt-3 border-t border-border/5">
                         <span>Tổng thanh toán</span>
                         <span>{formatMoney(order.totals.total)}</span>
                       </div>

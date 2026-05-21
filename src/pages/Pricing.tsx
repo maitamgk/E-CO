@@ -23,7 +23,7 @@ const Pricing = () => {
         <div className="container mx-auto px-4 relative z-10 text-center">
           {/* Header */}
           <div className="mb-12">
-            <h1 className="text-3xl md:text-4xl font-heading text-primary mb-4">
+            <h1 className="text-3xl md:text-4xl font-heading text-gradient-eco mb-4 font-bold">
               Bảng giá sản phẩm
             </h1>
             <p className="text-muted-foreground max-w-2xl mx-auto font-light">
@@ -85,7 +85,7 @@ const Pricing = () => {
           </div>
 
           {/* Wholesale Card - Featured */}
-          <div className="group relative bg-primary p-8 hover:bg-primary/95 transition-colors duration-300">
+          <div className="group relative bg-gradient-eco p-8 hover:opacity-95 transition-all duration-300 text-white shadow-lg">
             {/* Popular Badge */}
             <div className="absolute top-4 right-4">
               <span className="text-xs uppercase tracking-widest text-primary-foreground/70 font-medium border border-primary-foreground/20 px-3 py-1">
@@ -164,12 +164,12 @@ const Pricing = () => {
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <Link to="/shop">
-              <Button size="lg" className="rounded-none bg-primary hover:bg-primary/90">
+              <Button size="lg" className="rounded-none">
                 Đặt hàng ngay
               </Button>
             </Link>
-            <Button size="lg" variant="outline" className="rounded-none border-primary text-primary hover:bg-primary/5">
-              Liên hệ tư vấn: 0123 456 789
+            <Button size="lg" variant="outline" className="rounded-none border-primary text-primary hover:bg-gradient-eco hover:text-white hover:border-transparent transition-all duration-300">
+              Liên hệ tư vấn: 0385 959 294
             </Button>
           </div>
         </div>

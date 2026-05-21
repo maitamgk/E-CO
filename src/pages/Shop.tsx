@@ -45,7 +45,7 @@ const Shop = () => {
       <section className="relative bg-background border-b border-border/40 py-16 lg:py-24 text-center">
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-2xl mx-auto">
-            <h1 className="text-3xl md:text-4xl lg:text-5xl font-heading text-primary mb-4">
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-heading text-gradient-eco mb-4 font-bold">
               Cửa hàng B-ECO
             </h1>
             <p className="text-muted-foreground font-light mb-8">
@@ -143,7 +143,7 @@ const Shop = () => {
                   onClick={() => setGridSize('normal')}
                   className={cn(
                     "p-1.5 transition-colors",
-                    gridSize === 'normal' ? 'bg-primary text-primary-foreground' : 'hover:bg-primary/5 text-primary/60'
+                    gridSize === 'normal' ? 'bg-gradient-eco text-white' : 'hover:bg-primary/5 text-primary/60'
                   )}
                 >
                   <Grid3X3 className="h-4 w-4 stroke-[1.5]" />
@@ -152,7 +152,7 @@ const Shop = () => {
                   onClick={() => setGridSize('large')}
                   className={cn(
                     "p-1.5 transition-colors",
-                    gridSize === 'large' ? 'bg-primary text-primary-foreground' : 'hover:bg-primary/5 text-primary/60'
+                    gridSize === 'large' ? 'bg-gradient-eco text-white' : 'hover:bg-primary/5 text-primary/60'
                   )}
                 >
                   <LayoutGrid className="h-4 w-4 stroke-[1.5]" />

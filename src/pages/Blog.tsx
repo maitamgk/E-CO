@@ -83,7 +83,7 @@ const Blog = () => {
               <p className="text-[11px] tracking-[0.25em] font-barlow font-bold text-muted-foreground uppercase mb-3">
                 B-ECO JOURNAL
               </p>
-              <h1 className="text-4xl md:text-5xl font-heading font-bold mb-4">
+              <h1 className="text-4xl md:text-5xl font-heading font-bold text-gradient-eco mb-4">
                 Hành trình & Câu chuyện
               </h1>
               <p className="text-sm text-muted-foreground font-light leading-relaxed">
@@ -100,7 +100,7 @@ const Blog = () => {
                 onClick={() => setActiveTag(tag)}
                 className={`px-4 py-2 border transition-all duration-300 ${
                   activeTag === tag 
-                    ? "bg-[#1f1c17] text-white border-[#1f1c17] dark:bg-background dark:text-[#242b26] dark:border-white" 
+                    ? "bg-gradient-eco text-white border-none hover:bg-gradient-eco-hover" 
                     : "bg-transparent text-primary/70 border-transparent hover:text-primary"
                 }`}
               >
@@ -124,7 +124,7 @@ const Blog = () => {
                     alt={article.title} 
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
                   />
-                  <div className="absolute top-4 left-4 bg-white/95 dark:bg-[#242b26]/95 text-primary text-[10px] font-barlow font-bold tracking-widest px-3 py-1 uppercase border border-border/10">
+                  <div className="absolute top-4 left-4 bg-white/95 dark:bg-[#242b26]/95 text-gradient-eco text-[10px] font-barlow font-bold tracking-widest px-3 py-1 uppercase border border-border/10">
                     {article.tag}
                   </div>
                 </div>
@@ -136,7 +136,7 @@ const Blog = () => {
                     <span>{article.readTime}</span>
                   </div>
                   
-                  <h2 className="font-heading text-lg font-bold text-primary mb-3 leading-snug group-hover:text-primary/70 transition-colors">
+                  <h2 className="font-heading text-lg font-bold text-primary mb-3 leading-snug group-hover:text-secondary transition-colors">
                     {article.title}
                   </h2>
                   
@@ -145,7 +145,7 @@ const Blog = () => {
                   </p>
                   
                   <div>
-                    <button className="inline-flex items-center gap-2 text-xs font-barlow font-bold tracking-widest text-primary uppercase border-b border-primary/20 pb-0.5 hover:border-primary transition-all duration-300">
+                    <button className="inline-flex items-center gap-2 text-xs font-barlow font-bold tracking-widest text-primary hover:text-secondary uppercase border-b border-primary/20 pb-0.5 hover:border-secondary transition-all duration-300">
                       ĐỌC TIẾP <ArrowRight className="h-3 w-3" />
                     </button>
                   </div>

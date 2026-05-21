@@ -10,6 +10,7 @@ import logo from '@/assets/products/logo.jpg';
 const leftNavLinks = [
   { to: '/shop', label: 'Sản phẩm' },
   { to: '/about', label: 'Về B-ECO' },
+  { to: '/awards', label: 'Giải thưởng' },
   { to: '/blog', label: 'Bài viết' },
   { to: '/order-lookup', label: 'Tra cứu đơn hàng' },
 ];
@@ -121,15 +122,12 @@ export const Header = () => {
 
             {/* Center: Brand Logo */}
             <div className="absolute left-1/2 -translate-x-1/2 flex items-center">
-              <Link to="/" className="flex items-center gap-2 group">
+              <Link to="/" className="flex items-center group">
                 <img 
                   src={logo} 
                   alt="B-ECO Logo" 
-                  className="w-10 h-10 object-cover group-hover:scale-105 transition-transform duration-500 rounded-none border border-border/10" 
+                  className="w-24 h-24 md:w-36 md:h-36 object-cover group-hover:scale-105 transition-transform duration-500 rounded-none border border-border/10" 
                 />
-                <span className="font-heading text-xl md:text-2xl tracking-[0.1em] text-primary uppercase font-bold">
-                  B-ECO
-                </span>
               </Link>
             </div>
 

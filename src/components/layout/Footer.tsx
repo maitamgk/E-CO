@@ -21,15 +21,12 @@ export const Footer = () => {
           
           {/* Left Side: Brand & Newsletter */}
           <div className="lg:col-span-5 space-y-8">
-            <Link to="/" className="flex items-center gap-3 font-bold text-xl group">
+            <Link to="/" className="flex items-center group font-bold text-xl">
               <img 
                 src={logo} 
                 alt="B-ECO Logo" 
-                className="w-10 h-10 object-cover group-hover:scale-105 transition-transform duration-500 rounded-none border border-border/10" 
+                className="w-32 h-32 md:w-48 md:h-48 object-cover group-hover:scale-105 transition-transform duration-500 rounded-none border border-border/10" 
               />
-              <span className="font-heading text-2xl tracking-[0.1em] text-primary uppercase font-bold">
-                B-ECO
-              </span>
             </Link>
             
             <h3 className="font-heading text-3xl sm:text-4xl md:text-5xl italic font-light text-primary/90 leading-tight">
@@ -85,6 +82,7 @@ export const Footer = () => {
                   { to: '/shop', label: 'Cửa hàng' },
                   { to: '/pricing', label: 'Bảng giá' },
                   { to: '/about', label: 'Về B-ECO' },
+                  { to: '/awards', label: 'Giải thưởng' },
                   { to: '/blog', label: 'Bài viết' },
                   { to: '/order-lookup', label: 'Tra cứu đơn hàng' },
                 ].map(link => (

@@ -55,8 +55,8 @@ const Contact = () => {
         {
             icon: Phone,
             label: 'Hotline',
-            value: '0123 456 789',
-            href: 'tel:0123456789',
+            value: '0385 959 294',
+            href: 'tel:0385959294',
             description: 'Hỗ trợ 24/7',
         },
         {
@@ -87,7 +87,7 @@ const Contact = () => {
             {/* Hero Section */}
             <section className="relative bg-background border-b border-border/40 py-16 text-center">
                 <div className="container mx-auto px-4 relative z-10">
-                    <h1 className="text-3xl md:text-4xl font-heading text-primary mb-4">
+                    <h1 className="text-3xl md:text-4xl font-heading text-gradient-eco mb-4 font-bold">
                         Liên hệ với chúng tôi
                     </h1>
                     <p className="text-muted-foreground max-w-2xl mx-auto font-light">
@@ -103,7 +103,7 @@ const Contact = () => {
                         <div className="bg-background border border-border/40 p-8 rounded-none">
                             <div className="flex items-center gap-3 mb-6">
                                 <div>
-                                    <h2 className="text-2xl font-heading text-primary">Gửi tin nhắn</h2>
+                                    <h2 className="text-2xl font-heading text-gradient-eco font-bold">Gửi tin nhắn</h2>
                                     <p className="text-muted-foreground font-light mt-1">Điền thông tin bên dưới</p>
                                 </div>
                             </div>
@@ -117,7 +117,10 @@ const Contact = () => {
                                     <p className="text-muted-foreground mb-6">
                                         Chúng tôi đã nhận được tin nhắn và sẽ phản hồi sớm nhất.
                                     </p>
-                                    <Button onClick={() => setIsSubmitted(false)}>
+                                    <Button 
+                                        onClick={() => setIsSubmitted(false)}
+                                        className="rounded-none bg-gradient-eco text-white hover:bg-gradient-eco-hover transition-all duration-300 shadow-sm"
+                                    >
                                         Gửi tin nhắn khác
                                     </Button>
                                 </div>
@@ -192,7 +195,7 @@ const Contact = () => {
                                     <Button
                                         type="submit"
                                         size="lg"
-                                        className="w-full h-12 rounded-none bg-primary mt-8"
+                                        className="w-full h-12 rounded-none bg-gradient-eco text-white hover:bg-gradient-eco-hover transition-all duration-300 shadow-md shadow-primary/10 hover:shadow-primary/20 mt-8"
                                         disabled={isSubmitting}
                                     >
                                         {isSubmitting ? (
@@ -253,7 +256,7 @@ const Contact = () => {
 
                             {/* Social Links */}
                             <div className="p-6 border border-border/40 bg-white">
-                                <h3 className="font-heading text-lg mb-4 text-primary">Kết nối với chúng tôi</h3>
+                                <h3 className="font-heading text-lg mb-4 text-gradient-eco font-semibold">Kết nối với chúng tôi</h3>
                                 <div className="flex gap-3">
                                     {['Facebook', 'Instagram', 'Zalo', 'YouTube'].map((social) => (
                                         <a

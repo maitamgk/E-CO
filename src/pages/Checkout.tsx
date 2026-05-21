@@ -149,8 +149,8 @@ const Checkout = () => {
       <Layout>
         <div className="container mx-auto px-4 py-16 text-center">
           <div className="max-w-md mx-auto">
-            <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-6">
-              <Check className="h-8 w-8 text-primary-foreground" />
+            <div className="w-16 h-16 bg-gradient-eco rounded-full flex items-center justify-center mx-auto mb-6">
+              <Check className="h-8 w-8 text-white" />
             </div>
             <h1 className="text-2xl font-bold mb-2">Đặt hàng thành công!</h1>
             <p className="text-muted-foreground mb-4">
@@ -158,20 +158,20 @@ const Checkout = () => {
             </p>
             <div className="bg-muted/50 rounded-lg p-4 mb-6">
               <p className="text-sm text-muted-foreground">Mã đơn hàng</p>
-              <p className="text-2xl font-bold text-primary">{orderCode}</p>
+              <p className="text-2xl font-bold text-gradient-eco">{orderCode}</p>
             </div>
             <div className="flex flex-col gap-2">
               {user ? (
                 <Link to="/orders">
-                  <Button className="w-full">Xem đơn hàng của tôi</Button>
+                  <Button className="w-full bg-gradient-eco text-white hover:bg-gradient-eco-hover rounded-none transition-all duration-300">Xem đơn hàng của tôi</Button>
                 </Link>
               ) : (
                 <Link to={`/order-lookup?code=${orderCode}&phone=${form.phone}`}>
-                  <Button className="w-full">Xem đơn hàng của tôi</Button>
+                  <Button className="w-full bg-gradient-eco text-white hover:bg-gradient-eco-hover rounded-none transition-all duration-300">Xem đơn hàng của tôi</Button>
                 </Link>
               )}
               <Link to="/shop">
-                <Button variant="outline" className="w-full">Tiếp tục mua sắm</Button>
+                <Button variant="outline" className="w-full rounded-none">Tiếp tục mua sắm</Button>
               </Link>
             </div>
           </div>
@@ -189,7 +189,7 @@ const Checkout = () => {
             <ArrowLeft className="h-4 w-4 stroke-[1.5]" />
             Quay lại
           </Link>
-          <h1 className="text-3xl md:text-4xl font-heading text-primary mb-4">
+          <h1 className="text-3xl md:text-4xl font-heading text-gradient-eco mb-4 font-bold">
             Thanh toán
           </h1>
           <p className="text-muted-foreground font-light max-w-2xl mx-auto">
@@ -205,7 +205,7 @@ const Checkout = () => {
           <div>
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="bg-white border border-border/40 p-6">
-                <h2 className="text-xl font-heading text-primary mb-6">Thông tin giao hàng</h2>
+                <h2 className="text-xl font-heading text-gradient-eco mb-6 font-semibold">Thông tin giao hàng</h2>
 
                 <div className="space-y-4">
                   <div>
@@ -270,8 +270,8 @@ const Checkout = () => {
 
               {/* Payment Method */}
               <div className="bg-white border border-border/40 p-6">
-                <h2 className="text-xl font-heading text-primary mb-6">Phương thức thanh toán</h2>
-                <div className="flex items-center gap-3 p-4 bg-primary/10 border border-primary/20 rounded-lg">
+                <h2 className="text-xl font-heading text-gradient-eco mb-6 font-semibold">Phương thức thanh toán</h2>
+                <div className="flex items-center gap-3 p-4 bg-gradient-eco-soft border border-primary/20 rounded-lg">
                   <Truck className="h-6 w-6 text-primary" />
                   <div>
                     <p className="font-medium">Thanh toán khi nhận hàng (COD)</p>
@@ -301,7 +301,7 @@ const Checkout = () => {
           {/* Order Summary */}
           <div>
             <div className="bg-white border border-border/40 p-6 sticky top-20">
-              <h2 className="text-xl font-heading text-primary mb-6">Đơn hàng của bạn</h2>
+              <h2 className="text-xl font-heading text-gradient-eco mb-6 font-semibold">Đơn hàng của bạn</h2>
 
               <div className="space-y-3 max-h-64 overflow-y-auto mb-4">
                 {Object.values(items).map(item => (
@@ -348,7 +348,7 @@ const Checkout = () => {
                 </div>
                 <div className="border-t border-border pt-2 flex justify-between">
                   <span className="font-semibold">Tổng cộng:</span>
-                  <span className="text-xl font-bold text-primary">{formatMoney(total)}</span>
+                  <span className="text-xl font-bold text-gradient-eco">{formatMoney(total)}</span>
                 </div>
               </div>
             </div>

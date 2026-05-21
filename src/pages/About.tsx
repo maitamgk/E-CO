@@ -14,7 +14,7 @@ const About = () => {
         <section className="relative py-24 border-b border-border/40">
           <div className="container mx-auto px-4 relative z-10 text-center">
             <div className="max-w-2xl mx-auto">
-              <h1 className="text-4xl lg:text-5xl font-heading text-primary mb-6">
+              <h1 className="text-4xl lg:text-5xl font-heading text-gradient-eco mb-6 font-bold">
                 Về B-ECO
               </h1>
               <p className="text-lg text-muted-foreground font-light leading-relaxed">
@@ -33,7 +33,7 @@ const About = () => {
               <span className="h-px w-8 bg-primary"></span>
               <span className="text-xs tracking-widest text-primary font-medium">NGUỒN GỐC</span>
             </div>
-            <h2 className="text-3xl font-heading text-primary mb-6">Khởi nguồn từ Phú Yên</h2>
+            <h2 className="text-3xl font-heading text-gradient-eco font-bold mb-6">Khởi nguồn từ Phú Yên</h2>
             <p className="text-muted-foreground leading-relaxed font-light">
               B-ECO ra đời tại vùng đất Phú Yên xinh đẹp, nơi những cây bàng cổ thụ đứng 
               sừng sững bên bờ biển trong xanh. Chúng tôi nhận thấy lá bàng rụng xuống 
@@ -66,7 +66,7 @@ const About = () => {
               <span className="h-px w-8 bg-primary"></span>
               <span className="text-xs tracking-widest text-primary font-medium">SỨ MỆNH</span>
             </div>
-            <h2 className="text-3xl font-heading text-primary mb-6">Sứ mệnh của chúng tôi</h2>
+            <h2 className="text-3xl font-heading text-gradient-eco font-bold mb-6">Sứ mệnh của chúng tôi</h2>
             <p className="text-muted-foreground leading-relaxed font-light">
               Chúng tôi tin rằng mỗi chiếc chén, mỗi chiếc dĩa từ lá bàng là một bước 
               nhỏ nhưng ý nghĩa trong hành trình bảo vệ môi trường. B-ECO cam kết mang 
@@ -83,7 +83,7 @@ const About = () => {
               <span className="h-px w-8 bg-primary"></span>
               <span className="text-xs tracking-widest text-primary font-medium">MÔI TRƯỜNG</span>
             </div>
-            <h2 className="text-3xl font-heading text-primary mb-6">Bảo vệ biển Phú Yên</h2>
+            <h2 className="text-3xl font-heading text-gradient-eco font-bold mb-6">Bảo vệ biển Phú Yên</h2>
             <p className="text-muted-foreground leading-relaxed font-light">
               Biển Phú Yên với vẻ đẹp hoang sơ đang đối mặt với nguy cơ ô nhiễm từ 
               rác thải nhựa. Mỗi sản phẩm B-ECO bạn sử dụng là một lần bạn nói "không" 
@@ -116,7 +116,7 @@ const About = () => {
               <span className="h-px w-8 bg-primary"></span>
               <span className="text-xs tracking-widest text-primary font-medium">CỘNG ĐỒNG</span>
             </div>
-            <h2 className="text-3xl font-heading text-primary mb-6">Cộng đồng bền vững</h2>
+            <h2 className="text-3xl font-heading text-gradient-eco font-bold mb-6">Cộng đồng bền vững</h2>
             <p className="text-muted-foreground leading-relaxed font-light">
               B-ECO không chỉ là một thương hiệu, mà là một cộng đồng những người yêu 
               thiên nhiên. Chúng tôi tạo công ăn việc làm cho người dân địa phương, 
@@ -130,7 +130,7 @@ const About = () => {
       {/* Values */}
       <section className="py-20 border-t border-border/40 bg-white">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-heading text-primary text-center mb-12">Giá trị cốt lõi</h2>
+          <h2 className="text-3xl font-heading text-gradient-eco font-bold text-center mb-12">Giá trị cốt lõi</h2>
           <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
             {[
               { value: '100%', label: 'Tự nhiên', desc: 'Làm hoàn toàn từ lá bàng tự nhiên, không hóa chất' },
@@ -138,8 +138,8 @@ const About = () => {
               { value: '0%', label: 'Hóa chất', desc: 'Hoàn toàn an toàn cho người sử dụng' },
             ].map((item, idx) => (
               <div key={idx} className="text-center p-8 border border-border/40">
-                <div className="text-5xl font-heading text-primary/20 mb-4">{item.value}</div>
-                <div className="font-heading text-xl text-primary mb-2">{item.label}</div>
+                <div className="text-5xl font-heading text-gradient-eco font-bold mb-4">{item.value}</div>
+                <div className="font-heading text-xl text-gradient-eco font-bold mb-2">{item.label}</div>
                 <p className="text-sm text-muted-foreground font-light">{item.desc}</p>
               </div>
             ))}

@@ -108,11 +108,35 @@
     color: hsl(var(--primary-foreground));
   }
 
+  .bg-gradient-eco {
+    background: hsl(var(--secondary));
+  }
+
+  .bg-gradient-eco-hover {
+    background: #005c8d;
+  }
+
+  .text-gradient-eco {
+    background: none;
+    -webkit-background-clip: initial;
+    -webkit-text-fill-color: initial;
+    color: hsl(var(--primary));
+  }
+
+  .bg-gradient-eco-soft {
+    background: linear-gradient(135deg, rgba(47, 125, 50, 0.08) 0%, rgba(0, 119, 182, 0.08) 100%);
+  }
+
+  .bg-gradient-eco-card {
+    background: linear-gradient(135deg, rgba(47, 125, 50, 0.03) 0%, rgba(0, 119, 182, 0.03) 100%);
+  }
+
   .glass-panel {
-    background: hsl(var(--card) / 0.9);
-    border: 1px solid hsl(var(--border) / 0.2);
-    box-shadow: var(--shadow-sm);
-    backdrop-filter: blur(18px);
+    background: hsl(var(--card) / 0.85);
+    border: 1px solid rgba(47, 125, 50, 0.1);
+    box-shadow: var(--shadow-md);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
   }
 
   @keyframes marquee {

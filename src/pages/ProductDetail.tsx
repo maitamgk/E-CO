@@ -380,7 +380,7 @@ const ProductDetail = () => {
 
                   <Button
                     size="lg"
-                    className="w-full h-14 text-sm uppercase tracking-widest font-normal rounded-none bg-primary text-primary-foreground hover:bg-primary/90 transition-colors"
+                    className="w-full h-14 text-sm uppercase tracking-widest font-normal rounded-none bg-gradient-eco text-white hover:bg-gradient-eco-hover transition-all duration-300 shadow-md shadow-primary/10 hover:shadow-primary/20"
                     onClick={handleAddToCart}
                     disabled={product.stock === 0 || isAdding}
                   >
