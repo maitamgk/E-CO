@@ -5,8 +5,10 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/context/AuthContext';
 import { Order, OrderStatus } from '@/types';
+import { cn } from '@/lib/utils';
 import { formatMoney } from '@/utils/money';
 import { Package, ArrowRight, Clock, CheckCircle, Truck, XCircle } from 'lucide-react';
+import { orderService } from '@/services/orderService';
 
 // Mock orders data
 const mockOrders: Order[] = [
@@ -65,14 +67,20 @@ const Orders = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Simulate fetching orders
     const fetchOrders = async () => {
-      await new Promise(resolve => setTimeout(resolve, 500));
-      setOrders(mockOrders);
-      setIsLoading(false);
+      if (!user) return;
+      setIsLoading(true);
+      try {
+        const data = await orderService.getOrdersByUser(user.uid);
+        setOrders(data);
+      } catch (error) {
+        console.error('Error fetching orders:', error);
+      } finally {
+        setIsLoading(false);
+      }
     };
     fetchOrders();
-  }, []);
+  }, [user]);
 
   if (!user) {
     return (

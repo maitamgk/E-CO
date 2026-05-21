@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { Layout } from '@/components/layout/Layout';
 import { ScrollAnimate } from '@/components/ui/scroll-animate';
 import { Button } from '@/components/ui/button';
@@ -21,8 +22,9 @@ const statusTimeline: { status: OrderStatus; label: string; desc: string; icon: 
 ];
 
 const OrderLookup = () => {
-  const [orderCode, setOrderCode] = useState('');
-  const [phone, setPhone] = useState('');
+  const [searchParams] = useSearchParams();
+  const [orderCode, setOrderCode] = useState(() => searchParams.get('code') || '');
+  const [phone, setPhone] = useState(() => searchParams.get('phone') || '');
   const [isLoading, setIsLoading] = useState(false);
   const [order, setOrder] = useState<Order | null>(null);
   const [searched, setSearched] = useState(false);
@@ -60,9 +62,8 @@ const OrderLookup = () => {
     };
   }, [order?.id]);
 
-  const handleLookup = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!orderCode.trim() || !phone.trim()) {
+  const lookupOrder = async (codeVal: string, phoneVal: string) => {
+    if (!codeVal.trim() || !phoneVal.trim()) {
       toast.error('Vui lòng nhập đầy đủ mã đơn hàng và số điện thoại');
       return;
     }
@@ -71,8 +72,8 @@ const OrderLookup = () => {
     setSearched(true);
     try {
       const foundOrder = await orderService.getOrderByCodeAndPhone(
-        orderCode.trim(),
-        phone.trim()
+        codeVal.trim(),
+        phoneVal.trim()
       );
       if (foundOrder) {
         setOrder(foundOrder);
@@ -87,6 +88,19 @@ const OrderLookup = () => {
     } finally {
       setIsLoading(false);
     }
+  };
+
+  useEffect(() => {
+    const codeParam = searchParams.get('code');
+    const phoneParam = searchParams.get('phone');
+    if (codeParam && phoneParam) {
+      lookupOrder(codeParam, phoneParam);
+    }
+  }, [searchParams]);
+
+  const handleLookup = async (e: React.FormEvent) => {
+    e.preventDefault();
+    await lookupOrder(orderCode, phone);
   };
 
   const getStatusIndex = (currentStatus: OrderStatus) => {

@@ -161,9 +161,15 @@ const Checkout = () => {
               <p className="text-2xl font-bold text-primary">{orderCode}</p>
             </div>
             <div className="flex flex-col gap-2">
-              <Link to="/orders">
-                <Button className="w-full">Xem đơn hàng của tôi</Button>
-              </Link>
+              {user ? (
+                <Link to="/orders">
+                  <Button className="w-full">Xem đơn hàng của tôi</Button>
+                </Link>
+              ) : (
+                <Link to={`/order-lookup?code=${orderCode}&phone=${form.phone}`}>
+                  <Button className="w-full">Xem đơn hàng của tôi</Button>
+                </Link>
+              )}
               <Link to="/shop">
                 <Button variant="outline" className="w-full">Tiếp tục mua sắm</Button>
               </Link>
