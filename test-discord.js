@@ -31,7 +31,7 @@ const itemsList = order.items
   .map(item => `▫️ **${item.nameSnapshot}**\n   ↳ Số lượng: ${item.qty} | Đơn giá: ${formatMoney(item.priceSnapshot)}\n   ↳ Thành tiền: ${formatMoney(item.priceSnapshot * item.qty)}`)
   .join('\n');
 
-const adminUrl = 'http://localhost:5173/admin';
+const adminUrl = 'https://e-co.shop/admin';
 const orderDate = new Date(order.createdAt).toLocaleString('vi-VN', { timeZone: 'Asia/Ho_Chi_Minh' });
 
 const embed = {

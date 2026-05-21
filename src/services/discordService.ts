@@ -59,7 +59,7 @@ export const discordService = {
         inline: false
       });
 
-      const response = await fetch('/api/send-discord', {
+      const response = await fetch('/api/notify', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
