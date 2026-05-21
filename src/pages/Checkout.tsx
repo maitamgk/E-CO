@@ -11,11 +11,13 @@ import { formatMoney } from '@/utils/money';
 import { validatePhone, validateRequired } from '@/utils/validators';
 import { useToast } from '@/hooks/use-toast';
 import { Truck, CreditCard, ArrowLeft, Check, Loader2 } from 'lucide-react';
+import { orderService } from '@/services/orderService';
+import { telegramService } from '@/services/telegramService';
 
 const Checkout = () => {
   const navigate = useNavigate();
   const { items, itemCount, getSubtotal, getTotalQty, clearCart } = useCart();
-  const _auth = useAuth(); // Keep context connection for future user sync
+  const { user } = useAuth();
   const { toast } = useToast();
 
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -68,11 +70,46 @@ const Checkout = () => {
     setIsSubmitting(true);
 
     try {
-      // Simulate API call - In real app, this calls Firebase Cloud Function
-      await new Promise(resolve => setTimeout(resolve, 1500));
-
       // Generate order code
       const code = 'BCO' + Date.now().toString(36).toUpperCase();
+      
+      const newOrder = {
+        id: crypto.randomUUID(),
+        orderCode: code,
+        userId: user?.uid || 'guest',
+        customer: {
+          fullName: form.fullName,
+          phone: form.phone,
+          address: form.address,
+        },
+        items: Object.values(items),
+        totals: {
+          subtotal,
+          discountRate,
+          discountAmount,
+          total,
+          totalQty,
+        },
+        paymentMethod: 'COD' as const,
+        status: 'pending' as const,
+        notes: form.note,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      };
+
+      // Save order to Supabase
+      const success = await orderService.addOrder(newOrder);
+      if (!success) {
+        throw new Error('Không thể tạo đơn hàng trên hệ thống');
+      }
+
+      // Send notification to Telegram Bot (non-blocking)
+      try {
+        await telegramService.sendOrderNotification(newOrder);
+      } catch (err) {
+        console.error('Failed to send Telegram notification:', err);
+      }
+
       setOrderCode(code);
 
       // Clear cart and show success
@@ -83,10 +120,10 @@ const Checkout = () => {
         title: 'Đặt hàng thành công!',
         description: `Mã đơn hàng: ${code}`,
       });
-    } catch {
+    } catch (error: any) {
       toast({
         title: 'Có lỗi xảy ra',
-        description: 'Vui lòng thử lại sau',
+        description: error.message || 'Vui lòng thử lại sau',
         variant: 'destructive',
       });
     } finally {
