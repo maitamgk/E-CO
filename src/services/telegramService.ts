@@ -16,22 +16,31 @@ export const telegramService = {
 
     try {
       const itemsList = order.items
-        .map(item => `• ${item.nameSnapshot} x${item.qty} (${formatMoney(item.priceSnapshot * item.qty)})`)
+        .map(item => `▫️ <b>${item.nameSnapshot}</b>\n   ↳ Số lượng: ${item.qty}\n   ↳ Đơn giá: ${formatMoney(item.priceSnapshot)}\n   ↳ Thành tiền: ${formatMoney(item.priceSnapshot * item.qty)}`)
         .join('\n');
 
       const adminUrl = `${window.location.origin}/admin`;
+      const orderDate = new Date(order.createdAt).toLocaleString('vi-VN', { timeZone: 'Asia/Ho_Chi_Minh' });
       
       const message = [
-        `<b>🔔 CÓ ĐƠN HÀNG MỚI! (#${order.orderCode})</b>\n`,
-        `<b>👤 Khách hàng:</b> ${order.customer.fullName}`,
-        `<b>📞 Số điện thoại:</b> ${order.customer.phone}`,
-        `<b>📍 Địa chỉ:</b> ${order.customer.address}`,
-        `<b>💳 Thanh toán:</b> ${order.paymentMethod.toUpperCase()}`,
-        order.notes ? `<b>📝 Ghi chú:</b> <i>${order.notes}</i>` : '',
-        `\n<b>📦 Chi tiết sản phẩm:</b>`,
+        `🌟 <b>ĐƠN HÀNG MỚI TỪ B-ECO</b> 🌟`,
+        `━━━━━━━━━━━━━━━━━━`,
+        `📦 <b>Mã đơn:</b> <code>#${order.orderCode}</code>`,
+        `⏱ <b>Thời gian:</b> ${orderDate}`,
+        ``,
+        `👤 <b>THÔNG TIN KHÁCH HÀNG</b>`,
+        `┣ <b>Tên:</b> ${order.customer.fullName}`,
+        `┣ <b>SĐT:</b> <code>${order.customer.phone}</code>`,
+        `┗ <b>Địa chỉ:</b> ${order.customer.address}`,
+        ``,
+        `🛒 <b>CHI TIẾT GIỎ HÀNG</b>`,
         itemsList,
-        `\n<b>💰 Tổng thanh toán: ${formatMoney(order.totals.total)}</b>\n`,
-        `👉 <a href="${adminUrl}">Nhấn vào đây để duyệt đơn hàng</a>`
+        `━━━━━━━━━━━━━━━━━━`,
+        `💵 <b>TỔNG THANH TOÁN:</b> <b>${formatMoney(order.totals.total)}</b>`,
+        `🏷 <b>Phương thức:</b> ${order.paymentMethod.toUpperCase()}`,
+        order.notes ? `📝 <b>Ghi chú:</b> <i>${order.notes}</i>` : '',
+        ``,
+        `✨ <a href="${adminUrl}">👉 BẤM VÀO ĐÂY ĐỂ XỬ LÝ ĐƠN</a> ✨`
       ].filter(line => line !== '').join('\n');
 
       const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
