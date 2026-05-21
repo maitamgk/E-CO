@@ -10,7 +10,7 @@ B-ECO là một nền tảng thương mại điện tử chuyên bán các sản
 ## Công nghệ sử dụng
 - **Frontend**: React 18, TypeScript, Tailwind CSS
 - **Build Tool**: Vite
-- **Package Manager**: npm
+- **Package Manager**: Bun
 - **UI Components**: shadcn/ui
 - **Routing**: React Router v6
 - **Testing**: Vitest
@@ -19,8 +19,8 @@ B-ECO là một nền tảng thương mại điện tử chuyên bán các sản
 ## Cài đặt và chạy dự án
 
 ### Yêu cầu
-- Node.js 16+
-- npm (hoặc yarn)
+- Node.js 16+ hoặc Bun
+- npm/yarn/bun
 
 ### Hướng dẫn cài đặt
 
@@ -29,23 +29,23 @@ B-ECO là một nền tảng thương mại điện tử chuyên bán các sản
 git clone https://github.com/maitamgk/E-CO.git
 cd E-CO
 
-# Cài đặt dependencies
-npm install
+# Cài đặt dependencies (sử dụng bun)
+bun install
 
 # Chạy development server
-npm run dev
+bun run dev
 
 # Build cho production
-npm run build
+bun run build
 
 # Preview production build
-npm run preview
+bun run preview
 
 # Chạy tests
-npm run test
+bun run test
 
 # Lint code
-npm run lint
+bun run lint
 ```
 
 ## Deployment trên Vercel
@@ -56,9 +56,9 @@ npm run lint
 3. Chọn repository `maitamgk/E-CO`
 4. Cấu hình:
    - **Framework Preset**: Vite
-   - **Build Command**: `npm run build`
+   - **Build Command**: `bun run build`
    - **Output Directory**: `dist`
-   - **Install Command**: `npm install`
+   - **Install Command**: `bun install`
 5. Click "Deploy"
 
 ### Cách 2: Sử dụng Vercel CLI

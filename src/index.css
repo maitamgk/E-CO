@@ -1,25 +1,25 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@200;400;500;600;700&family=Barlow+Semi+Condensed:wght@500;700&family=Barlow:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Nunito:wght@400;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&family=Vollkorn:ital,wght@0,400;0,500;0,700;1,400&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
   :root {
-    /* Boxy Light Theme */
-    --background: 45 50% 98%; /* #fdfaf5 */
-    --foreground: 154 26% 16%; /* #1e332a */
+    /* Minimalist Organic Theme (Cocoon inspired) */
+    --background: 45 50% 98%; /* #fcf9f4 - Off-white / cream background */
+    --foreground: 154 26% 16%; /* #1e332a - Dark slate green for text */
 
-    --card: 0 0% 100%; /* white */
-    --card-foreground: 154 26% 16%; /* #1e332a */
+    --card: 0 0% 100%;
+    --card-foreground: 154 26% 16%;
 
     --popover: 0 0% 100%;
     --popover-foreground: 154 26% 16%;
 
-    --primary: 154 26% 16%; /* #1e332a */
-    --primary-foreground: 45 50% 98%; /* #fdfaf5 */
+    --primary: 137 9% 15%; /* #242b26 - The user's requested dark green */
+    --primary-foreground: 45 50% 98%;
 
-    --secondary: 154 24% 24%; /* #2d4a3e */
-    --secondary-foreground: 45 50% 98%; /* #fdfaf5 */
+    --secondary: 154 24% 24%;
+    --secondary-foreground: 45 50% 98%;
 
     --muted: 154 26% 92%;
     --muted-foreground: 154 10% 45%;
@@ -30,63 +30,46 @@
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 154 26% 16%; /* #1e332a */
+    --border: 154 26% 16%;
     --input: 154 26% 16%;
-    --ring: 154 26% 16%;
+    --ring: 137 9% 15%;
 
     --radius: 0rem;
 
-    --sidebar-background: 45 50% 98%;
-    --sidebar-foreground: 154 26% 16%;
-    --sidebar-primary: 154 26% 16%;
-    --sidebar-primary-foreground: 45 50% 98%;
-    --sidebar-accent: 154 26% 92%;
-    --sidebar-accent-foreground: 154 26% 16%;
-    --sidebar-border: 154 26% 16%;
-    --sidebar-ring: 154 26% 16%;
-
     --font-sans: 'Inter', system-ui, sans-serif;
     --font-heading: 'Playfair Display', serif;
+    --font-vollkorn: 'Vollkorn', serif;
+    --font-nunito: 'Nunito', sans-serif;
+    --font-barlow: 'Barlow', sans-serif;
+    --font-barlow-condensed: 'Barlow Condensed', sans-serif;
+    --font-barlow-semi: 'Barlow Semi Condensed', sans-serif;
+
+    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
   }
 
   .dark {
-    /* Boxy Dark Theme */
-    --background: 154 26% 10%; /* Very dark green background */
-    --foreground: 45 50% 98%; /* Cream text */
-
-    --card: 154 26% 14%; /* Dark green card */
-    --card-foreground: 45 50% 98%; /* Cream text */
-
-    --popover: 154 26% 14%;
+    --background: 137 9% 15%; /* #242b26 */
+    --foreground: 45 50% 98%;
+    --card: 137 9% 18%;
+    --card-foreground: 45 50% 98%;
+    --popover: 137 9% 18%;
     --popover-foreground: 45 50% 98%;
-
-    --primary: 45 50% 98%; /* Cream primary */
-    --primary-foreground: 154 26% 16%; /* Dark green text inside primary */
-
-    --secondary: 154 26% 20%; /* Slightly lighter dark green */
+    --primary: 45 50% 98%;
+    --primary-foreground: 137 9% 15%;
+    --secondary: 137 9% 25%;
     --secondary-foreground: 45 50% 98%;
-
-    --muted: 154 26% 20%;
-    --muted-foreground: 154 10% 70%;
-
-    --accent: 45 50% 98%;
-    --accent-foreground: 154 26% 16%;
-
-    --destructive: 0 62% 30%;
+    --muted: 137 9% 25%;
+    --muted-foreground: 45 50% 80%;
+    --accent: 137 9% 25%;
+    --accent-foreground: 45 50% 98%;
+    --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 45 50% 98%;
-
-    --border: 45 50% 98%; /* Cream border for contrast in dark mode */
-    --input: 45 50% 98%;
+    --border: 137 9% 25%;
+    --input: 137 9% 25%;
     --ring: 45 50% 98%;
-
-    --sidebar-background: 154 26% 10%;
-    --sidebar-foreground: 45 50% 98%;
-    --sidebar-primary: 45 50% 98%;
-    --sidebar-primary-foreground: 154 26% 16%;
-    --sidebar-accent: 154 26% 20%;
-    --sidebar-accent-foreground: 45 50% 98%;
-    --sidebar-border: 45 50% 98%;
-    --sidebar-ring: 45 50% 98%;
   }
 }
 
@@ -94,27 +77,26 @@
   * {
     @apply border-border;
   }
-  
+
   body {
-    @apply bg-background text-foreground font-sans antialiased;
-    text-rendering: optimizeLegibility;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+    @apply bg-background text-foreground;
+    font-family: var(--font-sans);
   }
   
   h1, h2, h3, h4, h5, h6 {
-    @apply font-heading tracking-tight;
+    font-family: var(--font-heading);
   }
 
+  /* Ensure images are responsive */
   img {
     max-width: 100%;
     height: auto;
     display: block;
   }
 
+  /* Fix for iOS viewport height */
   html {
     height: -webkit-fill-available;
-    scroll-behavior: smooth;
   }
 
   body {
@@ -124,10 +106,34 @@
 }
 
 @layer utilities {
-  .eco-dark-bg {
-    background-color: #2d4a3e;
+  .text-balance {
+    text-wrap: balance;
   }
-  .eco-dark-bg-deeper {
-    background-color: #1e332a;
+
+  .eco-dark-bg {
+    background-color: hsl(var(--primary));
+    color: hsl(var(--primary-foreground));
+  }
+
+  .glass-panel {
+    background: hsl(var(--card) / 0.9);
+    border: 1px solid hsl(var(--border) / 0.2);
+    box-shadow: var(--shadow-sm);
+    backdrop-filter: blur(18px);
+  }
+
+  @keyframes marquee {
+    0% {
+      transform: translateX(0%);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+
+  .animate-marquee {
+    display: flex;
+    width: max-content;
+    animation: marquee 30s linear infinite;
   }
 }

@@ -11,8 +11,6 @@ import { formatMoney } from '@/utils/money';
 import { validatePhone, validateRequired } from '@/utils/validators';
 import { useToast } from '@/hooks/use-toast';
 import { Truck, CreditCard, ArrowLeft, Check, Loader2 } from 'lucide-react';
-import { orderService } from '@/services/orderService';
-import { Order } from '@/types';
 
 const Checkout = () => {
   const navigate = useNavigate();
@@ -70,40 +68,11 @@ const Checkout = () => {
     setIsSubmitting(true);
 
     try {
+      // Simulate API call - In real app, this calls Firebase Cloud Function
+      await new Promise(resolve => setTimeout(resolve, 1500));
+
       // Generate order code
       const code = 'BCO' + Date.now().toString(36).toUpperCase();
-
-      const newOrder: Order = {
-        id: crypto.randomUUID(),
-        orderCode: code,
-        userId: _auth.user?.uid || 'guest',
-        customer: {
-          fullName: form.fullName,
-          phone: form.phone,
-          address: form.address,
-        },
-        items: Object.values(items),
-        totals: {
-          subtotal,
-          discountRate,
-          discountAmount,
-          total,
-          totalQty,
-        },
-        paymentMethod: 'COD',
-        status: 'pending',
-        notes: form.note,
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      };
-
-      // Save to Supabase
-      const success = await orderService.addOrder(newOrder);
-
-      if (!success) {
-        throw new Error('Failed to save order');
-      }
-
       setOrderCode(code);
 
       // Clear cart and show success
@@ -163,32 +132,16 @@ const Checkout = () => {
   return (
     <Layout>
       {/* Hero Section */}
-      <div className="relative bg-gradient-to-br from-green-950 via-emerald-900 to-teal-950 text-white overflow-hidden">
-        {/* Background Image */}
-        <div
-          className="absolute inset-0 opacity-35"
-          style={{
-            backgroundImage: 'url(https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=1920&q=80)',
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-          }}
-        />
-        {/* Gradient Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-br from-green-950/60 via-emerald-900/65 to-teal-950/70" />
-
-        {/* Glowing Orbs */}
-        <div className="absolute top-20 -left-20 w-72 h-72 bg-emerald-500/8 rounded-full blur-3xl" />
-        <div className="absolute bottom-20 -right-20 w-96 h-96 bg-teal-500/8 rounded-full blur-3xl" />
-
-        <div className="container mx-auto px-4 py-12 relative">
-          <Link to="/cart" className="inline-flex items-center gap-2 text-emerald-100 hover:text-emerald-50 transition-colors mb-4">
-            <ArrowLeft className="h-4 w-4" />
-            Quay lại giỏ hàng
+      <div className="relative bg-[#fcf9f4] border-b border-border/40 py-12 text-center">
+        <div className="container mx-auto px-4 relative z-10">
+          <Link to="/cart" className="inline-flex items-center gap-2 text-primary/60 hover:text-primary transition-colors mb-4 text-sm tracking-widest uppercase">
+            <ArrowLeft className="h-4 w-4 stroke-[1.5]" />
+            Quay lại
           </Link>
-          <h1 className="text-4xl md:text-5xl font-black italic mb-4 bg-gradient-to-r from-emerald-400 via-green-300 to-teal-400 bg-clip-text text-transparent">
+          <h1 className="text-3xl md:text-4xl font-heading text-primary mb-4">
             Thanh toán
           </h1>
-          <p className="text-emerald-100 text-lg max-w-2xl">
+          <p className="text-muted-foreground font-light max-w-2xl mx-auto">
             Hoàn tất thông tin để đặt hàng
           </p>
         </div>
@@ -200,8 +153,8 @@ const Checkout = () => {
           {/* Form */}
           <div>
             <form onSubmit={handleSubmit} className="space-y-6">
-              <div className="bg-card border border-border rounded-lg p-6">
-                <h2 className="text-lg font-semibold mb-4">Thông tin giao hàng</h2>
+              <div className="bg-white border border-border/40 p-6">
+                <h2 className="text-xl font-heading text-primary mb-6">Thông tin giao hàng</h2>
 
                 <div className="space-y-4">
                   <div>
@@ -265,8 +218,8 @@ const Checkout = () => {
               </div>
 
               {/* Payment Method */}
-              <div className="bg-card border border-border rounded-lg p-6">
-                <h2 className="text-lg font-semibold mb-4">Phương thức thanh toán</h2>
+              <div className="bg-white border border-border/40 p-6">
+                <h2 className="text-xl font-heading text-primary mb-6">Phương thức thanh toán</h2>
                 <div className="flex items-center gap-3 p-4 bg-primary/10 border border-primary/20 rounded-lg">
                   <Truck className="h-6 w-6 text-primary" />
                   <div>
@@ -296,8 +249,8 @@ const Checkout = () => {
 
           {/* Order Summary */}
           <div>
-            <div className="bg-card border border-border rounded-lg p-6 sticky top-20">
-              <h2 className="text-lg font-semibold mb-4">Đơn hàng của bạn</h2>
+            <div className="bg-white border border-border/40 p-6 sticky top-20">
+              <h2 className="text-xl font-heading text-primary mb-6">Đơn hàng của bạn</h2>
 
               <div className="space-y-3 max-h-64 overflow-y-auto mb-4">
                 {Object.values(items).map(item => (

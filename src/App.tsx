@@ -24,6 +24,8 @@ const ProductDetail = lazy(() => import("./pages/ProductDetail"));
 const Contact = lazy(() => import("./pages/Contact"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 const Admin = lazy(() => import("./pages/Admin"));
+const Blog = lazy(() => import("./pages/Blog"));
+const OrderLookup = lazy(() => import("./pages/OrderLookup"));
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -59,6 +61,8 @@ const App = () => (
                     <Route path="/product/:id" element={<ProductDetail />} />
                     <Route path="/contact" element={<Contact />} />
                     <Route path="/admin" element={<Admin />} />
+                    <Route path="/blog" element={<Blog />} />
+                    <Route path="/order-lookup" element={<OrderLookup />} />
                     <Route path="*" element={<NotFound />} />
                   </Routes>
                 </Suspense>

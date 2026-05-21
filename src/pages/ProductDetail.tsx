@@ -124,35 +124,19 @@ const ProductDetail = () => {
   return (
     <Layout>
       {/* Hero Section */}
-      <div className="relative bg-gradient-to-br from-green-950 via-emerald-900 to-teal-950 text-white overflow-hidden">
-        {/* Background Image */}
-        <div
-          className="absolute inset-0 opacity-35"
-          style={{
-            backgroundImage: 'url(https://images.unsplash.com/photo-1470058869958-2a77ade41c02?w=1920&q=80)',
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-          }}
-        />
-        {/* Gradient Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-br from-green-950/60 via-emerald-900/65 to-teal-950/70" />
-
-        {/* Glowing Orbs */}
-        <div className="absolute top-20 -left-20 w-72 h-72 bg-emerald-500/8 rounded-full blur-3xl" />
-        <div className="absolute bottom-20 -right-20 w-96 h-96 bg-teal-500/8 rounded-full blur-3xl" />
-
-        <div className="container mx-auto px-4 py-12 relative">
+      <div className="relative bg-[#fcf9f4] border-b border-border/40 py-12 text-center">
+        <div className="container mx-auto px-4 relative z-10">
           <Link
             to="/shop"
-            className="inline-flex items-center gap-2 text-emerald-100 hover:text-emerald-50 transition-colors mb-4"
+            className="inline-flex items-center gap-2 text-primary/60 hover:text-primary transition-colors mb-4 text-sm tracking-widest uppercase"
           >
-            <ArrowLeft className="h-4 w-4" />
+            <ArrowLeft className="h-4 w-4 stroke-[1.5]" />
             Quay lại cửa hàng
           </Link>
-          <h1 className="text-4xl md:text-5xl font-black italic mb-4 bg-gradient-to-r from-emerald-400 via-green-300 to-teal-400 bg-clip-text text-transparent">
+          <h1 className="text-3xl md:text-4xl font-heading text-primary mb-4">
             {product.name}
           </h1>
-          <p className="text-emerald-100 text-lg">
+          <p className="text-muted-foreground font-light max-w-2xl mx-auto">
             {categoryName}
           </p>
         </div>
@@ -215,7 +199,7 @@ const ProductDetail = () => {
             {/* Main Image with Zoom */}
             <div
               ref={imageContainerRef}
-              className="relative aspect-square rounded-3xl overflow-hidden bg-muted cursor-zoom-in group"
+              className="relative aspect-square border border-border/40 overflow-hidden bg-[#fcf9f4] cursor-zoom-in group"
               onMouseEnter={() => setIsZoomed(true)}
               onMouseLeave={() => setIsZoomed(false)}
               onMouseMove={handleMouseMove}
@@ -261,10 +245,10 @@ const ProductDetail = () => {
                   key={index}
                   onClick={() => setSelectedImageIndex(index)}
                   className={cn(
-                    "flex-shrink-0 w-20 h-20 lg:w-24 lg:h-24 rounded-xl overflow-hidden border-2 transition-all duration-300",
+                    "flex-shrink-0 w-20 h-20 lg:w-24 lg:h-24 border border-border/40 overflow-hidden transition-all duration-300",
                     selectedImageIndex === index
-                      ? "border-primary ring-2 ring-primary/20 scale-105"
-                      : "border-border hover:border-primary/50"
+                      ? "border-primary"
+                      : "hover:border-primary/50"
                   )}
                 >
                   <img
@@ -288,16 +272,16 @@ const ProductDetail = () => {
                 <button
                   onClick={() => setIsLiked(!isLiked)}
                   className={cn(
-                    "p-3 rounded-xl border transition-all duration-300 hover:scale-110",
+                    "p-3 border border-border/40 transition-all duration-300 hover:border-primary",
                     isLiked
-                      ? "bg-destructive text-destructive-foreground border-destructive"
-                      : "border-border hover:border-primary/50"
+                      ? "text-red-500"
+                      : "text-primary hover:text-primary"
                   )}
                 >
-                  <Heart className={cn("h-5 w-5", isLiked && "fill-current")} />
+                  <Heart className={cn("h-5 w-5 stroke-[1.5]", isLiked && "fill-current")} />
                 </button>
-                <button className="p-3 rounded-xl border border-border hover:border-primary/50 transition-all duration-300 hover:scale-110">
-                  <Share2 className="h-5 w-5" />
+                <button className="p-3 border border-border/40 text-primary hover:border-primary hover:text-primary transition-all duration-300">
+                  <Share2 className="h-5 w-5 stroke-[1.5]" />
                 </button>
               </div>
             </div>
@@ -313,19 +297,19 @@ const ProductDetail = () => {
             </p>
 
             {/* Prices */}
-            <div className="space-y-3 p-6 bg-card rounded-2xl border border-border">
+            <div className="space-y-3 p-6 bg-white border border-border/40">
               <div className="flex items-end gap-4">
-                <span className="text-4xl font-bold bg-gradient-to-r from-primary to-accent-foreground bg-clip-text text-transparent">
+                <span className="text-3xl font-heading text-primary">
                   {formatMoney(product.priceRetail)}
                 </span>
-                <span className="text-muted-foreground mb-1">/ cái</span>
+                <span className="text-muted-foreground font-light mb-1">/ cái</span>
               </div>
 
               <div className="flex items-center gap-2 text-sm">
-                <Sparkles className="h-4 w-4 text-primary" />
-                <span className="text-muted-foreground">Giá sỉ từ {product.wholesaleMinQty} cái:</span>
-                <span className="font-semibold text-primary">{formatMoney(product.priceWholesale)}</span>
-                <Badge className="bg-primary/10 text-primary border-0 ml-2">
+                <Sparkles className="h-4 w-4 text-primary stroke-[1.5]" />
+                <span className="text-muted-foreground font-light">Giá sỉ từ {product.wholesaleMinQty} cái:</span>
+                <span className="font-heading text-primary">{formatMoney(product.priceWholesale)}</span>
+                <Badge className="bg-primary text-primary-foreground rounded-none text-[10px] uppercase tracking-widest font-normal ml-2">
                   Tiết kiệm {savingsPercent}%
                 </Badge>
               </div>
@@ -334,72 +318,72 @@ const ProductDetail = () => {
             {/* Quantity & Add to Cart */}
             <div className="space-y-4">
               {cartItem ? (
-                <div className="flex items-center justify-between bg-primary/5 rounded-2xl p-4 border-2 border-primary/20">
-                  <span className="text-sm text-muted-foreground">Trong giỏ hàng:</span>
+                <div className="flex items-center justify-between bg-primary/5 p-4 border border-border/40">
+                  <span className="text-sm font-light text-muted-foreground">Trong giỏ hàng:</span>
                   <div className="flex items-center gap-4">
                     <Button
                       variant="ghost"
                       size="icon"
-                      className="h-12 w-12 rounded-xl hover:bg-primary/10 hover:text-primary"
+                      className="h-10 w-10 rounded-none hover:bg-primary/10 text-primary"
                       onClick={() => updateQuantity(product.id, cartItem.qty - 1)}
                     >
-                      <Minus className="h-5 w-5" />
+                      <Minus className="h-4 w-4 stroke-[1.5]" />
                     </Button>
-                    <span className="font-bold text-2xl text-primary min-w-[3rem] text-center">
+                    <span className="font-heading text-xl text-primary min-w-[3rem] text-center">
                       {cartItem.qty}
                     </span>
                     <Button
                       variant="ghost"
                       size="icon"
-                      className="h-12 w-12 rounded-xl hover:bg-primary/10 hover:text-primary"
+                      className="h-10 w-10 rounded-none hover:bg-primary/10 text-primary"
                       onClick={() => updateQuantity(product.id, cartItem.qty + 1)}
                       disabled={cartItem.qty >= product.stock}
                     >
-                      <Plus className="h-5 w-5" />
+                      <Plus className="h-4 w-4 stroke-[1.5]" />
                     </Button>
                   </div>
                 </div>
               ) : (
                 <>
                   <div className="flex items-center gap-4">
-                    <span className="text-muted-foreground">Số lượng:</span>
-                    <div className="flex items-center border border-border rounded-xl">
+                    <span className="text-muted-foreground font-light">Số lượng:</span>
+                    <div className="flex items-center border border-border/40">
                       <Button
                         variant="ghost"
                         size="icon"
-                        className="h-12 w-12 rounded-l-xl"
+                        className="h-12 w-12 rounded-none"
                         onClick={() => setQuantity(Math.max(1, quantity - 1))}
                       >
-                        <Minus className="h-4 w-4" />
+                        <Minus className="h-4 w-4 stroke-[1.5]" />
                       </Button>
-                      <span className="font-semibold text-xl min-w-[3rem] text-center">
+                      <span className="font-heading text-lg min-w-[3rem] text-center">
                         {quantity}
                       </span>
                       <Button
                         variant="ghost"
                         size="icon"
-                        className="h-12 w-12 rounded-r-xl"
+                        className="h-12 w-12 rounded-none"
                         onClick={() => setQuantity(Math.min(product.stock, quantity + 1))}
                       >
-                        <Plus className="h-4 w-4" />
+                        <Plus className="h-4 w-4 stroke-[1.5]" />
                       </Button>
                     </div>
                   </div>
 
                   <Button
                     size="lg"
-                    className="w-full h-16 text-lg font-semibold rounded-2xl shadow-xl shadow-primary/20 hover:shadow-2xl hover:shadow-primary/30 hover:scale-[1.02] transition-all duration-300"
+                    className="w-full h-14 text-sm uppercase tracking-widest font-normal rounded-none bg-primary text-primary-foreground hover:bg-primary/90 transition-colors"
                     onClick={handleAddToCart}
                     disabled={product.stock === 0 || isAdding}
                   >
                     {isAdding ? (
                       <>
-                        <Check className="h-6 w-6 mr-2 animate-bounce" />
-                        Đã thêm vào giỏ hàng!
+                        <Check className="h-5 w-5 mr-2" />
+                        Đã thêm vào giỏ hàng
                       </>
                     ) : (
                       <>
-                        <ShoppingCart className="h-6 w-6 mr-2" />
+                        <ShoppingCart className="h-5 w-5 mr-2 stroke-[1.5]" />
                         Thêm vào giỏ hàng
                       </>
                     )}
@@ -410,7 +394,7 @@ const ProductDetail = () => {
               <Button
                 variant="outline"
                 size="lg"
-                className="w-full h-14 text-base rounded-2xl"
+                className="w-full h-14 text-sm uppercase tracking-widest font-normal rounded-none"
                 onClick={() => navigate('/cart')}
               >
                 Xem giỏ hàng
@@ -418,24 +402,24 @@ const ProductDetail = () => {
             </div>
 
             {/* Features */}
-            <div className="grid grid-cols-3 gap-4 pt-6 border-t border-border">
+            <div className="grid grid-cols-3 gap-4 pt-6 border-t border-border/40">
               <div className="text-center space-y-2">
-                <div className="w-12 h-12 mx-auto rounded-xl bg-primary/10 flex items-center justify-center">
-                  <Leaf className="h-6 w-6 text-primary" />
+                <div className="w-12 h-12 mx-auto bg-[#fcf9f4] border border-border/40 flex items-center justify-center">
+                  <Leaf className="h-5 w-5 text-primary stroke-[1.5]" />
                 </div>
-                <p className="text-sm text-muted-foreground">100% Thiên nhiên</p>
+                <p className="text-[11px] uppercase tracking-widest text-muted-foreground font-light">100% Thiên nhiên</p>
               </div>
               <div className="text-center space-y-2">
-                <div className="w-12 h-12 mx-auto rounded-xl bg-primary/10 flex items-center justify-center">
-                  <Truck className="h-6 w-6 text-primary" />
+                <div className="w-12 h-12 mx-auto bg-[#fcf9f4] border border-border/40 flex items-center justify-center">
+                  <Truck className="h-5 w-5 text-primary stroke-[1.5]" />
                 </div>
-                <p className="text-sm text-muted-foreground">Giao toàn quốc</p>
+                <p className="text-[11px] uppercase tracking-widest text-muted-foreground font-light">Giao toàn quốc</p>
               </div>
               <div className="text-center space-y-2">
-                <div className="w-12 h-12 mx-auto rounded-xl bg-primary/10 flex items-center justify-center">
-                  <Shield className="h-6 w-6 text-primary" />
+                <div className="w-12 h-12 mx-auto bg-[#fcf9f4] border border-border/40 flex items-center justify-center">
+                  <Shield className="h-5 w-5 text-primary stroke-[1.5]" />
                 </div>
-                <p className="text-sm text-muted-foreground">Đảm bảo chất lượng</p>
+                <p className="text-[11px] uppercase tracking-widest text-muted-foreground font-light">Đảm bảo</p>
               </div>
             </div>
           </div>
@@ -444,13 +428,13 @@ const ProductDetail = () => {
         {/* Tabs Section - Product Details & Reviews */}
         <div className="mt-16">
           <Tabs defaultValue="details" className="w-full">
-            <TabsList className="w-full max-w-md mx-auto grid grid-cols-2 h-14 rounded-2xl bg-muted p-1">
-              <TabsTrigger value="details" className="rounded-xl text-base data-[state=active]:bg-background data-[state=active]:shadow-lg">
-                <Info className="h-4 w-4 mr-2" />
+            <TabsList className="w-full max-w-md mx-auto grid grid-cols-2 h-12 rounded-none bg-white border border-border/40 p-0">
+              <TabsTrigger value="details" className="rounded-none text-sm uppercase tracking-widest font-normal data-[state=active]:bg-[#fcf9f4] data-[state=active]:shadow-none data-[state=active]:text-primary border-r border-border/40 h-full">
+                <Info className="h-4 w-4 mr-2 stroke-[1.5]" />
                 Chi tiết
               </TabsTrigger>
-              <TabsTrigger value="reviews" className="rounded-xl text-base data-[state=active]:bg-background data-[state=active]:shadow-lg">
-                <MessageSquare className="h-4 w-4 mr-2" />
+              <TabsTrigger value="reviews" className="rounded-none text-sm uppercase tracking-widest font-normal data-[state=active]:bg-[#fcf9f4] data-[state=active]:shadow-none data-[state=active]:text-primary h-full">
+                <MessageSquare className="h-4 w-4 mr-2 stroke-[1.5]" />
                 Đánh giá (200)
               </TabsTrigger>
             </TabsList>
@@ -458,71 +442,71 @@ const ProductDetail = () => {
             <TabsContent value="details" className="mt-8">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 {/* Product Specifications */}
-                <div className="p-6 bg-card rounded-2xl border border-border space-y-4">
-                  <h3 className="font-semibold text-lg text-foreground flex items-center gap-2">
-                    <Package className="h-5 w-5 text-primary" />
+                <div className="p-6 bg-white border border-border/40 space-y-4">
+                  <h3 className="font-heading text-lg text-primary flex items-center gap-2 mb-6">
+                    <Package className="h-5 w-5 stroke-[1.5]" />
                     Thông số sản phẩm
                   </h3>
                   <div className="space-y-3">
-                    <div className="flex justify-between py-2 border-b border-border">
-                      <span className="text-muted-foreground">Chất liệu</span>
-                      <span className="font-medium text-foreground">Lá bàng tự nhiên 100%</span>
+                    <div className="flex justify-between py-2 border-b border-border/40">
+                      <span className="text-muted-foreground font-light text-sm">Chất liệu</span>
+                      <span className="font-medium text-sm">Lá bàng tự nhiên 100%</span>
                     </div>
-                    <div className="flex justify-between py-2 border-b border-border">
-                      <span className="text-muted-foreground">Xuất xứ</span>
-                      <span className="font-medium text-foreground">Phú Yên, Việt Nam</span>
+                    <div className="flex justify-between py-2 border-b border-border/40">
+                      <span className="text-muted-foreground font-light text-sm">Xuất xứ</span>
+                      <span className="font-medium text-sm">Phú Yên, Việt Nam</span>
                     </div>
-                    <div className="flex justify-between py-2 border-b border-border">
-                      <span className="text-muted-foreground">Thời gian phân hủy</span>
-                      <span className="font-medium text-foreground">45-60 ngày</span>
+                    <div className="flex justify-between py-2 border-b border-border/40">
+                      <span className="text-muted-foreground font-light text-sm">Thời gian phân hủy</span>
+                      <span className="font-medium text-sm">45-60 ngày</span>
                     </div>
-                    <div className="flex justify-between py-2 border-b border-border">
-                      <span className="text-muted-foreground">Chịu nhiệt</span>
-                      <span className="font-medium text-foreground">Đến 80°C</span>
+                    <div className="flex justify-between py-2 border-b border-border/40">
+                      <span className="text-muted-foreground font-light text-sm">Chịu nhiệt</span>
+                      <span className="font-medium text-sm">Đến 80°C</span>
                     </div>
                     <div className="flex justify-between py-2">
-                      <span className="text-muted-foreground">Bảo quản</span>
-                      <span className="font-medium text-foreground">Nơi khô ráo, thoáng mát</span>
+                      <span className="text-muted-foreground font-light text-sm">Bảo quản</span>
+                      <span className="font-medium text-sm">Nơi khô ráo, thoáng mát</span>
                     </div>
                   </div>
                 </div>
 
                 {/* Features & Benefits */}
-                <div className="p-6 bg-card rounded-2xl border border-border space-y-4">
-                  <h3 className="font-semibold text-lg text-foreground flex items-center gap-2">
-                    <Leaf className="h-5 w-5 text-primary" />
+                <div className="p-6 bg-white border border-border/40 space-y-4">
+                  <h3 className="font-heading text-lg text-primary flex items-center gap-2 mb-6">
+                    <Leaf className="h-5 w-5 stroke-[1.5]" />
                     Đặc điểm nổi bật
                   </h3>
-                  <ul className="space-y-3">
+                  <ul className="space-y-4">
                     <li className="flex items-start gap-3">
-                      <div className="w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0 mt-0.5">
-                        <Check className="h-3 w-3 text-primary" />
+                      <div className="mt-1">
+                        <Check className="h-4 w-4 text-primary stroke-[1.5]" />
                       </div>
-                      <span className="text-muted-foreground">100% từ thiên nhiên, không hóa chất độc hại</span>
+                      <span className="text-muted-foreground font-light text-sm">100% từ thiên nhiên, không hóa chất độc hại</span>
                     </li>
                     <li className="flex items-start gap-3">
-                      <div className="w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0 mt-0.5">
-                        <Check className="h-3 w-3 text-primary" />
+                      <div className="mt-1">
+                        <Check className="h-4 w-4 text-primary stroke-[1.5]" />
                       </div>
-                      <span className="text-muted-foreground">Tự phân hủy sinh học, thân thiện môi trường</span>
+                      <span className="text-muted-foreground font-light text-sm">Tự phân hủy sinh học, thân thiện môi trường</span>
                     </li>
                     <li className="flex items-start gap-3">
-                      <div className="w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0 mt-0.5">
-                        <Check className="h-3 w-3 text-primary" />
+                      <div className="mt-1">
+                        <Check className="h-4 w-4 text-primary stroke-[1.5]" />
                       </div>
-                      <span className="text-muted-foreground">Chịu nước, chịu dầu trong thời gian sử dụng</span>
+                      <span className="text-muted-foreground font-light text-sm">Chịu nước, chịu dầu trong thời gian sử dụng</span>
                     </li>
                     <li className="flex items-start gap-3">
-                      <div className="w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0 mt-0.5">
-                        <Check className="h-3 w-3 text-primary" />
+                      <div className="mt-1">
+                        <Check className="h-4 w-4 text-primary stroke-[1.5]" />
                       </div>
-                      <span className="text-muted-foreground">Thiết kế độc đáo, phù hợp mọi sự kiện</span>
+                      <span className="text-muted-foreground font-light text-sm">Thiết kế độc đáo, phù hợp mọi sự kiện</span>
                     </li>
                     <li className="flex items-start gap-3">
-                      <div className="w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0 mt-0.5">
-                        <Check className="h-3 w-3 text-primary" />
+                      <div className="mt-1">
+                        <Check className="h-4 w-4 text-primary stroke-[1.5]" />
                       </div>
-                      <span className="text-muted-foreground">An toàn cho sức khỏe, đạt tiêu chuẩn VSATTP</span>
+                      <span className="text-muted-foreground font-light text-sm">An toàn cho sức khỏe, đạt tiêu chuẩn VSATTP</span>
                     </li>
                   </ul>
                 </div>

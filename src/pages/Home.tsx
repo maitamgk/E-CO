@@ -1,315 +1,572 @@
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Layout } from '@/components/layout/Layout';
 import { ProductGrid } from '@/components/product/ProductGrid';
-import { useProducts } from '@/context/ProductsContext';
-import { Testimonials } from '@/components/home/Testimonials';
-import { Leaf, ShieldCheck, Recycle, ArrowRight, Sparkles, Percent, Truck, Thermometer, Palette, Factory, CheckCircle2, ChevronRight } from 'lucide-react';
 import { ScrollAnimate } from '@/components/ui/scroll-animate';
+import { useProducts } from '@/context/ProductsContext';
+import { Leaf, ArrowRight, CheckCircle } from 'lucide-react';
 
-import collectionDisplay1 from '@/assets/products/collection-display-1.jpg';
-import collectionDisplay2 from '@/assets/products/collection-display-2.jpg';
-import exhibitionDisplay from '@/assets/products/exhibition-display.jpg';
-import customLogoBeco from '@/assets/products/custom-logo-beco.jpg';
-import leafPlatesVariety from '@/assets/products/leaf-plates-variety.jpg';
-import leafPlatesCloseup from '@/assets/products/leaf-plates-closeup.jpg';
+// Hero Images
+import hero1 from '@/assets/hero/hero1.jpg';
+import hero2 from '@/assets/hero/hero2.jpg';
+import hero3 from '@/assets/hero/hero3.jpg';
+import hero4 from '@/assets/hero/hero4.jpg';
 
+// Products/Categories Images
+import closeup from '@/assets/products/leaf-plates-closeup.jpg';
+import customLogo from '@/assets/products/custom-logo-beco.jpg';
+import collection1 from '@/assets/products/collection-display-1.jpg';
+import collection2 from '@/assets/products/collection-display-2.jpg';
+
+// Instagram/Gallery Images
+import anh1 from '@/assets/products/anh1.jpg';
+import anh2 from '@/assets/products/anh2.jpg';
+import anh3 from '@/assets/products/anh3.jpg';
+import anh4 from '@/assets/products/anh4.jpeg';
+import customNtt from '@/assets/products/custom-logo-ntt.jpg';
+import customVanHien from '@/assets/products/custom-logo-vanhien.jpg';
+import exhibition from '@/assets/products/exhibition-display.jpg';
+import variety from '@/assets/products/leaf-plates-variety.jpg';
+
+// Video
+import promoVideo from '@/assets/video/video1.mp4';
+
+const heroSlides = [
+  {
+    image: hero1,
+    title: "Vẻ đẹp từ\nthiên nhiên",
+    subtitle: "SẢN PHẨM MỚI TỪ LÁ BÀNG BIỂN",
+    desc: "Sản phẩm thân thiện với môi trường, được làm hoàn toàn từ lá bàng biển tự nhiên. An toàn, thẩm mỹ và bền vững.",
+    bgColor: "bg-[#e8e2d2]",
+    textColor: "text-[#3d362d]",
+  },
+  {
+    image: hero2,
+    title: "In logo\nthương hiệu",
+    subtitle: "DẤU ẤN RIÊNG CỦA BẠN",
+    desc: "Khẳng định giá trị thương hiệu với dịch vụ in logo trực tiếp lên đĩa lá. Tinh tế và chuyên nghiệp.",
+    bgColor: "bg-[#d6e0d9]",
+    textColor: "text-[#2c3e32]",
+  },
+  {
+    image: hero3,
+    title: "Sự lựa chọn\nhoàn hảo",
+    subtitle: "COMBO DÀNH CHO TIỆC CƯỚI",
+    desc: "Đồng hành cùng những sự kiện quan trọng với vẻ đẹp mộc mạc và thân thiện với môi trường.",
+    bgColor: "bg-[#e5d9c5]",
+    textColor: "text-[#4a3a24]",
+  },
+  {
+    image: hero4,
+    title: "Giảm thiểu\nrác thải nhựa",
+    subtitle: "HÀNH ĐỘNG XANH VÌ TƯƠNG LAI",
+    desc: "Cùng B-ECO kiến tạo một tương lai xanh và bền vững hơn bằng cách sử dụng các sản phẩm thay thế nhựa.",
+    bgColor: "bg-[#d4dcd2]",
+    textColor: "text-[#2f3d2e]",
+  }
+];
+
+const processSteps = [
+  {
+    num: "01",
+    title: "Thu hái lá bàng biển",
+    desc: "Chọn lọc những chiếc lá bàng biển tự nhiên rụng xuống, kích thước đạt chuẩn, hoàn toàn không xâm hại đến cây xanh."
+  },
+  {
+    num: "02",
+    title: "Làm sạch & Xử lý",
+    desc: "Lá được rửa sạch bằng nước tinh khiết và công nghệ siêu âm, phơi khô tự nhiên dưới ánh nắng mặt trời."
+  },
+  {
+    num: "03",
+    title: "Ép nhiệt định hình",
+    desc: "Sử dụng khuôn ép nhiệt độ cao, định hình đĩa lá cứng cáp, đồng thời tiệt trùng 100% không dùng hóa chất."
+  }
+];
+
+const categories = [
+  { name: "Chén lá bàng", image: closeup, link: "/shop?category=chen" },
+  { name: "Dĩa lá bàng", image: collection1, link: "/shop?category=dia" },
+  { name: "Combo Tiệc", image: exhibition, link: "/shop?category=combo" },
+  { name: "Dịch vụ In", image: customLogo, link: "/shop?category=in-logo" }
+];
+
+const mockArticles = [
+  {
+    tag: "HÀNH TRÌNH XANH",
+    title: "Từ chiếc lá bàng biển rụng đến những chiếc đĩa trên bàn tiệc",
+    desc: "Khám phá quy trình chế tác tỉ mỉ và tâm huyết để biến lá cây khô thành sản phẩm sinh học cao cấp.",
+    image: collection2,
+    link: "/blog"
+  },
+  {
+    tag: "TIÊU DÙNG BỀN VỮNG",
+    title: "B-ECO đồng hành cùng xu hướng cưới sinh thái (Green Wedding)",
+    desc: "Xu hướng sử dụng đĩa lá tự nhiên thay thế nhựa dùng một lần trong các buổi tiệc cưới hiện đại ngày càng được ưa chuộng.",
+    image: exhibition,
+    link: "/blog"
+  },
+  {
+    tag: "MÔI TRƯỜNG",
+    title: "Tại sao đĩa lá bàng biển Phú Yên là lựa chọn hàng đầu bảo vệ đại dương?",
+    desc: "Lá bàng biển rụng tự nhiên từ Phú Yên được ép nhiệt không hóa chất, tự phân hủy hoàn toàn trong 45 ngày.",
+    image: variety,
+    link: "/blog"
+  }
+];
 
 const Home = () => {
   const { products, isLoading } = useProducts();
-  const featuredProducts = products.slice(0, 4);
+  const featuredProducts = products.length > 0 ? [products[0], products[4], products[7], products[1]].filter(Boolean) : [];
+  const [currentSlide, setCurrentSlide] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
+    }, 6000);
+    return () => clearInterval(timer);
+  }, []);
 
   return (
     <Layout>
-      {/* ============ HERO — Full-width BG + text bên phải (giống mockup 100%) ============ */}
-      <section className="relative min-h-[80vh] lg:min-h-[85vh] flex items-center overflow-hidden">
-        {/* Ảnh nền full-width */}
-        <img
-          src={collectionDisplay1}
-          alt="B-ECO Leaf Plates"
-          className="absolute inset-0 w-full h-full object-cover"
-          style={{ objectPosition: 'center center' }}
-          loading="eager"
-        />
-
-        {/* Overlay: Trái trong suốt thấy ảnh rõ, phải tối đậm cho text */}
-        <div className="absolute inset-0" style={{
-          background: 'linear-gradient(to right, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.08) 35%, rgba(30,51,42,0.6) 45%, rgba(30,51,42,0.92) 55%, rgba(30,51,42,0.97) 65%, rgba(30,51,42,0.99) 100%)'
-        }} />
-
-        {/* Content — căn giữa trong vùng tối bên phải */}
-        <div className="absolute inset-0 z-10 flex items-center">
-          <div className="w-full flex justify-end">
-            <div className="w-[60%] flex items-center justify-center px-4 lg:px-8">
-              <div className="text-center">
-                <h1 className="font-heading font-extrabold mb-6" style={{ textShadow: '0 2px 30px rgba(0,0,0,0.4)' }}>
-                  <span className="block text-3xl md:text-4xl lg:text-5xl xl:text-[3.5rem] whitespace-nowrap text-white leading-[1.1] font-heading" style={{ letterSpacing: '0.04em' }}>
-                    CHÉN ĐĨA SINH HỌC
-                  </span>
-                  <span className="block text-lg md:text-xl lg:text-2xl xl:text-3xl mt-3 font-semibold text-emerald-300 leading-[1.2] font-heading" style={{ letterSpacing: '0.1em', textShadow: '0 2px 20px rgba(52,211,153,0.3)' }}>
-                    TỪ LÁ BÀNG BIỂN
-                  </span>
-                </h1>
-
-                <p className="text-white/80 text-base md:text-lg lg:text-xl mb-8 leading-relaxed mx-auto max-w-md" style={{ fontStyle: 'italic', textShadow: '0 1px 10px rgba(0,0,0,0.3)' }}>
-                  Gieo mầm xanh — Từ chiếc lá nhỏ
-                </p>
-
-                <div className="flex flex-col sm:flex-row gap-5 justify-center items-center">
-                  <Link to="/about">
-                    <Button className="w-full sm:w-auto h-12 px-8 rounded-none text-sm font-bold uppercase tracking-[0.2em] bg-transparent text-white border-2 border-white hover:bg-white hover:text-foreground transition-all duration-300 shadow-[6px_6px_0px_0px_rgba(52,211,153,1)] hover:shadow-none hover:translate-y-[6px] hover:translate-x-[6px]">
-                      KHÁM PHÁ NGAY
-                    </Button>
-                  </Link>
-                  <Link to="/shop">
-                    <Button className="w-full sm:w-auto h-12 px-8 rounded-none text-sm font-bold uppercase tracking-[0.2em] bg-background text-foreground border-2 border-primary-foreground hover:bg-emerald-400 hover:border-emerald-400 transition-all duration-300 shadow-[6px_6px_0px_0px_rgba(52,211,153,1)] hover:shadow-none hover:translate-y-[6px] hover:translate-x-[6px]">
-                      ĐẶT HÀNG NGAY
-                    </Button>
-                  </Link>
-                </div>
-              </div>
+      {/* 1. Hero Section - Split Layout (Cocoon Style) */}
+      <section className="relative min-h-[90vh] md:h-screen w-full flex flex-col md:flex-row overflow-hidden border-b border-border/10">
+        
+        {/* Left Side: Image Carousel */}
+        <div className="w-full md:w-1/2 relative h-[45vh] md:h-full overflow-hidden">
+          {heroSlides.map((slide, index) => (
+            <div 
+              key={index}
+              className={`absolute inset-0 transition-all duration-1000 ease-in-out ${
+                currentSlide === index ? 'opacity-100 scale-100 z-10' : 'opacity-0 scale-105 z-0'
+              }`}
+            >
+              <img
+                src={slide.image}
+                alt={slide.subtitle}
+                className="w-full h-full object-cover"
+              />
             </div>
-          </div>
+          ))}
         </div>
-      </section>
 
-      {/* ============ VÌ SAO CHỌN B-ECO? — 6 cards ngang hàng ============ */}
-      <section className="py-20 bg-background">
-        <div className="container mx-auto px-6 lg:px-12">
-          <ScrollAnimate animation="fade-in-up">
-            <h2 className="text-2xl md:text-3xl font-bold uppercase tracking-wider mb-12">
-              VÌ SAO CHỌN B-ECO?
-            </h2>
+        {/* Right Side: Text & Color Block */}
+        <div className="w-full md:w-1/2 relative h-[45vh] md:h-full flex items-center bg-[#fcf9f4] dark:bg-[#242b26]">
+          {/* Background Colors */}
+          {heroSlides.map((slide, index) => (
+            <div 
+              key={`bg-${index}`}
+              className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${slide.bgColor} dark:bg-opacity-20 ${
+                currentSlide === index ? 'opacity-100 z-0' : 'opacity-0 z-0'
+              }`}
+            />
+          ))}
 
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-              {[
-                { icon: Leaf, title: '100% Tự nhiên', desc: 'Làm từ lá bàng tự nhiên, phân hủy sinh học hoàn toàn trong 45 ngày.' },
-                { icon: ShieldCheck, title: 'An toàn sức khỏe', desc: 'Không chứa hóa chất độc hại, an toàn cho sức khỏe người dùng.' },
-                { icon: Recycle, title: 'Bền vững & Phân hủy', desc: 'Sản phẩm từ lá bàng biển tự phân hủy, thân thiện môi trường.' },
-                { icon: Thermometer, title: 'Chịu nhiệt tốt', desc: 'Chịu nhiệt tốt, bàng dẻo nén, chịu nhiệt tốt.' },
-                { icon: Palette, title: 'Mẫu mã đa dạng', desc: 'Mẫu mã đa dạng, nhiều màu sắc và các mẫu mã đa dạng.' },
-                { icon: Factory, title: 'Quy trình hiện đại', desc: 'Quy trình hiện đại, sản xuất tại Phú Yên, Việt Nam.' },
-              ].map((item, idx) => (
-                <div key={idx} className="bg-white border-2 border-border p-6 text-center hover:-translate-y-1 hover:shadow-[6px_6px_0px_0px_rgba(30,51,42,1)] transition-all duration-300 group rounded-none">
-                  <div className="w-14 h-14 mx-auto mb-5 rounded-none border border-border/10 bg-background flex items-center justify-center text-foreground group-hover:bg-primary group-hover:text-white transition-all duration-300">
-                    <item.icon className="w-6 h-6" />
-                  </div>
-                  <h3 className="text-xs font-bold uppercase tracking-wider mb-2">{item.title}</h3>
-                  <p className="text-[11px] text-muted-foreground leading-relaxed">{item.desc}</p>
-                </div>
-              ))}
-            </div>
-          </ScrollAnimate>
-        </div>
-      </section>
-
-      {/* ============ SẢN PHẨM NỔI BẬT — 3 cards + 1 ảnh lớn (giống mockup) ============ */}
-      <section className="py-20 bg-white border-t-2 border-border">
-        <div className="container mx-auto px-6 lg:px-12">
-          <ScrollAnimate animation="fade-in-up">
-            <h2 className="text-2xl md:text-3xl font-bold uppercase tracking-wider mb-12">
-              SẢN PHẨM NỔI BẬT
-            </h2>
-
-            <div className="grid lg:grid-cols-4 gap-4">
-              {/* 3 product cards bên trái */}
-              {[
-                { img: leafPlatesVariety, name: 'Dĩa lá bàng', size: '20cm' },
-                { img: exhibitionDisplay, name: 'Chén lá bàng', size: '15cm' },
-                { img: customLogoBeco, name: 'Khay lá bàng', size: '25cm' },
-              ].map((product, idx) => (
-                <div key={idx} className="border-2 border-border bg-white group hover:-translate-y-1 hover:shadow-[6px_6px_0px_0px_rgba(30,51,42,1)] transition-all duration-300 rounded-none flex flex-col">
-                  <div className="aspect-square overflow-hidden">
-                    <img
-                      src={product.img}
-                      alt={product.name}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    />
-                  </div>
-                  <div className="p-4">
-                    <h3 className="font-bold text-sm uppercase tracking-wider">{product.name}</h3>
-                    <p className="text-xs text-muted-foreground mb-3">{product.size}</p>
-                    <Link to="/shop" className="text-xs font-bold uppercase tracking-widest text-primary hover:underline inline-flex items-center gap-1">
-                      XEM CHI TIẾT
-                      <ChevronRight className="w-3 h-3" />
+          {/* Text Content */}
+          <div className="relative z-10 px-6 sm:px-12 md:px-16 lg:px-24 w-full">
+            {heroSlides.map((slide, index) => (
+              <div 
+                key={`text-${index}`}
+                className={`transition-all duration-1000 ease-in-out flex flex-col justify-center absolute inset-0 px-6 sm:px-12 md:px-16 lg:px-24 ${
+                  currentSlide === index 
+                    ? 'opacity-100 translate-y-0 pointer-events-auto' 
+                    : 'opacity-0 translate-y-8 pointer-events-none'
+                }`}
+                style={{ position: currentSlide === index ? 'relative' : 'absolute' }}
+              >
+                <div className={`${slide.textColor} space-y-4 md:space-y-6 max-w-xl`}>
+                  <p className="text-[11px] md:text-xs tracking-[0.25em] font-barlow font-bold uppercase opacity-80">
+                    {slide.subtitle}
+                  </p>
+                  
+                  <h1 className="text-4xl md:text-5xl lg:text-6xl font-heading leading-[1.15] whitespace-pre-line font-bold">
+                    {slide.title}
+                  </h1>
+                  
+                  <p className="text-sm md:text-base font-nunito font-light leading-relaxed opacity-95 pb-2">
+                    {slide.desc}
+                  </p>
+                  
+                  <div>
+                    <Link 
+                      to="/shop" 
+                      className="inline-flex items-center gap-4 border border-current hover:bg-[#1f1c17] hover:text-[#fcf9f4] hover:border-[#1f1c17] transition-all duration-300 px-6 py-3 tracking-widest text-[11px] uppercase font-barlow font-semibold group"
+                    >
+                      XEM NGAY <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform duration-300" />
                     </Link>
                   </div>
                 </div>
-              ))}
+              </div>
+            ))}
 
-              {/* 1 ảnh lớn bên phải */}
-              <div className="border-2 border-border bg-white group hover:-translate-y-1 hover:shadow-[6px_6px_0px_0px_rgba(30,51,42,1)] transition-all duration-300 relative overflow-hidden rounded-none">
-                <img
-                  src={leafPlatesCloseup}
-                  alt="B-ECO Lá bàng biển"
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+            {/* Dots Pagination */}
+            <div className="absolute bottom-6 left-6 sm:left-12 md:left-16 lg:left-24 z-20 flex gap-2">
+              {heroSlides.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => setCurrentSlide(index)}
+                  className={`h-2.5 rounded-full transition-all duration-300 ${
+                    currentSlide === index 
+                      ? 'bg-black/60 dark:bg-white/60 w-6' 
+                      : 'bg-black/10 dark:bg-white/10 w-2.5 hover:bg-black/30'
+                  }`}
+                  aria-label={`Go to slide ${index + 1}`}
                 />
-                <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/60 to-transparent">
-                  <Link to="/shop" className="text-xs font-bold uppercase tracking-widest text-white hover:underline inline-flex items-center gap-1">
-                    XEM CHI TIẾT
-                    <ChevronRight className="w-3 h-3" />
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 2. Flagship Product Showcase (Cocoon Sen Hậu Giang style) */}
+      <section className="py-20 md:py-28 bg-white dark:bg-[#242b26] border-b border-border/5">
+        <div className="container mx-auto px-4">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+            
+            {/* Left text column */}
+            <div className="lg:col-span-5 order-2 lg:order-1 text-left">
+              <ScrollAnimate animation="fade-in-right">
+                <p className="text-[11px] tracking-[0.25em] font-barlow font-bold text-muted-foreground uppercase mb-3">
+                  SẢN PHẨM KHỞI NGUỒN
+                </p>
+                <h2 className="text-4xl md:text-5xl font-heading text-primary leading-tight mb-6">
+                  Đĩa lá bàng biển <br/>
+                  <span className="italic font-light font-vollkorn">Phú Yên mộc mạc</span>
+                </h2>
+                <p className="text-sm md:text-base text-muted-foreground font-nunito font-light leading-relaxed mb-8">
+                  Sản phẩm sở hữu những đường gân lá tự nhiên độc bản, tạo nét thẩm mỹ mộc mạc tinh tế trên bàn ăn. 
+                  Công thức ép nhiệt tuyệt đối không hóa chất giúp bảo toàn độ cứng cáp và mùi thơm dịu nhẹ nguyên bản của lá bàng rụng. 
+                  Một giải pháp thay thế hoàn hảo cho đồ dùng một lần nhựa, mang đến sự an tâm cho sức khỏe gia đình bạn và thân thiện trọn vẹn với Trái Đất.
+                </p>
+                <div>
+                  <Link 
+                    to="/shop" 
+                    className="inline-flex items-center gap-3 font-barlow text-sm font-semibold tracking-widest text-primary uppercase border-b border-primary hover:border-primary/40 pb-1 transition-all duration-300 group"
+                  >
+                    MUA NGAY <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform duration-300" />
                   </Link>
                 </div>
+              </ScrollAnimate>
+            </div>
+
+            {/* Right layered visuals */}
+            <div className="lg:col-span-7 order-1 lg:order-2 flex justify-center items-center relative">
+              <ScrollAnimate animation="fade-in-left" className="relative w-full max-w-lg aspect-square">
+                {/* Layered graphics layout */}
+                <div className="absolute inset-0 bg-[#fcf9f4] dark:bg-[#2c332d] rounded-full scale-90 border border-border/10 -z-10" />
+                <img 
+                  src={collection1} 
+                  alt="Đĩa lá bàng biển Phú Yên" 
+                  className="w-4/5 h-4/5 object-cover mx-auto my-auto shadow-xl rounded-none border border-border/10 relative z-10"
+                />
+                {/* Floating elements styling decoration */}
+                <div className="absolute -bottom-4 -left-4 w-1/3 aspect-square bg-[#e8e2d2] dark:bg-[#2c332d] p-2 border border-border/10 shadow-lg hidden md:block">
+                  <img src={closeup} alt="Gận lá bàng" className="w-full h-full object-cover" />
+                </div>
+              </ScrollAnimate>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      {/* 3. Brand Philosophy Box (Rustic background with centered card) */}
+      <section 
+        className="relative py-28 md:py-36 flex items-center justify-center bg-cover bg-center bg-no-repeat border-b border-border/10"
+        style={{ backgroundImage: `url(${hero1})` }}
+      >
+        {/* Backdrop overlay */}
+        <div className="absolute inset-0 bg-black/40 backdrop-blur-[1px]" />
+        
+        {/* Center card box */}
+        <div className="relative z-10 container mx-auto px-4 max-w-2xl">
+          <ScrollAnimate animation="scale-in">
+            <div className="bg-[#fcf9f4]/95 dark:bg-[#242b26]/95 backdrop-blur-md p-10 md:p-14 text-center rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.15)] border border-[#d6cfbe]/30">
+              <p className="font-vollkorn italic text-2xl md:text-3xl text-primary/80 font-normal mb-1">
+                Triết lý
+              </p>
+              <h2 className="font-barlow-condensed text-xl md:text-2xl tracking-[0.25em] font-medium text-primary uppercase mt-1">
+                THƯƠNG HIỆU
+              </h2>
+              
+              {/* Elegant divider line */}
+              <div className="w-16 h-px bg-primary/20 mx-auto my-6"></div>
+
+              <p className="text-xs md:text-sm text-primary/85 font-nunito font-light leading-relaxed tracking-wide max-w-md mx-auto mb-8">
+                Là những người yêu thiên nhiên và mong muốn bảo vệ môi trường Việt Nam, chúng tôi tận dụng nguồn lá bàng biển tự nhiên rụng tại Phú Yên để tạo ra những sản phẩm đĩa lá tự nhiên, tiện dụng và tự hủy hoàn toàn. B-ECO kiên định với sứ mệnh mang sản phẩm xanh đến mọi nhà.
+              </p>
+              <div>
+                <Link 
+                  to="/about" 
+                  className="inline-flex items-center gap-3 bg-[#1f1c17] text-[#fcf9f4] hover:bg-[#322d25] dark:bg-[#fcf9f4] dark:text-[#242b26] dark:hover:bg-[#f5ebd6] px-8 py-3 rounded-full tracking-[0.15em] text-[10px] uppercase font-barlow font-bold shadow-sm transition-all duration-300 group"
+                >
+                  TÌM HIỂU THÊM <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-1 transition-transform duration-300" />
+                </Link>
               </div>
             </div>
           </ScrollAnimate>
         </div>
       </section>
 
-      {/* ============ VỀ CHÚNG TÔI — grid ảnh + text ============ */}
-      <section className="py-20 bg-background border-t-2 border-border">
-        <div className="container mx-auto px-6 lg:px-12">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            {/* Ảnh */}
-            <ScrollAnimate animation="fade-in-left">
-              <div className="grid grid-cols-2 gap-4 relative">
-                <img src={exhibitionDisplay} alt="B-ECO" className="w-full aspect-square object-cover border-2 border-border shadow-[4px_4px_0px_0px_rgba(30,51,42,1)]" />
-                <img src={customLogoBeco} alt="B-ECO" className="w-full aspect-square object-cover border-2 border-border shadow-[4px_4px_0px_0px_rgba(30,51,42,1)] mt-12" />
-                <img src={collectionDisplay2} alt="B-ECO" className="w-full aspect-square object-cover border-2 border-border shadow-[4px_4px_0px_0px_rgba(30,51,42,1)] -mt-12" />
-                <img src={collectionDisplay1} alt="B-ECO" className="w-full aspect-square object-cover border-2 border-border shadow-[4px_4px_0px_0px_rgba(30,51,42,1)]" />
-                {/* Decorative block */}
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-primary text-white p-4 border-2 border-white rounded-none shadow-xl z-10">
-                  <Leaf className="w-8 h-8" />
-                </div>
+      {/* 4. Infinite Marquee */}
+      <section className="overflow-hidden border-b border-border/10 bg-[#fcf9f4] dark:bg-[#242b26] py-5">
+        <div className="animate-marquee whitespace-nowrap flex items-center">
+          {Array(4).fill([
+            "100% Tự Nhiên",
+            "Phân Hủy Sinh Học Hoàn Toàn",
+            "Không Hóa Chất Độc Hại",
+            "An Toàn Cho Sức Khỏe",
+            "Bảo Vệ Hệ Sinh Thái"
+          ]).flat().map((val, idx) => (
+            <span key={idx} className="font-barlow text-[11px] md:text-xs tracking-[0.25em] font-bold text-primary uppercase mx-12 flex items-center">
+              {val} <span className="inline-block w-1.5 h-1.5 rounded-full bg-primary/30 ml-12"></span>
+            </span>
+          ))}
+        </div>
+      </section>
+
+      {/* 5. Commitments / Certifications */}
+      <section className="py-20 md:py-28 bg-white dark:bg-[#242b26] border-b border-border/10">
+        <div className="container mx-auto px-4">
+          <ScrollAnimate animation="fade-in-up" className="text-center mb-16 max-w-xl mx-auto">
+            <p className="text-[11px] tracking-[0.25em] font-barlow font-bold text-muted-foreground uppercase mb-3">
+              TIÊU CHUẨN KIỂM ĐỊNH
+            </p>
+            <h2 className="text-3xl md:text-4xl font-heading text-primary leading-tight font-bold">
+              Cam kết chất lượng B-ECO
+            </h2>
+          </ScrollAnimate>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <ScrollAnimate animation="fade-in-up" delay={0} className="border border-border/10 p-8 text-center bg-[#fcf9f4] dark:bg-[#2c332d] hover:shadow-md transition-shadow">
+              <div className="flex justify-center mb-6">
+                <CheckCircle className="h-10 w-10 text-primary stroke-[1.2]" />
               </div>
+              <h3 className="font-barlow-condensed text-xl tracking-[0.1em] font-bold text-primary uppercase mb-3">
+                ĐẠT CHUẨN OCOP
+              </h3>
+              <p className="text-sm text-muted-foreground font-nunito font-light leading-relaxed">
+                Sản phẩm đĩa lá bàng đạt tiêu chuẩn chất lượng OCOP Việt Nam, đại diện cho nông sản đặc hữu Phú Yên sạch, phát triển bền vững cùng cộng đồng địa phương.
+              </p>
             </ScrollAnimate>
 
-            {/* Text */}
-            <ScrollAnimate animation="fade-in-right" delay={200}>
-              <div>
-                <div className="inline-flex items-center gap-2 px-3 py-1.5 border border-border/20 bg-primary/5 text-foreground text-[10px] font-bold uppercase tracking-[0.25em] mb-6">
-                  Về chúng tôi
-                </div>
-                <h2 className="text-3xl md:text-4xl font-bold mb-6 leading-tight text-foreground">
-                  Từ thiên nhiên, <span className="text-emerald-700">cho thiên nhiên</span>
-                </h2>
-                <p className="text-gray-600 mb-8 leading-relaxed">
-                  B-ECO ra đời với sứ mệnh thay thế sản phẩm nhựa dùng một lần bằng các giải pháp từ thiên nhiên,
-                  góp phần bảo vệ môi trường biển và hệ sinh thái Việt Nam.
-                </p>
-                <ul className="space-y-3 mb-8">
-                  {['Lá bàng thu hoạch 100% từ Phú Yên', 'Phân huỷ sinh học trong 45 ngày', 'Chịu nhiệt tốt, an toàn thực phẩm', 'Giá ưu đãi cho doanh nghiệp F&B'].map((item, idx) => (
-                    <li key={idx} className="flex items-start gap-3">
-                      <CheckCircle2 className="w-4 h-4 text-emerald-600 flex-shrink-0 mt-0.5" />
-                      <span className="text-sm font-medium text-gray-700">{item}</span>
-                    </li>
-                  ))}
-                </ul>
-                <Link to="/about">
-                  <Button className="h-12 px-8 rounded-none text-sm font-bold uppercase tracking-[0.15em] border-2 border-border bg-transparent text-foreground hover:bg-primary hover:text-white transition-all shadow-[4px_4px_0px_0px_rgba(30,51,42,1)] hover:-translate-y-1">
-                    Khám phá câu chuyện
-                    <ArrowRight className="h-4 w-4 ml-3" />
-                  </Button>
-                </Link>
+            <ScrollAnimate animation="fade-in-up" delay={100} className="border border-border/10 p-8 text-center bg-[#fcf9f4] dark:bg-[#2c332d] hover:shadow-md transition-shadow">
+              <div className="flex justify-center mb-6">
+                <Leaf className="h-10 w-10 text-primary stroke-[1.2]" />
               </div>
+              <h3 className="font-barlow-condensed text-xl tracking-[0.1em] font-bold text-primary uppercase mb-3">
+                KIỂM ĐỊNH EUROFINS
+              </h3>
+              <p className="text-sm text-muted-foreground font-nunito font-light leading-relaxed">
+                Được kiểm nghiệm tại hệ thống Eurofins toàn cầu. Kết quả chứng minh sản phẩm không chứa bất kỳ tàn dư kim loại nặng hay hóa chất độc hại nào.
+              </p>
+            </ScrollAnimate>
+
+            <ScrollAnimate animation="fade-in-up" delay={200} className="border border-border/10 p-8 text-center bg-[#fcf9f4] dark:bg-[#2c332d] hover:shadow-md transition-shadow">
+              <div className="flex justify-center mb-6">
+                <CheckCircle className="h-10 w-10 text-primary stroke-[1.2]" />
+              </div>
+              <h3 className="font-barlow-condensed text-xl tracking-[0.1em] font-bold text-primary uppercase mb-3">
+                AN TOÀN FDA HỦY SINH
+              </h3>
+              <p className="text-sm text-muted-foreground font-nunito font-light leading-relaxed">
+                Đáp ứng tiêu chuẩn chứa thực phẩm nguội lẫn nóng (dùng được trong lò vi sóng) và phân hủy sinh học tự nhiên trong vòng 45 ngày ngoài môi trường.
+              </p>
             </ScrollAnimate>
           </div>
         </div>
       </section>
 
-      {/* ============ GIẢM GIÁ BANNER ============ */}
-      <section className="eco-dark-bg py-14">
-        <div className="container mx-auto px-6 lg:px-12">
+      {/* 6. Video & Process Section */}
+      <section className="py-20 md:py-28 bg-[#fcf9f4] dark:bg-[#242b26] overflow-hidden border-b border-border/10">
+        <div className="container mx-auto px-4">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+            
+            {/* Video visual block */}
+            <div className="lg:col-span-6">
+              <ScrollAnimate animation="fade-in-right">
+                <div className="relative border border-border/10 overflow-hidden shadow-lg bg-black">
+                  <video 
+                    autoPlay 
+                    loop 
+                    muted 
+                    playsInline
+                    className="w-full aspect-[4/5] md:aspect-video lg:aspect-[4/5] object-cover scale-100 hover:scale-105 transition-transform duration-1000 ease-out"
+                  >
+                    <source src={promoVideo} type="video/mp4" />
+                    Trình duyệt của bạn không hỗ trợ thẻ video.
+                  </video>
+                </div>
+              </ScrollAnimate>
+            </div>
+
+            {/* Process description block */}
+            <div className="lg:col-span-6">
+              <ScrollAnimate animation="fade-in-left">
+                <div className="mb-6 flex items-center gap-2">
+                  <span className="h-px w-8 bg-primary"></span>
+                  <span className="text-xs tracking-widest text-primary font-barlow font-bold">QUY TRÌNH & CHẤT LƯỢNG</span>
+                </div>
+                <h2 className="text-4xl md:text-5xl font-heading text-primary mb-6 leading-tight">
+                  Hành trình từ lá rụng <br/> 
+                  <span className="italic font-light font-vollkorn">đến bàn ăn của bạn</span>
+                </h2>
+                <p className="text-sm md:text-base text-muted-foreground mb-10 font-nunito font-light leading-relaxed">
+                  Chúng tôi kiểm soát nghiêm ngặt từ khâu thu hoạch đến thành phẩm, 
+                  đảm bảo 100% tự nhiên, không hóa chất, an toàn tuyệt đối cho sức khỏe.
+                </p>
+
+                <div className="space-y-8">
+                  {processSteps.map((step, index) => (
+                    <div key={index} className="flex gap-6 group">
+                      <div className="text-2xl font-heading text-primary/30 font-light group-hover:text-primary transition-colors font-barlow">
+                        {step.num}
+                      </div>
+                      <div>
+                        <h3 className="text-lg font-heading text-primary font-bold mb-2">{step.title}</h3>
+                        <p className="text-muted-foreground text-sm font-light leading-relaxed font-nunito">{step.desc}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </ScrollAnimate>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      {/* 7. Product Explorer (Circle links) */}
+      <section className="py-20 md:py-24 bg-white dark:bg-[#242b26] border-b border-border/10">
+        <div className="container mx-auto px-4 text-center">
           <ScrollAnimate animation="fade-in-up">
-            <div className="flex flex-col lg:flex-row items-center justify-between gap-6">
-              <div className="flex items-center gap-5 text-center lg:text-left">
-                <div className="p-3 border border-white/20 hidden sm:flex">
-                  <Percent className="h-8 w-8 text-white" />
-                </div>
-                <div className="text-white">
-                  <div className="text-3xl md:text-4xl font-extrabold uppercase tracking-tight">GIẢM 10%</div>
-                  <div className="text-sm text-white/60 mt-1">cho đơn hàng từ 1.000 sản phẩm trở lên</div>
-                </div>
-              </div>
-              <Link to="/pricing">
-                <Button className="h-12 px-8 rounded-none text-sm font-bold uppercase tracking-[0.15em] bg-white text-[#2d4a3e] hover:bg-emerald-100 border-0 transition-all">
-                  Xem bảng giá
-                  <ArrowRight className="ml-3 h-4 w-4" />
-                </Button>
-              </Link>
+            <p className="text-[11px] tracking-[0.25em] font-barlow font-bold text-muted-foreground uppercase mb-3">
+              DANH MỤC LỰA CHỌN
+            </p>
+            <h2 className="text-3xl md:text-4xl font-heading text-primary font-bold mb-12">Khám phá sản phẩm</h2>
+            
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 max-w-4xl mx-auto">
+              {categories.map((cat, idx) => (
+                <Link to={cat.link} key={idx} className="group flex flex-col items-center">
+                  <div className="w-32 h-32 sm:w-40 sm:h-40 md:w-44 md:h-44 rounded-full overflow-hidden border border-border/10 mb-4 bg-[#fcf9f4] shadow-inner relative">
+                    <img 
+                      src={cat.image} 
+                      alt={cat.name} 
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                    />
+                  </div>
+                  <span className="text-xs font-barlow text-primary uppercase font-bold tracking-widest group-hover:underline underline-offset-4">
+                    {cat.name}
+                  </span>
+                </Link>
+              ))}
             </div>
           </ScrollAnimate>
         </div>
       </section>
 
-      {/* ============ PRODUCT GRID — hiện tại ============ */}
-      <section className="py-20 bg-white border-t-2 border-border">
-        <div className="container mx-auto px-6 lg:px-12">
+      {/* 8. Featured Products / Best Sellers Grid */}
+      <section className="py-20 md:py-28 bg-[#fcf9f4] dark:bg-[#242b26] border-b border-border/10">
+        <div className="container mx-auto px-4">
           <ScrollAnimate animation="fade-in-up">
-            <div className="flex flex-col md:flex-row justify-between items-end mb-10 gap-4 border-b-2 border-border/20 pb-6">
-              <div>
-                <h2 className="text-2xl md:text-3xl font-bold uppercase tracking-wider mb-2 text-foreground">Tất cả sản phẩm</h2>
-                <p className="text-gray-500 font-medium">Được hàng nghìn khách hàng tin dùng</p>
+            <div className="text-center mb-16 max-w-md mx-auto">
+              <div className="mb-4 flex items-center justify-center gap-2">
+                <span className="h-px w-8 bg-primary"></span>
+                <span className="text-xs tracking-widest text-primary font-barlow font-bold">KHÁM PHÁ B-ECO</span>
+                <span className="h-px w-8 bg-primary"></span>
               </div>
-              <Link to="/shop" className="group flex items-center gap-1 text-sm font-bold uppercase tracking-widest text-foreground hover:underline">
-                Xem tất cả <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </Link>
+              <h2 className="text-3xl md:text-4xl font-heading text-primary uppercase tracking-widest font-bold">Flagship Series</h2>
             </div>
+            
             <ProductGrid products={featuredProducts} isLoading={isLoading} />
-          </ScrollAnimate>
-        </div>
-      </section>
-
-      {/* ============ COD BANNER ============ */}
-      <section className="py-14 bg-background border-t-2 border-border">
-        <div className="container mx-auto px-6 lg:px-12">
-          <ScrollAnimate animation="fade-in-up">
-            <div className="border-2 border-border bg-white p-8 lg:p-10 flex flex-col lg:flex-row items-center justify-between gap-6 shadow-[8px_8px_0px_0px_rgba(30,51,42,1)] relative">
-              <div className="absolute top-0 right-0 w-16 h-16 bg-primary/5 border-l-2 border-b-2 border-border" />
-              <div className="flex flex-col sm:flex-row items-center gap-5 text-center sm:text-left relative z-10">
-                <div className="p-4 bg-primary text-white shadow-[4px_4px_0px_0px_rgba(45,74,62,1)]">
-                  <Truck className="h-8 w-8" />
-                </div>
-                <div>
-                  <h3 className="text-xl md:text-2xl font-bold mb-1 text-foreground">Thanh toán khi nhận hàng</h3>
-                  <p className="text-sm text-gray-500 font-medium">Giao hàng toàn quốc · Nhận hàng rồi mới thanh toán · An tâm mua sắm</p>
-                </div>
-              </div>
-              <Link to="/shop">
-                <Button className="h-12 px-8 rounded-none text-sm font-bold uppercase tracking-[0.15em] bg-primary text-white hover:bg-white hover:text-foreground border-2 border-border transition-all">
-                  Đặt hàng ngay <ArrowRight className="ml-3 h-4 w-4" />
-                </Button>
+            
+            <div className="mt-16 text-center">
+              <Link 
+                to="/shop" 
+                className="inline-flex items-center gap-3 bg-[#1f1c17] text-[#fcf9f4] hover:bg-[#1f1c17]/90 dark:bg-[#fcf9f4] dark:text-[#242b26] dark:hover:bg-[#fcf9f4]/90 px-10 py-4 tracking-widest text-xs uppercase font-barlow font-bold transition-all duration-300"
+              >
+                XEM TẤT CẢ SẢN PHẨM <ArrowRight className="h-4 w-4" />
               </Link>
             </div>
           </ScrollAnimate>
         </div>
       </section>
 
-      {/* ============ TESTIMONIALS ============ */}
-      <Testimonials />
+      {/* 9. Blog & Stories Slider */}
+      <section className="py-20 md:py-28 bg-white dark:bg-[#242b26] border-b border-border/10">
+        <div className="container mx-auto px-4">
+          <ScrollAnimate animation="fade-in-up" className="text-center mb-16 max-w-xl mx-auto">
+            <p className="text-[11px] tracking-[0.25em] font-barlow font-bold text-muted-foreground uppercase mb-3">
+              CÂU CHUYỆN SẢN PHẨM
+            </p>
+            <h2 className="text-3xl md:text-4xl font-heading text-primary leading-tight font-bold">
+              Từ B-ECO's Journal
+            </h2>
+          </ScrollAnimate>
 
-      {/* ============ FINAL CTA ============ */}
-      <section className="eco-dark-bg relative py-20 overflow-hidden">
-        <div className="absolute inset-0 opacity-10">
-          <img src={exhibitionDisplay} alt="" className="w-full h-full object-cover" />
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {mockArticles.map((article, idx) => (
+              <ScrollAnimate key={idx} animation="fade-in-up" delay={idx * 100} className="group border border-border/5 overflow-hidden flex flex-col h-full bg-[#fcf9f4] dark:bg-[#2c332d] shadow-sm hover:shadow-md transition-shadow duration-300">
+                <div className="aspect-video overflow-hidden">
+                  <img 
+                    src={article.image} 
+                    alt={article.title} 
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
+                  />
+                </div>
+                <div className="p-6 flex flex-col flex-grow">
+                  <span className="text-[10px] font-barlow font-bold text-primary/60 tracking-widest uppercase mb-3 inline-block">
+                    {article.tag}
+                  </span>
+                  <h3 className="font-heading text-lg font-bold text-primary mb-3 leading-snug group-hover:text-primary/70 transition-colors">
+                    <Link to={article.link}>{article.title}</Link>
+                  </h3>
+                  <p className="text-xs text-muted-foreground font-nunito font-light leading-relaxed mb-6 flex-grow">
+                    {article.desc}
+                  </p>
+                  <div>
+                    <Link 
+                      to={article.link} 
+                      className="inline-flex items-center gap-2 text-xs font-barlow font-bold tracking-widest text-primary uppercase border-b border-primary/20 pb-0.5 hover:border-primary transition-all duration-300"
+                    >
+                      ĐỌC BÀI VIẾT <ArrowRight className="h-3 w-3" />
+                    </Link>
+                  </div>
+                </div>
+              </ScrollAnimate>
+            ))}
+          </div>
         </div>
-        <div className="container mx-auto px-6 lg:px-12 relative z-10">
-          <ScrollAnimate animation="fade-in-up">
-            <div className="max-w-3xl">
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 border border-emerald-300/30 text-emerald-300 text-[10px] font-bold uppercase tracking-[0.25em] mb-8">
-                <Leaf className="h-3 w-3" />
-                Bắt đầu hành trình xanh
-              </div>
-              <h2 className="text-4xl md:text-5xl font-extrabold text-white mb-6 leading-tight uppercase tracking-tight">
-                Cùng B-ECO <br /><span className="text-emerald-300">bảo vệ môi trường</span>
-              </h2>
-              <p className="text-lg text-white/60 mb-10 max-w-xl">
-                Mỗi sản phẩm bạn sử dụng là một bước tiến đến tương lai xanh hơn.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4">
-                <Link to="/shop">
-                  <Button className="h-12 px-8 rounded-none text-sm font-bold uppercase tracking-[0.15em] bg-white text-[#2d4a3e] hover:bg-emerald-100 border-0">
-                    <Sparkles className="h-4 w-4 mr-3" /> Khám phá ngay
-                  </Button>
-                </Link>
-                <Link to="/pricing">
-                  <Button className="h-12 px-8 rounded-none text-sm font-bold uppercase tracking-[0.15em] bg-transparent border-2 border-white text-white hover:bg-white hover:text-foreground transition-all shadow-[4px_4px_0px_0px_rgba(255,255,255,0.2)] hover:shadow-[4px_4px_0px_0px_rgba(255,255,255,1)]">
-                    Báo giá doanh nghiệp
-                  </Button>
-                </Link>
+      </section>
+
+      {/* 10. Instagram Premium Grid (6 columns layout, asymmetric) */}
+      <section className="py-20 bg-[#fcf9f4] dark:bg-[#242b26]">
+        <div className="container mx-auto px-4">
+          <ScrollAnimate animation="fade-in-up" className="text-center mb-12">
+            <h2 className="text-2xl md:text-3xl font-heading text-primary uppercase tracking-widest font-bold mb-3">B-ECO trên Mạng Xã Hội</h2>
+            <p className="text-muted-foreground font-light font-barlow text-sm tracking-widest">@beco.vietnam</p>
+          </ScrollAnimate>
+          
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-2">
+            {/* Col 1-2 (Spans 2x2 on lg) */}
+            <div className="col-span-2 row-span-2 aspect-square lg:aspect-auto relative group overflow-hidden border border-border/10">
+              <img src={anh1} alt="Gallery 0" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+              <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                <span className="text-white text-xs font-barlow tracking-widest uppercase font-bold">Xem trên Instagram</span>
               </div>
             </div>
-          </ScrollAnimate>
+
+            {/* Other single image boxes */}
+            {[anh2, anh3, anh4, customNtt, customVanHien, exhibition, variety, collection1].map((img, idx) => (
+              <div key={idx} className="aspect-square relative group overflow-hidden border border-border/10">
+                <img src={img} alt={`Gallery ${idx + 1}`} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                  <Leaf className="text-white h-6 w-6 stroke-[1.5]" />
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
     </Layout>

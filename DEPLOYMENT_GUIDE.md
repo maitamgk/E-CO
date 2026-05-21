@@ -38,6 +38,8 @@
 ```bash
 # Cài đặt Vercel CLI
 npm i -g vercel
+# hoặc
+bun add -g vercel
 
 # Đăng nhập vào Vercel
 vercel login
@@ -99,7 +101,7 @@ vercel --prod
 → Kiểm tra `vercel.json` và đảm bảo build command đúng
 
 ### Build không thành công
-→ Chạy `npm run build` trên máy để test trước
+→ Chạy `bun run build` trên máy để test trước
 
 ---
 

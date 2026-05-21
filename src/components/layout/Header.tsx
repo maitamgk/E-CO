@@ -1,5 +1,5 @@
-import { Link } from 'react-router-dom';
-import { ShoppingCart, User, Menu, X, Moon, Sun } from 'lucide-react';
+import { Link, useNavigate } from 'react-router-dom';
+import { ShoppingCart, User, Menu, X, Leaf, Search, Sun, Moon } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -7,20 +7,23 @@ import { useCart } from '@/context/CartContext';
 import { useAuth } from '@/context/AuthContext';
 import logo from '@/assets/products/logo.jpg';
 
-const navLinks = [
-  { to: '/', label: 'Trang chủ' },
-  { to: '/shop', label: 'Cửa hàng' },
-  { to: '/pricing', label: 'Bảng giá' },
+const leftNavLinks = [
+  { to: '/shop', label: 'Sản phẩm' },
   { to: '/about', label: 'Về B-ECO' },
-  { to: '/contact', label: 'Liên hệ' },
-  { to: '/policies', label: 'Chính sách' },
+  { to: '/blog', label: 'Bài viết' },
+  { to: '/order-lookup', label: 'Tra cứu đơn hàng' },
 ];
 
 export const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
   const [scrolled, setScrolled] = useState(false);
+  
   const { itemCount } = useCart();
   const { user, isAdmin, logout } = useAuth();
+  const navigate = useNavigate();
+
   const [isDark, setIsDark] = useState(() => {
     if (typeof window !== 'undefined') {
       return document.documentElement.classList.contains('dark');
@@ -48,111 +51,213 @@ export const Header = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const handleSearchSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      navigate(`/shop?search=${encodeURIComponent(searchQuery.trim())}`);
+      setSearchOpen(false);
+      setSearchQuery('');
+    }
+  };
+
   return (
-    <header className={`sticky top-0 z-50 bg-background border-b-2 border-border transition-all duration-300 ${scrolled ? 'shadow-[0_4px_0px_0px_rgba(30,51,42,0.1)]' : ''}`}>
-      <div className="container mx-auto px-6 lg:px-12">
-        <div className="flex items-center justify-between h-16 lg:h-[72px]">
-          {/* Logo */}
-          <Link to="/" className="flex items-center gap-3 group">
-            <div className="overflow-hidden border-2 border-border rounded-none bg-white">
-              <img src={logo} alt="B-ECO Logo" className="h-10 w-10 object-cover" />
-            </div>
-            <span className="font-heading font-extrabold text-xl tracking-tight text-foreground">
-              B-ECO
-            </span>
-          </Link>
-
-          {/* Desktop Nav */}
-          <nav className="hidden md:flex items-center gap-1">
-            {navLinks.map(link => (
-              <Link
-                key={link.to}
-                to={link.to}
-                className="px-4 py-2 text-sm font-bold text-foreground/80 hover:text-foreground transition-colors uppercase tracking-wider relative after:content-[''] after:absolute after:bottom-1 after:left-4 after:right-4 after:h-[2px] after:bg-primary after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300"
+    <div className="w-full z-50 sticky top-0 flex flex-col">
+      {/* 2. Main Navigation Header */}
+      <header className={`transition-all duration-300 w-full border-b border-border/10 ${
+        scrolled
+          ? 'bg-[#fcf9f4]/95 dark:bg-[#242b26]/95 backdrop-blur-md shadow-sm'
+          : 'bg-[#fcf9f4] dark:bg-[#242b26]'
+      }`}>
+        <div className="container mx-auto px-4">
+          <div className="flex items-center justify-between h-20 relative">
+            
+            {/* Desktop Left: Search Toggle & Nav Links */}
+            <div className="hidden lg:flex items-center gap-8 flex-1">
+              <button 
+                onClick={() => setSearchOpen(!searchOpen)} 
+                className="flex items-center gap-2 text-primary/80 hover:text-primary transition-colors py-2"
+                aria-label="Search"
               >
-                {link.label}
-              </Link>
-            ))}
-          </nav>
+                <Search className="h-5 w-5 text-primary stroke-[1.5]" />
+              </button>
+              
+              <nav className="flex items-center gap-6">
+                {leftNavLinks.map(link => (
+                  <Link
+                    key={link.to}
+                    to={link.to}
+                    className="text-[13px] font-barlow uppercase tracking-widest text-primary/80 hover:text-primary transition-colors duration-300 relative group py-2"
+                  >
+                    {link.label}
+                    <span className="absolute bottom-0 left-0 w-0 h-px bg-primary transition-all duration-300 group-hover:w-full" />
+                  </Link>
+                ))}
+              </nav>
+            </div>
 
-          {/* Actions */}
-          <div className="flex items-center gap-2">
-            <Link to="/shop">
-              <Button className="hidden sm:flex h-9 px-5 rounded-none text-xs font-bold uppercase tracking-widest bg-primary border-2 border-border text-white hover:bg-background hover:text-foreground transition-all shadow-[3px_3px_0px_0px_rgba(30,51,42,1)] hover:shadow-none hover:translate-y-[3px] hover:translate-x-[3px]">
-                Đặt hàng
-              </Button>
-            </Link>
-
-            <Link to="/cart">
+            {/* Mobile Left: Menu Toggle */}
+            <div className="lg:hidden flex items-center">
               <Button
                 variant="ghost"
                 size="icon"
-                className="relative rounded-none h-9 w-9 text-foreground hover:bg-primary/10"
+                className="rounded-none hover:bg-transparent p-0 mr-4"
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                aria-label="Toggle menu"
               >
-                <ShoppingCart className="h-5 w-5" />
-                {itemCount > 0 && (
-                  <Badge className="absolute -top-1 -right-1 h-5 min-w-5 flex items-center justify-center p-0 text-[10px] font-bold bg-emerald-500 text-white rounded-none border border-border">
-                    {itemCount > 99 ? '99+' : itemCount}
-                  </Badge>
+                {mobileMenuOpen ? (
+                  <X className="h-6 w-6 text-primary stroke-[1.5]" />
+                ) : (
+                  <Menu className="h-6 w-6 text-primary stroke-[1.5]" />
                 )}
               </Button>
-            </Link>
+              <button
+                onClick={() => setSearchOpen(!searchOpen)}
+                className="text-primary/80 hover:text-primary transition-colors"
+                aria-label="Search"
+              >
+                <Search className="h-5 w-5 text-primary stroke-[1.5]" />
+              </button>
+            </div>
 
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={toggleDarkMode}
-              className="rounded-none h-9 w-9 text-foreground hover:bg-primary/10"
-            >
-              {isDark ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
-            </Button>
+            {/* Center: Brand Logo */}
+            <div className="absolute left-1/2 -translate-x-1/2 flex items-center">
+              <Link to="/" className="flex items-center gap-2 group">
+                <img 
+                  src={logo} 
+                  alt="B-ECO Logo" 
+                  className="w-10 h-10 object-cover group-hover:scale-105 transition-transform duration-500 rounded-none border border-border/10" 
+                />
+                <span className="font-heading text-xl md:text-2xl tracking-[0.1em] text-primary uppercase font-bold">
+                  B-ECO
+                </span>
+              </Link>
+            </div>
 
-            {user ? (
-              <div className="hidden md:flex items-center gap-1">
-                <Link to="/orders">
-                  <Button variant="ghost" size="sm" className="rounded-none text-foreground/80 hover:text-foreground hover:bg-primary/10 text-xs font-bold uppercase tracking-wider">
-                    Đơn hàng
-                  </Button>
-                </Link>
-                {isAdmin && (
-                  <Link to="/admin">
-                    <Button size="sm" className="rounded-none bg-primary/10 text-foreground border border-border/20 text-xs font-bold uppercase tracking-wider hover:bg-primary/20">
-                      Admin
+            {/* Right: Account, Cart, Theme Toggle */}
+            <div className="flex items-center gap-2 sm:gap-4 flex-1 justify-end">
+              {/* Dark Mode Toggle */}
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={toggleDarkMode}
+                className="rounded-none hover:bg-transparent hover:text-primary/70 transition-colors h-10 w-10 p-0"
+                aria-label="Toggle theme"
+              >
+                {isDark ? (
+                  <Sun className="h-5 w-5 text-primary stroke-[1.5]" />
+                ) : (
+                  <Moon className="h-5 w-5 text-primary stroke-[1.5]" />
+                )}
+              </Button>
+
+              {/* Account / Auth */}
+              {user ? (
+                <div className="flex items-center gap-2 sm:gap-4">
+                  <Link to="/orders">
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="hidden sm:inline-block rounded-none text-[12px] font-barlow uppercase tracking-widest hover:bg-transparent hover:text-primary/70 p-0 font-medium"
+                    >
+                      Đơn hàng
                     </Button>
                   </Link>
-                )}
-                <Button variant="ghost" size="sm" onClick={logout} className="rounded-none text-foreground/60 hover:text-foreground hover:bg-primary/10 text-xs font-bold uppercase tracking-wider">
-                  Đăng xuất
-                </Button>
-              </div>
-            ) : (
-              <Link to="/auth" className="hidden md:block">
-                <Button variant="ghost" size="icon" className="rounded-none h-9 w-9 text-foreground hover:bg-primary/10">
-                  <User className="h-5 w-5" />
+                  {isAdmin && (
+                    <Link to="/admin">
+                      <Button
+                        size="sm"
+                        className="hidden sm:inline-block rounded-none bg-primary text-primary-foreground hover:bg-primary/90 text-[11px] font-barlow uppercase tracking-widest font-medium h-9 px-4"
+                      >
+                        Admin
+                      </Button>
+                    </Link>
+                  )}
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={logout}
+                    className="hidden sm:inline-block rounded-none text-[12px] font-barlow uppercase tracking-widest hover:bg-transparent hover:text-primary/70 p-0 font-medium"
+                  >
+                    Thoát
+                  </Button>
+                  <Link to="/orders" className="sm:hidden" aria-label="Account">
+                    <User className="h-5 w-5 text-primary stroke-[1.5]" />
+                  </Link>
+                </div>
+              ) : (
+                <Link to="/auth" aria-label="Login">
+                  <User className="h-5 w-5 text-primary stroke-[1.5] hover:text-primary/70 transition-colors" />
+                </Link>
+              )}
+
+              {/* Cart */}
+              <Link to="/cart">
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="relative rounded-none hover:bg-transparent hover:text-primary/70 transition-colors h-10 w-10 p-0"
+                  aria-label="Cart"
+                >
+                  <ShoppingCart className="h-5 w-5 text-primary stroke-[1.5]" />
+                  {itemCount > 0 && (
+                    <Badge className="absolute -top-1.5 -right-1.5 h-4 min-w-4 flex items-center justify-center p-0 text-[9px] font-semibold bg-primary text-primary-foreground border-none rounded-full">
+                      {itemCount > 99 ? '99+' : itemCount}
+                    </Badge>
+                  )}
                 </Button>
               </Link>
-            )}
+            </div>
 
-            <Button
-              variant="ghost"
-              size="icon"
-              className="md:hidden rounded-none h-9 w-9 text-foreground hover:bg-primary/10"
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            >
-              {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-            </Button>
           </div>
         </div>
 
-        {/* Mobile Menu */}
+        {/* Collapsible Search Panel */}
+        {searchOpen && (
+          <div className="absolute left-0 w-full bg-[#fcf9f4] dark:bg-[#242b26] border-b border-border/10 py-6 animate-fade-in shadow-md z-40">
+            <div className="container mx-auto px-4 max-w-xl">
+              <form onSubmit={handleSearchSubmit} className="relative flex items-center border-b border-primary/20 pb-2">
+                <input
+                  type="text"
+                  placeholder="Nhập sản phẩm hoặc từ khóa bạn muốn tìm..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="w-full bg-transparent border-none outline-none focus:ring-0 text-sm placeholder-muted-foreground pr-10 font-nunito"
+                  autoFocus
+                />
+                <button type="submit" className="absolute right-0" aria-label="Search submit">
+                  <Search className="h-5 w-5 text-primary/60 hover:text-primary stroke-[1.5]" />
+                </button>
+              </form>
+              <div className="mt-4 flex flex-wrap gap-2 items-center">
+                <span className="text-[11px] font-barlow uppercase tracking-widest text-muted-foreground">Gợi ý:</span>
+                {['Đĩa tròn', 'Chén lá bàng', 'Combo tiệc cưới', 'In logo'].map((keyword) => (
+                  <button
+                    key={keyword}
+                    onClick={() => {
+                      setSearchQuery(keyword);
+                      navigate(`/shop?search=${encodeURIComponent(keyword)}`);
+                      setSearchOpen(false);
+                      setSearchQuery('');
+                    }}
+                    className="text-xs bg-primary/5 hover:bg-primary/10 text-primary px-3 py-1 transition-colors font-nunito"
+                  >
+                    {keyword}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Mobile Menu Panel */}
         {mobileMenuOpen && (
-          <div className="md:hidden py-4 border-t-2 border-border">
-            <nav className="flex flex-col">
-              {navLinks.map(link => (
+          <div className="lg:hidden border-t border-border/10 py-4 bg-[#fcf9f4] dark:bg-[#242b26] animate-fade-in absolute left-0 right-0 top-full shadow-lg z-50">
+            <nav className="flex flex-col container mx-auto px-4">
+              {leftNavLinks.map((link) => (
                 <Link
                   key={link.to}
                   to={link.to}
-                  className="px-4 py-3 text-sm font-bold uppercase tracking-wider text-foreground/80 hover:text-foreground hover:bg-primary/5 border-b border-border/10 transition-colors"
+                  className="py-4 text-[13px] font-barlow uppercase tracking-widest text-primary border-b border-border/5 hover:text-primary/70 transition-colors"
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   {link.label}
@@ -160,22 +265,45 @@ export const Header = () => {
               ))}
               {user ? (
                 <>
-                  <Link to="/orders" className="px-4 py-3 text-sm font-bold uppercase tracking-wider text-foreground/80 hover:text-foreground hover:bg-primary/5 border-b border-border/10" onClick={() => setMobileMenuOpen(false)}>
-                    Đơn hàng
+                  <Link
+                    to="/orders"
+                    className="py-4 text-[13px] font-barlow uppercase tracking-widest text-primary border-b border-border/5 hover:text-primary/70 transition-colors"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    Đơn hàng của tôi
                   </Link>
-                  <button className="px-4 py-3 text-left text-sm font-bold uppercase tracking-wider text-foreground/80 hover:text-foreground hover:bg-primary/5" onClick={() => { logout(); setMobileMenuOpen(false); }}>
+                  {isAdmin && (
+                    <Link
+                      to="/admin"
+                      className="py-4 text-[13px] font-barlow uppercase tracking-widest text-primary font-medium border-b border-border/5"
+                      onClick={() => setMobileMenuOpen(false)}
+                    >
+                      Trang quản trị (Admin)
+                    </Link>
+                  )}
+                  <button
+                    className="py-4 text-[13px] font-barlow uppercase tracking-widest text-left text-primary hover:text-primary/70 transition-colors"
+                    onClick={() => {
+                      logout();
+                      setMobileMenuOpen(false);
+                    }}
+                  >
                     Đăng xuất
                   </button>
                 </>
               ) : (
-                <Link to="/auth" className="px-4 py-3 text-sm font-bold uppercase tracking-wider text-foreground/80 hover:text-foreground hover:bg-primary/5 flex items-center gap-2" onClick={() => setMobileMenuOpen(false)}>
-                  <User className="h-4 w-4" /> Đăng nhập
+                <Link
+                  to="/auth"
+                  className="py-4 text-[13px] font-barlow uppercase tracking-widest text-primary hover:text-primary/70 transition-colors"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  Đăng nhập / Đăng ký
                 </Link>
               )}
             </nav>
           </div>
         )}
-      </div>
-    </header>
+      </header>
+    </div>
   );
 };

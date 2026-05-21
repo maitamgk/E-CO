@@ -75,10 +75,10 @@ const Admin = () => {
     <Layout>
       <div className="bg-background min-h-screen pb-20">
         {/* Header Dashboard */}
-        <div className="bg-primary text-primary-foreground py-12 px-6 border-b-2 border-border shadow-hard">
-          <div className="container mx-auto">
-            <h1 className="text-3xl font-heading font-black tracking-wider uppercase mb-2">Quản trị viên</h1>
-            <p className="text-primary-foreground/80">Hệ thống quản lý đơn hàng B-ECO</p>
+        <div className="bg-[#fcf9f4] border-b border-border/40 py-12 text-center">
+          <div className="container mx-auto px-4">
+            <h1 className="text-3xl md:text-4xl font-heading text-primary mb-4">Quản trị viên</h1>
+            <p className="text-muted-foreground font-light">Hệ thống quản lý đơn hàng B-ECO</p>
           </div>
         </div>
 
@@ -91,26 +91,26 @@ const Admin = () => {
               { label: 'Đơn chờ duyệt', value: orders.filter(o => o.status === 'pending').length, icon: Clock },
               { label: 'Đang giao', value: orders.filter(o => o.status === 'shipped').length, icon: Truck },
             ].map((stat, idx) => (
-              <div key={idx} className="bg-card border-2 border-border p-6 shadow-hard rounded-none flex items-center justify-between">
+              <div key={idx} className="bg-white border border-border/40 p-6 flex items-center justify-between">
                 <div>
-                  <p className="text-xs font-bold text-muted-foreground uppercase tracking-wider mb-1">{stat.label}</p>
-                  <p className="text-2xl font-black text-foreground">{stat.value}</p>
+                  <p className="text-[11px] font-normal text-muted-foreground uppercase tracking-widest mb-2">{stat.label}</p>
+                  <p className="text-2xl font-heading text-primary">{stat.value}</p>
                 </div>
-                <div className="bg-background border border-border p-3 rounded-none">
-                  <stat.icon className="w-6 h-6 text-primary" />
+                <div className="p-3 bg-[#fcf9f4] border border-border/40">
+                  <stat.icon className="w-5 h-5 text-primary stroke-[1.5]" />
                 </div>
               </div>
             ))}
           </div>
 
           {/* Orders Table */}
-          <div className="bg-card border-2 border-border shadow-hard rounded-none">
-            <div className="p-6 border-b-2 border-border flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-background">
-              <h2 className="text-xl font-bold uppercase tracking-wider">Danh sách đơn hàng</h2>
+          <div className="bg-white border border-border/40">
+            <div className="p-6 border-b border-border/40 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-[#fcf9f4]">
+              <h2 className="text-xl font-heading text-primary">Danh sách đơn hàng</h2>
               
               <div className="flex gap-2">
                 <select 
-                  className="bg-card border-2 border-border px-4 py-2 text-sm font-bold uppercase outline-none focus:border-primary shadow-hard-sm"
+                  className="bg-white border border-border/40 px-4 py-2 text-sm outline-none focus:border-primary/40 font-light"
                   value={filter}
                   onChange={(e) => setFilter(e.target.value as OrderStatus | 'all')}
                 >
@@ -127,13 +127,13 @@ const Admin = () => {
             <div className="overflow-x-auto">
               <table className="w-full text-left border-collapse">
                 <thead>
-                  <tr className="border-b-2 border-border bg-background/50">
-                    <th className="p-4 text-xs font-bold uppercase tracking-wider text-muted-foreground">Mã đơn</th>
-                    <th className="p-4 text-xs font-bold uppercase tracking-wider text-muted-foreground">Khách hàng</th>
-                    <th className="p-4 text-xs font-bold uppercase tracking-wider text-muted-foreground">Ngày đặt</th>
-                    <th className="p-4 text-xs font-bold uppercase tracking-wider text-muted-foreground">Tổng tiền</th>
-                    <th className="p-4 text-xs font-bold uppercase tracking-wider text-muted-foreground">Trạng thái</th>
-                    <th className="p-4 text-xs font-bold uppercase tracking-wider text-muted-foreground text-right">Thao tác</th>
+                  <tr className="border-b border-border/40 bg-[#fcf9f4]/50">
+                    <th className="p-4 text-[11px] font-normal uppercase tracking-widest text-muted-foreground">Mã đơn</th>
+                    <th className="p-4 text-[11px] font-normal uppercase tracking-widest text-muted-foreground">Khách hàng</th>
+                    <th className="p-4 text-[11px] font-normal uppercase tracking-widest text-muted-foreground">Ngày đặt</th>
+                    <th className="p-4 text-[11px] font-normal uppercase tracking-widest text-muted-foreground">Tổng tiền</th>
+                    <th className="p-4 text-[11px] font-normal uppercase tracking-widest text-muted-foreground">Trạng thái</th>
+                    <th className="p-4 text-[11px] font-normal uppercase tracking-widest text-muted-foreground text-right">Thao tác</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -141,18 +141,17 @@ const Admin = () => {
                     const status = statusConfig[order.status];
                     const StatusIcon = status.icon;
                     return (
-                      <tr key={order.id} className="border-b border-border/50 hover:bg-background/80 transition-colors">
-                        <td className="p-4 font-bold">{order.orderCode}</td>
+                      <tr key={order.id} className="border-b border-border/20 hover:bg-muted/30 transition-colors">
+                        <td className="p-4 font-medium text-sm">{order.orderCode}</td>
                         <td className="p-4">
-                          <p className="font-bold">{order.customer.fullName}</p>
-                          <p className="text-xs font-semibold text-muted-foreground">{order.customer.phone}</p>
-                          <p className="text-xs text-muted-foreground mt-1 line-clamp-2 max-w-[250px]">{order.customer.address}</p>
+                          <p className="font-medium text-sm">{order.customer.fullName}</p>
+                          <p className="text-xs text-muted-foreground font-light">{order.customer.phone}</p>
+                          <p className="text-xs text-muted-foreground mt-1 line-clamp-2 max-w-[250px] font-light">{order.customer.address}</p>
                         </td>
-                        <td className="p-4 text-sm">{order.createdAt.toLocaleDateString('vi-VN')}</td>
-                        <td className="p-4 font-bold text-primary">{formatMoney(order.totals.total)}</td>
+                        <td className="p-4 text-sm font-light text-muted-foreground">{order.createdAt.toLocaleDateString('vi-VN')}</td>
+                        <td className="p-4 font-heading text-primary">{formatMoney(order.totals.total)}</td>
                         <td className="p-4">
-                          <Badge className={`${status.color} text-white rounded-none border border-border shadow-hard-sm`}>
-                            <StatusIcon className="h-3 w-3 mr-1" />
+                          <Badge className={cn(status.color, "text-white rounded-none border-0 text-[10px] uppercase tracking-widest font-normal px-2 py-1")}>
                             {status.label}
                           </Badge>
                         </td>
@@ -161,7 +160,7 @@ const Admin = () => {
                             <Button 
                               size="sm" 
                               onClick={() => updateStatus(order.id, 'confirmed')}
-                              className="bg-blue-500 hover:bg-blue-600 text-white rounded-none border border-border shadow-[2px_2px_0px_0px_rgba(30,51,42,1)] hover:shadow-none hover:translate-y-[2px] hover:translate-x-[2px] text-xs font-bold uppercase px-3"
+                              className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-none text-[10px] uppercase tracking-widest font-normal px-3"
                             >
                               Xác nhận
                             </Button>
@@ -170,7 +169,7 @@ const Admin = () => {
                             <Button 
                               size="sm" 
                               onClick={() => updateStatus(order.id, 'shipped')}
-                              className="bg-purple-500 hover:bg-purple-600 text-white rounded-none border border-border shadow-[2px_2px_0px_0px_rgba(30,51,42,1)] hover:shadow-none hover:translate-y-[2px] hover:translate-x-[2px] text-xs font-bold uppercase px-3"
+                              className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-none text-[10px] uppercase tracking-widest font-normal px-3"
                             >
                               Giao hàng
                             </Button>
@@ -179,24 +178,24 @@ const Admin = () => {
                             <Button 
                               size="sm" 
                               onClick={() => updateStatus(order.id, 'delivered')}
-                              className="bg-emerald-500 hover:bg-emerald-600 text-white rounded-none border border-border shadow-[2px_2px_0px_0px_rgba(30,51,42,1)] hover:shadow-none hover:translate-y-[2px] hover:translate-x-[2px] text-xs font-bold uppercase px-3"
+                              className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-none text-[10px] uppercase tracking-widest font-normal px-3"
                             >
                               Hoàn tất
                             </Button>
                           )}
                           {(order.status === 'pending' || order.status === 'confirmed') && (
                             <Button 
-                              size="sm" variant="destructive"
+                              size="sm" variant="outline"
                               onClick={() => updateStatus(order.id, 'cancelled')}
-                              className="rounded-none shadow-[2px_2px_0px_0px_rgba(30,51,42,1)] hover:shadow-none hover:translate-y-[2px] hover:translate-x-[2px] text-xs font-bold uppercase px-3"
+                              className="rounded-none text-[10px] uppercase tracking-widest font-normal px-3"
                             >
                               Hủy
                             </Button>
                           )}
                           <Button 
-                            size="sm" variant="destructive"
+                            size="sm" variant="ghost"
                             onClick={() => deleteOrder(order.id)}
-                            className="bg-red-700 hover:bg-red-800 text-white rounded-none shadow-[2px_2px_0px_0px_rgba(30,51,42,1)] hover:shadow-none hover:translate-y-[2px] hover:translate-x-[2px] text-xs font-bold uppercase px-3"
+                            className="text-red-500 hover:text-red-600 hover:bg-red-50 rounded-none text-[10px] uppercase tracking-widest font-normal px-3"
                           >
                             Xóa
                           </Button>

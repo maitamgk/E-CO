@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Layout } from '@/components/layout/Layout';
 import { Badge } from '@/components/ui/badge';
@@ -7,9 +7,49 @@ import { useAuth } from '@/context/AuthContext';
 import { Order, OrderStatus } from '@/types';
 import { formatMoney } from '@/utils/money';
 import { Package, ArrowRight, Clock, CheckCircle, Truck, XCircle } from 'lucide-react';
-import { orderService } from '@/services/orderService';
 
-
+// Mock orders data
+const mockOrders: Order[] = [
+  {
+    id: '1',
+    orderCode: 'BCO001',
+    userId: 'user1',
+    customer: {
+      fullName: 'Nguyễn Văn A',
+      phone: '0901234567',
+      address: '123 Đường ABC, Phường XYZ, TP.HCM',
+    },
+    items: [
+      { productId: '1', nameSnapshot: 'Chén lá bàng tròn 12cm', priceSnapshot: 3500, imageUrlSnapshot: '', qty: 100 },
+      { productId: '2', nameSnapshot: 'Chén lá bàng tròn 15cm', priceSnapshot: 4500, imageUrlSnapshot: '', qty: 50 },
+    ],
+    totals: { subtotal: 575000, discountRate: 0, discountAmount: 0, total: 575000, totalQty: 150 },
+    paymentMethod: 'COD',
+    status: 'shipped',
+    notes: '',
+    createdAt: new Date('2024-01-15'),
+    updatedAt: new Date('2024-01-16'),
+  },
+  {
+    id: '2',
+    orderCode: 'BCO002',
+    userId: 'user1',
+    customer: {
+      fullName: 'Nguyễn Văn A',
+      phone: '0901234567',
+      address: '123 Đường ABC, Phường XYZ, TP.HCM',
+    },
+    items: [
+      { productId: '8', nameSnapshot: 'Combo tiệc 50 người', priceSnapshot: 450000, imageUrlSnapshot: '', qty: 3 },
+    ],
+    totals: { subtotal: 1350000, discountRate: 0, discountAmount: 0, total: 1350000, totalQty: 3 },
+    paymentMethod: 'COD',
+    status: 'pending',
+    notes: '',
+    createdAt: new Date('2024-01-20'),
+    updatedAt: new Date('2024-01-20'),
+  },
+];
 
 const statusConfig: Record<OrderStatus, { label: string; color: string; icon: React.ElementType }> = {
   pending: { label: 'Chờ xác nhận', color: 'bg-yellow-500', icon: Clock },
@@ -24,27 +64,15 @@ const Orders = () => {
   const [orders, setOrders] = useState<Order[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  const fetchOrders = useCallback(async () => {
-    if (!user) return;
-    const data = await orderService.getOrdersByUser(user.uid);
-    setOrders(data);
-    setIsLoading(false);
-  }, [user]);
-
   useEffect(() => {
-    if (user) {
-      fetchOrders();
-    }
-  }, [user, fetchOrders]);
-
-  const cancelOrder = async (orderId: string) => {
-    if (window.confirm('Bạn có chắc chắn muốn hủy đơn hàng này?')) {
-      const success = await orderService.updateOrderStatus(orderId, 'cancelled');
-      if (success) {
-        await fetchOrders();
-      }
-    }
-  };
+    // Simulate fetching orders
+    const fetchOrders = async () => {
+      await new Promise(resolve => setTimeout(resolve, 500));
+      setOrders(mockOrders);
+      setIsLoading(false);
+    };
+    fetchOrders();
+  }, []);
 
   if (!user) {
     return (
@@ -69,28 +97,12 @@ const Orders = () => {
   return (
     <Layout>
       {/* Hero Section */}
-      <div className="relative bg-gradient-to-br from-green-950 via-emerald-900 to-teal-950 text-white overflow-hidden">
-        {/* Background Image */}
-        <div 
-          className="absolute inset-0 opacity-35"
-          style={{
-            backgroundImage: 'url(https://images.unsplash.com/photo-1511497584788-876760111969?w=1920&q=80)',
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-          }}
-        />
-        {/* Gradient Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-br from-green-950/60 via-emerald-900/65 to-teal-950/70" />
-        
-        {/* Glowing Orbs */}
-        <div className="absolute top-20 -left-20 w-72 h-72 bg-emerald-500/8 rounded-full blur-3xl" />
-        <div className="absolute bottom-20 -right-20 w-96 h-96 bg-teal-500/8 rounded-full blur-3xl" />
-        
-        <div className="container mx-auto px-4 py-16 relative">
-          <h1 className="text-4xl md:text-5xl font-black italic mb-4 bg-gradient-to-r from-emerald-400 via-green-300 to-teal-400 bg-clip-text text-transparent">
+      <div className="relative bg-[#fcf9f4] border-b border-border/40 py-16 text-center">
+        <div className="container mx-auto px-4 relative z-10">
+          <h1 className="text-3xl md:text-4xl font-heading text-primary mb-4">
             Đơn hàng của tôi
           </h1>
-          <p className="text-emerald-100 text-lg max-w-2xl">
+          <p className="text-muted-foreground font-light max-w-2xl mx-auto">
             Theo dõi tình trạng đơn hàng của bạn
           </p>
         </div>
@@ -101,9 +113,9 @@ const Orders = () => {
         {isLoading ? (
           <div className="space-y-4">
             {[1, 2].map(i => (
-              <div key={i} className="bg-card border border-border rounded-lg p-6 animate-pulse">
-                <div className="h-4 bg-muted rounded w-1/4 mb-4" />
-                <div className="h-4 bg-muted rounded w-1/2" />
+              <div key={i} className="bg-white border border-border/40 p-6 animate-pulse">
+                <div className="h-4 bg-muted w-1/4 mb-4" />
+                <div className="h-4 bg-muted w-1/2" />
               </div>
             ))}
           </div>
@@ -128,56 +140,43 @@ const Orders = () => {
               const StatusIcon = status.icon;
               
               return (
-                <div key={order.id} className="bg-card border border-border rounded-lg p-6">
-                  <div className="flex flex-wrap items-center justify-between gap-4 mb-4">
+                <div key={order.id} className="bg-white border border-border/40 p-6">
+                  <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
                     <div>
-                      <div className="flex items-center gap-2 mb-1">
-                        <span className="font-bold text-lg">{order.orderCode}</span>
-                        <Badge className={`${status.color} text-white`}>
-                          <StatusIcon className="h-3 w-3 mr-1" />
+                      <div className="flex items-center gap-3 mb-2">
+                        <span className="font-heading text-lg text-primary">{order.orderCode}</span>
+                        <Badge variant="outline" className={cn(status.color, "text-white border-0 rounded-none text-[10px] uppercase tracking-widest font-normal px-2 py-1")}>
                           {status.label}
                         </Badge>
                       </div>
-                      <p className="text-sm text-muted-foreground">
+                      <p className="text-sm text-muted-foreground font-light">
                         Ngày đặt: {order.createdAt.toLocaleDateString('vi-VN')}
                       </p>
                     </div>
                     <div className="text-right">
-                      <p className="text-sm text-muted-foreground">{order.totals.totalQty} sản phẩm</p>
-                      <p className="font-bold text-primary text-lg">
+                      <p className="text-sm text-muted-foreground font-light mb-1">{order.totals.totalQty} sản phẩm</p>
+                      <p className="font-heading text-xl text-primary">
                         {formatMoney(order.totals.total)}
                       </p>
                     </div>
                   </div>
 
-                  <div className="border-t border-border pt-4">
-                    <div className="space-y-2">
+                  <div className="border-t border-border/40 pt-4">
+                    <div className="space-y-3">
                       {order.items.slice(0, 2).map((item, idx) => (
                         <div key={idx} className="flex justify-between text-sm">
-                          <span className="text-muted-foreground">
+                          <span className="text-muted-foreground font-light">
                             {item.nameSnapshot} x {item.qty}
                           </span>
-                          <span>{formatMoney(item.priceSnapshot * item.qty)}</span>
+                          <span className="font-medium text-primary">{formatMoney(item.priceSnapshot * item.qty)}</span>
                         </div>
                       ))}
                       {order.items.length > 2 && (
-                        <p className="text-sm text-muted-foreground">
+                        <p className="text-sm text-muted-foreground font-light mt-2 pt-2 border-t border-border/20">
                           +{order.items.length - 2} sản phẩm khác
                         </p>
                       )}
                     </div>
-                    {order.status === 'pending' && (
-                      <div className="mt-4 pt-4 border-t border-border flex justify-end">
-                        <Button 
-                          variant="destructive" 
-                          size="sm"
-                          onClick={() => cancelOrder(order.id)}
-                          className="rounded-none shadow-[2px_2px_0px_0px_rgba(30,51,42,1)] hover:shadow-none hover:translate-y-[2px] hover:translate-x-[2px] text-xs font-bold uppercase px-3"
-                        >
-                          Hủy đơn hàng
-                        </Button>
-                      </div>
-                    )}
                   </div>
                 </div>
               );

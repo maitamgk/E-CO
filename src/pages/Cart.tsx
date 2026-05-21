@@ -33,28 +33,12 @@ const Cart = () => {
   return (
     <Layout>
       {/* Hero Section */}
-      <div className="relative bg-gradient-to-br from-green-950 via-emerald-900 to-teal-950 text-white overflow-hidden">
-        {/* Background Image */}
-        <div 
-          className="absolute inset-0 opacity-35"
-          style={{
-            backgroundImage: 'url(https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?w=1920&q=80)',
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-          }}
-        />
-        {/* Gradient Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-br from-green-950/60 via-emerald-900/65 to-teal-950/70" />
-        
-        {/* Glowing Orbs */}
-        <div className="absolute top-20 -left-20 w-72 h-72 bg-emerald-500/8 rounded-full blur-3xl" />
-        <div className="absolute bottom-20 -right-20 w-96 h-96 bg-teal-500/8 rounded-full blur-3xl" />
-        
-        <div className="container mx-auto px-4 py-16 relative">
-          <h1 className="text-4xl md:text-5xl font-black italic mb-4 bg-gradient-to-r from-emerald-400 via-green-300 to-teal-400 bg-clip-text text-transparent">
+      <div className="relative bg-[#fcf9f4] border-b border-border/40 py-16 text-center">
+        <div className="container mx-auto px-4 relative z-10">
+          <h1 className="text-3xl md:text-4xl font-heading text-primary mb-4">
             Giỏ hàng của bạn
           </h1>
-          <p className="text-emerald-100 text-lg max-w-2xl">
+          <p className="text-muted-foreground font-light max-w-2xl mx-auto">
             {itemCount} sản phẩm đang chờ thanh toán
           </p>
         </div>
@@ -76,7 +60,7 @@ const Cart = () => {
         <div className="grid lg:grid-cols-3 gap-8">
           {/* Cart Items */}
           <div className="lg:col-span-2">
-            <div className="bg-card border border-border rounded-lg p-4">
+            <div className="bg-white border border-border/40 p-4">
               {cartItems.map(item => (
                 <CartItemRow key={item.productId} item={item} />
               ))}

@@ -1,5 +1,6 @@
 import { supabase } from '@/lib/supabase';
 import { Order, OrderStatus } from '@/types';
+import { orderStorage } from '@/utils/orderStorage';
 
 export const orderService = {
   getOrders: async (): Promise<Order[]> => {
@@ -77,6 +78,43 @@ export const orderService = {
       return false;
     }
     return true;
+  },
+
+  getOrderByCodeAndPhone: async (orderCode: string, phone: string): Promise<Order | null> => {
+    // 1. Try fetching from Supabase
+    try {
+      const { data, error } = await supabase
+        .from('orders')
+        .select('*')
+        .eq('order_code', orderCode)
+        .maybeSingle();
+
+      if (!error && data) {
+        const order = parseOrder(data);
+        const cleanPhoneInput = phone.replace(/[^0-9]/g, '');
+        const cleanOrderPhone = order.customer.phone.replace(/[^0-9]/g, '');
+        if (cleanPhoneInput === cleanOrderPhone) {
+          return order;
+        }
+      }
+    } catch (e) {
+      console.warn('Supabase query failed, falling back to localStorage:', e);
+    }
+
+    // 2. Fallback to localStorage mock/local database
+    const localOrders = orderStorage.getOrders();
+    const cleanPhoneInput = phone.replace(/[^0-9]/g, '');
+    const foundLocal = localOrders.find(
+      (o) => o.orderCode.toLowerCase() === orderCode.toLowerCase()
+    );
+    if (foundLocal) {
+      const cleanLocalPhone = foundLocal.customer.phone.replace(/[^0-9]/g, '');
+      if (cleanLocalPhone === cleanPhoneInput) {
+        return foundLocal;
+      }
+    }
+
+    return null;
   }
 };
 

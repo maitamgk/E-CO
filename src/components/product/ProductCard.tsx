@@ -31,204 +31,156 @@ export const ProductCard = ({ product, showWholesale = false }: ProductCardProps
   };
 
   return (
-    <div className="group relative">
-      {/* 3D Card Container */}
-      <div 
-        className="relative bg-white dark:bg-gray-950 border border-border overflow-hidden transition-all duration-500 ease-out hover:shadow-2xl hover:border-primary/50"
-        style={{
-          transformStyle: 'preserve-3d',
-          transform: 'perspective(1000px)',
-        }}
-      >
-        {/* Animated gradient border */}
-        <div className="absolute -inset-[1px] bg-gradient-to-r from-primary/0 via-primary/50 to-primary/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10 blur-sm" />
+    <div className="group relative bg-white border border-border/40 transition-colors duration-300 hover:border-primary/40 flex flex-col h-full">
+      {/* Image Container */}
+      <div className="relative aspect-[4/5] overflow-hidden bg-[#fcf9f4]">
+        {/* Loading shimmer */}
+        {!imageLoaded && (
+          <div 
+            className="absolute inset-0 bg-gradient-to-r from-muted via-muted/50 to-muted animate-shimmer"
+            style={{ backgroundSize: '200% 100%' }}
+          />
+        )}
         
-        {/* 3D Tilt Effect Container */}
-        <div className="group-hover:translate-y-[-8px] transition-transform duration-500 ease-out">
-          {/* Image Container */}
-          <div className="relative aspect-[4/5] overflow-hidden bg-muted">
-            {/* Loading shimmer */}
-            {!imageLoaded && (
-              <div 
-                className="absolute inset-0 bg-gradient-to-r from-muted via-muted/50 to-muted animate-shimmer"
-                style={{ backgroundSize: '200% 100%' }}
-              />
+        {/* Product Image */}
+        <img
+          src={product.imageUrl}
+          alt={product.name}
+          className={cn(
+            "w-full h-full object-cover object-center transition-transform duration-700 ease-out",
+            "group-hover:scale-105",
+            imageLoaded ? 'opacity-100' : 'opacity-0'
+          )}
+          onLoad={() => setImageLoaded(true)}
+          loading="lazy"
+        />
+        
+        {/* Top Badges */}
+        <div className="absolute top-4 left-4 flex flex-col gap-2">
+          {product.stock < 50 && product.stock > 0 && (
+            <Badge variant="secondary" className="bg-white/90 backdrop-blur-md rounded-none text-[10px] uppercase tracking-widest font-normal">
+              Còn {product.stock}
+            </Badge>
+          )}
+          {product.stock === 0 && (
+            <Badge variant="destructive" className="rounded-none text-[10px] uppercase tracking-widest font-normal">
+              Hết hàng
+            </Badge>
+          )}
+          {showWholesale && savingsPercent > 0 && (
+            <Badge className="bg-primary text-primary-foreground rounded-none text-[10px] uppercase tracking-widest font-normal">
+              -{savingsPercent}%
+            </Badge>
+          )}
+        </div>
+
+        {/* Action Buttons - Floating */}
+        <div className="absolute top-4 right-4 flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+          <button
+            onClick={() => setIsLiked(!isLiked)}
+            className={cn(
+              "p-2 bg-white/90 backdrop-blur-md border border-border/40 hover:bg-primary hover:text-primary-foreground hover:border-primary transition-colors",
+              isLiked ? "text-red-500" : "text-primary"
             )}
-            
-            {/* Product Image with 3D zoom */}
-            <img
-              src={product.imageUrl}
-              alt={product.name}
-              className={cn(
-                "w-full h-full object-cover object-center transition-all duration-700 ease-out",
-                "group-hover:scale-110 group-hover:rotate-1",
-                imageLoaded ? 'opacity-100' : 'opacity-0'
-              )}
-              onLoad={() => setImageLoaded(true)}
-              loading="lazy"
-            />
-            
-            {/* Gradient overlays */}
-            <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent opacity-0 group-hover:opacity-60 transition-opacity duration-500" />
-            <div className="absolute inset-0 bg-gradient-to-br from-primary/0 to-primary/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-            
-            {/* Top Badges */}
-            <div className="absolute top-4 left-4 flex flex-col gap-2">
-              {product.stock < 50 && product.stock > 0 && (
-                <Badge variant="secondary" className="bg-background/90 backdrop-blur-xl shadow-lg border-0">
-                  ⚡ Còn {product.stock}
-                </Badge>
-              )}
-              {product.stock === 0 && (
-                <Badge variant="destructive" className="shadow-lg">
-                  Hết hàng
-                </Badge>
-              )}
-              {showWholesale && savingsPercent > 0 && (
-                <Badge className="bg-gradient-to-r from-primary to-accent-foreground text-primary-foreground shadow-lg border-0">
-                  <Sparkles className="h-3 w-3 mr-1" />
-                  -{savingsPercent}%
-                </Badge>
-              )}
-            </div>
+          >
+            <Heart className={cn("h-4 w-4 stroke-[1.5]", isLiked && "fill-current")} />
+          </button>
+          <button 
+            onClick={() => navigate(`/product/${product.id}`)}
+            className="p-2 bg-white/90 backdrop-blur-md border border-border/40 text-primary hover:bg-primary hover:text-primary-foreground hover:border-primary transition-colors"
+          >
+            <Eye className="h-4 w-4 stroke-[1.5]" />
+          </button>
+        </div>
+      </div>
 
-            {/* Action Buttons - Floating */}
-            <div className="absolute top-4 right-4 flex flex-col gap-2 opacity-0 group-hover:opacity-100 translate-x-4 group-hover:translate-x-0 transition-all duration-300">
-              <button
-                onClick={() => setIsLiked(!isLiked)}
-                className={cn(
-                  "p-3 rounded-none backdrop-blur-xl shadow-lg transition-all duration-300 hover:scale-110",
-                  isLiked 
-                    ? "bg-destructive text-destructive-foreground" 
-                    : "bg-background/90 text-foreground hover:bg-background"
-                )}
-              >
-                <Heart className={cn("h-5 w-5", isLiked && "fill-current")} />
-              </button>
-              <button 
-                onClick={() => navigate(`/product/${product.id}`)}
-                className="p-3 bg-background/90 rounded-none backdrop-blur-xl shadow-lg hover:bg-background hover:scale-110 transition-all duration-300"
-              >
-                <Eye className="h-5 w-5" />
-              </button>
-            </div>
+      {/* Content */}
+      <div className="p-6 flex flex-col flex-grow">
+        {/* Category tag */}
+        <div className="mb-3">
+          <span className="text-[10px] uppercase tracking-widest text-primary/60">
+            {product.category === 'chen' ? 'Chén' : product.category === 'dia' ? 'Dĩa' : 'Combo'}
+          </span>
+        </div>
 
-            {/* Quick Add - Bottom Overlay */}
-            {!cartItem && product.stock > 0 && (
-              <div className="absolute inset-x-0 bottom-0 p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out">
-                <Button
-                  onClick={handleAddToCart}
-                  disabled={isAdding}
-                  className={cn(
-                    "w-full h-14 text-sm font-bold uppercase tracking-widest rounded-none shadow-2xl transition-all duration-300",
-                    isAdding 
-                      ? "bg-accent-foreground" 
-                      : "bg-background/90 backdrop-blur-xl text-foreground hover:bg-background"
-                  )}
-                >
-                  {isAdding ? (
-                    <>
-                      <Check className="h-5 w-5 mr-2 animate-scale-in" />
-                      Đã thêm!
-                    </>
-                  ) : (
-                    <>
-                      <ShoppingCart className="h-5 w-5 mr-2" />
-                      Thêm nhanh
-                    </>
-                  )}
-                </Button>
-              </div>
-            )}
-          </div>
+        {/* Title */}
+        <h3 
+          onClick={() => navigate(`/product/${product.id}`)}
+          className="font-heading text-lg sm:text-xl text-primary mb-2 cursor-pointer hover:text-primary/70 transition-colors"
+        >
+          {product.name}
+        </h3>
+        
+        {/* Description */}
+        <p className="text-sm text-muted-foreground font-light line-clamp-2 mb-4 flex-grow">
+          {product.description}
+        </p>
 
-          {/* Content */}
-          <div className="p-4 sm:p-5 lg:p-6 space-y-3 sm:space-y-4">
-            {/* Category tag */}
-            <div className="flex items-center gap-2">
-              <span className="text-xs font-semibold uppercase tracking-wider text-primary bg-primary/10 px-2 py-1 rounded-none border border-primary/20">
-                {product.category === 'chen' ? 'Chén' : product.category === 'dia' ? 'Dĩa' : 'Combo'}
-              </span>
-            </div>
+        {/* Prices */}
+        <div className="flex items-end gap-3 mb-4">
+          <span className="text-xl font-heading text-primary">
+            {formatMoney(displayPrice)}
+          </span>
+          {showWholesale && (
+            <span className="text-sm text-muted-foreground font-light line-through mb-0.5">
+              {formatMoney(product.priceRetail)}
+            </span>
+          )}
+        </div>
 
-            {/* Title - Clickable */}
-            <h3 
-              onClick={() => navigate(`/product/${product.id}`)}
-              className="font-heading font-bold text-xl sm:text-2xl text-foreground line-clamp-1 group-hover:text-primary transition-colors duration-300 cursor-pointer hover:underline"
-            >
-              {product.name}
-            </h3>
-            
-            {/* Description */}
-            <p className="text-sm text-muted-foreground line-clamp-2 leading-relaxed">
-              {product.description}
-            </p>
+        {showWholesale && (
+          <p className="text-xs text-muted-foreground font-light mb-4">
+            Từ {product.wholesaleMinQty} sản phẩm
+          </p>
+        )}
 
-            {/* Prices */}
-            <div className="flex items-end gap-2 sm:gap-3">
-              <span className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-primary to-accent-foreground bg-clip-text text-transparent">
-                {formatMoney(displayPrice)}
-              </span>
-              {showWholesale && (
-                <span className="text-sm sm:text-base text-muted-foreground line-through mb-1">
-                  {formatMoney(product.priceRetail)}
-                </span>
-              )}
-            </div>
-
-            {showWholesale && (
-              <p className="text-xs text-muted-foreground flex items-center gap-1">
-                <Sparkles className="h-3 w-3 text-primary" />
-                Từ {product.wholesaleMinQty} sản phẩm
-              </p>
-            )}
-
-            {/* Cart Actions */}
-            {cartItem ? (
-              <div className="flex items-center justify-between bg-primary/5 rounded-none p-2 border border-primary/20">
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="h-12 w-12 rounded-none hover:bg-primary/10 hover:text-primary transition-all duration-300 hover:scale-110"
-                  onClick={() => updateQuantity(product.id, cartItem.qty - 1)}
-                >
-                  <Minus className="h-5 w-5" />
-                </Button>
-                <span className="font-bold text-2xl text-primary min-w-[4rem] text-center">
-                  {cartItem.qty}
-                </span>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="h-12 w-12 rounded-none hover:bg-primary/10 hover:text-primary transition-all duration-300 hover:scale-110"
-                  onClick={() => updateQuantity(product.id, cartItem.qty + 1)}
-                  disabled={cartItem.qty >= product.stock}
-                >
-                  <Plus className="h-5 w-5" />
-                </Button>
-              </div>
-            ) : (
+        {/* Cart Actions */}
+        <div className="mt-auto pt-4 border-t border-border/20">
+          {cartItem ? (
+            <div className="flex items-center justify-between border border-border/40 p-1">
               <Button
-                className="w-full h-12 sm:h-14 text-xs sm:text-sm uppercase tracking-widest font-bold rounded-none bg-secondary border border-secondary text-white hover:bg-white hover:text-[#2d4a3e] transition-all duration-300 group/btn"
-                onClick={handleAddToCart}
-                disabled={product.stock === 0 || isAdding}
+                variant="ghost"
+                size="icon"
+                className="h-10 w-10 rounded-none hover:bg-primary/5 text-primary"
+                onClick={() => updateQuantity(product.id, cartItem.qty - 1)}
               >
-                {isAdding ? (
-                  <>
-                    <Check className="h-4 w-4 sm:h-5 sm:w-5 mr-2 animate-bounce" />
-                    Đã thêm!
-                  </>
-                ) : (
-                  <>
-                    <ShoppingCart className="h-4 w-4 sm:h-5 sm:w-5 mr-2 group-hover/btn:animate-wiggle" />
-                    Thêm vào giỏ hàng
-                  </>
-                )}
+                <Minus className="h-4 w-4 stroke-[1.5]" />
               </Button>
-            )}
-          </div>
+              <span className="font-heading text-lg text-primary px-4">
+                {cartItem.qty}
+              </span>
+              <Button
+                variant="ghost"
+                size="icon"
+                className="h-10 w-10 rounded-none hover:bg-primary/5 text-primary"
+                onClick={() => updateQuantity(product.id, cartItem.qty + 1)}
+                disabled={cartItem.qty >= product.stock}
+              >
+                <Plus className="h-4 w-4 stroke-[1.5]" />
+              </Button>
+            </div>
+          ) : (
+            <Button
+              className="w-full h-12 rounded-none bg-primary text-primary-foreground hover:bg-primary/90 text-xs uppercase tracking-widest font-normal transition-colors"
+              onClick={handleAddToCart}
+              disabled={product.stock === 0 || isAdding}
+            >
+              {isAdding ? (
+                <>
+                  <Check className="h-4 w-4 mr-2" />
+                  Đã thêm
+                </>
+              ) : (
+                <>
+                  <ShoppingCart className="h-4 w-4 mr-2 stroke-[1.5]" />
+                  Thêm vào giỏ
+                </>
+              )}
+            </Button>
+          )}
         </div>
       </div>
     </div>
   );
 };
+
