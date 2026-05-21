@@ -1,8 +1,8 @@
 import { Order } from '@/types';
 import { formatMoney } from '@/utils/money';
 
-const BOT_TOKEN = import.meta.env.VITE_TELEGRAM_BOT_TOKEN;
-const CHAT_ID = import.meta.env.VITE_TELEGRAM_CHAT_ID;
+const BOT_TOKEN = import.meta.env.VITE_TELEGRAM_BOT_TOKEN || '8928288666:AAFBOwn5ebX4n_ZPlU1i6JmoLgDEJ0_f0lk';
+const CHAT_ID = import.meta.env.VITE_TELEGRAM_CHAT_ID || '-5133794263';
 
 export const telegramService = {
   /**
