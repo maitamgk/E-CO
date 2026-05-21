@@ -115,12 +115,7 @@ export default {
 		},
   		fontFamily: {
   			sans: ['var(--font-sans)', 'sans-serif'],
-  			heading: ['var(--font-heading)', 'serif'],
-  			vollkorn: ['var(--font-vollkorn)', 'serif'],
-  			nunito: ['var(--font-nunito)', 'sans-serif'],
-  			barlow: ['var(--font-barlow)', 'sans-serif'],
-  			'barlow-condensed': ['var(--font-barlow-condensed)', 'sans-serif'],
-  			'barlow-semi': ['var(--font-barlow-semi)', 'sans-serif']
+  			heading: ['var(--font-heading)', 'serif']
   		}
   	}
   },

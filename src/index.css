@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@200;400;500;600;700&family=Barlow+Semi+Condensed:wght@500;700&family=Barlow:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Nunito:wght@400;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&family=Vollkorn:ital,wght@0,400;0,500;0,700;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -34,15 +34,10 @@
     --input: 154 26% 16%;
     --ring: 137 9% 15%;
 
-    --radius: 0rem;
+    --radius: 0.3rem;
 
-    --font-sans: 'Inter', system-ui, sans-serif;
-    --font-heading: 'Playfair Display', serif;
-    --font-vollkorn: 'Vollkorn', serif;
-    --font-nunito: 'Nunito', sans-serif;
-    --font-barlow: 'Barlow', sans-serif;
-    --font-barlow-condensed: 'Barlow Condensed', sans-serif;
-    --font-barlow-semi: 'Barlow Semi Condensed', sans-serif;
+    --font-sans: 'Manrope', system-ui, sans-serif;
+    --font-heading: 'Manrope', sans-serif;
 
     --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
     --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
