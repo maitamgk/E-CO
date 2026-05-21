@@ -85,7 +85,7 @@ const Contact = () => {
     return (
         <Layout>
             {/* Hero Section */}
-            <section className="relative bg-[#fcf9f4] border-b border-border/40 py-16 text-center">
+            <section className="relative bg-background border-b border-border/40 py-16 text-center">
                 <div className="container mx-auto px-4 relative z-10">
                     <h1 className="text-3xl md:text-4xl font-heading text-primary mb-4">
                         Liên hệ với chúng tôi
@@ -100,7 +100,7 @@ const Contact = () => {
                 <div className="grid lg:grid-cols-2 gap-12">
                     {/* Contact Form */}
                     <ScrollAnimate animation="fade-in-left">
-                        <div className="bg-[#fcf9f4] border border-border/40 p-8 rounded-none">
+                        <div className="bg-background border border-border/40 p-8 rounded-none">
                             <div className="flex items-center gap-3 mb-6">
                                 <div>
                                     <h2 className="text-2xl font-heading text-primary">Gửi tin nhắn</h2>
@@ -220,7 +220,7 @@ const Contact = () => {
                                     <a
                                         key={idx}
                                         href={info.href}
-                                        className="group p-6 bg-[#fcf9f4] border border-border/40 rounded-none hover:border-primary/50 transition-colors duration-300"
+                                        className="group p-6 bg-background border border-border/40 rounded-none hover:border-primary/50 transition-colors duration-300"
                                     >
                                         <div className="flex flex-col gap-4">
                                             <info.icon className="h-5 w-5 text-primary/40" />
@@ -259,7 +259,7 @@ const Contact = () => {
                                         <a
                                             key={social}
                                             href="#"
-                                            className="flex-1 py-3 px-4 bg-[#fcf9f4] border border-border/20 text-center text-sm hover:bg-primary hover:text-primary-foreground transition-colors duration-300"
+                                            className="flex-1 py-3 px-4 bg-background border border-border/20 text-center text-sm hover:bg-primary hover:text-primary-foreground transition-colors duration-300"
                                         >
                                             {social}
                                         </a>

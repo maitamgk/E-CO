@@ -105,7 +105,7 @@ const Orders = () => {
   return (
     <Layout>
       {/* Hero Section */}
-      <div className="relative bg-[#fcf9f4] border-b border-border/40 py-16 text-center">
+      <div className="relative bg-background border-b border-border/40 py-16 text-center">
         <div className="container mx-auto px-4 relative z-10">
           <h1 className="text-3xl md:text-4xl font-heading text-primary mb-4">
             Đơn hàng của tôi

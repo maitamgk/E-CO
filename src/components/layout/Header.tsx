@@ -65,8 +65,8 @@ export const Header = () => {
       {/* 2. Main Navigation Header */}
       <header className={`transition-all duration-300 w-full border-b border-border/10 ${
         scrolled
-          ? 'bg-[#fcf9f4]/95 dark:bg-[#242b26]/95 backdrop-blur-md shadow-sm'
-          : 'bg-[#fcf9f4] dark:bg-[#242b26]'
+          ? 'bg-background/95 dark:bg-[#242b26]/95 backdrop-blur-md shadow-sm'
+          : 'bg-background dark:bg-[#242b26]'
       }`}>
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between h-20 relative">
@@ -213,7 +213,7 @@ export const Header = () => {
 
         {/* Collapsible Search Panel */}
         {searchOpen && (
-          <div className="absolute left-0 w-full bg-[#fcf9f4] dark:bg-[#242b26] border-b border-border/10 py-6 animate-fade-in shadow-md z-40">
+          <div className="absolute left-0 w-full bg-background dark:bg-[#242b26] border-b border-border/10 py-6 animate-fade-in shadow-md z-40">
             <div className="container mx-auto px-4 max-w-xl">
               <form onSubmit={handleSearchSubmit} className="relative flex items-center border-b border-primary/20 pb-2">
                 <input
@@ -251,7 +251,7 @@ export const Header = () => {
 
         {/* Mobile Menu Panel */}
         {mobileMenuOpen && (
-          <div className="lg:hidden border-t border-border/10 py-4 bg-[#fcf9f4] dark:bg-[#242b26] animate-fade-in absolute left-0 right-0 top-full shadow-lg z-50">
+          <div className="lg:hidden border-t border-border/10 py-4 bg-background dark:bg-[#242b26] animate-fade-in absolute left-0 right-0 top-full shadow-lg z-50">
             <nav className="flex flex-col container mx-auto px-4">
               {leftNavLinks.map((link) => (
                 <Link

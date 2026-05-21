@@ -76,7 +76,7 @@ const Admin = () => {
     <Layout>
       <div className="bg-background min-h-screen pb-20">
         {/* Header Dashboard */}
-        <div className="bg-[#fcf9f4] border-b border-border/40 py-12 text-center">
+        <div className="bg-background border-b border-border/40 py-12 text-center">
           <div className="container mx-auto px-4">
             <h1 className="text-3xl md:text-4xl font-heading text-primary mb-4">Quản trị viên</h1>
             <p className="text-muted-foreground font-light">Hệ thống quản lý đơn hàng B-ECO</p>
@@ -97,7 +97,7 @@ const Admin = () => {
                   <p className="text-[11px] font-normal text-muted-foreground uppercase tracking-widest mb-2">{stat.label}</p>
                   <p className="text-2xl font-heading text-primary">{stat.value}</p>
                 </div>
-                <div className="p-3 bg-[#fcf9f4] border border-border/40">
+                <div className="p-3 bg-background border border-border/40">
                   <stat.icon className="w-5 h-5 text-primary stroke-[1.5]" />
                 </div>
               </div>
@@ -106,7 +106,7 @@ const Admin = () => {
 
           {/* Orders Table */}
           <div className="bg-white border border-border/40">
-            <div className="p-6 border-b border-border/40 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-[#fcf9f4]">
+            <div className="p-6 border-b border-border/40 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-background">
               <h2 className="text-xl font-heading text-primary">Danh sách đơn hàng</h2>
               
               <div className="flex gap-2">
@@ -128,7 +128,7 @@ const Admin = () => {
             <div className="overflow-x-auto">
               <table className="w-full text-left border-collapse">
                 <thead>
-                  <tr className="border-b border-border/40 bg-[#fcf9f4]/50">
+                  <tr className="border-b border-border/40 bg-background/50">
                     <th className="p-4 text-[11px] font-normal uppercase tracking-widest text-muted-foreground">Mã đơn</th>
                     <th className="p-4 text-[11px] font-normal uppercase tracking-widest text-muted-foreground">Khách hàng</th>
                     <th className="p-4 text-[11px] font-normal uppercase tracking-widest text-muted-foreground">Ngày đặt</th>

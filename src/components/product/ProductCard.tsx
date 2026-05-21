@@ -41,7 +41,7 @@ export const ProductCard = ({ product, showWholesale = false }: ProductCardProps
   return (
     <div className="group relative bg-white border border-border/40 transition-colors duration-300 hover:border-primary/40 flex flex-col h-full">
       {/* Image Container */}
-      <div className="relative aspect-[4/5] overflow-hidden bg-[#fcf9f4]">
+      <div className="relative aspect-[4/5] overflow-hidden bg-background">
         {/* Loading shimmer */}
         {!imageLoaded && (
           <div 

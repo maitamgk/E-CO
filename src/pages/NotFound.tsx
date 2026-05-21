@@ -8,7 +8,7 @@ const NotFound = () => {
 
   return (
     <Layout>
-      <div className="min-h-[80vh] flex items-center justify-center bg-[#fcf9f4] relative overflow-hidden">
+      <div className="min-h-[80vh] flex items-center justify-center bg-background relative overflow-hidden">
         <div className="container mx-auto px-4 py-20 relative z-10">
           <div className="max-w-2xl mx-auto text-center">
             {/* 404 Visual */}

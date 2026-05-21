@@ -19,7 +19,7 @@ const Pricing = () => {
   return (
     <Layout>
       {/* Hero Section with Background */}
-      <section className="relative overflow-hidden py-16 bg-[#fcf9f4] border-b border-border/40">
+      <section className="relative overflow-hidden py-16 bg-background border-b border-border/40">
         <div className="container mx-auto px-4 relative z-10 text-center">
           {/* Header */}
           <div className="mb-12">
@@ -33,7 +33,7 @@ const Pricing = () => {
           </div>
 
           {/* Discount Highlight */}
-          <div className="bg-[#fcf9f4] border border-border/40 text-primary p-8 mb-12 text-center max-w-2xl mx-auto">
+          <div className="bg-background border border-border/40 text-primary p-8 mb-12 text-center max-w-2xl mx-auto">
             <div className="flex items-center justify-center gap-3 mb-4">
               <Percent className="h-8 w-8 text-primary/40 stroke-[1.5]" />
               <span className="text-2xl font-heading">GIẢM 10%</span>
@@ -50,7 +50,7 @@ const Pricing = () => {
         {/* Pricing Tiers - Enhanced */}
         <div className="grid md:grid-cols-2 gap-8 mb-16">
           {/* Retail Card */}
-          <div className="group relative bg-[#fcf9f4] border border-border/40 p-8 hover:border-primary/50 transition-colors duration-300">
+          <div className="group relative bg-background border border-border/40 p-8 hover:border-primary/50 transition-colors duration-300">
             <div className="relative">
               <div className="flex items-center justify-between mb-6">
                 <h3 className="text-2xl font-heading text-primary">Giá lẻ</h3>
@@ -123,7 +123,7 @@ const Pricing = () => {
               </ul>
               
               <Link to="/shop" className="block">
-                <Button className="w-full rounded-none bg-[#fcf9f4] text-primary hover:bg-white h-12">
+                <Button className="w-full rounded-none bg-background text-primary hover:bg-white h-12">
                   Đặt hàng ngay
                 </Button>
               </Link>
@@ -144,7 +144,7 @@ const Pricing = () => {
             </TableHeader>
             <TableBody>
               {products.map(product => (
-                <TableRow key={product.id} className="border-border/20 hover:bg-[#fcf9f4]">
+                <TableRow key={product.id} className="border-border/20 hover:bg-background">
                   <TableCell className="font-medium text-primary">{product.name}</TableCell>
                   <TableCell className="text-right font-light">{formatMoney(product.priceRetail)}</TableCell>
                   <TableCell className="text-right text-primary">
@@ -158,7 +158,7 @@ const Pricing = () => {
         </div>
 
         {/* CTA */}
-        <div className="text-center p-8 bg-[#fcf9f4] border border-border/40">
+        <div className="text-center p-8 bg-background border border-border/40">
           <p className="text-muted-foreground mb-6 font-light">
             Liên hệ ngay để được tư vấn và báo giá chi tiết
           </p>

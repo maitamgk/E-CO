@@ -152,7 +152,7 @@ const Home = () => {
         </div>
 
         {/* Right Side: Text & Color Block */}
-        <div className="w-full md:w-1/2 relative h-[45vh] md:h-full flex items-center bg-[#fcf9f4] dark:bg-[#242b26]">
+        <div className="w-full md:w-1/2 relative h-[45vh] md:h-full flex items-center bg-background dark:bg-[#242b26]">
           {/* Background Colors */}
           {heroSlides.map((slide, index) => (
             <div 
@@ -191,7 +191,7 @@ const Home = () => {
                   <div>
                     <Link 
                       to="/shop" 
-                      className="inline-flex items-center gap-4 border border-current hover:bg-[#1f1c17] hover:text-[#fcf9f4] hover:border-[#1f1c17] transition-all duration-300 px-6 py-3 tracking-widest text-[11px] uppercase font-barlow font-semibold group"
+                      className="inline-flex items-center gap-4 border border-current hover:bg-[#1f1c17] hover:text-white hover:border-[#1f1c17] transition-all duration-300 px-6 py-3 tracking-widest text-[11px] uppercase font-barlow font-semibold group"
                     >
                       XEM NGAY <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform duration-300" />
                     </Link>
@@ -254,7 +254,7 @@ const Home = () => {
             <div className="lg:col-span-7 order-1 lg:order-2 flex justify-center items-center relative">
               <ScrollAnimate animation="fade-in-left" className="relative w-full max-w-lg aspect-square">
                 {/* Layered graphics layout */}
-                <div className="absolute inset-0 bg-[#fcf9f4] dark:bg-[#2c332d] rounded-full scale-90 border border-border/10 -z-10" />
+                <div className="absolute inset-0 bg-background dark:bg-[#2c332d] rounded-full scale-90 border border-border/10 -z-10" />
                 <img 
                   src={collection1} 
                   alt="Đĩa lá bàng biển Phú Yên" 
@@ -282,7 +282,7 @@ const Home = () => {
         {/* Center card box */}
         <div className="relative z-10 container mx-auto px-4 max-w-2xl">
           <ScrollAnimate animation="scale-in">
-            <div className="bg-[#fcf9f4]/95 dark:bg-[#242b26]/95 backdrop-blur-md p-10 md:p-14 text-center rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.15)] border border-[#d6cfbe]/30">
+            <div className="bg-background/95 dark:bg-[#242b26]/95 backdrop-blur-md p-10 md:p-14 text-center rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.15)] border border-[#d6cfbe]/30">
               <p className="font-vollkorn italic text-2xl md:text-3xl text-primary/80 font-normal mb-1">
                 Triết lý
               </p>
@@ -299,7 +299,7 @@ const Home = () => {
               <div>
                 <Link 
                   to="/about" 
-                  className="inline-flex items-center gap-3 bg-[#1f1c17] text-[#fcf9f4] hover:bg-[#322d25] dark:bg-[#fcf9f4] dark:text-[#242b26] dark:hover:bg-[#f5ebd6] px-8 py-3 rounded-full tracking-[0.15em] text-[10px] uppercase font-barlow font-bold shadow-sm transition-all duration-300 group"
+                  className="inline-flex items-center gap-3 bg-[#1f1c17] text-white hover:bg-[#322d25] dark:bg-background dark:text-[#242b26] dark:hover:bg-[#f5ebd6] px-8 py-3 rounded-full tracking-[0.15em] text-[10px] uppercase font-barlow font-bold shadow-sm transition-all duration-300 group"
                 >
                   TÌM HIỂU THÊM <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-1 transition-transform duration-300" />
                 </Link>
@@ -310,7 +310,7 @@ const Home = () => {
       </section>
 
       {/* 4. Infinite Marquee */}
-      <section className="overflow-hidden border-b border-border/10 bg-[#fcf9f4] dark:bg-[#242b26] py-5">
+      <section className="overflow-hidden border-b border-border/10 bg-background dark:bg-[#242b26] py-5">
         <div className="animate-marquee whitespace-nowrap flex items-center">
           {Array(4).fill([
             "100% Tự Nhiên",
@@ -339,7 +339,7 @@ const Home = () => {
           </ScrollAnimate>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <ScrollAnimate animation="fade-in-up" delay={0} className="border border-border/10 p-8 text-center bg-[#fcf9f4] dark:bg-[#2c332d] hover:shadow-md transition-shadow">
+            <ScrollAnimate animation="fade-in-up" delay={0} className="border border-border/10 p-8 text-center bg-background dark:bg-[#2c332d] hover:shadow-md transition-shadow">
               <div className="flex justify-center mb-6">
                 <CheckCircle className="h-10 w-10 text-primary stroke-[1.2]" />
               </div>
@@ -351,7 +351,7 @@ const Home = () => {
               </p>
             </ScrollAnimate>
 
-            <ScrollAnimate animation="fade-in-up" delay={100} className="border border-border/10 p-8 text-center bg-[#fcf9f4] dark:bg-[#2c332d] hover:shadow-md transition-shadow">
+            <ScrollAnimate animation="fade-in-up" delay={100} className="border border-border/10 p-8 text-center bg-background dark:bg-[#2c332d] hover:shadow-md transition-shadow">
               <div className="flex justify-center mb-6">
                 <Leaf className="h-10 w-10 text-primary stroke-[1.2]" />
               </div>
@@ -363,7 +363,7 @@ const Home = () => {
               </p>
             </ScrollAnimate>
 
-            <ScrollAnimate animation="fade-in-up" delay={200} className="border border-border/10 p-8 text-center bg-[#fcf9f4] dark:bg-[#2c332d] hover:shadow-md transition-shadow">
+            <ScrollAnimate animation="fade-in-up" delay={200} className="border border-border/10 p-8 text-center bg-background dark:bg-[#2c332d] hover:shadow-md transition-shadow">
               <div className="flex justify-center mb-6">
                 <CheckCircle className="h-10 w-10 text-primary stroke-[1.2]" />
               </div>
@@ -379,7 +379,7 @@ const Home = () => {
       </section>
 
       {/* 6. Video & Process Section */}
-      <section className="py-20 md:py-28 bg-[#fcf9f4] dark:bg-[#242b26] overflow-hidden border-b border-border/10">
+      <section className="py-20 md:py-28 bg-background dark:bg-[#242b26] overflow-hidden border-b border-border/10">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
             
@@ -449,7 +449,7 @@ const Home = () => {
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 max-w-4xl mx-auto">
               {categories.map((cat, idx) => (
                 <Link to={cat.link} key={idx} className="group flex flex-col items-center">
-                  <div className="w-32 h-32 sm:w-40 sm:h-40 md:w-44 md:h-44 rounded-full overflow-hidden border border-border/10 mb-4 bg-[#fcf9f4] shadow-inner relative">
+                  <div className="w-32 h-32 sm:w-40 sm:h-40 md:w-44 md:h-44 rounded-full overflow-hidden border border-border/10 mb-4 bg-background shadow-inner relative">
                     <img 
                       src={cat.image} 
                       alt={cat.name} 
@@ -467,7 +467,7 @@ const Home = () => {
       </section>
 
       {/* 8. Featured Products / Best Sellers Grid */}
-      <section className="py-20 md:py-28 bg-[#fcf9f4] dark:bg-[#242b26] border-b border-border/10">
+      <section className="py-20 md:py-28 bg-background dark:bg-[#242b26] border-b border-border/10">
         <div className="container mx-auto px-4">
           <ScrollAnimate animation="fade-in-up">
             <div className="text-center mb-16 max-w-md mx-auto">
@@ -484,7 +484,7 @@ const Home = () => {
             <div className="mt-16 text-center">
               <Link 
                 to="/shop" 
-                className="inline-flex items-center gap-3 bg-[#1f1c17] text-[#fcf9f4] hover:bg-[#1f1c17]/90 dark:bg-[#fcf9f4] dark:text-[#242b26] dark:hover:bg-[#fcf9f4]/90 px-10 py-4 tracking-widest text-xs uppercase font-barlow font-bold transition-all duration-300"
+                className="inline-flex items-center gap-3 bg-[#1f1c17] text-white hover:bg-[#1f1c17]/90 dark:bg-background dark:text-[#242b26] dark:hover:bg-background/90 px-10 py-4 tracking-widest text-xs uppercase font-barlow font-bold transition-all duration-300"
               >
                 XEM TẤT CẢ SẢN PHẨM <ArrowRight className="h-4 w-4" />
               </Link>
@@ -507,7 +507,7 @@ const Home = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {mockArticles.map((article, idx) => (
-              <ScrollAnimate key={idx} animation="fade-in-up" delay={idx * 100} className="group border border-border/5 overflow-hidden flex flex-col h-full bg-[#fcf9f4] dark:bg-[#2c332d] shadow-sm hover:shadow-md transition-shadow duration-300">
+              <ScrollAnimate key={idx} animation="fade-in-up" delay={idx * 100} className="group border border-border/5 overflow-hidden flex flex-col h-full bg-background dark:bg-[#2c332d] shadow-sm hover:shadow-md transition-shadow duration-300">
                 <div className="aspect-video overflow-hidden">
                   <img 
                     src={article.image} 
@@ -541,7 +541,7 @@ const Home = () => {
       </section>
 
       {/* 10. Instagram Premium Grid (6 columns layout, asymmetric) */}
-      <section className="py-20 bg-[#fcf9f4] dark:bg-[#242b26]">
+      <section className="py-20 bg-background dark:bg-[#242b26]">
         <div className="container mx-auto px-4">
           <ScrollAnimate animation="fade-in-up" className="text-center mb-12">
             <h2 className="text-2xl md:text-3xl font-heading text-primary uppercase tracking-widest font-bold mb-3">B-ECO trên Mạng Xã Hội</h2>

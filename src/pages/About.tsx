@@ -9,7 +9,7 @@ const About = () => {
   return (
     <Layout>
       {/* Entire page with light background */}
-      <div className="bg-[#fcf9f4] min-h-screen">
+      <div className="bg-background min-h-screen">
         {/* Hero Section */}
         <section className="relative py-24 border-b border-border/40">
           <div className="container mx-auto px-4 relative z-10 text-center">

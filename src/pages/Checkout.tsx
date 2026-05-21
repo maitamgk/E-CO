@@ -183,7 +183,7 @@ const Checkout = () => {
   return (
     <Layout>
       {/* Hero Section */}
-      <div className="relative bg-[#fcf9f4] border-b border-border/40 py-12 text-center">
+      <div className="relative bg-background border-b border-border/40 py-12 text-center">
         <div className="container mx-auto px-4 relative z-10">
           <Link to="/cart" className="inline-flex items-center gap-2 text-primary/60 hover:text-primary transition-colors mb-4 text-sm tracking-widest uppercase">
             <ArrowLeft className="h-4 w-4 stroke-[1.5]" />

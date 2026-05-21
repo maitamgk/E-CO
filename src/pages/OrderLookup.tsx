@@ -112,7 +112,7 @@ const OrderLookup = () => {
 
   return (
     <Layout>
-      <div className="bg-[#fcf9f4] dark:bg-[#242b26] min-h-screen py-16 sm:py-24 font-nunito text-primary">
+      <div className="bg-background dark:bg-[#242b26] min-h-screen py-16 sm:py-24 font-nunito text-primary">
         <div className="container mx-auto px-4 max-w-4xl">
           
           {/* Header */}
@@ -160,7 +160,7 @@ const OrderLookup = () => {
                   <Button 
                     type="submit" 
                     disabled={isLoading}
-                    className="w-full h-12 bg-[#1f1c17] text-[#fcf9f4] hover:bg-[#322d25] dark:bg-[#fcf9f4] dark:text-[#242b26] dark:hover:bg-[#f5ebd6] font-barlow font-bold tracking-widest text-xs rounded-xl uppercase flex items-center justify-center gap-2 shadow-sm transition-all duration-300"
+                    className="w-full h-12 bg-[#1f1c17] text-white hover:bg-[#322d25] dark:bg-background dark:text-[#242b26] dark:hover:bg-[#f5ebd6] font-barlow font-bold tracking-widest text-xs rounded-xl uppercase flex items-center justify-center gap-2 shadow-sm transition-all duration-300"
                   >
                     <Search className="w-4 h-4" />
                     {isLoading ? 'Đang tìm...' : 'Tra cứu'}
@@ -323,7 +323,7 @@ const OrderLookup = () => {
                     <div className="space-y-4 flex-grow">
                       {order.items.map((item, idx) => (
                         <div key={idx} className="flex gap-4 items-center pb-4 border-b border-border/5">
-                          <div className="w-14 h-14 bg-[#fcf9f4] dark:bg-[#242b26] border border-border/10 rounded-xl overflow-hidden shrink-0 flex items-center justify-center">
+                          <div className="w-14 h-14 bg-background dark:bg-[#242b26] border border-border/10 rounded-xl overflow-hidden shrink-0 flex items-center justify-center">
                             {item.imageUrlSnapshot ? (
                               <img src={item.imageUrlSnapshot} alt={item.nameSnapshot} className="w-full h-full object-cover" />
                             ) : (

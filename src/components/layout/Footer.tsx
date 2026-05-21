@@ -15,7 +15,7 @@ export const Footer = () => {
   };
 
   return (
-    <footer className="bg-[#fcf9f4] dark:bg-[#242b26] border-t border-border/10 relative overflow-hidden text-primary font-nunito">
+    <footer className="bg-background dark:bg-[#242b26] border-t border-border/10 relative overflow-hidden text-primary font-nunito">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20 relative">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 sm:gap-16">
           

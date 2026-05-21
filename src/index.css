@@ -5,34 +5,34 @@
 
 @layer base {
   :root {
-    /* Minimalist Organic Theme (Cocoon inspired) */
-    --background: 45 50% 98%; /* #fcf9f4 - Off-white / cream background */
-    --foreground: 154 26% 16%; /* #1e332a - Dark slate green for text */
+    /* B-ECO Official Brand Identity Theme */
+    --background: 0 0% 100%; /* #FFFFFF - Pure White (60% background) */
+    --foreground: 122 40% 12%; /* Deep forest green for optimal text readability */
 
     --card: 0 0% 100%;
-    --card-foreground: 154 26% 16%;
+    --card-foreground: 122 40% 12%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 154 26% 16%;
+    --popover-foreground: 122 40% 12%;
 
-    --primary: 137 9% 15%; /* #242b26 - The user's requested dark green */
-    --primary-foreground: 45 50% 98%;
+    --primary: 122 45% 34%; /* #2F7D32 - Eco Green (25% main brand color) */
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 154 24% 24%;
-    --secondary-foreground: 45 50% 98%;
+    --secondary: 201 100% 36%; /* #0077B6 - Ocean Blue (15% secondary brand color) */
+    --secondary-foreground: 0 0% 100%;
 
-    --muted: 154 26% 92%;
-    --muted-foreground: 154 10% 45%;
+    --muted: 122 15% 95%; /* Soft greyish green for muted states */
+    --muted-foreground: 122 10% 45%;
 
-    --accent: 154 26% 16%;
-    --accent-foreground: 45 50% 98%;
+    --accent: 201 100% 36%; /* Ocean Blue as accent */
+    --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 154 26% 16%;
-    --input: 154 26% 16%;
-    --ring: 137 9% 15%;
+    --border: 122 15% 90%; /* Soft elegant border */
+    --input: 122 15% 90%;
+    --ring: 122 45% 34%;
 
     --radius: 0.3rem;
 
@@ -46,25 +46,23 @@
   }
 
   .dark {
-    --background: 137 9% 15%; /* #242b26 */
-    --foreground: 45 50% 98%;
-    --card: 137 9% 18%;
-    --card-foreground: 45 50% 98%;
-    --popover: 137 9% 18%;
-    --popover-foreground: 45 50% 98%;
-    --primary: 45 50% 98%;
-    --primary-foreground: 137 9% 15%;
-    --secondary: 137 9% 25%;
-    --secondary-foreground: 45 50% 98%;
-    --muted: 137 9% 25%;
-    --muted-foreground: 45 50% 80%;
-    --accent: 137 9% 25%;
-    --accent-foreground: 45 50% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 45 50% 98%;
-    --border: 137 9% 25%;
-    --input: 137 9% 25%;
-    --ring: 45 50% 98%;
+    --background: 122 30% 10%; /* Deep dark forest green */
+    --foreground: 0 0% 98%;
+    --card: 122 25% 14%;
+    --card-foreground: 0 0% 98%;
+    --popover: 122 25% 14%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 122 45% 45%; /* Slightly lighter green for dark mode contrast */
+    --primary-foreground: 122 30% 10%;
+    --secondary: 201 80% 45%; /* Slightly lighter blue for dark mode contrast */
+    --secondary-foreground: 0 0% 100%;
+    --muted: 122 20% 20%;
+    --muted-foreground: 122 10% 70%;
+    --accent: 201 80% 45%;
+    --accent-foreground: 0 0% 100%;
+    --border: 122 20% 20%;
+    --input: 122 20% 20%;
+    --ring: 122 45% 45%;
   }
 }
 

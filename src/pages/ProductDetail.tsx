@@ -132,7 +132,7 @@ const ProductDetail = () => {
   return (
     <Layout>
       {/* Hero Section */}
-      <div className="relative bg-[#fcf9f4] border-b border-border/40 py-12 text-center">
+      <div className="relative bg-background border-b border-border/40 py-12 text-center">
         <div className="container mx-auto px-4 relative z-10">
           <Link
             to="/shop"
@@ -207,7 +207,7 @@ const ProductDetail = () => {
             {/* Main Image with Zoom */}
             <div
               ref={imageContainerRef}
-              className="relative aspect-square border border-border/40 overflow-hidden bg-[#fcf9f4] cursor-zoom-in group"
+              className="relative aspect-square border border-border/40 overflow-hidden bg-background cursor-zoom-in group"
               onMouseEnter={() => setIsZoomed(true)}
               onMouseLeave={() => setIsZoomed(false)}
               onMouseMove={handleMouseMove}
@@ -412,19 +412,19 @@ const ProductDetail = () => {
             {/* Features */}
             <div className="grid grid-cols-3 gap-4 pt-6 border-t border-border/40">
               <div className="text-center space-y-2">
-                <div className="w-12 h-12 mx-auto bg-[#fcf9f4] border border-border/40 flex items-center justify-center">
+                <div className="w-12 h-12 mx-auto bg-background border border-border/40 flex items-center justify-center">
                   <Leaf className="h-5 w-5 text-primary stroke-[1.5]" />
                 </div>
                 <p className="text-[11px] uppercase tracking-widest text-muted-foreground font-light">100% Thiên nhiên</p>
               </div>
               <div className="text-center space-y-2">
-                <div className="w-12 h-12 mx-auto bg-[#fcf9f4] border border-border/40 flex items-center justify-center">
+                <div className="w-12 h-12 mx-auto bg-background border border-border/40 flex items-center justify-center">
                   <Truck className="h-5 w-5 text-primary stroke-[1.5]" />
                 </div>
                 <p className="text-[11px] uppercase tracking-widest text-muted-foreground font-light">Giao toàn quốc</p>
               </div>
               <div className="text-center space-y-2">
-                <div className="w-12 h-12 mx-auto bg-[#fcf9f4] border border-border/40 flex items-center justify-center">
+                <div className="w-12 h-12 mx-auto bg-background border border-border/40 flex items-center justify-center">
                   <Shield className="h-5 w-5 text-primary stroke-[1.5]" />
                 </div>
                 <p className="text-[11px] uppercase tracking-widest text-muted-foreground font-light">Đảm bảo</p>
@@ -437,11 +437,11 @@ const ProductDetail = () => {
         <div className="mt-16">
           <Tabs defaultValue="details" className="w-full">
             <TabsList className="w-full max-w-md mx-auto grid grid-cols-2 h-12 rounded-none bg-white border border-border/40 p-0">
-              <TabsTrigger value="details" className="rounded-none text-sm uppercase tracking-widest font-normal data-[state=active]:bg-[#fcf9f4] data-[state=active]:shadow-none data-[state=active]:text-primary border-r border-border/40 h-full">
+              <TabsTrigger value="details" className="rounded-none text-sm uppercase tracking-widest font-normal data-[state=active]:bg-background data-[state=active]:shadow-none data-[state=active]:text-primary border-r border-border/40 h-full">
                 <Info className="h-4 w-4 mr-2 stroke-[1.5]" />
                 Chi tiết
               </TabsTrigger>
-              <TabsTrigger value="reviews" className="rounded-none text-sm uppercase tracking-widest font-normal data-[state=active]:bg-[#fcf9f4] data-[state=active]:shadow-none data-[state=active]:text-primary h-full">
+              <TabsTrigger value="reviews" className="rounded-none text-sm uppercase tracking-widest font-normal data-[state=active]:bg-background data-[state=active]:shadow-none data-[state=active]:text-primary h-full">
                 <MessageSquare className="h-4 w-4 mr-2 stroke-[1.5]" />
                 Đánh giá (200)
               </TabsTrigger>

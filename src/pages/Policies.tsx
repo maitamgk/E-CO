@@ -5,7 +5,7 @@ const Policies = () => {
   return (
     <Layout>
       {/* Hero Section */}
-      <section className="relative bg-[#fcf9f4] border-b border-border/40 py-16 text-center">
+      <section className="relative bg-background border-b border-border/40 py-16 text-center">
         <div className="container mx-auto px-4 relative z-10">
           <h1 className="text-3xl md:text-4xl font-heading text-primary mb-4">
             Chính sách B-ECO
@@ -51,7 +51,7 @@ const Policies = () => {
           </section>
 
           {/* Return Policy */}
-          <section className="bg-[#fcf9f4] border border-border/40 p-8">
+          <section className="bg-background border border-border/40 p-8">
             <div className="flex items-center gap-3 mb-6">
               <RefreshCw className="h-6 w-6 text-primary stroke-[1.5]" />
               <h2 className="text-2xl font-heading text-primary">Chính sách đổi trả</h2>

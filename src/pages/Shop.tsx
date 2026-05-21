@@ -42,7 +42,7 @@ const Shop = () => {
   return (
     <Layout>
       {/* Hero Banner */}
-      <section className="relative bg-[#fcf9f4] border-b border-border/40 py-16 lg:py-24 text-center">
+      <section className="relative bg-background border-b border-border/40 py-16 lg:py-24 text-center">
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-2xl mx-auto">
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-heading text-primary mb-4">
@@ -70,7 +70,7 @@ const Shop = () => {
                     <X className="h-4 w-4 stroke-[1.5]" />
                   </button>
                 )}
-                <Button className="h-full px-6 rounded-none bg-[#fcf9f4] text-primary hover:bg-primary/5 border-l border-border/40 font-normal uppercase tracking-widest text-[11px]">
+                <Button className="h-full px-6 rounded-none bg-background text-primary hover:bg-primary/5 border-l border-border/40 font-normal uppercase tracking-widest text-[11px]">
                   Tìm
                 </Button>
               </div>
@@ -84,7 +84,7 @@ const Shop = () => {
         <div className="container mx-auto px-4 py-8">
           {/* Discount Banner */}
           <ScrollAnimate animation="fade-in-up">
-            <div className="border border-border/40 bg-[#fcf9f4] p-4 lg:p-6 mb-8 flex items-center justify-between">
+            <div className="border border-border/40 bg-background p-4 lg:p-6 mb-8 flex items-center justify-between">
               <div className="flex items-center gap-4">
                 <Percent className="h-6 w-6 text-primary stroke-[1.5]" />
                 <div>
@@ -129,7 +129,7 @@ const Shop = () => {
                       "rounded-none px-4 h-10 text-xs font-normal uppercase tracking-widest transition-colors",
                       category === cat.id
                         ? ''
-                        : 'border-border/40 hover:bg-[#fcf9f4] hover:text-primary'
+                        : 'border-border/40 hover:bg-background hover:text-primary'
                     )}
                   >
                     {cat.name}
@@ -138,7 +138,7 @@ const Shop = () => {
               </div>
 
               {/* Grid Toggle */}
-              <div className="hidden md:flex items-center gap-1 bg-[#fcf9f4] border border-border/40 h-10 p-1">
+              <div className="hidden md:flex items-center gap-1 bg-background border border-border/40 h-10 p-1">
                 <button
                   onClick={() => setGridSize('normal')}
                   className={cn(
@@ -252,7 +252,7 @@ const Shop = () => {
                 </div>
 
                 {/* Eco Badge */}
-                <div className="border border-border/40 p-6 text-center bg-[#fcf9f4]">
+                <div className="border border-border/40 p-6 text-center bg-background">
                   <Leaf className="h-6 w-6 text-primary mx-auto mb-3 stroke-[1.5]" />
                   <h4 className="font-heading text-base mb-2">100% Sinh học</h4>
                   <p className="text-[13px] text-muted-foreground font-light">

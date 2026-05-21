@@ -100,7 +100,7 @@ const Blog = () => {
                 onClick={() => setActiveTag(tag)}
                 className={`px-4 py-2 border transition-all duration-300 ${
                   activeTag === tag 
-                    ? "bg-[#1f1c17] text-[#fcf9f4] border-[#1f1c17] dark:bg-[#fcf9f4] dark:text-[#242b26] dark:border-[#fcf9f4]" 
+                    ? "bg-[#1f1c17] text-white border-[#1f1c17] dark:bg-background dark:text-[#242b26] dark:border-white" 
                     : "bg-transparent text-primary/70 border-transparent hover:text-primary"
                 }`}
               >
@@ -116,7 +116,7 @@ const Blog = () => {
                 key={idx} 
                 animation="fade-in-up" 
                 delay={idx * 100}
-                className="group flex flex-col h-full bg-[#fcf9f4] dark:bg-[#2c332d] border border-border/5 shadow-sm hover:shadow-md transition-shadow duration-300"
+                className="group flex flex-col h-full bg-background dark:bg-[#2c332d] border border-border/5 shadow-sm hover:shadow-md transition-shadow duration-300"
               >
                 <div className="aspect-video overflow-hidden relative">
                   <img 
