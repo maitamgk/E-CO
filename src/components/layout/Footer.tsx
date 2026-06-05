@@ -82,7 +82,6 @@ export const Footer = () => {
                   { to: '/shop', label: 'Cửa hàng' },
                   { to: '/pricing', label: 'Bảng giá' },
                   { to: '/about', label: 'Về B-ECO' },
-                  { to: '/awards', label: 'Giải thưởng' },
                   { to: '/blog', label: 'Bài viết' },
                   { to: '/order-lookup', label: 'Tra cứu đơn hàng' },
                 ].map(link => (

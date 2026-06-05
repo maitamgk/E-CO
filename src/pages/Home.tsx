@@ -31,6 +31,7 @@ import variety from '@/assets/products/leaf-plates-variety.jpg';
 
 // Video
 import promoVideo from '@/assets/video/video1.mp4';
+import backgroundVideo from '@/assets/video/video.mp4';
 
 const heroSlides = [
   {
@@ -228,23 +229,24 @@ const Home = () => {
             <div className="lg:col-span-5 order-2 lg:order-1 text-left">
               <ScrollAnimate animation="fade-in-right">
                 <p className="text-[11px] tracking-[0.25em] font-barlow font-bold text-muted-foreground uppercase mb-3">
-                  SẢN PHẨM KHỞI NGUỒN
+                  TỪ THIÊN NHIÊN — CHO BÀN TIỆC
                 </p>
                 <h2 className="text-4xl md:text-5xl font-heading text-gradient-eco leading-tight mb-6 font-bold">
-                  Đĩa lá bàng biển <br/>
-                  <span className="italic font-light font-vollkorn text-gradient-eco">Phú Yên mộc mạc</span>
+                  Khi chiếc lá rụng <br/>
+                  <span className="italic font-light font-vollkorn text-gradient-eco">kể câu chuyện xanh</span>
                 </h2>
                 <p className="text-sm md:text-base text-muted-foreground font-nunito font-light leading-relaxed mb-8">
-                  Sản phẩm sở hữu những đường gân lá tự nhiên độc bản, tạo nét thẩm mỹ mộc mạc tinh tế trên bàn ăn. 
-                  Công thức ép nhiệt tuyệt đối không hóa chất giúp bảo toàn độ cứng cáp và mùi thơm dịu nhẹ nguyên bản của lá bàng rụng. 
-                  Một giải pháp thay thế hoàn hảo cho đồ dùng một lần nhựa, mang đến sự an tâm cho sức khỏe gia đình bạn và thân thiện trọn vẹn với Trái Đất.
+                  Mỗi chiếc đĩa B-ECO là một tác phẩm độc bản từ thiên nhiên — mang trọn vân gân lá bàng biển Phú Yên, 
+                  được ép nhiệt ở nhiệt độ cao mà không cần bất kỳ hóa chất nào. Cứng cáp, thơm nhẹ, và phân hủy hoàn toàn 
+                  chỉ sau 45 ngày. Đây không chỉ là sản phẩm thay thế nhựa — mà là cách bạn chọn yêu thương Trái Đất 
+                  ngay trên chính bàn ăn của mình.
                 </p>
                 <div>
                   <Link 
                     to="/shop" 
                     className="inline-flex items-center gap-3 font-barlow text-sm font-semibold tracking-widest text-primary uppercase border-b border-primary hover:border-primary/40 pb-1 transition-all duration-300 group"
                   >
-                    MUA NGAY <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform duration-300" />
+                    KHÁM PHÁ NGAY <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform duration-300" />
                   </Link>
                 </div>
               </ScrollAnimate>
@@ -271,42 +273,18 @@ const Home = () => {
         </div>
       </section>
 
-      {/* 3. Brand Philosophy Box (Rustic background with centered card) */}
-      <section 
-        className="relative py-28 md:py-36 flex items-center justify-center bg-cover bg-center bg-no-repeat border-b border-border/10"
-        style={{ backgroundImage: `url(${hero1})` }}
-      >
-        {/* Backdrop overlay */}
-        <div className="absolute inset-0 bg-black/40 backdrop-blur-[1px]" />
-        
-        {/* Center card box */}
-        <div className="relative z-10 container mx-auto px-4 max-w-2xl">
-          <ScrollAnimate animation="scale-in">
-            <div className="bg-background/95 dark:bg-[#242b26]/95 backdrop-blur-md p-10 md:p-14 text-center rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.15)] border border-[#d6cfbe]/30">
-              <p className="font-vollkorn italic text-2xl md:text-3xl text-gradient-eco font-normal mb-1">
-                Triết lý
-              </p>
-              <h2 className="font-barlow-condensed text-xl md:text-2xl tracking-[0.25em] font-semibold text-gradient-eco uppercase mt-1">
-                THƯƠNG HIỆU
-              </h2>
-              
-              {/* Elegant divider line */}
-              <div className="w-16 h-px bg-primary/20 mx-auto my-6"></div>
-
-              <p className="text-xs md:text-sm text-primary/85 font-nunito font-light leading-relaxed tracking-wide max-w-md mx-auto mb-8">
-                Là những người yêu thiên nhiên và mong muốn bảo vệ môi trường Việt Nam, chúng tôi tận dụng nguồn lá bàng biển tự nhiên rụng tại Phú Yên để tạo ra những sản phẩm đĩa lá tự nhiên, tiện dụng và tự hủy hoàn toàn. B-ECO kiên định với sứ mệnh mang sản phẩm xanh đến mọi nhà.
-              </p>
-              <div>
-                <Link 
-                  to="/about" 
-                  className="inline-flex items-center gap-3 bg-gradient-eco text-white hover:bg-gradient-eco-hover px-8 py-3 rounded-full tracking-[0.15em] text-[10px] uppercase font-barlow font-bold shadow-md shadow-primary/10 hover:shadow-primary/20 transition-all duration-300 group"
-                >
-                  TÌM HIỂU THÊM <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-1 transition-transform duration-300" />
-                </Link>
-              </div>
-            </div>
-          </ScrollAnimate>
-        </div>
+      {/* 3. Brand Video Section */}
+      <section className="relative w-full h-[70vh] md:h-screen overflow-hidden border-b border-border/10">
+        <video 
+          autoPlay 
+          loop 
+          muted 
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover"
+        >
+          <source src={backgroundVideo} type="video/mp4" />
+          Trình duyệt của bạn không hỗ trợ thẻ video.
+        </video>
       </section>
 
       {/* 4. Infinite Marquee */}
