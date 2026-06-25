@@ -25,7 +25,7 @@ export const Footer = () => {
               <img 
                 src={logo} 
                 alt="B-ECO Logo" 
-                className="w-32 h-32 md:w-48 md:h-48 object-cover group-hover:scale-105 transition-transform duration-500 rounded-none border border-border/10" 
+                className="h-24 w-24 md:h-32 md:w-32 object-contain group-hover:scale-105 transition-transform duration-500" 
               />
             </Link>
             

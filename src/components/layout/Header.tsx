@@ -125,7 +125,7 @@ export const Header = () => {
                 <img 
                   src={logo} 
                   alt="B-ECO Logo" 
-                  className="w-24 h-24 md:w-36 md:h-36 object-cover group-hover:scale-105 transition-transform duration-500 rounded-none border border-border/10" 
+                  className="h-14 w-14 md:h-16 md:w-16 object-contain group-hover:scale-105 transition-transform duration-500" 
                 />
               </Link>
             </div>
