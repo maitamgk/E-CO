@@ -5,7 +5,7 @@ import { Layout } from '@/components/layout/Layout';
 import { ProductGrid } from '@/components/product/ProductGrid';
 import { ScrollAnimate } from '@/components/ui/scroll-animate';
 import { useProducts } from '@/context/ProductsContext';
-import { Leaf, ArrowRight, CheckCircle } from 'lucide-react';
+import { Leaf, ArrowRight } from 'lucide-react';
 
 // Hero Images
 import hero1 from '@/assets/hero/hero1.jpg';
@@ -296,58 +296,6 @@ const Home = () => {
               {val} <span className="inline-block w-1.5 h-1.5 rounded-full bg-primary/30 ml-12"></span>
             </span>
           ))}
-        </div>
-      </section>
-
-      {/* 5. Commitments / Certifications */}
-      <section className="py-20 md:py-28 bg-white dark:bg-[#242b26] border-b border-border/10">
-        <div className="container mx-auto px-4">
-          <ScrollAnimate animation="fade-in-up" className="text-center mb-16 max-w-xl mx-auto">
-            <p className="text-[11px] tracking-[0.25em] font-barlow font-bold text-muted-foreground uppercase mb-3">
-              TIÊU CHUẨN KIỂM ĐỊNH
-            </p>
-            <h2 className="text-3xl md:text-4xl font-heading text-primary leading-tight font-bold">
-              Cam kết chất lượng B-ECO
-            </h2>
-          </ScrollAnimate>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <ScrollAnimate animation="fade-in-up" delay={0} className="border border-border/10 p-8 text-center bg-background dark:bg-[#2c332d] hover:shadow-md transition-shadow">
-              <div className="flex justify-center mb-6">
-                <CheckCircle className="h-10 w-10 text-primary stroke-[1.2]" />
-              </div>
-              <h3 className="font-barlow-condensed text-xl tracking-[0.1em] font-bold text-primary uppercase mb-3">
-                ĐẠT CHUẨN OCOP
-              </h3>
-              <p className="text-sm text-muted-foreground font-nunito font-light leading-relaxed">
-                Sản phẩm đĩa lá bàng đạt tiêu chuẩn chất lượng OCOP Việt Nam, đại diện cho nông sản đặc hữu Phú Yên sạch, phát triển bền vững cùng cộng đồng địa phương.
-              </p>
-            </ScrollAnimate>
-
-            <ScrollAnimate animation="fade-in-up" delay={100} className="border border-border/10 p-8 text-center bg-background dark:bg-[#2c332d] hover:shadow-md transition-shadow">
-              <div className="flex justify-center mb-6">
-                <Leaf className="h-10 w-10 text-primary stroke-[1.2]" />
-              </div>
-              <h3 className="font-barlow-condensed text-xl tracking-[0.1em] font-bold text-primary uppercase mb-3">
-                KIỂM ĐỊNH EUROFINS
-              </h3>
-              <p className="text-sm text-muted-foreground font-nunito font-light leading-relaxed">
-                Được kiểm nghiệm tại hệ thống Eurofins toàn cầu. Kết quả chứng minh sản phẩm không chứa bất kỳ tàn dư kim loại nặng hay hóa chất độc hại nào.
-              </p>
-            </ScrollAnimate>
-
-            <ScrollAnimate animation="fade-in-up" delay={200} className="border border-border/10 p-8 text-center bg-background dark:bg-[#2c332d] hover:shadow-md transition-shadow">
-              <div className="flex justify-center mb-6">
-                <CheckCircle className="h-10 w-10 text-primary stroke-[1.2]" />
-              </div>
-              <h3 className="font-barlow-condensed text-xl tracking-[0.1em] font-bold text-primary uppercase mb-3">
-                AN TOÀN FDA HỦY SINH
-              </h3>
-              <p className="text-sm text-muted-foreground font-nunito font-light leading-relaxed">
-                Đáp ứng tiêu chuẩn chứa thực phẩm nguội lẫn nóng (dùng được trong lò vi sóng) và phân hủy sinh học tự nhiên trong vòng 45 ngày ngoài môi trường.
-              </p>
-            </ScrollAnimate>
-          </div>
         </div>
       </section>
 
