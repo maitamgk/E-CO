@@ -28,6 +28,8 @@ dist-ssr
 .env.*
 !.env.example
 
-# Database scripts
+# Local SQL dumps (keep schema/migration tracked for Supabase setup)
 *.sql
-supabase_schema.sql
+!supabase_schema.sql
+!supabase_auth_migration.sql
+!supabase_seed_admin.sql

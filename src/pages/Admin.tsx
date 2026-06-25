@@ -19,7 +19,7 @@ const statusConfig: Record<OrderStatus, { label: string; color: string; icon: Re
 };
 
 const Admin = () => {
-  const { user, isAdmin } = useAuth();
+  const { user, isAdmin, isLoading } = useAuth();
   const [orders, setOrders] = useState<Order[]>([]);
   const [filter, setFilter] = useState<OrderStatus | 'all'>('all');
 
@@ -58,6 +58,16 @@ const Admin = () => {
       }
     }
   };
+
+  if (isLoading) {
+    return (
+      <Layout>
+        <div className="container mx-auto px-4 py-32 text-center text-muted-foreground">
+          Đang tải...
+        </div>
+      </Layout>
+    );
+  }
 
   if (!user || !isAdmin) {
     return (

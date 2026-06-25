@@ -29,9 +29,9 @@ import customVanHien from '@/assets/products/custom-logo-vanhien.jpg';
 import exhibition from '@/assets/products/exhibition-display.jpg';
 import variety from '@/assets/products/leaf-plates-variety.jpg';
 
-// Video
-import promoVideo from '@/assets/video/video1.mp4';
-import backgroundVideo from '@/assets/video/video.mp4';
+// Video placeholders (add mp4 files to src/assets/video/ when available)
+import brandVideoPoster from '@/assets/products/exhibition-display.jpg';
+import promoVideoPoster from '@/assets/hero/hero4.jpg';
 
 const heroSlides = [
   {
@@ -275,16 +275,11 @@ const Home = () => {
 
       {/* 3. Brand Video Section */}
       <section className="relative w-full h-[70vh] md:h-screen overflow-hidden border-b border-border/10">
-        <video 
-          autoPlay 
-          loop 
-          muted 
-          playsInline
+        <img
+          src={brandVideoPoster}
+          alt="B-ECO brand"
           className="absolute inset-0 w-full h-full object-cover"
-        >
-          <source src={backgroundVideo} type="video/mp4" />
-          Trình duyệt của bạn không hỗ trợ thẻ video.
-        </video>
+        />
       </section>
 
       {/* 4. Infinite Marquee */}
@@ -365,16 +360,11 @@ const Home = () => {
             <div className="lg:col-span-6">
               <ScrollAnimate animation="fade-in-right">
                 <div className="relative border border-border/10 overflow-hidden shadow-lg bg-black">
-                  <video 
-                    autoPlay 
-                    loop 
-                    muted 
-                    playsInline
+                  <img
+                    src={promoVideoPoster}
+                    alt="Quy trình sản xuất B-ECO"
                     className="w-full aspect-[4/5] md:aspect-video lg:aspect-[4/5] object-cover scale-100 hover:scale-105 transition-transform duration-1000 ease-out"
-                  >
-                    <source src={promoVideo} type="video/mp4" />
-                    Trình duyệt của bạn không hỗ trợ thẻ video.
-                  </video>
+                  />
                 </div>
               </ScrollAnimate>
             </div>

@@ -74,7 +74,14 @@ const Auth = () => {
     
     setIsLoading(true);
     try {
-      await register(registerForm.email, registerForm.password);
+      const { needsEmailConfirmation } = await register(registerForm.email, registerForm.password);
+      if (needsEmailConfirmation) {
+        toast({
+          title: 'Đăng ký thành công!',
+          description: 'Vui lòng kiểm tra email để xác nhận tài khoản trước khi đăng nhập.',
+        });
+        return;
+      }
       toast({ title: 'Đăng ký thành công!' });
       navigate('/');
     } catch (error: any) {
@@ -152,10 +159,6 @@ const Auth = () => {
                     {isLoading && <Loader2 className="h-4 w-4 mr-2 animate-spin" />}
                     Đăng nhập
                   </Button>
-
-                  <p className="text-xs text-muted-foreground text-center">
-                    Demo: admin@bco.vn / admin123 hoặc user@bco.vn / user123
-                  </p>
                 </form>
               </TabsContent>
 
