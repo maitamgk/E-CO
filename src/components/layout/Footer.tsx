@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { Phone, Mail, MapPin, ArrowRight } from 'lucide-react';
 import { useState } from 'react';
-import logo from '@/assets/products/logo.jpg';
+import logo from '@/assets/products/logo.png';
 
 export const Footer = () => {
   const [email, setEmail] = useState('');
@@ -25,7 +25,7 @@ export const Footer = () => {
               <img 
                 src={logo} 
                 alt="B-ECO Logo" 
-                className="h-24 w-24 md:h-32 md:w-32 object-contain group-hover:scale-105 transition-transform duration-500" 
+                className="h-16 md:h-20 w-auto max-w-[240px] md:max-w-[280px] object-contain group-hover:scale-105 transition-transform duration-500" 
               />
             </Link>
             

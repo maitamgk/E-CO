@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { useCart } from '@/context/CartContext';
 import { useAuth } from '@/context/AuthContext';
-import logo from '@/assets/products/logo.jpg';
+import logo from '@/assets/products/logo.png';
 
 const leftNavLinks = [
   { to: '/shop', label: 'Sản phẩm' },
@@ -125,7 +125,7 @@ export const Header = () => {
                 <img 
                   src={logo} 
                   alt="B-ECO Logo" 
-                  className="h-14 w-14 md:h-16 md:w-16 object-contain group-hover:scale-105 transition-transform duration-500" 
+                  className="h-11 md:h-14 w-auto max-w-[160px] md:max-w-[200px] object-contain group-hover:scale-105 transition-transform duration-500" 
                 />
               </Link>
             </div>
