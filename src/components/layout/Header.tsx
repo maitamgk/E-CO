@@ -1,13 +1,12 @@
-import { Link, useNavigate } from 'react-router-dom';
-import { ShoppingCart, User, Menu, X, Leaf, Search, Sun, Moon } from 'lucide-react';
-import { useState, useEffect } from 'react';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { useCart } from '@/context/CartContext';
+import { useEffect, useState } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Menu, Moon, Search, ShoppingBag, Sun, User, X } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
+import { useCart } from '@/context/CartContext';
+import { cn } from '@/lib/utils';
 import logo from '@/assets/products/logo.png';
 
-const leftNavLinks = [
+const navLinks = [
   { to: '/shop', label: 'Sản phẩm' },
   { to: '/about', label: 'Về B-ECO' },
   { to: '/blog', label: 'Bài viết' },
@@ -18,289 +17,148 @@ export const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
-  const [scrolled, setScrolled] = useState(false);
-  
+  const [isDark, setIsDark] = useState(() => {
+    if (typeof window === 'undefined') return false;
+    const savedTheme = localStorage.getItem('theme');
+    return savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches);
+  });
   const { itemCount } = useCart();
   const { user, isAdmin, logout } = useAuth();
+  const location = useLocation();
   const navigate = useNavigate();
 
-  const [isDark, setIsDark] = useState(() => {
-    if (typeof window !== 'undefined') {
-      return document.documentElement.classList.contains('dark');
-    }
-    return false;
-  });
-
-  const toggleDarkMode = () => {
-    const newDark = !isDark;
-    setIsDark(newDark);
-    if (newDark) {
-      document.documentElement.classList.add('dark');
-      localStorage.setItem('theme', 'dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-      localStorage.setItem('theme', 'light');
-    }
-  };
+  useEffect(() => {
+    document.documentElement.classList.toggle('dark', isDark);
+    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+  }, [isDark]);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+    setMobileMenuOpen(false);
+    setSearchOpen(false);
+  }, [location.pathname]);
 
-  const handleSearchSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (searchQuery.trim()) {
-      navigate(`/shop?search=${encodeURIComponent(searchQuery.trim())}`);
-      setSearchOpen(false);
-      setSearchQuery('');
-    }
+  const handleSearchSubmit = (event: React.FormEvent) => {
+    event.preventDefault();
+    const query = searchQuery.trim();
+    if (!query) return;
+    navigate(`/shop?search=${encodeURIComponent(query)}`);
+    setSearchQuery('');
   };
 
   return (
-    <div className="w-full z-50 sticky top-0 flex flex-col">
-      {/* 2. Main Navigation Header */}
-      <header className={`transition-all duration-300 w-full border-b border-border/10 ${
-        scrolled
-          ? 'bg-background/95 dark:bg-[#242b26]/95 backdrop-blur-md shadow-sm'
-          : 'bg-background dark:bg-[#242b26]'
-      }`}>
-        <div className="container mx-auto px-4">
-          <div className="flex items-center justify-between h-20 relative">
-            
-            {/* Desktop Left: Search Toggle & Nav Links */}
-            <div className="hidden lg:flex items-center gap-8 flex-1">
-              <button 
-                onClick={() => setSearchOpen(!searchOpen)} 
-                className="flex items-center gap-2 text-primary/80 hover:text-primary transition-colors py-2"
-                aria-label="Search"
-              >
-                <Search className="h-5 w-5 text-primary stroke-[1.5]" />
-              </button>
-              
-              <nav className="flex items-center gap-6">
-                {leftNavLinks.map(link => (
-                  <Link
-                    key={link.to}
-                    to={link.to}
-                    className="text-[13px] font-barlow uppercase tracking-widest text-primary/80 hover:text-primary transition-colors duration-300 relative group py-2"
-                  >
-                    {link.label}
-                    <span className="absolute bottom-0 left-0 w-0 h-px bg-primary transition-all duration-300 group-hover:w-full" />
-                  </Link>
-                ))}
-              </nav>
-            </div>
+    <header className="sticky top-0 z-40 border-b border-border/75 bg-background/90 shadow-[0_6px_24px_rgba(16,63,40,0.04)] backdrop-blur-xl">
+      <div className="mx-auto grid h-[72px] max-w-[1400px] grid-cols-[auto_1fr_auto] items-center gap-4 px-4 sm:px-6 lg:px-8">
+        <Link to="/" className="flex items-center" aria-label="B-ECO trang chủ">
+          <img src={logo} alt="B-ECO" className="h-12 w-36 object-contain object-left sm:w-40" />
+        </Link>
 
-            {/* Mobile Left: Menu Toggle */}
-            <div className="lg:hidden flex items-center">
-              <Button
-                variant="ghost"
-                size="icon"
-                className="rounded-none hover:bg-transparent p-0 mr-4"
-                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                aria-label="Toggle menu"
-              >
-                {mobileMenuOpen ? (
-                  <X className="h-6 w-6 text-primary stroke-[1.5]" />
-                ) : (
-                  <Menu className="h-6 w-6 text-primary stroke-[1.5]" />
+        <nav className="hidden items-center justify-center gap-1 lg:flex" aria-label="Điều hướng chính">
+          {navLinks.map(link => {
+            const active = location.pathname === link.to || (link.to === '/shop' && location.pathname.startsWith('/product/'));
+            return (
+              <Link
+                key={link.to}
+                to={link.to}
+                className={cn(
+                  'rounded-lg px-3 py-2 text-sm font-semibold transition-colors',
+                  active ? 'bg-secondary text-primary' : 'text-muted-foreground hover:bg-secondary/70 hover:text-foreground',
                 )}
-              </Button>
-              <button
-                onClick={() => setSearchOpen(!searchOpen)}
-                className="text-primary/80 hover:text-primary transition-colors"
-                aria-label="Search"
               >
-                <Search className="h-5 w-5 text-primary stroke-[1.5]" />
-              </button>
-            </div>
-
-            {/* Center: Brand Logo */}
-            <div className="absolute left-1/2 -translate-x-1/2 flex items-center">
-              <Link to="/" className="flex items-center group">
-                <img 
-                  src={logo} 
-                  alt="B-ECO Logo" 
-                  className="h-11 md:h-14 w-auto max-w-[160px] md:max-w-[200px] object-contain group-hover:scale-105 transition-transform duration-500" 
-                />
+                {link.label}
               </Link>
-            </div>
+            );
+          })}
+        </nav>
 
-            {/* Right: Account, Cart, Theme Toggle */}
-            <div className="flex items-center gap-2 sm:gap-4 flex-1 justify-end">
-              {/* Dark Mode Toggle */}
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={toggleDarkMode}
-                className="rounded-none hover:bg-transparent hover:text-primary/70 transition-colors h-10 w-10 p-0"
-                aria-label="Toggle theme"
-              >
-                {isDark ? (
-                  <Sun className="h-5 w-5 text-primary stroke-[1.5]" />
-                ) : (
-                  <Moon className="h-5 w-5 text-primary stroke-[1.5]" />
-                )}
-              </Button>
-
-              {/* Account / Auth */}
-              {user ? (
-                <div className="flex items-center gap-2 sm:gap-4">
-                  <Link to="/orders">
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      className="hidden sm:inline-block rounded-none text-[12px] font-barlow uppercase tracking-widest hover:bg-transparent hover:text-primary/70 p-0 font-medium"
-                    >
-                      Đơn hàng
-                    </Button>
-                  </Link>
-                  {isAdmin && (
-                    <Link to="/admin">
-                      <Button
-                        size="sm"
-                        className="hidden sm:inline-block rounded-none bg-primary text-primary-foreground hover:bg-primary/90 text-[11px] font-barlow uppercase tracking-widest font-medium h-9 px-4"
-                      >
-                        Admin
-                      </Button>
-                    </Link>
-                  )}
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={logout}
-                    className="hidden sm:inline-block rounded-none text-[12px] font-barlow uppercase tracking-widest hover:bg-transparent hover:text-primary/70 p-0 font-medium"
-                  >
-                    Thoát
-                  </Button>
-                  <Link to="/orders" className="sm:hidden" aria-label="Account">
-                    <User className="h-5 w-5 text-primary stroke-[1.5]" />
-                  </Link>
-                </div>
-              ) : (
-                <Link to="/auth" aria-label="Login">
-                  <User className="h-5 w-5 text-primary stroke-[1.5] hover:text-primary/70 transition-colors" />
-                </Link>
-              )}
-
-              {/* Cart */}
-              <Link to="/cart">
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="relative rounded-none hover:bg-transparent hover:text-primary/70 transition-colors h-10 w-10 p-0"
-                  aria-label="Cart"
-                >
-                  <ShoppingCart className="h-5 w-5 text-primary stroke-[1.5]" />
-                  {itemCount > 0 && (
-                    <Badge className="absolute -top-1.5 -right-1.5 h-4 min-w-4 flex items-center justify-center p-0 text-[9px] font-semibold bg-primary text-primary-foreground border-none rounded-full">
-                      {itemCount > 99 ? '99+' : itemCount}
-                    </Badge>
-                  )}
-                </Button>
-              </Link>
-            </div>
-
-          </div>
+        <div className="flex items-center justify-end gap-1 sm:gap-2">
+          <button
+            type="button"
+            onClick={() => setSearchOpen(current => !current)}
+            className="flex h-10 w-10 items-center justify-center rounded-xl text-foreground transition-colors hover:bg-secondary"
+            aria-label="Tìm kiếm"
+            aria-expanded={searchOpen}
+          >
+            <Search className="h-5 w-5 stroke-[1.7]" />
+          </button>
+          <button
+            type="button"
+            onClick={() => setIsDark(current => !current)}
+            className="hidden h-10 w-10 items-center justify-center rounded-xl text-foreground transition-colors hover:bg-secondary sm:flex"
+            aria-label={isDark ? 'Dùng giao diện sáng' : 'Dùng giao diện tối'}
+          >
+            {isDark ? <Sun className="h-5 w-5 stroke-[1.7]" /> : <Moon className="h-5 w-5 stroke-[1.7]" />}
+          </button>
+          <Link
+            to={user ? '/orders' : '/auth'}
+            className="hidden h-10 w-10 items-center justify-center rounded-xl text-foreground transition-colors hover:bg-secondary sm:flex"
+            aria-label={user ? 'Đơn hàng của tôi' : 'Đăng nhập'}
+          >
+            <User className="h-5 w-5 stroke-[1.7]" />
+          </Link>
+          <Link
+            to="/cart"
+            className="relative flex h-10 w-10 items-center justify-center rounded-xl text-foreground transition-colors hover:bg-secondary"
+            aria-label={`Giỏ hàng có ${itemCount} sản phẩm`}
+          >
+            <ShoppingBag className="h-5 w-5 stroke-[1.7]" />
+            {itemCount > 0 && (
+              <span className="absolute -right-1 -top-1 flex h-5 min-w-5 items-center justify-center rounded-full bg-accent px-1 text-[10px] font-bold text-accent-foreground">
+                {itemCount > 99 ? '99+' : itemCount}
+              </span>
+            )}
+          </Link>
+          <button
+            type="button"
+            onClick={() => setMobileMenuOpen(current => !current)}
+            className="flex h-10 w-10 items-center justify-center rounded-xl text-foreground transition-colors hover:bg-secondary lg:hidden"
+            aria-label="Mở menu"
+            aria-expanded={mobileMenuOpen}
+          >
+            {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+          </button>
         </div>
+      </div>
 
-        {/* Collapsible Search Panel */}
-        {searchOpen && (
-          <div className="absolute left-0 w-full bg-background dark:bg-[#242b26] border-b border-border/10 py-6 animate-fade-in shadow-md z-40">
-            <div className="container mx-auto px-4 max-w-xl">
-              <form onSubmit={handleSearchSubmit} className="relative flex items-center border-b border-primary/20 pb-2">
-                <input
-                  type="text"
-                  placeholder="Nhập sản phẩm hoặc từ khóa bạn muốn tìm..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full bg-transparent border-none outline-none focus:ring-0 text-sm placeholder-muted-foreground pr-10 font-nunito"
-                  autoFocus
-                />
-                <button type="submit" className="absolute right-0" aria-label="Search submit">
-                  <Search className="h-5 w-5 text-primary/60 hover:text-primary stroke-[1.5]" />
-                </button>
-              </form>
-              <div className="mt-4 flex flex-wrap gap-2 items-center">
-                <span className="text-[11px] font-barlow uppercase tracking-widest text-muted-foreground">Gợi ý:</span>
-                {['Đĩa tròn', 'Chén lá bàng', 'Combo tiệc cưới', 'In logo'].map((keyword) => (
-                  <button
-                    key={keyword}
-                    onClick={() => {
-                      setSearchQuery(keyword);
-                      navigate(`/shop?search=${encodeURIComponent(keyword)}`);
-                      setSearchOpen(false);
-                      setSearchQuery('');
-                    }}
-                    className="text-xs bg-primary/5 hover:bg-primary/10 text-primary px-3 py-1 transition-colors font-nunito"
-                  >
-                    {keyword}
-                  </button>
-                ))}
-              </div>
-            </div>
-          </div>
-        )}
+      {searchOpen && (
+        <div className="border-t border-border/60 bg-card shadow-[0_18px_48px_hsl(var(--primary)/0.1)]">
+          <form onSubmit={handleSearchSubmit} className="mx-auto flex max-w-3xl items-center gap-3 px-4 py-4 sm:px-6">
+            <Search className="h-5 w-5 flex-none text-muted-foreground" />
+            <label htmlFor="site-search" className="sr-only">Tìm sản phẩm</label>
+            <input
+              id="site-search"
+              value={searchQuery}
+              onChange={event => setSearchQuery(event.target.value)}
+              placeholder="Tìm đĩa, chén, quà tặng hoặc sản phẩm nghệ thuật"
+              className="h-11 min-w-0 flex-1 bg-transparent text-sm text-foreground outline-none placeholder:text-muted-foreground"
+              autoFocus
+            />
+            <button type="submit" className="rounded-xl bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground hover:bg-primary/90">
+              Tìm kiếm
+            </button>
+          </form>
+        </div>
+      )}
 
-        {/* Mobile Menu Panel */}
-        {mobileMenuOpen && (
-          <div className="lg:hidden border-t border-border/10 py-4 bg-background dark:bg-[#242b26] animate-fade-in absolute left-0 right-0 top-full shadow-lg z-50">
-            <nav className="flex flex-col container mx-auto px-4">
-              {leftNavLinks.map((link) => (
-                <Link
-                  key={link.to}
-                  to={link.to}
-                  className="py-4 text-[13px] font-barlow uppercase tracking-widest text-primary border-b border-border/5 hover:text-primary/70 transition-colors"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  {link.label}
-                </Link>
-              ))}
-              {user ? (
-                <>
-                  <Link
-                    to="/orders"
-                    className="py-4 text-[13px] font-barlow uppercase tracking-widest text-primary border-b border-border/5 hover:text-primary/70 transition-colors"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    Đơn hàng của tôi
-                  </Link>
-                  {isAdmin && (
-                    <Link
-                      to="/admin"
-                      className="py-4 text-[13px] font-barlow uppercase tracking-widest text-primary font-medium border-b border-border/5"
-                      onClick={() => setMobileMenuOpen(false)}
-                    >
-                      Trang quản trị (Admin)
-                    </Link>
-                  )}
-                  <button
-                    className="py-4 text-[13px] font-barlow uppercase tracking-widest text-left text-primary hover:text-primary/70 transition-colors"
-                    onClick={() => {
-                      logout();
-                      setMobileMenuOpen(false);
-                    }}
-                  >
-                    Đăng xuất
-                  </button>
-                </>
-              ) : (
-                <Link
-                  to="/auth"
-                  className="py-4 text-[13px] font-barlow uppercase tracking-widest text-primary hover:text-primary/70 transition-colors"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  Đăng nhập / Đăng ký
-                </Link>
-              )}
-            </nav>
-          </div>
-        )}
-      </header>
-    </div>
+      {mobileMenuOpen && (
+        <div className="border-t border-border/60 bg-card px-4 py-4 shadow-[0_18px_48px_hsl(var(--primary)/0.1)] lg:hidden">
+          <nav className="mx-auto flex max-w-[1400px] flex-col" aria-label="Điều hướng di động">
+            {navLinks.map(link => (
+              <Link key={link.to} to={link.to} className="rounded-xl px-4 py-3.5 text-sm font-semibold text-foreground hover:bg-secondary">
+                {link.label}
+              </Link>
+            ))}
+            <Link to={user ? '/orders' : '/auth'} className="rounded-xl px-4 py-3.5 text-sm font-semibold text-foreground hover:bg-secondary">
+              {user ? 'Đơn hàng của tôi' : 'Đăng nhập / Đăng ký'}
+            </Link>
+            {isAdmin && <Link to="/admin" className="rounded-xl px-4 py-3.5 text-sm font-semibold text-primary hover:bg-secondary">Trang quản trị</Link>}
+            {user && <button type="button" onClick={logout} className="rounded-xl px-4 py-3.5 text-left text-sm font-semibold text-muted-foreground hover:bg-secondary">Đăng xuất</button>}
+            <button type="button" onClick={() => setIsDark(current => !current)} className="mt-2 flex items-center gap-3 rounded-xl border border-border px-4 py-3 text-sm font-semibold text-foreground">
+              {isDark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+              {isDark ? 'Giao diện sáng' : 'Giao diện tối'}
+            </button>
+          </nav>
+        </div>
+      )}
+    </header>
   );
 };

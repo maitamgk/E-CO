@@ -10,7 +10,7 @@ import { formatMoney } from '@/utils/money';
 import { supabase } from '@/lib/supabase';
 import { 
   Search, Clock, CheckCircle, Truck, Package, XCircle, 
-  MapPin, Phone, User, Calendar, CreditCard, ChevronRight, Leaf 
+  MapPin, Phone, User, Calendar, CreditCard, Leaf 
 } from 'lucide-react';
 import { toast } from 'sonner';
 
@@ -28,22 +28,23 @@ const OrderLookup = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [order, setOrder] = useState<Order | null>(null);
   const [searched, setSearched] = useState(false);
+  const orderId = order?.id;
 
   // Real-time subscription to order status updates
   useEffect(() => {
-    if (!order) return;
+    if (!orderId) return;
 
     const channel = supabase
-      .channel(`order-lookup-${order.id}`)
+      .channel(`order-lookup-${orderId}`)
       .on(
         'postgres_changes',
         { 
           event: 'UPDATE', 
           schema: 'public', 
           table: 'orders', 
-          filter: `id=eq.${order.id}` 
+          filter: `id=eq.${orderId}` 
         },
-        (payload: any) => {
+        (payload) => {
           const updatedRow = payload.new;
           if (updatedRow) {
             setOrder(prev => prev ? {
@@ -60,7 +61,7 @@ const OrderLookup = () => {
     return () => {
       supabase.removeChannel(channel);
     };
-  }, [order?.id]);
+  }, [orderId]);
 
   const lookupOrder = async (codeVal: string, phoneVal: string) => {
     if (!codeVal.trim() || !phoneVal.trim()) {

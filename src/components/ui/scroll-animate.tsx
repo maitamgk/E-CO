@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 import { cn } from '@/lib/utils';
 
@@ -20,6 +20,15 @@ export const ScrollAnimate = ({
   threshold = 0.1,
 }: ScrollAnimateProps) => {
   const { ref, isVisible } = useScrollAnimation({ threshold });
+  const [reduceMotion, setReduceMotion] = useState(false);
+
+  useEffect(() => {
+    const query = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const updatePreference = () => setReduceMotion(query.matches);
+    updatePreference();
+    query.addEventListener('change', updatePreference);
+    return () => query.removeEventListener('change', updatePreference);
+  }, []);
 
   const animationClass = {
     'fade-in': 'animate-fade-in',
@@ -33,8 +42,8 @@ export const ScrollAnimate = ({
     <div
       ref={ref}
       className={cn(
-        'opacity-0',
-        isVisible && animationClass,
+        reduceMotion ? 'opacity-100' : 'opacity-0',
+        !reduceMotion && isVisible && animationClass,
         className
       )}
       style={{ animationDelay: `${delay}ms` }}

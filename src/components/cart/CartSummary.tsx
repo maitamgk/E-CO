@@ -1,7 +1,5 @@
 import { formatMoney } from '@/utils/money';
 import { useCart } from '@/context/CartContext';
-import { Badge } from '@/components/ui/badge';
-import { Percent } from 'lucide-react';
 
 interface CartSummaryProps {
   discountRate?: number;
@@ -16,36 +14,12 @@ export const CartSummary = ({ discountRate = 0, discountAmount = 0, total }: Car
   const totalQty = getTotalQty();
   const finalTotal = total ?? subtotal - discountAmount;
 
-  const qualifiesForDiscount = totalQty >= 1000;
-
   return (
     <div className="bg-muted/50 rounded-lg p-4 space-y-3">
-      {/* Discount Info */}
-      {!qualifiesForDiscount && totalQty > 0 && (
-        <div className="flex items-center gap-2 text-sm text-muted-foreground bg-gradient-eco-soft border border-primary/10 p-3 rounded-md">
-          <Percent className="h-4 w-4 text-primary" />
-          <span>
-            Thêm <strong>{1000 - totalQty}</strong> sản phẩm để được giảm <strong>10%</strong>
-          </span>
-        </div>
-      )}
-
-      {qualifiesForDiscount && (
-        <div className="flex items-center gap-2">
-          <Badge variant="default" className="bg-gradient-eco border-none hover:bg-gradient-eco-hover transition-all duration-300">
-            <Percent className="h-3 w-3 mr-1" />
-            Giảm 10%
-          </Badge>
-          <span className="text-sm text-muted-foreground">
-            Đơn hàng từ 1000 sản phẩm
-          </span>
-        </div>
-      )}
-
       <div className="space-y-2 text-sm">
         <div className="flex justify-between">
           <span className="text-muted-foreground">Số lượng:</span>
-          <span className="font-medium">{totalQty} sản phẩm</span>
+          <span className="font-medium">{totalQty} đơn vị bán</span>
         </div>
         <div className="flex justify-between">
           <span className="text-muted-foreground">Tạm tính:</span>
@@ -65,7 +39,7 @@ export const CartSummary = ({ discountRate = 0, discountAmount = 0, total }: Car
           <span className="text-xl font-bold text-primary">{formatMoney(finalTotal)}</span>
         </div>
         <p className="text-xs text-muted-foreground mt-1">
-          * Giá cuối cùng sẽ được tính khi thanh toán
+          * Giá phân phối và giá doanh nghiệp được xác nhận theo điều kiện của từng mã sản phẩm
         </p>
       </div>
     </div>

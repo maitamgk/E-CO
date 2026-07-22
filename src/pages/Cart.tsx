@@ -13,9 +13,9 @@ const Cart = () => {
   if (itemCount === 0) {
     return (
       <Layout>
-        <div className="container mx-auto px-4 py-16 text-center">
-          <ShoppingBag className="h-16 w-16 mx-auto text-muted-foreground mb-4" />
-          <h1 className="text-2xl font-bold mb-2">Giỏ hàng trống</h1>
+        <div className="mx-auto max-w-xl px-4 py-24 text-center">
+          <span className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-secondary text-primary"><ShoppingBag className="h-7 w-7" /></span>
+          <h1 className="mt-6 text-3xl font-extrabold tracking-[-0.035em]">Giỏ hàng trống</h1>
           <p className="text-muted-foreground mb-6">
             Bạn chưa thêm sản phẩm nào vào giỏ hàng
           </p>
@@ -32,19 +32,18 @@ const Cart = () => {
 
   return (
     <Layout>
-      {/* Hero Section */}
-      <div className="relative bg-background border-b border-border/40 py-16 text-center">
-        <div className="container mx-auto px-4 relative z-10">
-          <h1 className="text-3xl md:text-4xl font-heading text-gradient-eco mb-4 font-bold">
+      <div className="px-4 pb-10 pt-12 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-[1400px]">
+          <h1 className="text-4xl font-extrabold tracking-[-0.05em] text-foreground sm:text-5xl">
             Giỏ hàng của bạn
           </h1>
-          <p className="text-muted-foreground font-light max-w-2xl mx-auto">
-            {itemCount} sản phẩm đang chờ thanh toán
+          <p className="mt-4 text-muted-foreground">
+            {itemCount} đơn vị bán đang chờ thanh toán
           </p>
         </div>
       </div>
 
-      <div className="container mx-auto px-4 py-8">
+      <div className="mx-auto max-w-[1400px] px-4 pb-20 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between mb-8">
           <Button
             variant="ghost"
@@ -60,7 +59,7 @@ const Cart = () => {
         <div className="grid lg:grid-cols-3 gap-8">
           {/* Cart Items */}
           <div className="lg:col-span-2">
-            <div className="bg-white border border-border/40 p-4">
+            <div className="rounded-2xl border border-border bg-card p-4 sm:p-6">
               {cartItems.map(item => (
                 <CartItemRow key={item.productId} item={item} />
               ))}

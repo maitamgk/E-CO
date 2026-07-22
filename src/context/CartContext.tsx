@@ -50,6 +50,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
           nameSnapshot: product.name,
           priceSnapshot: product.priceRetail,
           imageUrlSnapshot: product.imageUrl,
+          salesUnitSnapshot: product.salesUnit,
           qty: Math.min(newQty, product.stock),
         },
       };

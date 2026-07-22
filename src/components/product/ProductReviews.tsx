@@ -60,7 +60,7 @@ const mockReviews: Review[] = [
     author: 'Võ Minh Tuấn',
     rating: 4,
     date: '02/01/2026',
-    content: 'Sản phẩm đẹp, độc đáo. Dùng làm quà tặng đối tác, ai cũng ấn tượng. Giá sỉ rất tốt khi đặt số lượng lớn.',
+    content: 'Sản phẩm đẹp, độc đáo. Dùng làm quà tặng đối tác, ai cũng ấn tượng. Giá phân phối phù hợp khi đặt số lượng lớn.',
     helpful: 9,
     verified: false,
   },

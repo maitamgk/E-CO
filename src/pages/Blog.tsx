@@ -1,11 +1,10 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
 import { Layout } from '@/components/layout/Layout';
 import { ScrollAnimate } from '@/components/ui/scroll-animate';
 import { ArrowRight } from 'lucide-react';
 
 // Thumbnails
-import collection2 from '@/assets/products/collection-display-2.jpg';
+import collection2 from '@/assets/products/collection-display-1.jpg';
 import exhibition from '@/assets/products/exhibition-display.jpg';
 import variety from '@/assets/products/leaf-plates-variety.jpg';
 import closeup from '@/assets/products/leaf-plates-closeup.jpg';
@@ -74,79 +73,74 @@ const Blog = () => {
 
   return (
     <Layout>
-      <div className="bg-white dark:bg-[#242b26] min-h-screen py-16 sm:py-24 font-nunito text-primary">
-        <div className="container mx-auto px-4">
+      <div className="min-h-[100dvh] px-4 py-12 sm:px-6 sm:py-16 lg:px-8">
+        <div className="mx-auto max-w-[1400px]">
           
           {/* Header */}
-          <div className="text-center max-w-xl mx-auto mb-16">
+          <div className="mb-12 max-w-3xl">
             <ScrollAnimate animation="fade-in-up">
-              <p className="text-[11px] tracking-[0.25em] font-barlow font-bold text-muted-foreground uppercase mb-3">
-                B-ECO JOURNAL
-              </p>
-              <h1 className="text-4xl md:text-5xl font-heading font-bold text-gradient-eco mb-4">
+              <h1 className="text-4xl font-extrabold tracking-[-0.05em] text-foreground sm:text-6xl">
                 Hành trình & Câu chuyện
               </h1>
-              <p className="text-sm text-muted-foreground font-light leading-relaxed">
+              <p className="mt-5 max-w-[62ch] text-base leading-7 text-muted-foreground sm:text-lg">
                 Nơi chúng tôi chia sẻ những câu chuyện về nguồn nguyên liệu lá bàng biển Phú Yên, các hoạt động cộng đồng xanh và phong cách sống bền vững.
               </p>
             </ScrollAnimate>
           </div>
 
           {/* Tags bar */}
-          <div className="flex flex-wrap justify-center gap-2 md:gap-4 border-b border-border/10 pb-8 mb-12 max-w-4xl mx-auto font-barlow text-xs tracking-widest uppercase font-bold">
+          <div className="mb-10 flex gap-2 overflow-x-auto pb-2">
             {blogTags.map(tag => (
               <button
                 key={tag}
                 onClick={() => setActiveTag(tag)}
-                className={`px-4 py-2 border transition-all duration-300 ${
+                className={`h-10 flex-none rounded-full px-4 text-sm font-semibold transition-colors ${
                   activeTag === tag 
-                    ? "bg-gradient-eco text-white border-none hover:bg-gradient-eco-hover" 
-                    : "bg-transparent text-primary/70 border-transparent hover:text-primary"
+                    ? "bg-primary text-primary-foreground" 
+                    : "bg-secondary/75 text-foreground hover:bg-secondary"
                 }`}
               >
-                {tag}
+                {tag === 'TẤT CẢ' ? 'Tất cả' : tag.charAt(0) + tag.slice(1).toLocaleLowerCase('vi')}
               </button>
             ))}
           </div>
 
           {/* Articles Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
             {filteredArticles.map((article, idx) => (
               <ScrollAnimate 
                 key={idx} 
                 animation="fade-in-up" 
                 delay={idx * 100}
-                className="group flex flex-col h-full bg-background dark:bg-[#2c332d] border border-border/5 shadow-sm hover:shadow-md transition-shadow duration-300"
+                className={`group overflow-hidden rounded-2xl border border-border bg-card transition-[transform,box-shadow] duration-300 hover:-translate-y-1 hover:shadow-[0_22px_55px_hsl(var(--primary)/0.1)] ${idx === 0 ? 'md:col-span-2 md:grid md:grid-cols-[1.1fr_0.9fr]' : 'flex h-full flex-col'}`}
               >
-                <div className="aspect-video overflow-hidden relative">
+                <div className="aspect-video overflow-hidden">
                   <img 
                     src={article.image} 
                     alt={article.title} 
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
                   />
-                  <div className="absolute top-4 left-4 bg-white/95 dark:bg-[#242b26]/95 text-gradient-eco text-[10px] font-barlow font-bold tracking-widest px-3 py-1 uppercase border border-border/10">
-                    {article.tag}
-                  </div>
                 </div>
                 
-                <div className="p-6 flex flex-col flex-grow">
-                  <div className="flex items-center gap-4 text-[10px] font-barlow text-muted-foreground uppercase tracking-widest mb-3">
+                <div className="flex flex-grow flex-col p-6 sm:p-7">
+                  <span className="mb-3 text-xs font-bold text-primary">{article.tag.charAt(0) + article.tag.slice(1).toLocaleLowerCase('vi')}</span>
+                  <div className="mb-3 flex items-center gap-3 text-xs text-muted-foreground">
                     <span>{article.date}</span>
-                    <span>•</span>
+                    <span>/</span>
                     <span>{article.readTime}</span>
                   </div>
                   
-                  <h2 className="font-heading text-lg font-bold text-primary mb-3 leading-snug group-hover:text-secondary transition-colors">
+                  <h2 className="mb-3 text-xl font-bold leading-snug tracking-[-0.02em] text-foreground transition-colors group-hover:text-primary">
                     {article.title}
                   </h2>
                   
-                  <p className="text-xs text-muted-foreground font-light leading-relaxed mb-6 flex-grow">
+                  <p className="mb-6 flex-grow text-sm leading-6 text-muted-foreground">
                     {article.desc}
                   </p>
                   
                   <div>
-                    <button className="inline-flex items-center gap-2 text-xs font-barlow font-bold tracking-widest text-primary hover:text-secondary uppercase border-b border-primary/20 pb-0.5 hover:border-secondary transition-all duration-300">
-                      ĐỌC TIẾP <ArrowRight className="h-3 w-3" />
+                    <button className="inline-flex items-center gap-2 text-sm font-bold text-primary transition-colors hover:text-accent">
+                      Đọc tiếp <ArrowRight className="h-4 w-4" />
                     </button>
                   </div>
                 </div>

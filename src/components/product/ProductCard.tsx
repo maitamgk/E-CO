@@ -1,13 +1,13 @@
-import { Product } from '@/types';
-import { formatMoney } from '@/utils/money';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { ShoppingCart, Plus, Minus, Sparkles, Eye, Heart, Check } from 'lucide-react';
-import { useCart } from '@/context/CartContext';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { cn } from '@/lib/utils';
+import { Check, Eye, Minus, Plus, ShoppingBag } from 'lucide-react';
 import { toast } from 'sonner';
+import { Product } from '@/types';
+import { Button } from '@/components/ui/button';
+import { useCart } from '@/context/CartContext';
+import { getCategoryName } from '@/data/mockProducts';
+import { formatMoney } from '@/utils/money';
+import { cn } from '@/lib/utils';
 
 interface ProductCardProps {
   product: Product;
@@ -19,176 +19,87 @@ export const ProductCard = ({ product, showWholesale = false }: ProductCardProps
   const { addToCart, items, updateQuantity } = useCart();
   const [isAdding, setIsAdding] = useState(false);
   const [imageLoaded, setImageLoaded] = useState(false);
-  const [isLiked, setIsLiked] = useState(false);
-
   const cartItem = items[product.id];
   const displayPrice = showWholesale ? product.priceWholesale : product.priceRetail;
-  const savingsPercent = showWholesale ? Math.round((1 - product.priceWholesale / product.priceRetail) * 100) : 0;
 
   const handleAddToCart = () => {
     setIsAdding(true);
     addToCart(product, 1);
     toast.success('Đã thêm sản phẩm vào giỏ', {
-      action: {
-        label: 'Xem giỏ hàng',
-        onClick: () => navigate('/cart')
-      },
-      duration: 3000
+      action: { label: 'Xem giỏ hàng', onClick: () => navigate('/cart') },
+      duration: 3000,
     });
-    setTimeout(() => setIsAdding(false), 600);
+    window.setTimeout(() => setIsAdding(false), 500);
   };
 
   return (
-    <div className="group relative bg-white border border-border/40 transition-colors duration-300 hover:border-primary/40 flex flex-col h-full">
-      {/* Image Container */}
-      <div className="relative aspect-[4/5] overflow-hidden bg-background">
-        {/* Loading shimmer */}
-        {!imageLoaded && (
-          <div 
-            className="absolute inset-0 bg-gradient-to-r from-muted via-muted/50 to-muted animate-shimmer"
-            style={{ backgroundSize: '200% 100%' }}
-          />
-        )}
-        
-        {/* Product Image */}
+    <article className="group flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-card shadow-[0_12px_32px_rgba(16,63,40,0.06)] transition-[transform,border-color,box-shadow] duration-300 hover:-translate-y-1 hover:border-primary/30 hover:shadow-[0_22px_48px_rgba(16,63,40,0.12)]">
+      <button
+        type="button"
+        onClick={() => navigate(`/product/${product.id}`)}
+        className="relative aspect-[4/3] overflow-hidden bg-secondary/55 text-left"
+        aria-label={`Xem ${product.name}`}
+      >
+        {!imageLoaded && <span className="absolute inset-0 animate-pulse bg-muted" />}
         <img
           src={product.imageUrl}
           alt={product.name}
           className={cn(
-            "w-full h-full object-cover object-center transition-transform duration-700 ease-out",
-            "group-hover:scale-105",
-            imageLoaded ? 'opacity-100' : 'opacity-0'
+            'h-full w-full transition-[opacity,transform] duration-700 group-hover:scale-[1.055]',
+            product.category === 'art' ? 'object-contain p-2' : 'object-cover',
+            imageLoaded ? 'opacity-100' : 'opacity-0',
           )}
           onLoad={() => setImageLoaded(true)}
           loading="lazy"
         />
-        
-        {/* Top Badges */}
-        <div className="absolute top-4 left-4 flex flex-col gap-2">
-          {product.stock < 50 && product.stock > 0 && (
-            <Badge variant="secondary" className="bg-white/90 backdrop-blur-md rounded-none text-[10px] uppercase tracking-widest font-normal">
-              Còn {product.stock}
-            </Badge>
-          )}
-          {product.stock === 0 && (
-            <Badge variant="destructive" className="rounded-none text-[10px] uppercase tracking-widest font-normal">
-              Hết hàng
-            </Badge>
-          )}
-          {showWholesale && savingsPercent > 0 && (
-            <Badge className="bg-primary text-primary-foreground rounded-none text-[10px] uppercase tracking-widest font-normal">
-              -{savingsPercent}%
-            </Badge>
-          )}
+      </button>
+
+      <div className="relative flex flex-1 flex-col p-5 sm:p-6">
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/14 to-transparent" />
+        <div className="flex items-center justify-between gap-3 text-xs font-semibold text-muted-foreground">
+          <span>{getCategoryName(product.category)}</span>
+          <span>{product.sku}</span>
         </div>
 
-        {/* Action Buttons - Floating */}
-        <div className="absolute top-4 right-4 flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-          <button
-            onClick={() => setIsLiked(!isLiked)}
-            className={cn(
-              "p-2 bg-white/90 backdrop-blur-md border border-border/40 hover:bg-primary hover:text-primary-foreground hover:border-primary transition-colors",
-              isLiked ? "text-red-500" : "text-primary"
-            )}
-          >
-            <Heart className={cn("h-4 w-4 stroke-[1.5]", isLiked && "fill-current")} />
-          </button>
-          <button 
-            onClick={() => navigate(`/product/${product.id}`)}
-            className="p-2 bg-white/90 backdrop-blur-md border border-border/40 text-primary hover:bg-primary hover:text-primary-foreground hover:border-primary transition-colors"
-          >
-            <Eye className="h-4 w-4 stroke-[1.5]" />
-          </button>
+        <button type="button" onClick={() => navigate(`/product/${product.id}`)} className="mt-3 text-left">
+          <h3 className="text-lg font-bold leading-snug tracking-[-0.02em] text-foreground transition-colors group-hover:text-primary sm:text-xl">
+            {product.name}
+          </h3>
+        </button>
+        <p className="mt-2 line-clamp-2 text-sm leading-6 text-muted-foreground">{product.description}</p>
+
+        <div className="mt-5 flex items-end gap-2">
+          <strong className="text-2xl font-extrabold tracking-[-0.035em] text-primary">{formatMoney(displayPrice)}</strong>
+          <span className="pb-1 text-xs text-muted-foreground">/ {product.salesUnit ?? 'cái'}</span>
         </div>
-      </div>
-
-      {/* Content */}
-      <div className="p-6 flex flex-col flex-grow">
-        {/* Category tag */}
-        <div className="mb-3">
-          <span className="text-[10px] uppercase tracking-widest text-primary/60">
-            {product.category === 'chen' ? 'Chén' : product.category === 'dia' ? 'Dĩa' : 'Combo'}
-          </span>
-        </div>
-
-        {/* Title */}
-        <h3 
-          onClick={() => navigate(`/product/${product.id}`)}
-          className="font-heading text-lg sm:text-xl text-primary mb-2 cursor-pointer hover:text-primary/70 transition-colors"
-        >
-          {product.name}
-        </h3>
-        
-        {/* Description */}
-        <p className="text-sm text-muted-foreground font-light line-clamp-2 mb-4 flex-grow">
-          {product.description}
-        </p>
-
-        {/* Prices */}
-        <div className="flex items-end gap-3 mb-4">
-          <span className="text-xl font-heading text-primary">
-            {formatMoney(displayPrice)}
-          </span>
-          {showWholesale && (
-            <span className="text-sm text-muted-foreground font-light line-through mb-0.5">
-              {formatMoney(product.priceRetail)}
-            </span>
-          )}
-        </div>
-
         {showWholesale && (
-          <p className="text-xs text-muted-foreground font-light mb-4">
-            Từ {product.wholesaleMinQty} sản phẩm
-          </p>
+          <p className="mt-2 text-xs leading-5 text-muted-foreground">Áp dụng từ {product.wholesaleThresholdLabel ?? `${product.wholesaleMinQty} cái`}</p>
         )}
 
-        {/* Cart Actions */}
-        <div className="mt-auto pt-4 border-t border-border/20">
+        <div className="mt-auto pt-5">
           {cartItem ? (
-            <div className="flex items-center justify-between border border-border/40 p-1">
-              <Button
-                variant="ghost"
-                size="icon"
-                className="h-10 w-10 rounded-none hover:bg-primary/5 text-primary"
-                onClick={() => updateQuantity(product.id, cartItem.qty - 1)}
-              >
-                <Minus className="h-4 w-4 stroke-[1.5]" />
+            <div className="flex h-12 items-center justify-between rounded-xl border border-border bg-secondary/55 p-1">
+              <Button variant="ghost" size="icon" className="h-10 w-10" onClick={() => updateQuantity(product.id, cartItem.qty - 1)} aria-label="Giảm số lượng">
+                <Minus className="h-4 w-4" />
               </Button>
-              <span className="font-heading text-lg text-primary px-4">
-                {cartItem.qty}
-              </span>
-              <Button
-                variant="ghost"
-                size="icon"
-                className="h-10 w-10 rounded-none hover:bg-primary/5 text-primary"
-                onClick={() => updateQuantity(product.id, cartItem.qty + 1)}
-                disabled={cartItem.qty >= product.stock}
-              >
-                <Plus className="h-4 w-4 stroke-[1.5]" />
+              <span className="font-bold text-foreground">{cartItem.qty}</span>
+              <Button variant="ghost" size="icon" className="h-10 w-10" onClick={() => updateQuantity(product.id, cartItem.qty + 1)} disabled={cartItem.qty >= product.stock} aria-label="Tăng số lượng">
+                <Plus className="h-4 w-4" />
               </Button>
             </div>
           ) : (
-            <Button
-              className="w-full h-12 rounded-none bg-gradient-eco text-white hover:bg-gradient-eco-hover text-xs uppercase tracking-widest font-normal transition-all duration-300 shadow-sm hover:shadow-md"
-              onClick={handleAddToCart}
-              disabled={product.stock === 0 || isAdding}
-            >
-              {isAdding ? (
-                <>
-                  <Check className="h-4 w-4 mr-2" />
-                  Đã thêm
-                </>
-              ) : (
-                <>
-                  <ShoppingCart className="h-4 w-4 mr-2 stroke-[1.5]" />
-                  Thêm vào giỏ
-                </>
-              )}
-            </Button>
+            <div className="grid grid-cols-[1fr_48px] gap-2">
+              <Button className="h-12" onClick={handleAddToCart} disabled={product.stock === 0 || isAdding}>
+                {isAdding ? <Check className="h-4 w-4" /> : <ShoppingBag className="h-4 w-4" />}
+                {isAdding ? 'Đã thêm' : 'Thêm vào giỏ'}
+              </Button>
+              <Button variant="outline" size="icon" className="h-12 w-12" onClick={() => navigate(`/product/${product.id}`)} aria-label="Xem chi tiết">
+                <Eye className="h-4 w-4" />
+              </Button>
+            </div>
           )}
         </div>
       </div>
-    </div>
+    </article>
   );
 };
-

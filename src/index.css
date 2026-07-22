@@ -1,68 +1,60 @@
-@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
   :root {
-    /* B-ECO Official Brand Identity Theme */
-    --background: 0 0% 100%; /* #FFFFFF - Pure White (60% background) */
-    --foreground: 122 40% 12%; /* Deep forest green for optimal text readability */
-
-    --card: 0 0% 100%;
-    --card-foreground: 122 40% 12%;
-
-    --popover: 0 0% 100%;
-    --popover-foreground: 122 40% 12%;
-
-    --primary: 122 45% 34%; /* #2F7D32 - Eco Green (25% main brand color) */
-    --primary-foreground: 0 0% 100%;
-
-    --secondary: 201 100% 36%; /* #0077B6 - Ocean Blue (15% secondary brand color) */
-    --secondary-foreground: 0 0% 100%;
-
-    --muted: 122 15% 95%; /* Soft greyish green for muted states */
-    --muted-foreground: 122 10% 45%;
-
-    --accent: 201 100% 36%; /* Ocean Blue as accent */
-    --accent-foreground: 0 0% 100%;
+    --background: 42 31% 97%;
+    --foreground: 40 18% 14%;
+    --card: 44 35% 99%;
+    --card-foreground: 40 18% 14%;
+    --popover: 44 35% 99%;
+    --popover-foreground: 40 18% 14%;
+    --primary: 149 54% 22%;
+    --primary-foreground: 42 31% 97%;
+    --secondary: 39 29% 91%;
+    --secondary-foreground: 40 18% 16%;
+    --muted: 40 18% 91%;
+    --muted-foreground: 42 8% 39%;
+    --accent: 39 40% 56%;
+    --accent-foreground: 40 23% 12%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 122 15% 90%; /* Soft elegant border */
-    --input: 122 15% 90%;
-    --ring: 122 45% 34%;
+    --border: 40 16% 80%;
+    --input: 40 16% 74%;
+    --ring: 149 54% 22%;
 
-    --radius: 0.3rem;
+    --radius: 0.25rem;
 
     --font-sans: 'Manrope', system-ui, sans-serif;
-    --font-heading: 'Manrope', sans-serif;
+    --font-heading: 'Vollkorn', Georgia, serif;
 
-    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-    --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
-    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+    --shadow-sm: 0 2px 8px rgb(45 39 29 / 0.05);
+    --shadow: 0 12px 30px rgb(45 39 29 / 0.08);
+    --shadow-md: 0 22px 52px rgb(45 39 29 / 0.1);
+    --shadow-lg: 0 34px 80px rgb(45 39 29 / 0.13);
   }
 
   .dark {
-    --background: 122 30% 10%; /* Deep dark forest green */
-    --foreground: 0 0% 98%;
-    --card: 122 25% 14%;
-    --card-foreground: 0 0% 98%;
-    --popover: 122 25% 14%;
-    --popover-foreground: 0 0% 98%;
-    --primary: 122 45% 45%; /* Slightly lighter green for dark mode contrast */
-    --primary-foreground: 122 30% 10%;
-    --secondary: 201 80% 45%; /* Slightly lighter blue for dark mode contrast */
-    --secondary-foreground: 0 0% 100%;
-    --muted: 122 20% 20%;
-    --muted-foreground: 122 10% 70%;
-    --accent: 201 80% 45%;
-    --accent-foreground: 0 0% 100%;
-    --border: 122 20% 20%;
-    --input: 122 20% 20%;
-    --ring: 122 45% 45%;
+    --background: 155 40% 5%;
+    --foreground: 145 18% 95%;
+    --card: 154 35% 8%;
+    --card-foreground: 145 18% 95%;
+    --popover: 154 35% 8%;
+    --popover-foreground: 145 18% 95%;
+    --primary: 141 49% 62%;
+    --primary-foreground: 155 46% 7%;
+    --secondary: 154 27% 13%;
+    --secondary-foreground: 145 18% 95%;
+    --muted: 154 25% 12%;
+    --muted-foreground: 148 12% 71%;
+    --accent: 141 49% 62%;
+    --accent-foreground: 155 46% 7%;
+    --border: 153 19% 19%;
+    --input: 153 19% 19%;
+    --ring: 141 49% 62%;
   }
 }
 
@@ -74,6 +66,9 @@
   body {
     @apply bg-background text-foreground;
     font-family: var(--font-sans);
+    font-feature-settings: "ss01" 1, "cv02" 1;
+    text-rendering: optimizeLegibility;
+    background: hsl(var(--background));
   }
   
   h1, h2, h3, h4, h5, h6 {
@@ -90,11 +85,16 @@
   /* Fix for iOS viewport height */
   html {
     height: -webkit-fill-available;
+    scroll-behavior: smooth;
   }
 
   body {
     min-height: 100vh;
     min-height: -webkit-fill-available;
+  }
+
+  ::selection {
+    background: hsl(var(--accent) / 0.24);
   }
 }
 
@@ -104,16 +104,16 @@
   }
 
   .eco-dark-bg {
-    background-color: hsl(var(--primary));
+    background-color: hsl(151 49% 13%);
     color: hsl(var(--primary-foreground));
   }
 
   .bg-gradient-eco {
-    background: hsl(var(--secondary));
+    background: hsl(var(--primary));
   }
 
   .bg-gradient-eco-hover {
-    background: #005c8d;
+    background: hsl(145 61% 21%);
   }
 
   .text-gradient-eco {
@@ -124,19 +124,72 @@
   }
 
   .bg-gradient-eco-soft {
-    background: linear-gradient(135deg, rgba(47, 125, 50, 0.08) 0%, rgba(0, 119, 182, 0.08) 100%);
+    background: linear-gradient(145deg, hsl(var(--secondary)) 0%, hsl(var(--background)) 100%);
   }
 
   .bg-gradient-eco-card {
-    background: linear-gradient(135deg, rgba(47, 125, 50, 0.03) 0%, rgba(0, 119, 182, 0.03) 100%);
+    background: linear-gradient(145deg, hsl(var(--card)) 0%, hsl(var(--secondary) / 0.5) 100%);
   }
 
   .glass-panel {
-    background: hsl(var(--card) / 0.85);
-    border: 1px solid rgba(47, 125, 50, 0.1);
+    background: hsl(var(--card) / 0.72);
+    border: 1px solid hsl(var(--foreground) / 0.1);
     box-shadow: var(--shadow-md);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
+  }
+
+  .glass-3d {
+    border-radius: var(--radius);
+    border: 1px solid hsl(var(--border));
+    background:
+      linear-gradient(135deg, hsl(var(--card)), hsl(var(--secondary) / 0.45)),
+      hsl(var(--card) / 0.94);
+    box-shadow:
+      inset 0 1px 0 hsl(0 0% 100% / 0.8),
+      0 20px 48px rgb(16 63 40 / 0.1);
+    backdrop-filter: blur(22px) saturate(135%);
+    -webkit-backdrop-filter: blur(22px) saturate(135%);
+  }
+
+  .scene-3d {
+    perspective: 1400px;
+    perspective-origin: 50% 48%;
+  }
+
+  .depth-card {
+    transform: perspective(1100px) translateZ(0);
+    transform-style: preserve-3d;
+    box-shadow:
+      inset 0 1px 0 hsl(0 0% 100% / 0.7),
+      0 18px 44px rgb(16 63 40 / 0.08);
+    transition:
+      transform 500ms cubic-bezier(0.16, 1, 0.3, 1),
+      border-color 300ms ease,
+      box-shadow 500ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .depth-card:hover {
+    transform: perspective(1100px) rotateX(1.6deg) rotateY(-1.8deg) translateY(-8px) translateZ(8px);
+    border-color: hsl(var(--accent) / 0.34);
+    box-shadow:
+      inset 0 1px 0 hsl(0 0% 100% / 0.82),
+      0 30px 64px rgb(16 63 40 / 0.15);
+  }
+
+  .immersive-grid {
+    position: relative;
+  }
+
+  .immersive-grid::before {
+    content: '';
+    position: absolute;
+    inset: 8% -8% 5% 35%;
+    z-index: -1;
+    border-radius: 50%;
+    background: radial-gradient(circle, hsl(var(--accent) / 0.12), transparent 65%);
+    filter: blur(44px);
+    pointer-events: none;
   }
 
   @keyframes marquee {
@@ -152,5 +205,30 @@
     display: flex;
     width: max-content;
     animation: marquee 30s linear infinite;
+  }
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .glass-panel,
+  .glass-3d {
+    background: hsl(var(--card));
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .depth-card:hover {
+    transform: none;
   }
 }

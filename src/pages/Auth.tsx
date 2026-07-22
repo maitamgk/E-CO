@@ -10,6 +10,8 @@ import { useToast } from '@/hooks/use-toast';
 import { validateEmail, validateMinLength } from '@/utils/validators';
 import { Loader2, Leaf } from 'lucide-react';
 
+const getErrorMessage = (error: unknown) => error instanceof Error ? error.message : 'Vui lòng thử lại sau.';
+
 const Auth = () => {
   const navigate = useNavigate();
   const { login, register, user } = useAuth();
@@ -40,10 +42,10 @@ const Auth = () => {
       await login(loginForm.email, loginForm.password);
       toast({ title: 'Đăng nhập thành công!' });
       navigate('/');
-    } catch (error: any) {
+    } catch (error: unknown) {
       toast({
         title: 'Đăng nhập thất bại',
-        description: error.message,
+        description: getErrorMessage(error),
         variant: 'destructive',
       });
     } finally {
@@ -84,10 +86,10 @@ const Auth = () => {
       }
       toast({ title: 'Đăng ký thành công!' });
       navigate('/');
-    } catch (error: any) {
+    } catch (error: unknown) {
       toast({
         title: 'Đăng ký thất bại',
-        description: error.message,
+        description: getErrorMessage(error),
         variant: 'destructive',
       });
     } finally {

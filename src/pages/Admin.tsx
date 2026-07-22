@@ -150,7 +150,6 @@ const Admin = () => {
                 <tbody>
                   {filteredOrders.map(order => {
                     const status = statusConfig[order.status];
-                    const StatusIcon = status.icon;
                     return (
                       <tr key={order.id} className="border-b border-border/20 hover:bg-muted/30 transition-colors">
                         <td className="p-4 font-medium text-sm">{order.orderCode}</td>

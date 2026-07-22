@@ -1,11 +1,15 @@
 // Product types
 export interface Product {
   id: string;
+  sku?: string;
   name: string;
   description: string;
   priceRetail: number;
   priceWholesale: number;
+  priceEnterprise?: number;
   wholesaleMinQty: number;
+  salesUnit?: string;
+  wholesaleThresholdLabel?: string;
   stock: number;
   imageUrl: string;
   category: string;
@@ -20,6 +24,7 @@ export interface CartItem {
   nameSnapshot: string;
   priceSnapshot: number;
   imageUrlSnapshot: string;
+  salesUnitSnapshot?: string;
   qty: number;
 }
 

@@ -4,22 +4,21 @@ import { ShieldCheck, RefreshCw, Lock, Mail, Phone } from 'lucide-react';
 const Policies = () => {
   return (
     <Layout>
-      {/* Hero Section */}
-      <section className="relative bg-background border-b border-border/40 py-16 text-center">
-        <div className="container mx-auto px-4 relative z-10">
-          <h1 className="text-3xl md:text-4xl font-heading text-primary mb-4">
+      <section className="px-4 pb-12 pt-12 sm:px-6 sm:pb-16 sm:pt-16 lg:px-8">
+        <div className="mx-auto max-w-[1400px]">
+          <h1 className="max-w-3xl text-4xl font-extrabold tracking-[-0.05em] text-foreground sm:text-6xl">
             Chính sách B-ECO
           </h1>
-          <p className="text-muted-foreground max-w-2xl mx-auto font-light">
+          <p className="mt-5 max-w-2xl text-base leading-7 text-muted-foreground sm:text-lg">
             Cam kết mang đến trải nghiệm mua sắm tốt nhất cho khách hàng
           </p>
         </div>
       </section>
 
-      <div className="container mx-auto px-4 py-12">
+      <div className="mx-auto max-w-[1400px] px-4 pb-20 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto space-y-12">
           {/* Warranty Policy */}
-          <section className="bg-white border border-border/40 p-8">
+          <section className="rounded-2xl border border-border bg-card p-7 sm:p-9">
             <div className="flex items-center gap-3 mb-6">
               <ShieldCheck className="h-6 w-6 text-primary stroke-[1.5]" />
               <h2 className="text-2xl font-heading text-primary">Chính sách bảo hành</h2>
@@ -43,7 +42,7 @@ const Policies = () => {
                 <strong className="text-foreground font-medium">Không áp dụng bảo hành:</strong>
                 <ul className="list-disc list-inside mt-2 space-y-2">
                   <li>Sản phẩm hư hỏng do sử dụng sai cách</li>
-                  <li>Sản phẩm đã qua sử dụng với thực phẩm nóng quá 80°C</li>
+                  <li>Sản phẩm đã qua sử dụng với thực phẩm nóng quá 65°C</li>
                   <li>Sản phẩm bị ngâm nước trong thời gian dài</li>
                 </ul>
               </div>
@@ -51,7 +50,7 @@ const Policies = () => {
           </section>
 
           {/* Return Policy */}
-          <section className="bg-background border border-border/40 p-8">
+          <section className="rounded-2xl border border-border bg-card p-7 sm:p-9">
             <div className="flex items-center gap-3 mb-6">
               <RefreshCw className="h-6 w-6 text-primary stroke-[1.5]" />
               <h2 className="text-2xl font-heading text-primary">Chính sách đổi trả</h2>
@@ -90,7 +89,7 @@ const Policies = () => {
           </section>
 
           {/* Privacy Policy */}
-          <section className="bg-white border border-border/40 p-8">
+          <section className="rounded-2xl border border-border bg-card p-7 sm:p-9">
             <div className="flex items-center gap-3 mb-6">
               <Lock className="h-6 w-6 text-primary stroke-[1.5]" />
               <h2 className="text-2xl font-heading text-primary">Chính sách bảo mật</h2>
@@ -153,7 +152,7 @@ const Policies = () => {
           </section>
 
           {/* Contact */}
-          <section className="bg-primary p-8 text-center text-primary-foreground">
+          <section className="rounded-2xl bg-primary p-8 text-center text-primary-foreground">
             <h2 className="text-2xl font-heading mb-4">Liên hệ hỗ trợ</h2>
             <p className="text-primary-foreground/80 mb-6 font-light">
               Nếu có bất kỳ câu hỏi nào về chính sách của chúng tôi, vui lòng liên hệ:
@@ -161,11 +160,11 @@ const Policies = () => {
             <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
               <div className="flex items-center gap-2">
                 <Phone className="h-5 w-5 stroke-[1.5]" />
-                <span className="font-medium tracking-wide">0123 456 789</span>
+                <a href="tel:0382548419" className="font-medium tracking-wide hover:underline">0382 548 419</a>
               </div>
               <div className="flex items-center gap-2">
                 <Mail className="h-5 w-5 stroke-[1.5]" />
-                <span className="font-medium tracking-wide">support@b-eco.vn</span>
+                <a href="mailto:beco.phuyen@gmai.com" className="font-medium tracking-wide hover:underline">beco.phuyen@gmai.com</a>
               </div>
             </div>
           </section>

@@ -26,7 +26,7 @@ export const CartItemRow = ({ item }: CartItemRowProps) => {
       <div className="flex-1 min-w-0">
         <h4 className="font-medium text-foreground truncate">{item.nameSnapshot}</h4>
         <p className="text-sm text-muted-foreground">
-          {formatMoney(item.priceSnapshot)} / sản phẩm
+          {formatMoney(item.priceSnapshot)} / {item.salesUnitSnapshot ?? 'sản phẩm'}
         </p>
 
         {/* Quantity Controls */}

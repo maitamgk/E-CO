@@ -36,9 +36,10 @@ const Checkout = () => {
 
   const subtotal = getSubtotal();
   const totalQty = getTotalQty();
-  const discountRate = totalQty >= 1000 ? 0.1 : 0;
-  const discountAmount = subtotal * discountRate;
-  const total = subtotal - discountAmount;
+  // Bảng giá mới áp dụng theo từng mã sản phẩm, không tự động giảm đồng loạt tại checkout.
+  const discountRate = 0;
+  const discountAmount = 0;
+  const total = subtotal;
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -128,10 +129,10 @@ const Checkout = () => {
         title: 'Đặt hàng thành công!',
         description: `Mã đơn hàng: ${code}`,
       });
-    } catch (error: any) {
+    } catch (error: unknown) {
       toast({
         title: 'Có lỗi xảy ra',
-        description: error.message || 'Vui lòng thử lại sau',
+        description: error instanceof Error ? error.message : 'Vui lòng thử lại sau',
         variant: 'destructive',
       });
     } finally {
@@ -317,7 +318,7 @@ const Checkout = () => {
                     <div className="flex-1 min-w-0">
                       <p className="text-sm font-medium truncate">{item.nameSnapshot}</p>
                       <p className="text-sm text-muted-foreground">
-                        {item.qty} x {formatMoney(item.priceSnapshot)}
+                        {item.qty} {item.salesUnitSnapshot ?? 'sản phẩm'} × {formatMoney(item.priceSnapshot)}
                       </p>
                     </div>
                     <span className="text-sm font-medium">
@@ -330,18 +331,12 @@ const Checkout = () => {
               <div className="border-t border-border pt-4 space-y-2">
                 <div className="flex justify-between text-sm">
                   <span className="text-muted-foreground">Số lượng:</span>
-                  <span>{totalQty} sản phẩm</span>
+                  <span>{totalQty} đơn vị bán</span>
                 </div>
                 <div className="flex justify-between text-sm">
                   <span className="text-muted-foreground">Tạm tính:</span>
                   <span>{formatMoney(subtotal)}</span>
                 </div>
-                {discountAmount > 0 && (
-                  <div className="flex justify-between text-sm text-primary">
-                    <span>Giảm giá (10%):</span>
-                    <span>-{formatMoney(discountAmount)}</span>
-                  </div>
-                )}
                 <div className="flex justify-between text-sm">
                   <span className="text-muted-foreground">Phí vận chuyển:</span>
                   <span>Liên hệ</span>

@@ -1,179 +1,108 @@
+import { Link } from 'react-router-dom';
+import { Building2, Check, Package, Store } from 'lucide-react';
 import { Layout } from '@/components/layout/Layout';
 import { Button } from '@/components/ui/button';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { useProducts } from '@/context/ProductsContext';
 import { formatMoney } from '@/utils/money';
-import { Percent, Check, Package, Boxes } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '@/components/ui/table';
+import customLogo from '@/assets/products/custom-logo-beco.jpg';
 
 const Pricing = () => {
   const { products } = useProducts();
 
   return (
     <Layout>
-      {/* Hero Section with Background */}
-      <section className="relative overflow-hidden py-16 bg-background border-b border-border/40">
-        <div className="container mx-auto px-4 relative z-10 text-center">
-          {/* Header */}
-          <div className="mb-12">
-            <h1 className="text-3xl md:text-4xl font-heading text-gradient-eco mb-4 font-bold">
-              Bảng giá sản phẩm
-            </h1>
-            <p className="text-muted-foreground max-w-2xl mx-auto font-light">
-              Chúng tôi cung cấp giá sỉ ưu đãi cho các đơn hàng lớn. 
-              Đặc biệt, đơn hàng từ 1000 sản phẩm được giảm thêm 10%.
-            </p>
-          </div>
-
-          {/* Discount Highlight */}
-          <div className="bg-background border border-border/40 text-primary p-8 mb-12 text-center max-w-2xl mx-auto">
-            <div className="flex items-center justify-center gap-3 mb-4">
-              <Percent className="h-8 w-8 text-primary/40 stroke-[1.5]" />
-              <span className="text-2xl font-heading">GIẢM 10%</span>
+      <section className="px-4 pb-12 pt-6 sm:px-6 sm:pb-16 lg:px-8">
+        <div className="mx-auto grid max-w-[1400px] overflow-hidden rounded-2xl border border-border bg-card lg:grid-cols-[0.92fr_1.08fr]">
+          <div className="flex items-center p-8 sm:p-12 lg:p-14">
+            <div className="max-w-2xl">
+              <h1 className="text-4xl font-extrabold tracking-[-0.05em] text-foreground sm:text-6xl">Bảng giá minh bạch</h1>
+              <p className="mt-5 max-w-[55ch] text-base leading-7 text-muted-foreground sm:text-lg">Giá bán lẻ, phân phối và doanh nghiệp được công khai theo từng mã sản phẩm.</p>
+              <Button asChild className="mt-7"><Link to="/contact">Nhận báo giá</Link></Button>
             </div>
-            <p className="mb-2 font-medium">Cho đơn hàng từ 1000 sản phẩm trở lên</p>
-            <p className="text-sm text-muted-foreground font-light">
-              Áp dụng tự động khi thanh toán. Giảm giá được tính trên server để đảm bảo chính xác.
-            </p>
+          </div>
+          <div className="relative min-h-[320px] bg-secondary">
+            <img src={customLogo} alt="Sản phẩm B-ECO khắc logo doanh nghiệp" className="absolute inset-0 h-full w-full object-cover" />
+            <div className="absolute inset-y-0 left-0 hidden w-24 bg-gradient-to-r from-card to-transparent lg:block" />
           </div>
         </div>
       </section>
 
-      <div className="container mx-auto px-4 py-12">
-        {/* Pricing Tiers - Enhanced */}
-        <div className="grid md:grid-cols-2 gap-8 mb-16">
-          {/* Retail Card */}
-          <div className="group relative bg-background border border-border/40 p-8 hover:border-primary/50 transition-colors duration-300">
-            <div className="relative">
-              <div className="flex items-center justify-between mb-6">
-                <h3 className="text-2xl font-heading text-primary">Giá lẻ</h3>
-                <Package className="h-6 w-6 text-primary/40 stroke-[1.5]" />
-              </div>
-              
-              <p className="text-muted-foreground font-light mb-6 text-sm">
-                Phù hợp cho cá nhân, hộ gia đình, sự kiện nhỏ
-              </p>
-              
-              <ul className="space-y-4 mb-8">
-                <li className="flex items-start gap-3">
-                  <Check className="h-4 w-4 mt-0.5 text-primary stroke-[1.5]" />
-                  <span className="text-sm font-light text-foreground flex-1">Đặt hàng số lượng bất kỳ</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <Check className="h-4 w-4 mt-0.5 text-primary stroke-[1.5]" />
-                  <span className="text-sm font-light text-foreground flex-1">Giao hàng COD toàn quốc</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <Check className="h-4 w-4 mt-0.5 text-primary stroke-[1.5]" />
-                  <span className="text-sm font-light text-foreground flex-1">Bảo hành 3 tháng</span>
-                </li>
-              </ul>
-              
-              <Link to="/shop" className="block mt-auto">
-                <Button variant="outline" className="w-full rounded-none border-primary/20 hover:border-primary hover:bg-primary/5 text-primary h-12">
-                  Mua ngay
-                </Button>
-              </Link>
-            </div>
-          </div>
-
-          {/* Wholesale Card - Featured */}
-          <div className="group relative bg-gradient-eco p-8 hover:opacity-95 transition-all duration-300 text-white shadow-lg">
-            {/* Popular Badge */}
-            <div className="absolute top-4 right-4">
-              <span className="text-xs uppercase tracking-widest text-primary-foreground/70 font-medium border border-primary-foreground/20 px-3 py-1">
-                Phổ biến nhất
-              </span>
-            </div>
-            
-            <div className="relative pt-6">
-              <div className="flex items-center justify-between mb-6">
-                <h3 className="text-2xl font-heading text-primary-foreground">Giá sỉ</h3>
-                <Boxes className="h-6 w-6 text-primary-foreground/40 stroke-[1.5]" />
-              </div>
-              
-              <p className="text-primary-foreground/80 mb-6 text-sm font-light">
-                Phù hợp cho nhà hàng, quán ăn, đại lý phân phối
-              </p>
-              
-              <ul className="space-y-4 mb-8">
-                <li className="flex items-start gap-3">
-                  <Check className="h-4 w-4 mt-0.5 text-primary-foreground stroke-[1.5]" />
-                  <span className="text-sm font-light text-primary-foreground/90 flex-1">Giá ưu đãi theo số lượng</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <Check className="h-4 w-4 mt-0.5 text-primary-foreground stroke-[1.5]" />
-                  <span className="text-sm font-light text-primary-foreground/90 flex-1">Giảm thêm 10% khi ≥ 1000 sp</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <Check className="h-4 w-4 mt-0.5 text-primary-foreground stroke-[1.5]" />
-                  <span className="text-sm font-light text-primary-foreground/90 flex-1">Hỗ trợ đặt hàng định kỳ</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <Check className="h-4 w-4 mt-0.5 text-primary-foreground stroke-[1.5]" />
-                  <span className="text-sm font-light text-primary-foreground/90 flex-1">Tư vấn miễn phí</span>
-                </li>
-              </ul>
-              
-              <Link to="/shop" className="block">
-                <Button className="w-full rounded-none bg-background text-primary hover:bg-white h-12">
-                  Đặt hàng ngay
-                </Button>
-              </Link>
-            </div>
-          </div>
-        </div>
-
-        {/* Price Table */}
-        <div className="border border-border/40 mb-12">
-          <Table>
-            <TableHeader>
-              <TableRow className="border-border/40 hover:bg-transparent">
-                <TableHead className="font-heading text-primary">Sản phẩm</TableHead>
-                <TableHead className="text-right font-heading text-primary">Giá lẻ</TableHead>
-                <TableHead className="text-right font-heading text-primary">Giá sỉ</TableHead>
-                <TableHead className="text-right font-heading text-primary">SL tối thiểu (sỉ)</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {products.map(product => (
-                <TableRow key={product.id} className="border-border/20 hover:bg-background">
-                  <TableCell className="font-medium text-primary">{product.name}</TableCell>
-                  <TableCell className="text-right font-light">{formatMoney(product.priceRetail)}</TableCell>
-                  <TableCell className="text-right text-primary">
-                    {formatMoney(product.priceWholesale)}
-                  </TableCell>
-                  <TableCell className="text-right font-light">{product.wholesaleMinQty}</TableCell>
-                </TableRow>
+      <section className="px-4 pb-14 sm:px-6 lg:px-8">
+        <div className="mx-auto grid max-w-[1400px] gap-5 lg:grid-cols-12">
+          <div className="rounded-2xl border border-border bg-card p-7 lg:col-span-5 lg:p-9">
+            <Package className="h-7 w-7 text-primary" />
+            <h2 className="mt-7 text-3xl font-extrabold tracking-[-0.035em] text-foreground">Giá bán lẻ</h2>
+            <p className="mt-3 leading-7 text-muted-foreground">Cho gia đình, quà tặng và sự kiện quy mô nhỏ.</p>
+            <div className="mt-7 grid gap-3 text-sm text-foreground">
+              {['Đơn vị bán ghi rõ theo từng sản phẩm', 'Giao hàng COD toàn quốc', 'Thanh toán theo giá niêm yết'].map(item => (
+                <span key={item} className="flex items-center gap-3"><Check className="h-4 w-4 text-accent" />{item}</span>
               ))}
-            </TableBody>
-          </Table>
-        </div>
+            </div>
+            <Button asChild variant="outline" className="mt-8"><Link to="/shop">Mua sản phẩm</Link></Button>
+          </div>
 
-        {/* CTA */}
-        <div className="text-center p-8 bg-background border border-border/40">
-          <p className="text-muted-foreground mb-6 font-light">
-            Liên hệ ngay để được tư vấn và báo giá chi tiết
-          </p>
-          <div className="flex flex-wrap justify-center gap-4">
-            <Link to="/shop">
-              <Button size="lg" className="rounded-none">
-                Đặt hàng ngay
-              </Button>
-            </Link>
-            <Button size="lg" variant="outline" className="rounded-none border-primary text-primary hover:bg-gradient-eco hover:text-white hover:border-transparent transition-all duration-300">
-              Liên hệ tư vấn: 0385 959 294
-            </Button>
+          <div className="rounded-2xl bg-primary p-7 text-primary-foreground lg:col-span-7 lg:p-9">
+            <Store className="h-7 w-7 text-accent" />
+            <h2 className="mt-7 text-3xl font-extrabold tracking-[-0.035em]">Giá phân phối</h2>
+            <p className="mt-3 max-w-[55ch] leading-7 text-primary-foreground/72">Cho nhà hàng, đại lý, khách sạn và đơn vị đặt hàng định kỳ.</p>
+            <div className="mt-7 grid gap-3 text-sm sm:grid-cols-2">
+              {['Mức giá theo số lượng', 'Điều kiện riêng cho từng mã', 'Hỗ trợ đơn hàng định kỳ', 'Tư vấn trước khi xác nhận'].map(item => (
+                <span key={item} className="flex items-center gap-3"><Check className="h-4 w-4 text-accent" />{item}</span>
+              ))}
+            </div>
+            <Button asChild className="mt-8 bg-accent text-accent-foreground hover:bg-accent/90"><Link to="/contact">Nhận tư vấn</Link></Button>
+          </div>
+
+          <div className="flex flex-col gap-5 rounded-2xl border border-border bg-secondary/70 p-7 sm:flex-row sm:items-center sm:justify-between lg:col-span-12 lg:p-9">
+            <div className="flex items-start gap-4">
+              <span className="flex h-12 w-12 flex-none items-center justify-center rounded-xl bg-card text-primary"><Building2 className="h-5 w-5" /></span>
+              <div>
+                <h2 className="text-xl font-bold text-foreground">Giá doanh nghiệp</h2>
+                <p className="mt-2 max-w-[65ch] text-sm leading-6 text-muted-foreground">Dành cho đơn hàng lớn, khắc logo và quà tặng theo yêu cầu. Điều kiện áp dụng được xác nhận trực tiếp.</p>
+              </div>
+            </div>
+            <Button asChild className="flex-none"><a href="tel:0382548419">Gọi 0382 548 419</a></Button>
           </div>
         </div>
-      </div>
+      </section>
+
+      <section className="bg-secondary/45 px-4 py-14 sm:px-6 sm:py-20 lg:px-8">
+        <div className="mx-auto max-w-[1400px]">
+          <div className="mb-8 max-w-2xl">
+            <h2 className="text-3xl font-extrabold tracking-[-0.04em] text-foreground sm:text-4xl">Chi tiết theo mã sản phẩm</h2>
+            <p className="mt-3 leading-7 text-muted-foreground">Bảng giá cập nhật cho 11 sản phẩm B-ECO Daily và B-ECO Art.</p>
+          </div>
+          <div className="overflow-x-auto rounded-2xl border border-border bg-card shadow-[0_18px_50px_hsl(var(--primary)/0.07)]">
+            <Table>
+              <TableHeader>
+                <TableRow className="bg-secondary/60 hover:bg-secondary/60">
+                  <TableHead className="whitespace-nowrap font-bold text-foreground">Mã SP</TableHead>
+                  <TableHead className="min-w-64 font-bold text-foreground">Sản phẩm</TableHead>
+                  <TableHead className="whitespace-nowrap font-bold text-foreground">Đơn vị</TableHead>
+                  <TableHead className="whitespace-nowrap text-right font-bold text-foreground">Bán lẻ</TableHead>
+                  <TableHead className="whitespace-nowrap text-right font-bold text-foreground">Phân phối</TableHead>
+                  <TableHead className="whitespace-nowrap text-right font-bold text-foreground">Điều kiện</TableHead>
+                  <TableHead className="whitespace-nowrap text-right font-bold text-foreground">Doanh nghiệp</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {products.map(product => (
+                  <TableRow key={product.id}>
+                    <TableCell className="whitespace-nowrap font-mono text-xs">{product.sku ?? '-'}</TableCell>
+                    <TableCell className="font-semibold text-foreground">{product.name}</TableCell>
+                    <TableCell className="whitespace-nowrap text-muted-foreground">{product.salesUnit ?? 'cái'}</TableCell>
+                    <TableCell className="whitespace-nowrap text-right">{formatMoney(product.priceRetail)}</TableCell>
+                    <TableCell className="whitespace-nowrap text-right font-bold text-primary">{formatMoney(product.priceWholesale)}</TableCell>
+                    <TableCell className="whitespace-nowrap text-right text-muted-foreground">{product.wholesaleThresholdLabel ?? product.wholesaleMinQty}</TableCell>
+                    <TableCell className="whitespace-nowrap text-right font-semibold">{product.priceEnterprise !== undefined ? formatMoney(product.priceEnterprise) : 'Liên hệ'}</TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </div>
+        </div>
+      </section>
     </Layout>
   );
 };

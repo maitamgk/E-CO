@@ -1,6 +1,7 @@
 import { Product } from '@/types';
 import { ProductCard } from './ProductCard';
 import { ProductCardSkeleton } from '@/components/ui/loading-skeletons';
+import { Leaf } from 'lucide-react';
 
 interface ProductGridProps {
   products: Product[];
@@ -24,7 +25,7 @@ export const ProductGrid = ({ products, isLoading = false, showWholesale = false
   if (products.length === 0) {
     return (
       <div className="text-center py-12 sm:py-16 px-4">
-        <div className="text-5xl sm:text-6xl mb-4">🍃</div>
+        <Leaf className="mx-auto mb-4 h-12 w-12 text-primary/50" />
         <p className="text-lg sm:text-xl font-medium text-muted-foreground">Không tìm thấy sản phẩm nào.</p>
         <p className="text-sm sm:text-base text-muted-foreground mt-2">Thử thay đổi bộ lọc hoặc từ khóa tìm kiếm.</p>
       </div>

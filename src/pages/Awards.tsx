@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Layout } from '@/components/layout/Layout';
-import { Award, Calendar, Building, X, Maximize2, Trophy, ArrowRight, Lightbulb } from 'lucide-react';
+import { Calendar, Building, X, Maximize2, Trophy, ArrowRight, Lightbulb } from 'lucide-react';
 
 interface AwardItem {
   id: string;
@@ -60,13 +60,13 @@ const awardsData: AwardItem[] = [
     badge: 'Top 9 Toàn quốc',
     project: 'Dự án khởi nghiệp xanh từ lá bàng biển',
     year: '2024',
-    host: 'Cuộc thi “Design Thinking – Open Innovation Thủ Đức 2024”',
+    host: 'Cuộc thi “Design Thinking - Open Innovation Thủ Đức 2024”',
     description: 'Vượt qua hơn 100 đội thi từ 64 trường đại học, cao đẳng và các startup trên toàn quốc để đứng trong top 9 dự án xuất sắc nhất hướng tới phát triển bền vững và đổi mới sáng tạo mở.',
     images: ['/images/achievements/image2.png']
   },
   {
     id: 'korea-vietnam-2026',
-    title: 'Innovation Prize – Korea-Vietnam University Student Startup Idea Competition 2026',
+    title: 'Innovation Prize - Korea-Vietnam University Student Startup Idea Competition 2026',
     badge: 'Giải Đổi mới Sáng tạo',
     project: 'Dự án khởi nghiệp đổi mới sáng tạo từ lá bàng biển',
     year: '2026',

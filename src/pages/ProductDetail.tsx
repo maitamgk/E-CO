@@ -29,10 +29,10 @@ import {
   Info
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { getCategoryName } from '@/data/mockProducts';
 
 // Import all product images for gallery
 import collectionDisplay1 from '@/assets/products/collection-display-1.jpg';
-import collectionDisplay2 from '@/assets/products/collection-display-2.jpg';
 import exhibitionDisplay from '@/assets/products/exhibition-display.jpg';
 import leafPlatesCloseup from '@/assets/products/leaf-plates-closeup.jpg';
 import leafPlatesVariety from '@/assets/products/leaf-plates-variety.jpg';
@@ -42,7 +42,6 @@ const galleryImages = [
   leafPlatesCloseup,
   leafPlatesVariety,
   collectionDisplay1,
-  collectionDisplay2,
   exhibitionDisplay,
 ];
 
@@ -66,10 +65,11 @@ const ProductDetail = () => {
   const imageContainerRef = useRef<HTMLDivElement>(null);
 
   // Generate gallery from product image + related images
-  const productGallery = product ? [
-    product.imageUrl,
-    ...galleryImages.filter(img => img !== product.imageUrl).slice(0, 3)
-  ] : [];
+  const productGallery = product
+    ? product.category === 'art'
+      ? [product.imageUrl]
+      : [product.imageUrl, ...galleryImages.filter(img => img !== product.imageUrl).slice(0, 3)]
+    : [];
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!imageContainerRef.current) return;
@@ -127,26 +127,19 @@ const ProductDetail = () => {
   }
 
   const savingsPercent = Math.round((1 - product.priceWholesale / product.priceRetail) * 100);
-  const categoryName = product.category === 'chen' ? 'Chén' : product.category === 'dia' ? 'Dĩa' : product.category === 'in-logo' ? 'In logo' : 'Combo';
+  const categoryName = getCategoryName(product.category);
 
   return (
     <Layout>
-      {/* Hero Section */}
-      <div className="relative bg-background border-b border-border/40 py-12 text-center">
-        <div className="container mx-auto px-4 relative z-10">
+      <div className="px-4 pt-8 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-[1400px]">
           <Link
             to="/shop"
-            className="inline-flex items-center gap-2 text-primary/60 hover:text-primary transition-colors mb-4 text-sm tracking-widest uppercase"
+            className="inline-flex items-center gap-2 text-sm font-semibold text-muted-foreground transition-colors hover:text-primary"
           >
             <ArrowLeft className="h-4 w-4 stroke-[1.5]" />
             Quay lại cửa hàng
           </Link>
-          <h1 className="text-3xl md:text-4xl font-heading text-primary mb-4">
-            {product.name}
-          </h1>
-          <p className="text-muted-foreground font-light max-w-2xl mx-auto">
-            {categoryName}
-          </p>
         </div>
       </div>
 
@@ -191,7 +184,7 @@ const ProductDetail = () => {
         </div>
       )}
 
-      <div className="container mx-auto px-4 py-8 lg:py-12">
+      <div className="mx-auto max-w-[1400px] px-4 py-8 sm:px-6 lg:px-8 lg:py-12">
         {/* Breadcrumb */}
         <nav className="flex items-center gap-2 text-sm text-muted-foreground mb-8">
           <Link to="/" className="hover:text-foreground transition-colors">Trang chủ</Link>
@@ -207,7 +200,7 @@ const ProductDetail = () => {
             {/* Main Image with Zoom */}
             <div
               ref={imageContainerRef}
-              className="relative aspect-square border border-border/40 overflow-hidden bg-background cursor-zoom-in group"
+              className="group relative aspect-square cursor-zoom-in overflow-hidden rounded-2xl border border-border bg-secondary/45"
               onMouseEnter={() => setIsZoomed(true)}
               onMouseLeave={() => setIsZoomed(false)}
               onMouseMove={handleMouseMove}
@@ -217,7 +210,8 @@ const ProductDetail = () => {
                 src={productGallery[selectedImageIndex]}
                 alt={product.name}
                 className={cn(
-                  "w-full h-full object-cover object-center transition-transform duration-300",
+                  "h-full w-full object-center transition-transform duration-300",
+                  product.category === 'art' ? "object-contain p-3" : "object-cover",
                   isZoomed && "scale-150"
                 )}
                 style={isZoomed ? {
@@ -231,19 +225,6 @@ const ProductDetail = () => {
                 Click để phóng to
               </div>
 
-              {/* Badges */}
-              <div className="absolute top-4 left-4 flex flex-col gap-2">
-                {product.stock < 50 && product.stock > 0 && (
-                  <Badge variant="secondary" className="bg-background/90 backdrop-blur-xl shadow-lg border-0">
-                    ⚡ Còn {product.stock}
-                  </Badge>
-                )}
-                {product.stock === 0 && (
-                  <Badge variant="destructive" className="shadow-lg">
-                    Hết hàng
-                  </Badge>
-                )}
-              </div>
             </div>
 
             {/* Thumbnails */}
@@ -253,7 +234,7 @@ const ProductDetail = () => {
                   key={index}
                   onClick={() => setSelectedImageIndex(index)}
                   className={cn(
-                    "flex-shrink-0 w-20 h-20 lg:w-24 lg:h-24 border border-border/40 overflow-hidden transition-all duration-300",
+                    "h-20 w-20 flex-shrink-0 overflow-hidden rounded-xl border border-border transition-all duration-300 lg:h-24 lg:w-24",
                     selectedImageIndex === index
                       ? "border-primary"
                       : "hover:border-primary/50"
@@ -262,7 +243,7 @@ const ProductDetail = () => {
                   <img
                     src={img}
                     alt={`${product.name} - ${index + 1}`}
-                    className="w-full h-full object-cover"
+                    className={cn('h-full w-full', product.category === 'art' ? 'object-contain p-1' : 'object-cover')}
                   />
                 </button>
               ))}
@@ -280,7 +261,7 @@ const ProductDetail = () => {
                 <button
                   onClick={() => setIsLiked(!isLiked)}
                   className={cn(
-                    "p-3 border border-border/40 transition-all duration-300 hover:border-primary",
+                    "rounded-xl border border-border p-3 transition-all duration-300 hover:border-primary",
                     isLiked
                       ? "text-red-500"
                       : "text-primary hover:text-primary"
@@ -288,7 +269,7 @@ const ProductDetail = () => {
                 >
                   <Heart className={cn("h-5 w-5 stroke-[1.5]", isLiked && "fill-current")} />
                 </button>
-                <button className="p-3 border border-border/40 text-primary hover:border-primary hover:text-primary transition-all duration-300">
+                <button className="rounded-xl border border-border p-3 text-primary transition-all duration-300 hover:border-primary">
                   <Share2 className="h-5 w-5 stroke-[1.5]" />
                 </button>
               </div>
@@ -305,34 +286,41 @@ const ProductDetail = () => {
             </p>
 
             {/* Prices */}
-            <div className="space-y-3 p-6 bg-white border border-border/40">
+            <div className="space-y-3 rounded-2xl border border-border bg-card p-6 shadow-[0_18px_48px_hsl(var(--primary)/0.07)]">
               <div className="flex items-end gap-4">
                 <span className="text-3xl font-heading text-primary">
                   {formatMoney(product.priceRetail)}
                 </span>
-                <span className="text-muted-foreground font-light mb-1">/ cái</span>
+                <span className="text-muted-foreground font-light mb-1">/ {product.salesUnit ?? 'cái'}</span>
               </div>
 
               <div className="flex items-center gap-2 text-sm">
                 <Sparkles className="h-4 w-4 text-primary stroke-[1.5]" />
-                <span className="text-muted-foreground font-light">Giá sỉ từ {product.wholesaleMinQty} cái:</span>
+                <span className="text-muted-foreground font-light">Giá phân phối từ {product.wholesaleThresholdLabel ?? `${product.wholesaleMinQty} cái`}:</span>
                 <span className="font-heading text-primary">{formatMoney(product.priceWholesale)}</span>
-                <Badge className="bg-primary text-primary-foreground rounded-none text-[10px] uppercase tracking-widest font-normal ml-2">
+                <Badge className="ml-2 rounded-lg bg-secondary text-xs font-semibold text-primary hover:bg-secondary">
                   Tiết kiệm {savingsPercent}%
                 </Badge>
               </div>
+              {product.priceEnterprise !== undefined && (
+                <div className="flex items-center gap-2 text-sm border-t border-border/40 pt-3">
+                  <span className="text-muted-foreground font-light">Giá doanh nghiệp:</span>
+                  <span className="font-heading text-primary">{formatMoney(product.priceEnterprise)}</span>
+                  <span className="text-xs text-muted-foreground">/ {product.salesUnit ?? 'cái'} · liên hệ điều kiện áp dụng</span>
+                </div>
+              )}
             </div>
 
             {/* Quantity & Add to Cart */}
             <div className="space-y-4">
               {cartItem ? (
-                <div className="flex items-center justify-between bg-primary/5 p-4 border border-border/40">
+                <div className="flex items-center justify-between rounded-2xl border border-border bg-secondary/55 p-4">
                   <span className="text-sm font-light text-muted-foreground">Trong giỏ hàng:</span>
                   <div className="flex items-center gap-4">
                     <Button
                       variant="ghost"
                       size="icon"
-                      className="h-10 w-10 rounded-none hover:bg-primary/10 text-primary"
+                      className="h-10 w-10 text-primary hover:bg-primary/10"
                       onClick={() => updateQuantity(product.id, cartItem.qty - 1)}
                     >
                       <Minus className="h-4 w-4 stroke-[1.5]" />
@@ -343,7 +331,7 @@ const ProductDetail = () => {
                     <Button
                       variant="ghost"
                       size="icon"
-                      className="h-10 w-10 rounded-none hover:bg-primary/10 text-primary"
+                      className="h-10 w-10 text-primary hover:bg-primary/10"
                       onClick={() => updateQuantity(product.id, cartItem.qty + 1)}
                       disabled={cartItem.qty >= product.stock}
                     >
@@ -355,11 +343,11 @@ const ProductDetail = () => {
                 <>
                   <div className="flex items-center gap-4">
                     <span className="text-muted-foreground font-light">Số lượng:</span>
-                    <div className="flex items-center border border-border/40">
+                    <div className="flex items-center rounded-xl border border-border bg-card p-1">
                       <Button
                         variant="ghost"
                         size="icon"
-                        className="h-12 w-12 rounded-none"
+                        className="h-10 w-10"
                         onClick={() => setQuantity(Math.max(1, quantity - 1))}
                       >
                         <Minus className="h-4 w-4 stroke-[1.5]" />
@@ -370,7 +358,7 @@ const ProductDetail = () => {
                       <Button
                         variant="ghost"
                         size="icon"
-                        className="h-12 w-12 rounded-none"
+                        className="h-10 w-10"
                         onClick={() => setQuantity(Math.min(product.stock, quantity + 1))}
                       >
                         <Plus className="h-4 w-4 stroke-[1.5]" />
@@ -380,7 +368,7 @@ const ProductDetail = () => {
 
                   <Button
                     size="lg"
-                    className="w-full h-14 text-sm uppercase tracking-widest font-normal rounded-none bg-gradient-eco text-white hover:bg-gradient-eco-hover transition-all duration-300 shadow-md shadow-primary/10 hover:shadow-primary/20"
+                    className="h-14 w-full text-sm"
                     onClick={handleAddToCart}
                     disabled={product.stock === 0 || isAdding}
                   >
@@ -402,7 +390,7 @@ const ProductDetail = () => {
               <Button
                 variant="outline"
                 size="lg"
-                className="w-full h-14 text-sm uppercase tracking-widest font-normal rounded-none"
+                className="h-14 w-full text-sm"
                 onClick={() => navigate('/cart')}
               >
                 Xem giỏ hàng
@@ -415,19 +403,19 @@ const ProductDetail = () => {
                 <div className="w-12 h-12 mx-auto bg-background border border-border/40 flex items-center justify-center">
                   <Leaf className="h-5 w-5 text-primary stroke-[1.5]" />
                 </div>
-                <p className="text-[11px] uppercase tracking-widest text-muted-foreground font-light">100% Thiên nhiên</p>
+                <p className="text-xs font-medium text-muted-foreground">100% thiên nhiên</p>
               </div>
               <div className="text-center space-y-2">
                 <div className="w-12 h-12 mx-auto bg-background border border-border/40 flex items-center justify-center">
                   <Truck className="h-5 w-5 text-primary stroke-[1.5]" />
                 </div>
-                <p className="text-[11px] uppercase tracking-widest text-muted-foreground font-light">Giao toàn quốc</p>
+                <p className="text-xs font-medium text-muted-foreground">Giao toàn quốc</p>
               </div>
               <div className="text-center space-y-2">
                 <div className="w-12 h-12 mx-auto bg-background border border-border/40 flex items-center justify-center">
                   <Shield className="h-5 w-5 text-primary stroke-[1.5]" />
                 </div>
-                <p className="text-[11px] uppercase tracking-widest text-muted-foreground font-light">Đảm bảo</p>
+                <p className="text-xs font-medium text-muted-foreground">Đảm bảo</p>
               </div>
             </div>
           </div>
@@ -436,12 +424,12 @@ const ProductDetail = () => {
         {/* Tabs Section - Product Details & Reviews */}
         <div className="mt-16">
           <Tabs defaultValue="details" className="w-full">
-            <TabsList className="w-full max-w-md mx-auto grid grid-cols-2 h-12 rounded-none bg-white border border-border/40 p-0">
-              <TabsTrigger value="details" className="rounded-none text-sm uppercase tracking-widest font-normal data-[state=active]:bg-background data-[state=active]:shadow-none data-[state=active]:text-primary border-r border-border/40 h-full">
+            <TabsList className="mx-auto grid h-12 w-full max-w-md grid-cols-2 rounded-xl border border-border bg-card p-1">
+              <TabsTrigger value="details" className="h-full rounded-lg text-sm font-semibold data-[state=active]:bg-secondary data-[state=active]:text-primary data-[state=active]:shadow-none">
                 <Info className="h-4 w-4 mr-2 stroke-[1.5]" />
                 Chi tiết
               </TabsTrigger>
-              <TabsTrigger value="reviews" className="rounded-none text-sm uppercase tracking-widest font-normal data-[state=active]:bg-background data-[state=active]:shadow-none data-[state=active]:text-primary h-full">
+              <TabsTrigger value="reviews" className="h-full rounded-lg text-sm font-semibold data-[state=active]:bg-secondary data-[state=active]:text-primary data-[state=active]:shadow-none">
                 <MessageSquare className="h-4 w-4 mr-2 stroke-[1.5]" />
                 Đánh giá (200)
               </TabsTrigger>
@@ -450,7 +438,7 @@ const ProductDetail = () => {
             <TabsContent value="details" className="mt-8">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 {/* Product Specifications */}
-                <div className="p-6 bg-white border border-border/40 space-y-4">
+                <div className="space-y-4 rounded-2xl border border-border bg-card p-6">
                   <h3 className="font-heading text-lg text-primary flex items-center gap-2 mb-6">
                     <Package className="h-5 w-5 stroke-[1.5]" />
                     Thông số sản phẩm
@@ -470,7 +458,7 @@ const ProductDetail = () => {
                     </div>
                     <div className="flex justify-between py-2 border-b border-border/40">
                       <span className="text-muted-foreground font-light text-sm">Chịu nhiệt</span>
-                      <span className="font-medium text-sm">Đến 80°C</span>
+                      <span className="font-medium text-sm">Đến 65°C</span>
                     </div>
                     <div className="flex justify-between py-2">
                       <span className="text-muted-foreground font-light text-sm">Bảo quản</span>
@@ -480,7 +468,7 @@ const ProductDetail = () => {
                 </div>
 
                 {/* Features & Benefits */}
-                <div className="p-6 bg-white border border-border/40 space-y-4">
+                <div className="space-y-4 rounded-2xl border border-border bg-card p-6">
                   <h3 className="font-heading text-lg text-primary flex items-center gap-2 mb-6">
                     <Leaf className="h-5 w-5 stroke-[1.5]" />
                     Đặc điểm nổi bật

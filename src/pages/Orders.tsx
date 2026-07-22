@@ -11,7 +11,7 @@ import { Package, ArrowRight, Clock, CheckCircle, Truck, XCircle } from 'lucide-
 import { orderService } from '@/services/orderService';
 
 // Mock orders data
-const mockOrders: Order[] = [
+const _mockOrders: Order[] = [
   {
     id: '1',
     orderCode: 'BCO001',
@@ -145,8 +145,6 @@ const Orders = () => {
           <div className="space-y-4">
             {orders.map(order => {
               const status = statusConfig[order.status];
-              const StatusIcon = status.icon;
-              
               return (
                 <div key={order.id} className="bg-white border border-border/40 p-6">
                   <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
