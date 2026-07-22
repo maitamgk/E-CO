@@ -17,9 +17,6 @@ ON profiles FOR SELECT
 USING (auth.uid() = id);
 
 DROP POLICY IF EXISTS "Users can update own profile" ON profiles;
-CREATE POLICY "Users can update own profile"
-ON profiles FOR UPDATE
-USING (auth.uid() = id);
 
 CREATE OR REPLACE FUNCTION public.resolve_user_role(user_email TEXT)
 RETURNS TEXT
@@ -58,8 +55,9 @@ RETURNS TRIGGER
 LANGUAGE plpgsql
 AS $$
 BEGIN
-  IF TG_OP = 'UPDATE' AND NEW.role IS DISTINCT FROM OLD.role THEN
+  IF TG_OP = 'UPDATE' AND (NEW.role IS DISTINCT FROM OLD.role OR NEW.email IS DISTINCT FROM OLD.email) THEN
     NEW.role := OLD.role;
+    NEW.email := OLD.email;
   END IF;
   RETURN NEW;
 END;
@@ -81,3 +79,18 @@ SET role = public.resolve_user_role(EXCLUDED.email),
 -- Chỉ admin@beco.com được là admin
 UPDATE profiles SET role = 'admin' WHERE lower(email) = 'admin@beco.com';
 UPDATE profiles SET role = 'user' WHERE lower(email) <> 'admin@beco.com' AND role = 'admin';
+
+-- Chỉ admin đã xác thực mới được sửa hoặc xóa đơn hàng
+DROP POLICY IF EXISTS "Allow anonymous update orders" ON orders;
+DROP POLICY IF EXISTS "Allow anonymous delete orders" ON orders;
+DROP POLICY IF EXISTS "Allow admin update orders" ON orders;
+DROP POLICY IF EXISTS "Allow admin delete orders" ON orders;
+
+CREATE POLICY "Allow admin update orders"
+ON orders FOR UPDATE
+USING (lower(auth.jwt() ->> 'email') = 'admin@beco.com')
+WITH CHECK (lower(auth.jwt() ->> 'email') = 'admin@beco.com');
+
+CREATE POLICY "Allow admin delete orders"
+ON orders FOR DELETE
+USING (lower(auth.jwt() ->> 'email') = 'admin@beco.com');

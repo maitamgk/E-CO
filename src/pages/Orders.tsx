@@ -87,13 +87,13 @@ const Orders = () => {
       <Layout>
         <div className="container mx-auto px-4 py-16 text-center">
           <Package className="h-16 w-16 mx-auto text-muted-foreground mb-4" />
-          <h1 className="text-2xl font-bold mb-2">Đăng nhập để xem đơn hàng</h1>
+          <h1 className="text-2xl font-bold mb-2">Tra cứu đơn hàng</h1>
           <p className="text-muted-foreground mb-6">
-            Vui lòng đăng nhập để theo dõi đơn hàng của bạn
+            Nhập mã đơn và số điện thoại để theo dõi trạng thái giao hàng
           </p>
-          <Link to="/auth">
+          <Link to="/order-lookup">
             <Button className="gap-2">
-              Đăng nhập
+              Tra cứu ngay
               <ArrowRight className="h-4 w-4" />
             </Button>
           </Link>

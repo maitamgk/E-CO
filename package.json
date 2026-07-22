@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "type": "module",
   "author": "Trần Biểu",
-  "description": "B-ECO: Gieo mầm xanh - Từ chiếc lá nhỏ",
+  "description": "B-ECO: Gieo Mầm Xanh - Từ chiếc lá nhỏ",
   "scripts": {
     "dev": "vite",
     "build": "vite build",

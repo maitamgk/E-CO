@@ -8,73 +8,99 @@ interface AuthContextType {
   isLoading: boolean;
   isAdmin: boolean;
   login: (email: string, password: string) => Promise<void>;
-  register: (email: string, password: string) => Promise<{ needsEmailConfirmation: boolean }>;
   logout: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
+const ADMIN_EMAIL = 'admin@beco.com';
 
 const mapAuthError = (message: string): string => {
   const normalized = message.toLowerCase();
   if (normalized.includes('invalid login credentials')) {
     return 'Email hoặc mật khẩu không đúng';
   }
-  if (normalized.includes('user already registered')) {
-    return 'Email đã được sử dụng';
-  }
   if (normalized.includes('email not confirmed')) {
     return 'Vui lòng xác nhận email trước khi đăng nhập';
   }
-  if (normalized.includes('password should be at least')) {
-    return 'Mật khẩu phải có ít nhất 6 ký tự';
-  }
   return message;
 };
+
+const ADMIN_ONLY_ERROR = 'Tài khoản này không có quyền quản trị';
 
 const buildUser = async (authUser: { id: string; email?: string; created_at?: string }): Promise<User> => {
   const profile = await profileService.getProfile(authUser.id);
 
   return {
     uid: authUser.id,
-    email: profile?.email || authUser.email || '',
+    email: authUser.email || profile?.email || '',
     role: profile?.role || 'user',
     createdAt: new Date(profile?.created_at || authUser.created_at || Date.now()),
   };
 };
 
+const isAuthorizedAdmin = (candidate: User): boolean => (
+  candidate.role === 'admin' && candidate.email.trim().toLowerCase() === ADMIN_EMAIL
+);
+
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  const isAdmin = user?.role === 'admin';
+  const isAdmin = user ? isAuthorizedAdmin(user) : false;
 
   useEffect(() => {
     let mounted = true;
 
     const initSession = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
-      if (!mounted) return;
+      try {
+        const { data: { session } } = await supabase.auth.getSession();
+        if (!mounted) return;
 
-      if (session?.user) {
-        const appUser = await buildUser(session.user);
-        if (mounted) setUser(appUser);
+        if (session?.user) {
+          const appUser = await buildUser(session.user);
+          if (isAuthorizedAdmin(appUser)) {
+            if (mounted) setUser(appUser);
+          } else {
+            await supabase.auth.signOut();
+            if (mounted) setUser(null);
+          }
+        } else {
+          setUser(null);
+        }
+      } catch (error) {
+        console.error('Không thể khởi tạo phiên quản trị:', error);
+        if (mounted) setUser(null);
+      } finally {
+        if (mounted) setIsLoading(false);
       }
-
-      if (mounted) setIsLoading(false);
     };
 
-    initSession();
+    void initSession();
 
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (_event, session) => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
       if (!mounted) return;
 
-      if (session?.user) {
-        const appUser = await buildUser(session.user);
-        setUser(appUser);
-      } else {
+      if (!session?.user) {
         setUser(null);
+        setIsLoading(false);
+        return;
       }
-      setIsLoading(false);
+
+      window.setTimeout(() => {
+        if (!mounted) return;
+
+        void buildUser(session.user)
+          .then(appUser => {
+            if (mounted) setUser(isAuthorizedAdmin(appUser) ? appUser : null);
+          })
+          .catch(error => {
+            console.error('Không thể đồng bộ phiên quản trị:', error);
+            if (mounted) setUser(null);
+          })
+          .finally(() => {
+            if (mounted) setIsLoading(false);
+          });
+      }, 0);
     });
 
     return () => {
@@ -91,25 +117,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       if (!data.user) throw new Error('Đăng nhập thất bại');
 
       const appUser = await buildUser(data.user);
-      setUser(appUser);
-    } finally {
-      setIsLoading(false);
-    }
-  }, []);
-
-  const register = useCallback(async (email: string, password: string) => {
-    setIsLoading(true);
-    try {
-      const { data, error } = await supabase.auth.signUp({ email, password });
-      if (error) throw new Error(mapAuthError(error.message));
-
-      if (data.session?.user) {
-        const appUser = await buildUser(data.session.user);
-        setUser(appUser);
-        return { needsEmailConfirmation: false };
+      if (!isAuthorizedAdmin(appUser)) {
+        await supabase.auth.signOut();
+        setUser(null);
+        throw new Error(ADMIN_ONLY_ERROR);
       }
-
-      return { needsEmailConfirmation: true };
+      setUser(appUser);
     } finally {
       setIsLoading(false);
     }
@@ -121,7 +134,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, isLoading, isAdmin, login, register, logout }}>
+    <AuthContext.Provider value={{ user, isLoading, isAdmin, login, logout }}>
       {children}
     </AuthContext.Provider>
   );

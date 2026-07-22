@@ -81,7 +81,7 @@ export const Header = () => {
           <button type="button" onClick={() => setIsDark(current => !current)} className="hidden h-10 w-10 items-center justify-center text-foreground transition-colors hover:text-primary sm:flex" aria-label={isDark ? 'Dùng giao diện sáng' : 'Dùng giao diện tối'}>
             {isDark ? <Sun className="h-[19px] w-[19px] stroke-[1.6]" /> : <Moon className="h-[19px] w-[19px] stroke-[1.6]" />}
           </button>
-          <Link to={user ? '/orders' : '/auth'} className="hidden h-10 w-10 items-center justify-center text-foreground transition-colors hover:text-primary sm:flex" aria-label={user ? 'Đơn hàng của tôi' : 'Đăng nhập'}>
+          <Link to={isAdmin ? '/admin' : '/auth'} className="hidden h-10 w-10 items-center justify-center text-foreground transition-colors hover:text-primary sm:flex" aria-label={isAdmin ? 'Trang quản trị' : 'Đăng nhập quản trị'}>
             <User className="h-[19px] w-[19px] stroke-[1.6]" />
           </Link>
           <Link to="/cart" className="relative flex h-10 w-10 items-center justify-center text-foreground transition-colors hover:text-primary" aria-label={`Giỏ hàng có ${itemCount} sản phẩm`}>
@@ -109,8 +109,7 @@ export const Header = () => {
         <div className="border-t border-border bg-card px-4 py-5 lg:hidden">
           <nav className="mx-auto flex max-w-[1400px] flex-col" aria-label="Điều hướng di động">
             {navLinks.map(link => <Link key={link.to} to={link.to} className="border-b border-border/70 px-1 py-3.5 text-sm font-bold text-foreground hover:text-primary">{link.label}</Link>)}
-            <Link to={user ? '/orders' : '/auth'} className="border-b border-border/70 px-1 py-3.5 text-sm font-bold text-foreground">{user ? 'Đơn hàng của tôi' : 'Đăng nhập / Đăng ký'}</Link>
-            {isAdmin && <Link to="/admin" className="border-b border-border/70 px-1 py-3.5 text-sm font-bold text-primary">Trang quản trị</Link>}
+            <Link to={isAdmin ? '/admin' : '/auth'} className="border-b border-border/70 px-1 py-3.5 text-sm font-bold text-foreground">{isAdmin ? 'Trang quản trị' : 'Đăng nhập quản trị'}</Link>
             {user && <button type="button" onClick={logout} className="border-b border-border/70 px-1 py-3.5 text-left text-sm font-bold text-muted-foreground">Đăng xuất</button>}
             <button type="button" onClick={() => setIsDark(current => !current)} className="mt-4 flex items-center gap-3 text-sm font-bold text-foreground">
               {isDark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}

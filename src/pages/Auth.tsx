@@ -1,230 +1,158 @@
-import { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { ArrowLeft, Loader2, LockKeyhole, ShieldCheck } from 'lucide-react';
 import { Layout } from '@/components/layout/Layout';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useAuth } from '@/context/AuthContext';
 import { useToast } from '@/hooks/use-toast';
-import { validateEmail, validateMinLength } from '@/utils/validators';
-import { Loader2, Leaf } from 'lucide-react';
+import { validateEmail } from '@/utils/validators';
+import adminVisual from '@/assets/generated/beco-about-origin.png';
+
+type LoginErrors = {
+  email?: string;
+  password?: string;
+  form?: string;
+};
 
 const getErrorMessage = (error: unknown) => error instanceof Error ? error.message : 'Vui lòng thử lại sau.';
 
 const Auth = () => {
   const navigate = useNavigate();
-  const { login, register, user } = useAuth();
+  const { login, user, isAdmin } = useAuth();
   const { toast } = useToast();
-  
-  const [isLoading, setIsLoading] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [loginForm, setLoginForm] = useState({ email: '', password: '' });
-  const [registerForm, setRegisterForm] = useState({ email: '', password: '', confirmPassword: '' });
-  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [errors, setErrors] = useState<LoginErrors>({});
 
-  // Redirect if already logged in
-  if (user) {
-    navigate('/');
-    return null;
-  }
+  useEffect(() => {
+    if (user && isAdmin) {
+      navigate('/admin', { replace: true });
+    }
+  }, [isAdmin, navigate, user]);
 
-  const handleLogin = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setErrors({});
-    
+  const handleLogin = async (event: React.FormEvent) => {
+    event.preventDefault();
+
+    const nextErrors: LoginErrors = {};
     if (!validateEmail(loginForm.email)) {
-      setErrors({ email: 'Email không hợp lệ' });
+      nextErrors.email = 'Email quản trị không hợp lệ';
+    }
+    if (!loginForm.password) {
+      nextErrors.password = 'Vui lòng nhập mật khẩu';
+    }
+    if (Object.keys(nextErrors).length > 0) {
+      setErrors(nextErrors);
       return;
     }
-    
-    setIsLoading(true);
+
+    setErrors({});
+    setIsSubmitting(true);
     try {
-      await login(loginForm.email, loginForm.password);
-      toast({ title: 'Đăng nhập thành công!' });
-      navigate('/');
+      await login(loginForm.email.trim(), loginForm.password);
+      toast({ title: 'Đăng nhập quản trị thành công' });
+      navigate('/admin', { replace: true });
     } catch (error: unknown) {
-      toast({
-        title: 'Đăng nhập thất bại',
-        description: getErrorMessage(error),
-        variant: 'destructive',
-      });
+      setErrors({ form: getErrorMessage(error) });
     } finally {
-      setIsLoading(false);
+      setIsSubmitting(false);
     }
   };
 
-  const handleRegister = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setErrors({});
-    
-    const newErrors: Record<string, string> = {};
-    
-    if (!validateEmail(registerForm.email)) {
-      newErrors.email = 'Email không hợp lệ';
-    }
-    if (!validateMinLength(registerForm.password, 6)) {
-      newErrors.password = 'Mật khẩu phải có ít nhất 6 ký tự';
-    }
-    if (registerForm.password !== registerForm.confirmPassword) {
-      newErrors.confirmPassword = 'Mật khẩu xác nhận không khớp';
-    }
-    
-    if (Object.keys(newErrors).length > 0) {
-      setErrors(newErrors);
-      return;
-    }
-    
-    setIsLoading(true);
-    try {
-      const { needsEmailConfirmation } = await register(registerForm.email, registerForm.password);
-      if (needsEmailConfirmation) {
-        toast({
-          title: 'Đăng ký thành công!',
-          description: 'Vui lòng kiểm tra email để xác nhận tài khoản trước khi đăng nhập.',
-        });
-        return;
-      }
-      toast({ title: 'Đăng ký thành công!' });
-      navigate('/');
-    } catch (error: unknown) {
-      toast({
-        title: 'Đăng ký thất bại',
-        description: getErrorMessage(error),
-        variant: 'destructive',
-      });
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  const loading = isSubmitting;
 
   return (
     <Layout>
-      {/* Hero Section */}
-      <div className="relative bg-background border-b border-border/40 py-16 text-center">
-        <div className="container mx-auto px-4 relative z-10">
-          <h1 className="text-3xl md:text-4xl font-heading text-primary mb-4">
-            Tài khoản
-          </h1>
-          <p className="text-muted-foreground font-light max-w-2xl mx-auto">
-            Đăng nhập hoặc tạo tài khoản mới
-          </p>
-        </div>
-      </div>
+      <main className="border-b border-border bg-background">
+        <div className="mx-auto grid min-h-[calc(100dvh-104px)] max-w-[1500px] grid-cols-1 lg:grid-cols-[0.86fr_1.14fr]">
+          <section className="flex items-center px-5 py-12 sm:px-10 sm:py-16 lg:px-16 xl:px-24" aria-labelledby="admin-login-title">
+            <div className="w-full max-w-md">
+              <Link to="/" className="mb-12 inline-flex items-center gap-2 text-sm font-semibold text-muted-foreground transition-colors hover:text-primary">
+                <ArrowLeft className="h-4 w-4" aria-hidden="true" />
+                Về trang chủ
+              </Link>
 
-      <div className="container mx-auto px-4 py-16">
-        <div className="max-w-md mx-auto">
-          {/* Logo */}
-          <div className="text-center mb-8">
-            <Link to="/" className="inline-flex items-center gap-2 font-bold text-2xl text-primary">
-              <Leaf className="h-8 w-8" />
-              <span>B-ECO</span>
-            </Link>
-            <p className="text-muted-foreground mt-2">Đăng nhập để quản lý đơn hàng</p>
-          </div>
+              <div className="mb-9">
+                <div className="mb-5 flex h-11 w-11 items-center justify-center border border-primary/30 bg-primary/10 text-primary">
+                  <ShieldCheck className="h-5 w-5" aria-hidden="true" />
+                </div>
+                <p className="mb-3 text-xs font-bold uppercase tracking-[0.12em] text-primary">Khu vực nội bộ</p>
+                <h1 id="admin-login-title" className="max-w-sm font-heading text-4xl font-medium leading-[1.08] text-foreground sm:text-5xl">
+                  Cổng quản trị B-ECO
+                </h1>
+                <p className="mt-4 max-w-sm text-sm leading-6 text-muted-foreground sm:text-base">
+                  Đăng nhập để quản lý đơn hàng, sản phẩm và trạng thái vận hành.
+                </p>
+              </div>
 
-          <div className="bg-white border border-border/40 p-8">
-            <Tabs defaultValue="login">
-              <TabsList className="grid w-full grid-cols-2 mb-6">
-                <TabsTrigger value="login">Đăng nhập</TabsTrigger>
-                <TabsTrigger value="register">Đăng ký</TabsTrigger>
-              </TabsList>
-
-              <TabsContent value="login">
-                <form onSubmit={handleLogin} className="space-y-4">
-                  <div>
-                    <Label htmlFor="login-email">Email</Label>
+              <form onSubmit={handleLogin} className="border-t border-border pt-8" noValidate>
+                <div className="grid gap-5">
+                  <div className="grid gap-2">
+                    <Label htmlFor="admin-email" className="text-sm font-semibold">Email quản trị</Label>
                     <Input
-                      id="login-email"
+                      id="admin-email"
+                      name="email"
                       type="email"
+                      autoComplete="username"
                       value={loginForm.email}
-                      onChange={e => setLoginForm(prev => ({ ...prev, email: e.target.value }))}
-                      placeholder="email@example.com"
-                      className={errors.email ? 'border-destructive' : ''}
+                      onChange={event => setLoginForm(previous => ({ ...previous, email: event.target.value }))}
+                      placeholder="Nhập email quản trị"
+                      aria-invalid={Boolean(errors.email)}
+                      aria-describedby={errors.email ? 'admin-email-error' : undefined}
+                      className="h-12 rounded-none border-border bg-card px-4 placeholder:text-muted-foreground focus-visible:ring-primary"
                     />
-                    {errors.email && (
-                      <p className="text-sm text-destructive mt-1">{errors.email}</p>
-                    )}
+                    {errors.email && <p id="admin-email-error" className="text-sm font-medium text-destructive">{errors.email}</p>}
                   </div>
 
-                  <div>
-                    <Label htmlFor="login-password">Mật khẩu</Label>
+                  <div className="grid gap-2">
+                    <Label htmlFor="admin-password" className="text-sm font-semibold">Mật khẩu</Label>
                     <Input
-                      id="login-password"
+                      id="admin-password"
+                      name="password"
                       type="password"
+                      autoComplete="current-password"
                       value={loginForm.password}
-                      onChange={e => setLoginForm(prev => ({ ...prev, password: e.target.value }))}
-                      placeholder="••••••••"
+                      onChange={event => setLoginForm(previous => ({ ...previous, password: event.target.value }))}
+                      placeholder="Nhập mật khẩu"
+                      aria-invalid={Boolean(errors.password)}
+                      aria-describedby={errors.password ? 'admin-password-error' : undefined}
+                      className="h-12 rounded-none border-border bg-card px-4 placeholder:text-muted-foreground focus-visible:ring-primary"
                     />
+                    {errors.password && <p id="admin-password-error" className="text-sm font-medium text-destructive">{errors.password}</p>}
                   </div>
 
-                  <Button type="submit" className="w-full" disabled={isLoading}>
-                    {isLoading && <Loader2 className="h-4 w-4 mr-2 animate-spin" />}
-                    Đăng nhập
+                  {errors.form && (
+                    <div role="alert" className="border-l-2 border-destructive bg-destructive/10 px-4 py-3 text-sm font-medium text-destructive">
+                      {errors.form}
+                    </div>
+                  )}
+
+                  <Button type="submit" size="lg" className="mt-1 h-12 w-full rounded-none" disabled={loading}>
+                    {loading ? <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" /> : <LockKeyhole className="h-4 w-4" aria-hidden="true" />}
+                    {loading ? 'Đang xác thực' : 'Đăng nhập quản trị'}
                   </Button>
-                </form>
-              </TabsContent>
+                </div>
+              </form>
 
-              <TabsContent value="register">
-                <form onSubmit={handleRegister} className="space-y-4">
-                  <div>
-                    <Label htmlFor="register-email">Email</Label>
-                    <Input
-                      id="register-email"
-                      type="email"
-                      value={registerForm.email}
-                      onChange={e => setRegisterForm(prev => ({ ...prev, email: e.target.value }))}
-                      placeholder="email@example.com"
-                      className={errors.email ? 'border-destructive' : ''}
-                    />
-                    {errors.email && (
-                      <p className="text-sm text-destructive mt-1">{errors.email}</p>
-                    )}
-                  </div>
+              <p className="mt-6 text-xs leading-5 text-muted-foreground">
+                Chỉ tài khoản được cấp quyền quản trị mới có thể truy cập.
+              </p>
+            </div>
+          </section>
 
-                  <div>
-                    <Label htmlFor="register-password">Mật khẩu</Label>
-                    <Input
-                      id="register-password"
-                      type="password"
-                      value={registerForm.password}
-                      onChange={e => setRegisterForm(prev => ({ ...prev, password: e.target.value }))}
-                      placeholder="••••••••"
-                      className={errors.password ? 'border-destructive' : ''}
-                    />
-                    {errors.password && (
-                      <p className="text-sm text-destructive mt-1">{errors.password}</p>
-                    )}
-                  </div>
-
-                  <div>
-                    <Label htmlFor="register-confirm">Xác nhận mật khẩu</Label>
-                    <Input
-                      id="register-confirm"
-                      type="password"
-                      value={registerForm.confirmPassword}
-                      onChange={e => setRegisterForm(prev => ({ ...prev, confirmPassword: e.target.value }))}
-                      placeholder="••••••••"
-                      className={errors.confirmPassword ? 'border-destructive' : ''}
-                    />
-                    {errors.confirmPassword && (
-                      <p className="text-sm text-destructive mt-1">{errors.confirmPassword}</p>
-                    )}
-                  </div>
-
-                  <Button type="submit" className="w-full" disabled={isLoading}>
-                    {isLoading && <Loader2 className="h-4 w-4 mr-2 animate-spin" />}
-                    Đăng ký
-                  </Button>
-                </form>
-              </TabsContent>
-            </Tabs>
-          </div>
-
-          <p className="text-center text-sm text-muted-foreground mt-6">
-            Bạn vẫn có thể đặt hàng mà không cần đăng nhập
-          </p>
+          <aside className="relative min-h-[320px] overflow-hidden border-t border-border lg:min-h-full lg:border-l lg:border-t-0" aria-label="Sản phẩm B-ECO tại Phú Yên">
+            <img
+              src={adminVisual}
+              alt="Sản phẩm lá bàng biển B-ECO bên bờ biển Phú Yên"
+              className="absolute inset-0 h-full w-full object-cover"
+              loading="eager"
+              decoding="async"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-[hsl(151_49%_13%/0.36)] via-transparent to-transparent" aria-hidden="true" />
+          </aside>
         </div>
-      </div>
+      </main>
     </Layout>
   );
 };

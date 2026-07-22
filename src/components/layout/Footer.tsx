@@ -20,7 +20,7 @@ const supportLinks = [
   { to: '/order-lookup', label: 'Tra cứu đơn hàng' },
   { to: '/policies', label: 'Chính sách mua hàng' },
   { to: '/cart', label: 'Giỏ hàng' },
-  { to: '/auth', label: 'Tài khoản' },
+  { to: '/auth', label: 'Quản trị' },
 ];
 
 const FooterLinks = ({ title, links }: { title: string; links: { to: string; label: string }[] }) => (
@@ -37,11 +37,11 @@ export const Footer = () => (
     <div className="mx-auto max-w-[1500px] px-5 py-14 sm:px-8 sm:py-16 lg:px-14">
       <div className="grid gap-12 border-b border-border pb-14 sm:grid-cols-2 lg:grid-cols-[1.45fr_0.7fr_0.7fr_0.8fr_1.1fr]">
         <div className="max-w-md">
-          <Link to="/" aria-label="B-ECO trang chủ">
-            <img src={logo} alt="B-ECO" className="h-16 w-44 object-contain object-left" />
+          <Link to="/" className="flex h-20 w-56 items-center justify-center overflow-hidden" aria-label="B-ECO trang chủ">
+            <img src={logo} alt="B-ECO" className="h-full w-full scale-[2.8] object-contain" />
           </Link>
           <p className="mt-5 text-sm leading-7 text-muted-foreground">Sản phẩm sinh thái và mỹ nghệ từ lá bàng biển, được phát triển tại Phú Yên cho gia đình, doanh nghiệp và cộng đồng.</p>
-          <p className="mt-4 font-heading text-xl font-medium leading-7 text-primary">Từ chiếc lá nhỏ đến một lựa chọn sống xanh.</p>
+          <p className="mt-4 font-heading text-xl font-medium leading-7 text-primary">Gieo Mầm Xanh - Từ chiếc lá nhỏ</p>
         </div>
 
         <FooterLinks title="Sản phẩm" links={productLinks} />

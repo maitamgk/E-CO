@@ -18,10 +18,6 @@ CREATE POLICY "Users can read own profile"
 ON profiles FOR SELECT
 USING (auth.uid() = id);
 
-CREATE POLICY "Users can update own profile"
-ON profiles FOR UPDATE
-USING (auth.uid() = id);
-
 CREATE OR REPLACE FUNCTION public.resolve_user_role(user_email TEXT)
 RETURNS TEXT
 LANGUAGE plpgsql
@@ -57,8 +53,9 @@ RETURNS TRIGGER
 LANGUAGE plpgsql
 AS $$
 BEGIN
-  IF TG_OP = 'UPDATE' AND NEW.role IS DISTINCT FROM OLD.role THEN
+  IF TG_OP = 'UPDATE' AND (NEW.role IS DISTINCT FROM OLD.role OR NEW.email IS DISTINCT FROM OLD.email) THEN
     NEW.role := OLD.role;
+    NEW.email := OLD.email;
   END IF;
   RETURN NEW;
 END;
@@ -96,13 +93,14 @@ CREATE POLICY "Allow anonymous insert orders"
 ON orders FOR INSERT
 WITH CHECK (true);
 
-CREATE POLICY "Allow anonymous update orders"
+CREATE POLICY "Allow admin update orders"
 ON orders FOR UPDATE
-USING (true);
+USING (lower(auth.jwt() ->> 'email') = 'admin@beco.com')
+WITH CHECK (lower(auth.jwt() ->> 'email') = 'admin@beco.com');
 
-CREATE POLICY "Allow anonymous delete orders"
+CREATE POLICY "Allow admin delete orders"
 ON orders FOR DELETE
-USING (true);
+USING (lower(auth.jwt() ->> 'email') = 'admin@beco.com');
 
 ALTER PUBLICATION supabase_realtime ADD TABLE orders;
 

@@ -55,14 +55,8 @@ const Home = () => {
         <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(15,31,22,0.9)_0%,rgba(15,31,22,0.67)_38%,rgba(15,31,22,0.14)_68%,rgba(15,31,22,0.05)_100%)]" />
         <div className="relative mx-auto w-full max-w-[1500px] px-5 py-16 sm:px-8 lg:px-14">
           <MotionReveal className="max-w-[760px] text-[#f8f4ea]">
-            <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#d9bd80]">Lá bàng biển Phú Yên</p>
-            <h1 className="mt-5 font-heading text-5xl font-medium leading-[0.98] tracking-[-0.035em] sm:text-6xl lg:text-[64px]">
-              <span className="block">Từ chiếc lá nhỏ,</span>
-              <span className="block">tạo nên lựa chọn lớn.</span>
-            </h1>
-            <p className="mt-6 max-w-[46ch] text-sm leading-7 text-[#f8f4ea]/80 sm:text-base">
-              Đĩa, chén và quà tặng từ lá bàng biển Phú Yên cho đời sống hiện đại.
-            </p>
+            <h1 className="font-heading text-[72px] font-medium leading-[0.86] tracking-[0.02em] sm:text-[104px] lg:text-[132px]">B ECO</h1>
+            <p className="mt-7 font-heading text-2xl font-medium text-[#d9bd80] sm:text-3xl">Gieo Mầm Xanh - Từ chiếc lá nhỏ</p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Link to="/shop" className="inline-flex h-12 items-center gap-2 border border-[#d9bd80] bg-[#d9bd80] px-7 text-xs font-bold uppercase tracking-[0.1em] text-[#1f241d] transition-[transform,background-color] hover:-translate-y-0.5 hover:bg-[#e3ca92] active:translate-y-px">
                 Mua ngay <ArrowRight className="h-4 w-4" />
