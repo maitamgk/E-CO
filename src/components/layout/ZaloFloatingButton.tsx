@@ -1,4 +1,4 @@
-const ZALO_URL = 'https://zaloapp.com/qr/p/4fs7vspgiyed';
+const ZALO_URL = 'https://zalo.me/0382548419';
 
 export const ZaloFloatingButton = () => (
   <a

@@ -9,7 +9,7 @@ import { useToast } from '@/hooks/use-toast';
 import zaloCard from '@/assets/contact/zalo-card.png';
 import collectionDisplay from '@/assets/products/collection-display-1.jpg';
 
-const ZALO_URL = 'https://zaloapp.com/qr/p/4fs7vspgiyed';
+const ZALO_URL = 'https://zalo.me/0382548419';
 
 const Contact = () => {
   const { toast } = useToast();
