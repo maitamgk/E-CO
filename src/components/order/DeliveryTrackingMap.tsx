@@ -3,13 +3,14 @@ import { MapContainer, TileLayer, Marker, Popup, Polyline, useMap } from 'react-
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { OrderStatus, StatusHistoryEntry } from '@/types';
-import { Truck, MapPin, Building2, CheckCircle2, Clock, Navigation } from 'lucide-react';
+import { Truck, MapPin, Building2, CheckCircle2, Navigation } from 'lucide-react';
 import { format } from 'date-fns';
 import { vi } from 'date-fns/locale';
 
 interface DeliveryTrackingMapProps {
   status: OrderStatus;
   statusHistory?: StatusHistoryEntry[];
+  currentLocation?: string;
   customerAddress: string;
   customerName: string;
   orderCode: string;
@@ -22,7 +23,6 @@ const WAREHOUSE_COORDS: [number, number] = [13.0882, 109.3299]; // Phú Yên
 const getDestinationCoords = (address: string): [number, number] => {
   const lower = address.toLowerCase();
   
-  // Known major regions mapping for realistic map locations
   if (lower.includes('hồ chí minh') || lower.includes('hcm') || lower.includes('sài gòn') || lower.includes('tphcm')) {
     return [10.7769, 106.7009];
   }
@@ -45,19 +45,17 @@ const getDestinationCoords = (address: string): [number, number] => {
     return [10.0452, 105.7469];
   }
 
-  // Fallback: Generate offset relative to Phú Yên (within Vietnam boundaries)
   let hash = 0;
   for (let i = 0; i < address.length; i++) {
     hash = (hash << 5) - hash + address.charCodeAt(i);
     hash |= 0;
   }
-  const latOffset = ((Math.abs(hash) % 200) - 100) / 50; // -2 to +2 deg
-  const lngOffset = ((Math.abs(hash * 3) % 150) - 75) / 50; // -1.5 to +1.5 deg
+  const latOffset = ((Math.abs(hash) % 200) - 100) / 50;
+  const lngOffset = ((Math.abs(hash * 3) % 150) - 75) / 50;
   
   return [13.0882 + latOffset, 109.3299 + lngOffset];
 };
 
-// Helper component to fit bounds automatically
 const AutoFitBounds = ({ coords }: { coords: [number, number][] }) => {
   const map = useMap();
   useEffect(() => {
@@ -69,7 +67,6 @@ const AutoFitBounds = ({ coords }: { coords: [number, number][] }) => {
   return null;
 };
 
-// Custom DivIcons for Leaflet
 const createCustomIcon = (html: string, className = '') => {
   return L.divIcon({
     html,
@@ -135,18 +132,18 @@ const truckIconHtml = `
 export const DeliveryTrackingMap = ({
   status,
   statusHistory = [],
+  currentLocation,
   customerAddress,
   customerName,
   orderCode,
 }: DeliveryTrackingMapProps) => {
   const destCoords = useMemo(() => getDestinationCoords(customerAddress), [customerAddress]);
 
-  // Calculate truck progress position (0 = warehouse, 0.55 = in transit, 1 = customer)
   const truckProgress = useMemo(() => {
     if (status === 'delivered') return 1.0;
     if (status === 'shipped') return 0.55;
     if (status === 'confirmed') return 0.15;
-    return 0; // pending or cancelled
+    return 0;
   }, [status]);
 
   const truckCoords: [number, number] = useMemo(() => {
@@ -161,7 +158,12 @@ export const DeliveryTrackingMap = ({
   const customerIcon = useMemo(() => createCustomIcon(customerIconHtml), []);
   const truckIcon = useMemo(() => createCustomIcon(truckIconHtml), []);
 
+  const latestHistoryNote = statusHistory.length > 0 ? statusHistory[statusHistory.length - 1].note : undefined;
+  const activeLocation = currentLocation || latestHistoryNote;
+
   const currentStatusText = useMemo(() => {
+    if (activeLocation) return activeLocation;
+
     switch (status) {
       case 'pending':
         return 'Đang tiếp nhận đơn hàng tại Kho B-ECO';
@@ -176,14 +178,14 @@ export const DeliveryTrackingMap = ({
       default:
         return 'Đang cập nhật vị trí...';
     }
-  }, [status]);
+  }, [status, activeLocation]);
 
   return (
     <div className="space-y-4">
       {/* Realtime Status Banner */}
       <div className="bg-gradient-to-r from-emerald-900 via-green-800 to-emerald-900 text-white rounded-2xl p-4 md:p-5 shadow-lg flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-        <div className="flex items-center gap-3.5">
-          <div className="w-12 h-12 rounded-xl bg-white/15 backdrop-blur-md flex items-center justify-center text-emerald-300 flex-shrink-0">
+        <div className="flex items-start md:items-center gap-3.5">
+          <div className="w-12 h-12 rounded-xl bg-white/15 backdrop-blur-md flex items-center justify-center text-emerald-300 flex-shrink-0 mt-0.5 md:mt-0">
             {status === 'shipped' ? (
               <Truck className="w-6 h-6 animate-bounce" />
             ) : status === 'delivered' ? (
@@ -194,19 +196,21 @@ export const DeliveryTrackingMap = ({
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <span className="text-xs font-semibold text-emerald-300 uppercase tracking-wider">Lộ trình vận chuyển realtime</span>
+              <span className="text-xs font-semibold text-emerald-300 uppercase tracking-wider">Vị trí hiện tại (Cập nhật bởi Admin)</span>
               <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
             </div>
-            <h4 className="text-base md:text-lg font-bold text-white mt-0.5">{currentStatusText}</h4>
-            <p className="text-xs text-white/70 mt-0.5">
+            <h4 className="text-base md:text-lg font-bold text-white mt-0.5 leading-snug">
+              📍 {currentStatusText}
+            </h4>
+            <p className="text-xs text-white/70 mt-1">
               Từ Kho B-ECO (Phú Yên) ➔ {customerAddress || 'Địa chỉ khách hàng'}
             </p>
           </div>
         </div>
 
         {statusHistory.length > 0 && (
-          <div className="text-left md:text-right border-t md:border-t-0 md:border-l border-white/15 pt-3 md:pt-0 md:pl-5 flex-shrink-0">
-            <span className="text-[11px] text-white/60 block">Cập nhật mới nhất</span>
+          <div className="text-left md:text-right border-t md:border-t-0 md:border-l border-white/15 pt-3 md:pt-0 md:pl-5 flex-shrink-0 w-full md:w-auto">
+            <span className="text-[11px] text-white/60 block">Cập nhật lúc</span>
             <span className="text-xs font-semibold text-emerald-200">
               {format(new Date(statusHistory[statusHistory.length - 1].timestamp), 'HH:mm - dd/MM/yyyy', { locale: vi })}
             </span>
@@ -268,18 +272,43 @@ export const DeliveryTrackingMap = ({
           {status !== 'cancelled' && (
             <Marker position={truckCoords} icon={truckIcon}>
               <Popup>
-                <div className="p-1 text-center">
+                <div className="p-1 text-center max-w-[200px]">
                   <p className="font-bold text-sm text-blue-700">🚚 Xe vận chuyển B-ECO</p>
                   <p className="text-xs text-slate-600 mt-1">Đơn hàng: {orderCode}</p>
-                  <span className="inline-block bg-blue-100 text-blue-800 text-[11px] px-2 py-0.5 rounded-full font-semibold mt-1">
-                    {currentStatusText}
-                  </span>
+                  <div className="bg-blue-50 text-blue-800 text-xs p-1.5 rounded-lg font-medium mt-1.5 border border-blue-200">
+                    📍 {currentStatusText}
+                  </div>
                 </div>
               </Popup>
             </Marker>
           )}
         </MapContainer>
       </div>
+
+      {/* History Log Timeline (Details) */}
+      {statusHistory.length > 0 && (
+        <div className="bg-card border border-border/60 rounded-xl p-4">
+          <h5 className="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-3 flex items-center gap-1.5">
+            <Navigation className="w-3.5 h-3.5 text-primary" /> Nhật ký di chuyển chi tiết
+          </h5>
+          <div className="space-y-2.5 divide-y divide-border/20">
+            {statusHistory.slice().reverse().map((entry, idx) => (
+              <div key={idx} className="pt-2 first:pt-0 flex items-start justify-between text-xs gap-3">
+                <div className="flex items-start gap-2">
+                  <span className="w-2 h-2 rounded-full bg-primary mt-1 flex-shrink-0" />
+                  <div>
+                    <p className="font-semibold text-foreground">{entry.note || entry.status}</p>
+                    <span className="text-[11px] text-muted-foreground capitalize">Trạng thái: {entry.status}</span>
+                  </div>
+                </div>
+                <span className="text-[11px] text-muted-foreground font-mono flex-shrink-0">
+                  {format(new Date(entry.timestamp), 'HH:mm dd/MM', { locale: vi })}
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 };

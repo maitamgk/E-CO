@@ -37,6 +37,7 @@ export const orderService = {
       {
         status: order.status,
         timestamp: order.createdAt.toISOString(),
+        note: order.currentLocation || 'Khởi tạo đơn hàng tại Kho B-ECO',
       },
     ];
 
@@ -51,6 +52,7 @@ export const orderService = {
       payment_status: order.paymentStatus,
       status: order.status,
       status_history: initialHistory,
+      current_location: order.currentLocation || 'Kho B-ECO (Phú Yên)',
       notes: order.notes,
       created_at: order.createdAt.toISOString(),
       updated_at: order.updatedAt.toISOString(),
@@ -58,9 +60,10 @@ export const orderService = {
 
     let { error } = await supabase.from('orders').insert(orderData);
 
-    // Fallback if status_history column doesn't exist yet on DB
-    if (error && error.message?.includes('status_history')) {
+    // Fallback if status_history or current_location columns don't exist yet on DB
+    if (error && (error.message?.includes('status_history') || error.message?.includes('current_location'))) {
       delete orderData.status_history;
+      delete orderData.current_location;
       const retry = await supabase.from('orders').insert(orderData);
       error = retry.error;
     }
@@ -72,13 +75,16 @@ export const orderService = {
     return true;
   },
 
-  updateOrderStatus: async (orderId: string, status: OrderStatus): Promise<boolean> => {
+  updateOrderStatus: async (
+    orderId: string,
+    status: OrderStatus,
+    locationNote?: string
+  ): Promise<boolean> => {
     const nowIso = new Date().toISOString();
 
-    // 1. Fetch current order to get existing status_history
     const { data: currentOrder } = await supabase
       .from('orders')
-      .select('created_at, status_history, status')
+      .select('created_at, status_history, status, current_location')
       .eq('id', orderId)
       .maybeSingle();
 
@@ -90,21 +96,27 @@ export const orderService = {
       history.push({
         status: currentOrder?.status || 'pending',
         timestamp: currentOrder?.created_at || nowIso,
+        note: currentOrder?.current_location,
       });
     }
 
-    // Add new status entry if not last
-    if (history[history.length - 1]?.status !== status) {
-      history.push({
-        status,
-        timestamp: nowIso,
-      });
-    }
+    const note = locationNote || (
+      status === 'confirmed' ? 'Đã xác nhận & đang đóng gói tại Kho Phú Yên' :
+      status === 'shipped' ? 'Đã bàn giao đơn vị vận chuyển' :
+      status === 'delivered' ? 'Đã giao tới địa chỉ khách hàng' :
+      status === 'cancelled' ? 'Đã hủy đơn hàng' : 'Đang xử lý'
+    );
 
-    // Update DB
+    history.push({
+      status,
+      timestamp: nowIso,
+      note,
+    });
+
     const updatePayload: Record<string, any> = {
       status,
       status_history: history,
+      current_location: note,
       updated_at: nowIso,
     };
 
@@ -113,9 +125,9 @@ export const orderService = {
       .update(updatePayload)
       .eq('id', orderId);
 
-    // Fallback if column missing
-    if (error && error.message?.includes('status_history')) {
+    if (error && (error.message?.includes('status_history') || error.message?.includes('current_location'))) {
       delete updatePayload.status_history;
+      delete updatePayload.current_location;
       const retry = await supabase
         .from('orders')
         .update(updatePayload)
@@ -124,7 +136,56 @@ export const orderService = {
     }
 
     if (error) {
-      console.error('Error updating order:', error);
+      console.error('Error updating order status:', error);
+      return false;
+    }
+    return true;
+  },
+
+  updateOrderLocation: async (orderId: string, locationNote: string): Promise<boolean> => {
+    const nowIso = new Date().toISOString();
+
+    const { data: currentOrder } = await supabase
+      .from('orders')
+      .select('created_at, status_history, status')
+      .eq('id', orderId)
+      .maybeSingle();
+
+    const currentStatus = currentOrder?.status || 'shipped';
+
+    let history: StatusHistoryEntry[] = Array.isArray(currentOrder?.status_history)
+      ? [...currentOrder.status_history]
+      : [];
+
+    history.push({
+      status: currentStatus,
+      timestamp: nowIso,
+      note: locationNote,
+    });
+
+    const updatePayload: Record<string, any> = {
+      status_history: history,
+      current_location: locationNote,
+      updated_at: nowIso,
+    };
+
+    let { error } = await supabase
+      .from('orders')
+      .update(updatePayload)
+      .eq('id', orderId);
+
+    if (error && (error.message?.includes('status_history') || error.message?.includes('current_location'))) {
+      delete updatePayload.status_history;
+      delete updatePayload.current_location;
+      const retry = await supabase
+        .from('orders')
+        .update(updatePayload)
+        .eq('id', orderId);
+      error = retry.error;
+    }
+
+    if (error) {
+      console.error('Error updating order location:', error);
       return false;
     }
     return true;
@@ -144,7 +205,6 @@ export const orderService = {
   },
 
   getOrderByCodeAndPhone: async (orderCode: string, phone: string): Promise<Order | null> => {
-    // 1. Try fetching from Supabase
     try {
       const { data, error } = await supabase
         .from('orders')
@@ -164,7 +224,6 @@ export const orderService = {
       console.warn('Supabase query failed, falling back to localStorage:', e);
     }
 
-    // 2. Fallback to localStorage mock/local database
     const localOrders = orderStorage.getOrders();
     const cleanPhoneInput = phone.replace(/[^0-9]/g, '');
     const foundLocal = localOrders.find(
@@ -192,12 +251,12 @@ interface OrderRow {
   payment_status: PaymentStatus;
   status: OrderStatus;
   status_history?: StatusHistoryEntry[];
+  current_location?: string;
   notes: string;
   created_at: string;
   updated_at: string;
 }
 
-// Helper to convert DB snake_case back to camelCase Order type
 const parseOrder = (data: OrderRow): Order => {
   const createdAtDate = new Date(data.created_at);
   const updatedAtDate = new Date(data.updated_at);
@@ -211,6 +270,8 @@ const parseOrder = (data: OrderRow): Order => {
           : []),
       ];
 
+  const lastNote = statusHistory[statusHistory.length - 1]?.note;
+
   return {
     id: data.id,
     orderCode: data.order_code,
@@ -222,6 +283,7 @@ const parseOrder = (data: OrderRow): Order => {
     paymentStatus: data.payment_status,
     status: data.status,
     statusHistory,
+    currentLocation: data.current_location || lastNote,
     notes: data.notes,
     createdAt: createdAtDate,
     updatedAt: updatedAtDate,

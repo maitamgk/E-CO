@@ -70,6 +70,7 @@ export interface Order {
   paymentStatus: PaymentStatus;
   status: OrderStatus;
   statusHistory?: StatusHistoryEntry[];
+  currentLocation?: string;
   notes: string;
   createdAt: Date;
   updatedAt: Date;

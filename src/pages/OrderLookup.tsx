@@ -68,6 +68,7 @@ const OrderLookup = () => {
                     statusHistory: Array.isArray(updatedRow.status_history)
                       ? updatedRow.status_history
                       : previous.statusHistory,
+                    currentLocation: updatedRow.current_location || previous.currentLocation,
                     updatedAt: new Date(updatedRow.updated_at),
                   }
                 : null
@@ -305,6 +306,7 @@ const OrderLookup = () => {
                   <DeliveryTrackingMap
                     status={order.status}
                     statusHistory={order.statusHistory}
+                    currentLocation={order.currentLocation}
                     customerAddress={order.customer.address}
                     customerName={order.customer.fullName}
                     orderCode={order.orderCode}
