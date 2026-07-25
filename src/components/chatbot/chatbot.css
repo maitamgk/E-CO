@@ -675,3 +675,81 @@
   0%, 100% { opacity: 1; }
   50% { opacity: 0; }
 }
+
+/* ── Clickable Links in Messages ──────────────────── */
+.chatbot-link {
+  color: hsl(var(--primary));
+  text-decoration: underline;
+  text-decoration-color: hsl(var(--primary) / 0.3);
+  text-underline-offset: 2px;
+  transition: all 0.15s ease;
+  font-weight: 600;
+  cursor: pointer;
+  word-break: break-all;
+}
+
+.chatbot-link:hover {
+  text-decoration-color: hsl(var(--primary));
+  color: hsl(var(--primary));
+  filter: brightness(1.1);
+}
+
+/* Phone link — pill-style button */
+.chatbot-link--phone {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.25rem 0.625rem;
+  margin: 0.1875rem 0;
+  border-radius: 999px;
+  background: hsl(var(--primary) / 0.08);
+  border: 1px solid hsl(var(--primary) / 0.15);
+  text-decoration: none;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+}
+
+.chatbot-link--phone:hover {
+  background: hsl(var(--primary) / 0.15);
+  border-color: hsl(var(--primary) / 0.35);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px hsl(var(--primary) / 0.12);
+  filter: none;
+}
+
+/* Links inside user bubbles (white on green) */
+.chatbot-msg--user .chatbot-link {
+  color: rgba(255, 255, 255, 0.95);
+  text-decoration-color: rgba(255, 255, 255, 0.4);
+}
+
+.chatbot-msg--user .chatbot-link:hover {
+  color: white;
+  text-decoration-color: white;
+  filter: none;
+}
+
+.chatbot-msg--user .chatbot-link--phone {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.25);
+  color: white;
+}
+
+.chatbot-msg--user .chatbot-link--phone:hover {
+  background: rgba(255, 255, 255, 0.25);
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+.dark .chatbot-msg--user .chatbot-link {
+  color: hsl(155 46% 10%);
+  text-decoration-color: hsl(155 46% 10% / 0.4);
+}
+
+.dark .chatbot-msg--user .chatbot-link--phone {
+  background: hsl(155 46% 7% / 0.15);
+  border-color: hsl(155 46% 7% / 0.2);
+  color: hsl(155 46% 10%);
+}

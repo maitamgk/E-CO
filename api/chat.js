@@ -94,7 +94,11 @@ const SYSTEM_PROMPT = `Bạn là trợ lý tư vấn AI của B-ECO — thương
 7. Sử dụng emoji phù hợp để tạo cảm giác thân thiện (🌿🍃♻️📦)
 8. Khi so sánh giá, luôn nêu rõ 3 mức: lẻ, sỉ, doanh nghiệp
 9. Luôn nhấn mạnh giá trị sinh thái và tự nhiên của sản phẩm
-10. Không bịa thông tin ngoài những gì đã cung cấp ở trên`;
+10. Không bịa thông tin ngoài những gì đã cung cấp ở trên
+11. Khi đề cập số điện thoại, LUÔN viết dạng số trực tiếp: 0382 548 419 (KHÔNG dùng markdown link)
+12. Khi đề cập email, viết trực tiếp: beco.phuyen@gmail.com
+13. Khi đề cập Zalo, viết: zalo.me/0382548419
+14. Sử dụng **in đậm** cho tên sản phẩm và thông tin quan trọng`;
 
 export default async function handler(req, res) {
   // Only allow POST

@@ -31,6 +31,67 @@ const WELCOME_MSG: ChatMessage = {
 /* ── Helpers ─────────────────────────────────────────── */
 const uid = () => `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
 
+/**
+ * Renders message text with clickable links for:
+ * - Phone numbers (0xxx xxx xxx)
+ * - Email addresses
+ * - URLs (http/https/zalo.me)
+ * - Bold text (**text**)
+ */
+const formatMessageContent = (text: string) => {
+  // Combined regex: URLs | emails | VN phone numbers | **bold**
+  const pattern =
+    /(https?:\/\/[^\s)]+|zalo\.me\/[^\s)]+)|([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})|((?:0|\+84)\d[\d\s.-]{7,12}\d)|(\*\*(.+?)\*\*)/g;
+
+  const parts: (string | JSX.Element)[] = [];
+  let lastIndex = 0;
+  let match: RegExpExecArray | null;
+
+  while ((match = pattern.exec(text)) !== null) {
+    // Push text before match
+    if (match.index > lastIndex) {
+      parts.push(text.slice(lastIndex, match.index));
+    }
+
+    const [fullMatch, url, email, phone, , boldText] = match;
+    const key = `lnk-${match.index}`;
+
+    if (url) {
+      const href = url.startsWith('http') ? url : `https://${url}`;
+      const label = url.replace(/^https?:\/\//, '').replace(/\/$/, '');
+      parts.push(
+        <a key={key} href={href} target="_blank" rel="noreferrer" className="chatbot-link">
+          {label}
+        </a>,
+      );
+    } else if (email) {
+      parts.push(
+        <a key={key} href={`mailto:${email}`} className="chatbot-link">
+          {email}
+        </a>,
+      );
+    } else if (phone) {
+      const cleanPhone = phone.replace(/[\s.-]/g, '');
+      parts.push(
+        <a key={key} href={`tel:${cleanPhone}`} className="chatbot-link chatbot-link--phone">
+          📞 {phone.trim()}
+        </a>,
+      );
+    } else if (boldText) {
+      parts.push(<strong key={key}>{boldText}</strong>);
+    }
+
+    lastIndex = match.index + fullMatch.length;
+  }
+
+  // Push remaining text
+  if (lastIndex < text.length) {
+    parts.push(text.slice(lastIndex));
+  }
+
+  return parts.length > 0 ? parts : text;
+};
+
 /* ── Component ───────────────────────────────────────── */
 export const ChatBot = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -317,7 +378,7 @@ export const ChatBot = () => {
                   </div>
                 )}
                 <div className="chatbot-msg-bubble">
-                  {msg.content}
+                  {formatMessageContent(msg.content)}
                   {isStreaming &&
                     msg.id !== 'welcome' &&
                     msg.role === 'assistant' &&
