@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { Layout } from '@/components/layout/Layout';
 import { Button } from '@/components/ui/button';
@@ -18,9 +18,9 @@ import {
   Loader2,
   Building2,
   Copy,
-  QrCode,
   CheckCircle2,
   Banknote,
+  X,
 } from 'lucide-react';
 import { orderService } from '@/services/orderService';
 import { telegramService } from '@/services/telegramService';
@@ -38,7 +38,215 @@ const BANK_INFO = {
 const getVietQRUrl = (amount: number, orderCode: string) =>
   `https://img.vietqr.io/image/${BANK_INFO.bankCode}-${BANK_INFO.accountNumber}-compact2.png?amount=${amount}&addInfo=${encodeURIComponent(orderCode)}&accountName=${encodeURIComponent(BANK_INFO.accountName)}`;
 
-/* ── Main Component ──────────────────────────────── */
+/* ══════════════════════════════════════════════════════
+   QR Payment Modal Component
+   ══════════════════════════════════════════════════════ */
+const QRPaymentModal = ({
+  order,
+  depositType,
+  transferAmount,
+  onConfirm,
+  onClose,
+}: {
+  order: Order;
+  depositType: 'deposit_50' | 'paid_100';
+  transferAmount: number;
+  onConfirm: () => void;
+  onClose: () => void;
+}) => {
+  const { toast } = useToast();
+  const [confirmingSent, setConfirmingSent] = useState(false);
+  const [confirmationDone, setConfirmationDone] = useState(false);
+  const [imgLoaded, setImgLoaded] = useState(false);
+
+  const copyToClipboard = (text: string, label: string) => {
+    navigator.clipboard.writeText(text).then(() => {
+      toast({ title: '✅ Đã sao chép!', description: `${label}: ${text}` });
+    });
+  };
+
+  const handleConfirmTransfer = async () => {
+    if (confirmingSent) return;
+    setConfirmingSent(true);
+    try {
+      await Promise.all([
+        telegramService.sendPaymentConfirmation(order, depositType).catch(console.error),
+        discordService.sendPaymentConfirmation(order, depositType).catch(console.error),
+      ]);
+      setConfirmationDone(true);
+      toast({
+        title: '✅ Đã gửi xác nhận!',
+        description: 'Admin sẽ kiểm tra và xác nhận đơn hàng của bạn.',
+      });
+      // Close modal after 2s
+      setTimeout(() => onConfirm(), 2000);
+    } catch {
+      toast({
+        title: 'Lỗi gửi xác nhận',
+        description: 'Vui lòng liên hệ 0382 548 419.',
+        variant: 'destructive',
+      });
+    } finally {
+      setConfirmingSent(false);
+    }
+  };
+
+  // Prevent body scroll when modal is open
+  useEffect(() => {
+    document.body.style.overflow = 'hidden';
+    return () => { document.body.style.overflow = ''; };
+  }, []);
+
+  return (
+    <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4">
+      {/* Backdrop */}
+      <div
+        className="absolute inset-0 bg-black/60 backdrop-blur-sm animate-in fade-in duration-300"
+        onClick={onClose}
+      />
+
+      {/* Modal */}
+      <div className="relative w-full max-w-md max-h-[90vh] overflow-y-auto bg-white dark:bg-card rounded-2xl shadow-2xl animate-in zoom-in-95 slide-in-from-bottom-4 duration-300">
+        {/* Close button */}
+        <button
+          type="button"
+          onClick={onClose}
+          className="absolute top-4 right-4 z-10 p-1.5 rounded-full bg-muted/80 hover:bg-muted transition-colors"
+        >
+          <X className="h-4 w-4 text-muted-foreground" />
+        </button>
+
+        {/* Header */}
+        <div className="bg-gradient-to-br from-green-700 to-green-900 dark:from-green-800 dark:to-green-950 text-white px-6 pt-6 pb-8 rounded-t-2xl text-center">
+          <div className="w-12 h-12 bg-white/15 backdrop-blur rounded-xl flex items-center justify-center mx-auto mb-3">
+            <Building2 className="h-6 w-6" />
+          </div>
+          <h2 className="text-lg font-bold">Chuyển khoản thanh toán</h2>
+          <p className="text-sm text-white/70 mt-1">Quét mã QR hoặc chuyển khoản thủ công</p>
+          <div className="mt-3 inline-block px-3 py-1 bg-white/15 rounded-full text-xs font-semibold">
+            Mã đơn: #{order.orderCode}
+          </div>
+        </div>
+
+        {/* Content */}
+        <div className="px-6 pb-6 -mt-4 space-y-5">
+          {/* QR Code */}
+          <div className="flex justify-center">
+            <div className="bg-white rounded-xl p-2.5 shadow-lg border border-border/30 -mt-0">
+              {!imgLoaded && (
+                <div className="w-52 h-52 flex items-center justify-center">
+                  <Loader2 className="h-8 w-8 text-primary animate-spin" />
+                </div>
+              )}
+              <img
+                src={getVietQRUrl(transferAmount, order.orderCode)}
+                alt="QR chuyển khoản"
+                className={`w-52 h-auto rounded-lg ${imgLoaded ? 'block' : 'hidden'}`}
+                onLoad={() => setImgLoaded(true)}
+                loading="eager"
+              />
+            </div>
+          </div>
+
+          {/* Amount badge */}
+          <div className="text-center">
+            <div className="inline-flex items-center gap-2 bg-primary/8 border border-primary/15 rounded-full px-4 py-2">
+              <span className="text-sm text-muted-foreground">Số tiền CK:</span>
+              <span className="text-lg font-bold text-primary">{formatMoney(transferAmount)}</span>
+            </div>
+            <p className="text-xs text-muted-foreground mt-1.5">
+              {depositType === 'paid_100'
+                ? '💯 Thanh toán 100%'
+                : '5️⃣0️⃣ Đặt cọc 50% — Phần còn lại thanh toán khi nhận hàng'}
+            </p>
+          </div>
+
+          {/* Bank details table */}
+          <div className="bg-muted/40 dark:bg-muted/20 rounded-xl divide-y divide-border/40">
+            <div className="flex justify-between items-center px-4 py-3">
+              <span className="text-sm text-muted-foreground">Ngân hàng</span>
+              <span className="font-semibold text-sm">MBBank</span>
+            </div>
+            <div className="flex justify-between items-center px-4 py-3">
+              <span className="text-sm text-muted-foreground">Số tài khoản</span>
+              <div className="flex items-center gap-2">
+                <span className="font-bold text-base tracking-widest font-mono">{BANK_INFO.accountNumber}</span>
+                <button
+                  type="button"
+                  onClick={() => copyToClipboard(BANK_INFO.accountNumber, 'STK')}
+                  className="p-1 rounded-md hover:bg-background transition-colors"
+                >
+                  <Copy className="h-3.5 w-3.5 text-primary" />
+                </button>
+              </div>
+            </div>
+            <div className="flex justify-between items-center px-4 py-3">
+              <span className="text-sm text-muted-foreground">Chủ tài khoản</span>
+              <span className="font-semibold text-sm">{BANK_INFO.accountName}</span>
+            </div>
+            <div className="flex justify-between items-center px-4 py-3">
+              <span className="text-sm text-muted-foreground">Nội dung CK</span>
+              <div className="flex items-center gap-2">
+                <code className="bg-primary/10 text-primary px-2.5 py-0.5 rounded-md font-bold text-sm">{order.orderCode}</code>
+                <button
+                  type="button"
+                  onClick={() => copyToClipboard(order.orderCode, 'Nội dung CK')}
+                  className="p-1 rounded-md hover:bg-background transition-colors"
+                >
+                  <Copy className="h-3.5 w-3.5 text-primary" />
+                </button>
+              </div>
+            </div>
+          </div>
+
+          {/* Confirm button */}
+          {!confirmationDone ? (
+            <Button
+              onClick={handleConfirmTransfer}
+              disabled={confirmingSent}
+              className="w-full gap-2 bg-gradient-eco text-white hover:bg-gradient-eco-hover h-12 text-base"
+            >
+              {confirmingSent ? (
+                <>
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                  Đang gửi xác nhận...
+                </>
+              ) : (
+                <>
+                  <CheckCircle2 className="h-5 w-5" />
+                  Tôi đã chuyển khoản
+                </>
+              )}
+            </Button>
+          ) : (
+            <div className="bg-green-50 dark:bg-green-950/30 border border-green-200 dark:border-green-800/40 rounded-xl p-4 text-center space-y-1">
+              <CheckCircle2 className="h-7 w-7 text-green-600 mx-auto" />
+              <p className="font-semibold text-green-700 dark:text-green-400">
+                Đã gửi xác nhận thành công!
+              </p>
+              <p className="text-sm text-green-600 dark:text-green-500">
+                Admin sẽ kiểm tra và xác nhận sớm nhất.
+              </p>
+            </div>
+          )}
+
+          {/* Skip button */}
+          <button
+            type="button"
+            onClick={onClose}
+            className="w-full text-center text-sm text-muted-foreground hover:text-foreground transition-colors py-1"
+          >
+            Tôi sẽ chuyển khoản sau →
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+/* ══════════════════════════════════════════════════════
+   Main Checkout Component
+   ══════════════════════════════════════════════════════ */
 const Checkout = () => {
   const navigate = useNavigate();
   const { items, itemCount, getSubtotal, getTotalQty, clearCart } = useCart();
@@ -49,8 +257,7 @@ const Checkout = () => {
   const [orderPlaced, setOrderPlaced] = useState(false);
   const [orderCode, setOrderCode] = useState('');
   const [savedOrder, setSavedOrder] = useState<Order | null>(null);
-  const [confirmingSent, setConfirmingSent] = useState(false);
-  const [confirmationDone, setConfirmationDone] = useState(false);
+  const [showQRModal, setShowQRModal] = useState(false);
 
   /* Payment state */
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>('COD');
@@ -72,7 +279,6 @@ const Checkout = () => {
   const discountAmount = 0;
   const total = subtotal;
 
-  /* Transfer amount based on deposit type */
   const transferAmount = depositType === 'paid_100' ? total : Math.round(total / 2);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -83,35 +289,16 @@ const Checkout = () => {
 
   const validate = () => {
     const newErrors: Record<string, string> = {};
-
-    if (!validateRequired(form.fullName)) {
-      newErrors.fullName = 'Vui lòng nhập họ tên';
-    }
-    if (!validatePhone(form.phone)) {
-      newErrors.phone = 'Số điện thoại không hợp lệ';
-    }
-    if (!validateRequired(form.address)) {
-      newErrors.address = 'Vui lòng nhập địa chỉ giao hàng';
-    }
-
+    if (!validateRequired(form.fullName)) newErrors.fullName = 'Vui lòng nhập họ tên';
+    if (!validatePhone(form.phone)) newErrors.phone = 'Số điện thoại không hợp lệ';
+    if (!validateRequired(form.address)) newErrors.address = 'Vui lòng nhập địa chỉ giao hàng';
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
-  };
-
-  /* Copy to clipboard helper */
-  const copyToClipboard = (text: string, label: string) => {
-    navigator.clipboard.writeText(text).then(() => {
-      toast({
-        title: '✅ Đã sao chép!',
-        description: `${label}: ${text}`,
-      });
-    });
   };
 
   /* Submit order */
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
     if (!validate()) return;
 
     setIsSubmitting(true);
@@ -132,13 +319,7 @@ const Checkout = () => {
           address: form.address,
         },
         items: Object.values(items),
-        totals: {
-          subtotal,
-          discountRate,
-          discountAmount,
-          total,
-          totalQty,
-        },
+        totals: { subtotal, discountRate, discountAmount, total, totalQty },
         paymentMethod,
         paymentStatus,
         status: 'pending' as const,
@@ -148,19 +329,13 @@ const Checkout = () => {
       };
 
       const success = await orderService.addOrder(newOrder);
-      if (!success) {
-        throw new Error('Không thể tạo đơn hàng trên hệ thống');
-      }
+      if (!success) throw new Error('Không thể tạo đơn hàng trên hệ thống');
 
-      // Send notification to Telegram Bot and Discord Webhook (non-blocking)
+      // Send notifications (non-blocking)
       try {
         await Promise.all([
-          telegramService.sendOrderNotification(newOrder).catch(err => {
-            console.error('Failed to send Telegram notification:', err);
-          }),
-          discordService.sendOrderNotification(newOrder).catch(err => {
-            console.error('Failed to send Discord notification:', err);
-          })
+          telegramService.sendOrderNotification(newOrder).catch(console.error),
+          discordService.sendOrderNotification(newOrder).catch(console.error),
         ]);
       } catch (err) {
         console.error('Failed to send notifications:', err);
@@ -168,9 +343,14 @@ const Checkout = () => {
 
       setOrderCode(code);
       setSavedOrder(newOrder);
-
       clearCart();
-      setOrderPlaced(true);
+
+      // If bank transfer → show QR modal, else → go to success
+      if (paymentMethod === 'BANK_TRANSFER') {
+        setShowQRModal(true);
+      } else {
+        setOrderPlaced(true);
+      }
 
       toast({
         title: 'Đặt hàng thành công!',
@@ -187,34 +367,7 @@ const Checkout = () => {
     }
   };
 
-  /* Confirm bank transfer */
-  const handleConfirmTransfer = async () => {
-    if (!savedOrder || confirmingSent) return;
-
-    setConfirmingSent(true);
-    try {
-      await Promise.all([
-        telegramService.sendPaymentConfirmation(savedOrder, depositType).catch(console.error),
-        discordService.sendPaymentConfirmation(savedOrder, depositType).catch(console.error),
-      ]);
-
-      setConfirmationDone(true);
-      toast({
-        title: '✅ Đã gửi xác nhận!',
-        description: 'Admin sẽ kiểm tra và xác nhận đơn hàng của bạn.',
-      });
-    } catch {
-      toast({
-        title: 'Lỗi gửi xác nhận',
-        description: 'Vui lòng liên hệ 0382 548 419 để xác nhận.',
-        variant: 'destructive',
-      });
-    } finally {
-      setConfirmingSent(false);
-    }
-  };
-
-  if (itemCount === 0 && !orderPlaced) {
+  if (itemCount === 0 && !orderPlaced && !showQRModal) {
     navigate('/cart');
     return null;
   }
@@ -223,137 +376,19 @@ const Checkout = () => {
   if (orderPlaced) {
     return (
       <Layout>
-        <div className="container mx-auto px-4 py-16">
-          <div className="max-w-lg mx-auto">
-            {/* Success badge */}
-            <div className="text-center mb-8">
-              <div className="w-16 h-16 bg-gradient-eco rounded-full flex items-center justify-center mx-auto mb-6">
-                <Check className="h-8 w-8 text-white" />
-              </div>
-              <h1 className="text-2xl font-bold mb-2">Đặt hàng thành công!</h1>
-              <p className="text-muted-foreground">
-                Cảm ơn bạn đã đặt hàng. Chúng tôi sẽ liên hệ xác nhận sớm nhất.
-              </p>
+        <div className="container mx-auto px-4 py-16 text-center">
+          <div className="max-w-md mx-auto">
+            <div className="w-16 h-16 bg-gradient-eco rounded-full flex items-center justify-center mx-auto mb-6">
+              <Check className="h-8 w-8 text-white" />
             </div>
-
-            {/* Order code */}
-            <div className="bg-muted/50 rounded-lg p-4 mb-6 text-center">
+            <h1 className="text-2xl font-bold mb-2">Đặt hàng thành công!</h1>
+            <p className="text-muted-foreground mb-4">
+              Cảm ơn bạn đã đặt hàng. Chúng tôi sẽ liên hệ xác nhận sớm nhất.
+            </p>
+            <div className="bg-muted/50 rounded-lg p-4 mb-6">
               <p className="text-sm text-muted-foreground">Mã đơn hàng</p>
               <p className="text-2xl font-bold text-gradient-eco">{orderCode}</p>
             </div>
-
-            {/* Bank transfer info (only if BANK_TRANSFER) */}
-            {savedOrder?.paymentMethod === 'BANK_TRANSFER' && (
-              <div className="bg-white dark:bg-card border border-border/60 rounded-xl p-6 mb-6 space-y-5">
-                <div className="flex items-center gap-2 text-primary font-semibold">
-                  <Building2 className="h-5 w-5" />
-                  <span>Thông tin chuyển khoản</span>
-                </div>
-
-                {/* QR Code */}
-                <div className="flex justify-center">
-                  <div className="bg-white rounded-xl p-3 border border-border/50 shadow-sm">
-                    <img
-                      src={getVietQRUrl(transferAmount, orderCode)}
-                      alt="QR chuyển khoản"
-                      className="w-56 h-auto rounded-lg"
-                      loading="eager"
-                    />
-                  </div>
-                </div>
-
-                <p className="text-center text-xs text-muted-foreground">
-                  Quét mã QR bằng app ngân hàng để chuyển khoản tự động
-                </p>
-
-                {/* Bank details */}
-                <div className="space-y-3">
-                  <div className="flex justify-between items-center py-2 border-b border-border/30">
-                    <span className="text-sm text-muted-foreground">Ngân hàng</span>
-                    <span className="font-semibold text-sm">{BANK_INFO.bankName}</span>
-                  </div>
-                  <div className="flex justify-between items-center py-2 border-b border-border/30">
-                    <span className="text-sm text-muted-foreground">Số tài khoản</span>
-                    <div className="flex items-center gap-2">
-                      <span className="font-bold text-base tracking-wider">{BANK_INFO.accountNumber}</span>
-                      <button
-                        type="button"
-                        onClick={() => copyToClipboard(BANK_INFO.accountNumber, 'STK')}
-                        className="p-1.5 rounded-md hover:bg-muted transition-colors"
-                        title="Sao chép STK"
-                      >
-                        <Copy className="h-3.5 w-3.5 text-primary" />
-                      </button>
-                    </div>
-                  </div>
-                  <div className="flex justify-between items-center py-2 border-b border-border/30">
-                    <span className="text-sm text-muted-foreground">Chủ tài khoản</span>
-                    <span className="font-semibold text-sm">{BANK_INFO.accountName}</span>
-                  </div>
-                  <div className="flex justify-between items-center py-2 border-b border-border/30">
-                    <span className="text-sm text-muted-foreground">Số tiền</span>
-                    <span className="font-bold text-primary text-base">{formatMoney(transferAmount)}</span>
-                  </div>
-                  <div className="flex justify-between items-center py-2">
-                    <span className="text-sm text-muted-foreground">Nội dung CK</span>
-                    <div className="flex items-center gap-2">
-                      <code className="bg-primary/10 text-primary px-2 py-0.5 rounded font-bold text-sm">{orderCode}</code>
-                      <button
-                        type="button"
-                        onClick={() => copyToClipboard(orderCode, 'Nội dung CK')}
-                        className="p-1.5 rounded-md hover:bg-muted transition-colors"
-                        title="Sao chép nội dung CK"
-                      >
-                        <Copy className="h-3.5 w-3.5 text-primary" />
-                      </button>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Deposit type badge */}
-                <div className="bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800/40 rounded-lg p-3 text-center">
-                  <p className="text-sm font-medium text-amber-800 dark:text-amber-300">
-                    {depositType === 'paid_100'
-                      ? '💯 Thanh toán toàn bộ 100%'
-                      : '5️⃣0️⃣ Đặt cọc 50% — Thanh toán phần còn lại khi nhận hàng'}
-                  </p>
-                </div>
-
-                {/* Confirm transfer button */}
-                {!confirmationDone ? (
-                  <Button
-                    onClick={handleConfirmTransfer}
-                    disabled={confirmingSent}
-                    className="w-full gap-2 bg-gradient-eco text-white hover:bg-gradient-eco-hover"
-                    size="lg"
-                  >
-                    {confirmingSent ? (
-                      <>
-                        <Loader2 className="h-4 w-4 animate-spin" />
-                        Đang gửi xác nhận...
-                      </>
-                    ) : (
-                      <>
-                        <CheckCircle2 className="h-4 w-4" />
-                        Tôi đã chuyển khoản
-                      </>
-                    )}
-                  </Button>
-                ) : (
-                  <div className="bg-green-50 dark:bg-green-950/30 border border-green-200 dark:border-green-800/40 rounded-lg p-4 text-center space-y-1">
-                    <CheckCircle2 className="h-6 w-6 text-green-600 mx-auto" />
-                    <p className="font-semibold text-green-700 dark:text-green-400">
-                      Đã gửi xác nhận thành công!
-                    </p>
-                    <p className="text-sm text-green-600 dark:text-green-500">
-                      Admin sẽ kiểm tra và xác nhận đơn hàng sớm nhất.
-                    </p>
-                  </div>
-                )}
-              </div>
-            )}
-
-            {/* Action buttons */}
             <div className="flex flex-col gap-2">
               {user ? (
                 <Link to="/orders">
@@ -377,6 +412,23 @@ const Checkout = () => {
   /* ── Checkout Form ─────────────────────────────── */
   return (
     <Layout>
+      {/* QR Payment Modal */}
+      {showQRModal && savedOrder && (
+        <QRPaymentModal
+          order={savedOrder}
+          depositType={depositType}
+          transferAmount={transferAmount}
+          onConfirm={() => {
+            setShowQRModal(false);
+            setOrderPlaced(true);
+          }}
+          onClose={() => {
+            setShowQRModal(false);
+            setOrderPlaced(true);
+          }}
+        />
+      )}
+
       {/* Hero Section */}
       <div className="relative bg-background border-b border-border/40 py-12 text-center">
         <div className="container mx-auto px-4 relative z-10">
@@ -394,7 +446,6 @@ const Checkout = () => {
       </div>
 
       <div className="container mx-auto px-4 py-8">
-
         <div className="grid lg:grid-cols-2 gap-8">
           {/* Form */}
           <div>
@@ -413,9 +464,7 @@ const Checkout = () => {
                       placeholder="Nguyễn Văn A"
                       className={errors.fullName ? 'border-destructive' : ''}
                     />
-                    {errors.fullName && (
-                      <p className="text-sm text-destructive mt-1">{errors.fullName}</p>
-                    )}
+                    {errors.fullName && <p className="text-sm text-destructive mt-1">{errors.fullName}</p>}
                   </div>
 
                   <div>
@@ -428,9 +477,7 @@ const Checkout = () => {
                       placeholder="0901234567"
                       className={errors.phone ? 'border-destructive' : ''}
                     />
-                    {errors.phone && (
-                      <p className="text-sm text-destructive mt-1">{errors.phone}</p>
-                    )}
+                    {errors.phone && <p className="text-sm text-destructive mt-1">{errors.phone}</p>}
                   </div>
 
                   <div>
@@ -444,9 +491,7 @@ const Checkout = () => {
                       rows={3}
                       className={errors.address ? 'border-destructive' : ''}
                     />
-                    {errors.address && (
-                      <p className="text-sm text-destructive mt-1">{errors.address}</p>
-                    )}
+                    {errors.address && <p className="text-sm text-destructive mt-1">{errors.address}</p>}
                   </div>
 
                   <div>
@@ -515,76 +560,48 @@ const Checkout = () => {
                   </label>
                 </div>
 
-                {/* Bank Transfer Details (shown when selected) */}
+                {/* Deposit type selection (shown when bank transfer selected) */}
                 {paymentMethod === 'BANK_TRANSFER' && (
-                  <div className="mt-5 pt-5 border-t border-border/40 space-y-5">
-                    {/* Deposit type selection */}
-                    <div>
-                      <p className="text-sm font-medium mb-3 flex items-center gap-1.5">
-                        <Banknote className="h-4 w-4 text-primary" />
-                        Chọn mức thanh toán
+                  <div className="mt-5 pt-5 border-t border-border/40 space-y-4">
+                    <p className="text-sm font-medium flex items-center gap-1.5">
+                      <Banknote className="h-4 w-4 text-primary" />
+                      Chọn mức thanh toán
+                    </p>
+                    <div className="grid grid-cols-2 gap-3">
+                      <button
+                        type="button"
+                        onClick={() => setDepositType('paid_100')}
+                        className={`p-3.5 rounded-xl border-2 text-center transition-all ${
+                          depositType === 'paid_100'
+                            ? 'border-primary bg-primary/5 shadow-sm'
+                            : 'border-border/50 hover:border-primary/30'
+                        }`}
+                      >
+                        <p className="font-bold text-sm">💯 100%</p>
+                        <p className="text-xs text-muted-foreground mt-0.5">Thanh toán toàn bộ</p>
+                        <p className="text-primary font-bold text-sm mt-1.5">{formatMoney(total)}</p>
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setDepositType('deposit_50')}
+                        className={`p-3.5 rounded-xl border-2 text-center transition-all ${
+                          depositType === 'deposit_50'
+                            ? 'border-primary bg-primary/5 shadow-sm'
+                            : 'border-border/50 hover:border-primary/30'
+                        }`}
+                      >
+                        <p className="font-bold text-sm">5️⃣0️⃣ 50%</p>
+                        <p className="text-xs text-muted-foreground mt-0.5">Đặt cọc trước</p>
+                        <p className="text-primary font-bold text-sm mt-1.5">{formatMoney(Math.round(total / 2))}</p>
+                      </button>
+                    </div>
+
+                    {/* Info note */}
+                    <div className="flex items-start gap-2 bg-amber-50 dark:bg-amber-950/30 border border-amber-200/60 dark:border-amber-800/30 rounded-lg p-3">
+                      <Building2 className="h-4 w-4 text-amber-600 mt-0.5 flex-shrink-0" />
+                      <p className="text-xs text-amber-800 dark:text-amber-300 leading-relaxed">
+                        Sau khi bấm đặt hàng, mã QR chuyển khoản sẽ hiện lên để bạn thanh toán ngay.
                       </p>
-                      <div className="grid grid-cols-2 gap-3">
-                        <button
-                          type="button"
-                          onClick={() => setDepositType('paid_100')}
-                          className={`p-3 rounded-lg border-2 text-center transition-all ${
-                            depositType === 'paid_100'
-                              ? 'border-primary bg-primary/5'
-                              : 'border-border/50 hover:border-primary/30'
-                          }`}
-                        >
-                          <p className="font-bold text-sm">💯 100%</p>
-                          <p className="text-xs text-muted-foreground mt-0.5">Thanh toán toàn bộ</p>
-                          <p className="text-primary font-bold text-sm mt-1">{formatMoney(total)}</p>
-                        </button>
-                        <button
-                          type="button"
-                          onClick={() => setDepositType('deposit_50')}
-                          className={`p-3 rounded-lg border-2 text-center transition-all ${
-                            depositType === 'deposit_50'
-                              ? 'border-primary bg-primary/5'
-                              : 'border-border/50 hover:border-primary/30'
-                          }`}
-                        >
-                          <p className="font-bold text-sm">5️⃣0️⃣ 50%</p>
-                          <p className="text-xs text-muted-foreground mt-0.5">Đặt cọc trước</p>
-                          <p className="text-primary font-bold text-sm mt-1">{formatMoney(Math.round(total / 2))}</p>
-                        </button>
-                      </div>
-                    </div>
-
-                    {/* QR Preview */}
-                    <div className="flex justify-center">
-                      <div className="bg-white rounded-xl p-3 border border-border/50 shadow-sm">
-                        <div className="flex items-center gap-1.5 justify-center mb-2">
-                          <QrCode className="h-3.5 w-3.5 text-primary" />
-                          <span className="text-xs font-medium text-muted-foreground">QR sẽ hiện sau khi đặt hàng</span>
-                        </div>
-                        <div className="w-40 h-40 bg-muted/30 rounded-lg flex items-center justify-center">
-                          <Building2 className="h-10 w-10 text-muted-foreground/30" />
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Bank info preview */}
-                    <div className="bg-muted/30 rounded-lg p-4 space-y-2">
-                      <div className="flex justify-between text-sm">
-                        <span className="text-muted-foreground">Ngân hàng:</span>
-                        <span className="font-medium">{BANK_INFO.bankName}</span>
-                      </div>
-                      <div className="flex justify-between text-sm">
-                        <span className="text-muted-foreground">STK:</span>
-                        <span className="font-bold tracking-wider">{BANK_INFO.accountNumber}</span>
-                      </div>
-                      <div className="flex justify-between text-sm">
-                        <span className="text-muted-foreground">Chủ TK:</span>
-                        <span className="font-medium">{BANK_INFO.accountName}</span>
-                      </div>
-                      <div className="flex justify-between text-sm">
-                        <span className="text-muted-foreground">Số tiền CK:</span>
-                        <span className="font-bold text-primary">{formatMoney(transferAmount)}</span>
-                      </div>
                     </div>
                   </div>
                 )}
