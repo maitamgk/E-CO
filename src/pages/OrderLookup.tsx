@@ -25,12 +25,13 @@ import { supabase } from '@/lib/supabase';
 import { Order, OrderStatus } from '@/types';
 import { formatMoney } from '@/utils/money';
 import collectionDisplay from '@/assets/products/collection-display-1.jpg';
+import { DeliveryTrackingMap } from '@/components/order/DeliveryTrackingMap';
 
 const statusTimeline: { status: OrderStatus; label: string; desc: string; icon: React.ElementType }[] = [
-  { status: 'pending', label: 'Chờ xác nhận', desc: 'B-ECO đang tiếp nhận đơn hàng', icon: Clock },
-  { status: 'confirmed', label: 'Đã xác nhận', desc: 'Sản phẩm đang được chuẩn bị', icon: CheckCircle },
-  { status: 'shipped', label: 'Đang giao hàng', desc: 'Đơn hàng đã bàn giao vận chuyển', icon: Truck },
-  { status: 'delivered', label: 'Đã giao hàng', desc: 'Đơn hàng đã giao thành công', icon: Package },
+  { status: 'pending', label: 'Chờ xác nhận', desc: 'B-ECO tiếp nhận đơn hàng', icon: Clock },
+  { status: 'confirmed', label: 'Đã xác nhận', desc: 'Sản phẩm đang được đóng gói', icon: CheckCircle },
+  { status: 'shipped', label: 'Đang giao hàng', desc: 'Xe vận chuyển đang giao hàng', icon: Truck },
+  { status: 'delivered', label: 'Đã giao hàng', desc: 'Đã giao tới địa chỉ khách', icon: Package },
 ];
 
 const OrderLookup = () => {
@@ -59,14 +60,21 @@ const OrderLookup = () => {
         (payload) => {
           const updatedRow = payload.new;
           if (updatedRow) {
-            setOrder((previous) => previous ? {
-              ...previous,
-              status: updatedRow.status as OrderStatus,
-              updatedAt: new Date(updatedRow.updated_at),
-            } : null);
-            toast.success('Trạng thái đơn hàng vừa được cập nhật.');
+            setOrder((previous) =>
+              previous
+                ? {
+                    ...previous,
+                    status: updatedRow.status as OrderStatus,
+                    statusHistory: Array.isArray(updatedRow.status_history)
+                      ? updatedRow.status_history
+                      : previous.statusHistory,
+                    updatedAt: new Date(updatedRow.updated_at),
+                  }
+                : null
+            );
+            toast.success('Trạng thái đơn hàng vừa được cập nhật!');
           }
-        },
+        }
       )
       .subscribe();
 
@@ -88,7 +96,7 @@ const OrderLookup = () => {
     try {
       const foundOrder = await orderService.getOrderByCodeAndPhone(
         codeValue.trim(),
-        phoneValue.trim(),
+        phoneValue.trim()
       );
 
       if (foundOrder) {
@@ -129,9 +137,24 @@ const OrderLookup = () => {
     ? null
     : statusTimeline[currentStatusIndex];
 
+  const getStepTimestamp = (stepStatus: OrderStatus) => {
+    if (!order?.statusHistory) return null;
+    const match = order.statusHistory.find((h) => h.status === stepStatus);
+    if (!match) return null;
+    try {
+      const d = new Date(match.timestamp);
+      return d.toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' }) +
+        ' ' +
+        d.toLocaleDateString('vi-VN', { day: '2-digit', month: '2-digit' });
+    } catch {
+      return null;
+    }
+  };
+
   return (
     <Layout>
       <main className="min-h-[calc(100dvh-104px)] bg-background text-foreground">
+        {/* Search Hero Header */}
         <section className="border-b border-border px-5 py-12 sm:px-8 sm:py-16 lg:px-14 lg:py-20">
           <div className="mx-auto grid max-w-[1400px] overflow-hidden border border-border bg-card lg:grid-cols-[0.92fr_1.08fr]">
             <MotionReveal className="flex items-center px-6 py-12 sm:px-10 sm:py-16 lg:px-16 lg:py-20">
@@ -141,7 +164,7 @@ const OrderLookup = () => {
                   Theo dõi hành trình đơn hàng
                 </h1>
                 <p className="mt-5 max-w-[52ch] text-sm leading-7 text-muted-foreground sm:text-base">
-                  Nhập mã đơn hàng và số điện thoại để xem trạng thái giao nhận mới nhất.
+                  Nhập mã đơn hàng và số điện thoại để xem vị trí bản đồ & lịch sử vận chuyển realtime.
                 </p>
 
                 <form onSubmit={handleLookup} className="mt-9 border-t border-border pt-7" noValidate>
@@ -203,7 +226,7 @@ const OrderLookup = () => {
                     </Button>
                     <p className="flex items-center gap-2 text-xs leading-5 text-muted-foreground">
                       <ShieldCheck className="h-4 w-4 flex-none text-primary" />
-                      Thông tin chỉ dùng để xác minh đơn hàng.
+                      Thông tin tra cứu bảo mật trực tiếp từ hệ thống B-ECO.
                     </p>
                   </div>
                 </form>
@@ -247,7 +270,7 @@ const OrderLookup = () => {
               <div>
                 <h2 className="font-heading text-3xl font-medium text-foreground">Không tìm thấy đơn hàng</h2>
                 <p className="mt-3 max-w-[64ch] text-sm leading-7 text-muted-foreground">
-                  Hãy kiểm tra lại mã đơn hàng và số điện thoại đã dùng khi đặt hàng. Mã đơn thường có dạng BCO001.
+                  Hãy kiểm tra lại mã đơn hàng và số điện thoại đã dùng khi đặt hàng. Mã đơn thường có dạng BCO...
                 </p>
               </div>
             </MotionReveal>
@@ -258,21 +281,37 @@ const OrderLookup = () => {
           <section className="px-5 py-16 sm:px-8 sm:py-20 lg:px-14" aria-live="polite">
             <div className="mx-auto max-w-[1260px]">
               <MotionReveal className="border border-border bg-card">
+                {/* Order Top Bar */}
                 <div className="grid gap-6 border-b border-border p-7 sm:grid-cols-[1fr_auto] sm:items-end sm:p-10">
                   <div>
                     <p className="text-xs font-bold uppercase tracking-[0.12em] text-muted-foreground">Mã đơn hàng</p>
                     <h2 className="mt-2 font-heading text-4xl font-medium text-primary sm:text-5xl">{order.orderCode}</h2>
-                    <p className="mt-3 text-sm text-muted-foreground">Đặt ngày {order.createdAt.toLocaleDateString('vi-VN')}</p>
+                    <p className="mt-3 text-sm text-muted-foreground">Thời gian đặt: {order.createdAt.toLocaleString('vi-VN')}</p>
                   </div>
                   <div className="sm:text-right">
                     <p className="text-xs font-bold uppercase tracking-[0.12em] text-muted-foreground">Trạng thái hiện tại</p>
                     <p className={`mt-2 font-heading text-2xl font-medium ${order.status === 'cancelled' ? 'text-destructive' : 'text-primary'}`}>
                       {order.status === 'cancelled' ? 'Đã hủy' : currentStatus?.label}
                     </p>
-                    <p className="mt-2 text-xs text-muted-foreground">Cập nhật {order.updatedAt.toLocaleString('vi-VN')}</p>
+                    <p className="mt-2 text-xs text-muted-foreground">Cập nhật realtime {order.updatedAt.toLocaleString('vi-VN')}</p>
                   </div>
                 </div>
 
+                {/* Tracking Interactive Map Component */}
+                <div className="p-7 sm:p-10 border-b border-border bg-secondary/30">
+                  <h3 className="text-lg font-heading font-medium text-foreground mb-4 flex items-center gap-2">
+                    <Truck className="w-5 h-5 text-primary" /> Vị trí vận chuyển đơn hàng (Bản đồ Realtime)
+                  </h3>
+                  <DeliveryTrackingMap
+                    status={order.status}
+                    statusHistory={order.statusHistory}
+                    customerAddress={order.customer.address}
+                    customerName={order.customer.fullName}
+                    orderCode={order.orderCode}
+                  />
+                </div>
+
+                {/* Timeline Progress Step Bar */}
                 <div className="p-7 sm:p-10">
                   {order.status === 'cancelled' ? (
                     <div className="grid gap-5 border border-destructive/25 bg-destructive/5 p-6 sm:grid-cols-[auto_1fr] sm:items-center">
@@ -288,6 +327,7 @@ const OrderLookup = () => {
                         const isCompleted = index <= currentStatusIndex;
                         const isCurrent = index === currentStatusIndex;
                         const StepIcon = step.icon;
+                        const timestampText = getStepTimestamp(step.status);
 
                         return (
                           <div key={step.status} className="relative flex gap-5 pb-9 last:pb-0 md:block md:pb-0 md:pr-5">
@@ -305,8 +345,15 @@ const OrderLookup = () => {
                             </div>
                             <div className="pt-0.5 md:mt-5 md:pr-4">
                               <h3 className={`text-sm font-bold ${isCompleted ? 'text-primary' : 'text-muted-foreground'}`}>{step.label}</h3>
-                              <p className="mt-2 max-w-[24ch] text-xs leading-5 text-muted-foreground">{step.desc}</p>
-                              {isCurrent && <p className="mt-2 text-xs font-bold text-primary">Đang ở bước này</p>}
+                              <p className="mt-1.5 max-w-[24ch] text-xs leading-5 text-muted-foreground">{step.desc}</p>
+
+                              {timestampText && (
+                                <p className="mt-1.5 text-[11px] font-semibold text-emerald-700 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/40 inline-block px-2 py-0.5 rounded border border-emerald-200/60 dark:border-emerald-800/40">
+                                  ⏱ {timestampText}
+                                </p>
+                              )}
+
+                              {isCurrent && <p className="mt-2 text-xs font-bold text-primary flex items-center gap-1">📍 Vị trí hiện tại</p>}
                             </div>
                           </div>
                         );
@@ -316,6 +363,7 @@ const OrderLookup = () => {
                 </div>
               </MotionReveal>
 
+              {/* Order Info & Items */}
               <div className="mt-8 grid gap-8 lg:grid-cols-[0.78fr_1.22fr]">
                 <MotionReveal className="space-y-8" delay={0.05}>
                   <section className="border border-border bg-card p-7 sm:p-8">
@@ -356,6 +404,12 @@ const OrderLookup = () => {
                         <span className="flex items-center gap-2 text-muted-foreground"><CreditCard className="h-4 w-4" /> Phương thức</span>
                         <span className="font-semibold">
                           {order.paymentMethod === 'BANK_TRANSFER' ? '🏦 Chuyển khoản' : '💵 COD'}
+                        </span>
+                      </div>
+                      <div className="flex items-center justify-between gap-4">
+                        <span className="flex items-center gap-2 text-muted-foreground"><CheckCircle className="h-4 w-4 text-emerald-600" /> Trạng thái thanh toán</span>
+                        <span className="font-semibold text-emerald-700 dark:text-emerald-400">
+                          {order.paymentStatus === 'paid_100' ? 'Đã thanh toán 100%' : order.paymentStatus === 'deposit_50' ? 'Đã cọc 50%' : 'Chưa thanh toán'}
                         </span>
                       </div>
                       {order.notes && (

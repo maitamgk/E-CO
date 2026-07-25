@@ -53,6 +53,12 @@ export interface OrderTotals {
   totalQty: number;
 }
 
+export interface StatusHistoryEntry {
+  status: OrderStatus;
+  timestamp: string;
+  note?: string;
+}
+
 export interface Order {
   id: string;
   orderCode: string;
@@ -63,6 +69,7 @@ export interface Order {
   paymentMethod: PaymentMethod;
   paymentStatus: PaymentStatus;
   status: OrderStatus;
+  statusHistory?: StatusHistoryEntry[];
   notes: string;
   createdAt: Date;
   updatedAt: Date;
