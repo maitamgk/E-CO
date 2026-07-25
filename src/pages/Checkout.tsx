@@ -44,21 +44,22 @@ const getVietQRUrl = (amount: number, orderCode: string) =>
 const QRPaymentModal = ({
   order,
   depositType,
-  onConfirm,
-  onClose,
+  onDone,
+  user,
+  phone,
 }: {
   order: Order;
   depositType: 'deposit_50' | 'paid_100';
-  onConfirm: () => void;
-  onClose: () => void;
+  onDone: () => void;
+  user: { uid: string } | null;
+  phone: string;
 }) => {
   const { toast } = useToast();
   const [confirmingSent, setConfirmingSent] = useState(false);
-  const [confirmationDone, setConfirmationDone] = useState(false);
+  const [phase, setPhase] = useState<'qr' | 'success'>('qr');
   const [imgLoaded, setImgLoaded] = useState(false);
   const [copiedField, setCopiedField] = useState<string | null>(null);
 
-  // Compute from saved order — NOT from cart (which is already cleared)
   const orderTotal = order.totals.total;
   const amount = depositType === 'paid_100' ? orderTotal : Math.round(orderTotal / 2);
 
@@ -78,12 +79,7 @@ const QRPaymentModal = ({
         telegramService.sendPaymentConfirmation(order, depositType).catch(console.error),
         discordService.sendPaymentConfirmation(order, depositType).catch(console.error),
       ]);
-      setConfirmationDone(true);
-      toast({
-        title: '✅ Đã gửi xác nhận!',
-        description: 'Admin sẽ kiểm tra và xác nhận đơn hàng của bạn.',
-      });
-      setTimeout(() => onConfirm(), 2500);
+      setPhase('success');
     } catch {
       toast({
         title: 'Lỗi gửi xác nhận',
@@ -95,6 +91,10 @@ const QRPaymentModal = ({
     }
   };
 
+  const handleSkipTransfer = () => {
+    setPhase('success');
+  };
+
   useEffect(() => {
     document.body.style.overflow = 'hidden';
     return () => { document.body.style.overflow = ''; };
@@ -102,139 +102,141 @@ const QRPaymentModal = ({
 
   return (
     <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4">
-      {/* Backdrop */}
-      <div className="absolute inset-0 bg-black/50 backdrop-blur-[6px]" onClick={onClose} />
+      <div className="absolute inset-0 bg-black/50 backdrop-blur-[6px]" />
 
-      {/* Modal */}
       <div
         className="relative w-full max-w-[26rem] max-h-[92vh] overflow-y-auto rounded-2xl shadow-[0_32px_80px_rgba(0,0,0,0.25)]"
         style={{ animation: 'qr-modal-in 0.35s cubic-bezier(0.16,1,0.3,1) forwards' }}
       >
         <style>{`
           @keyframes qr-modal-in {
-            from { opacity: 0; transform: translateY(24px) scale(0.95); }
+            from { opacity: 0; transform: translateY(24px) scale(0.96); }
             to { opacity: 1; transform: translateY(0) scale(1); }
+          }
+          @keyframes success-check {
+            0% { transform: scale(0) rotate(-45deg); opacity: 0; }
+            50% { transform: scale(1.2) rotate(0deg); opacity: 1; }
+            100% { transform: scale(1) rotate(0deg); opacity: 1; }
           }
         `}</style>
 
-        {/* Close */}
-        <button
-          type="button"
-          onClick={onClose}
-          className="absolute top-3.5 right-3.5 z-10 p-1.5 rounded-full bg-white/20 hover:bg-white/30 text-white transition-colors"
-        >
-          <X className="h-4 w-4" />
-        </button>
-
-        {/* ─── Green Header ─── */}
-        <div className="relative bg-gradient-to-br from-[#166534] via-[#15803d] to-[#166534] text-white text-center px-6 pt-7 pb-16 rounded-t-2xl overflow-hidden">
-          {/* Decorative circles */}
-          <div className="absolute -top-8 -right-8 w-32 h-32 rounded-full bg-white/5" />
-          <div className="absolute -bottom-4 -left-6 w-24 h-24 rounded-full bg-white/5" />
-
-          <div className="relative">
-            <p className="text-sm font-medium text-white/80 mb-1">Đặt hàng thành công! 🎉</p>
-            <h2 className="text-xl font-bold tracking-tight">Chuyển khoản thanh toán</h2>
-            <div className="mt-3 inline-flex items-center gap-2 bg-white/15 backdrop-blur-sm rounded-full px-4 py-1.5">
-              <span className="text-xs text-white/70">Mã đơn</span>
-              <code className="text-sm font-bold">{order.orderCode}</code>
-            </div>
-          </div>
-        </div>
-
-        {/* ─── Body ─── */}
-        <div className="bg-white dark:bg-card rounded-b-2xl px-5 pb-5 -mt-10 relative">
-          {/* QR Card — overlapping header */}
-          <div className="flex justify-center mb-4">
-            <div className="bg-white rounded-2xl p-2 shadow-xl border border-border/20 ring-1 ring-black/5">
-              {!imgLoaded && (
-                <div className="w-56 h-56 flex flex-col items-center justify-center gap-2">
-                  <Loader2 className="h-7 w-7 text-primary animate-spin" />
-                  <span className="text-xs text-muted-foreground">Đang tải mã QR...</span>
+        {phase === 'qr' && (
+          <>
+            <div className="relative bg-gradient-to-br from-[#14532d] via-[#166534] to-[#15803d] text-white text-center px-6 pt-7 pb-16 rounded-t-2xl overflow-hidden">
+              <button type="button" onClick={handleSkipTransfer} className="absolute top-3.5 right-3.5 z-10 p-1.5 rounded-full bg-white/15 hover:bg-white/25 text-white/80 hover:text-white transition-all">
+                <X className="h-4 w-4" />
+              </button>
+              <div className="relative">
+                <div className="inline-flex items-center gap-2 bg-white/10 rounded-full px-3 py-1 mb-3 text-[11px] font-medium text-white/70">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                  Bước 2/2 · Thanh toán
                 </div>
-              )}
-              <img
-                src={getVietQRUrl(amount, order.orderCode)}
-                alt="QR chuyển khoản VietQR"
-                className={`w-56 h-auto rounded-xl ${imgLoaded ? 'block' : 'hidden'}`}
-                onLoad={() => setImgLoaded(true)}
-                loading="eager"
-              />
+                <h2 className="text-xl font-bold tracking-tight">Chuyển khoản ngân hàng</h2>
+                <p className="text-sm text-white/60 mt-1">Quét mã QR bằng app ngân hàng bất kỳ</p>
+              </div>
             </div>
-          </div>
 
-          {/* Amount + deposit type */}
-          <div className="text-center mb-5">
-            <p className="text-2xl font-extrabold text-primary tracking-tight">{formatMoney(amount)}</p>
-            <p className="text-xs text-muted-foreground mt-1">
-              {depositType === 'paid_100'
-                ? '💯 Thanh toán toàn bộ 100%'
-                : '5️⃣0️⃣ Đặt cọc 50% · Phần còn lại thanh toán khi nhận hàng'}
-            </p>
-          </div>
-
-          {/* Bank details */}
-          <div className="rounded-xl border border-border/50 divide-y divide-border/40 mb-5 overflow-hidden">
-            {[
-              { label: 'Ngân hàng', value: 'MB Bank (Quân đội)', field: '', copyValue: '' },
-              { label: 'Số tài khoản', value: BANK_INFO.accountNumber, field: 'stk', copyValue: BANK_INFO.accountNumber },
-              { label: 'Chủ tài khoản', value: BANK_INFO.accountName, field: '', copyValue: '' },
-              { label: 'Nội dung CK', value: order.orderCode, field: 'ndck', copyValue: order.orderCode },
-            ].map(row => (
-              <div key={row.label} className="flex items-center justify-between px-4 py-3 bg-muted/20 hover:bg-muted/40 transition-colors">
-                <span className="text-[13px] text-muted-foreground">{row.label}</span>
-                <div className="flex items-center gap-1.5">
-                  <span className={`text-[13px] font-semibold ${row.field === 'stk' ? 'font-mono tracking-widest text-foreground' : row.field === 'ndck' ? 'font-mono bg-primary/10 text-primary px-2 py-0.5 rounded' : 'text-foreground'}`}>
-                    {row.value}
-                  </span>
-                  {row.copyValue && (
-                    <button
-                      type="button"
-                      onClick={() => copyToClipboard(row.copyValue, row.field, row.label)}
-                      className="p-1.5 rounded-lg hover:bg-muted transition-colors"
-                      title={`Sao chép ${row.label}`}
-                    >
-                      {copiedField === row.field ? (
-                        <Check className="h-3.5 w-3.5 text-green-600" />
-                      ) : (
-                        <Copy className="h-3.5 w-3.5 text-primary/60" />
-                      )}
-                    </button>
+            <div className="bg-white dark:bg-card rounded-b-2xl px-5 pb-6 -mt-10 relative">
+              <div className="flex justify-center mb-5">
+                <div className="bg-white rounded-2xl p-2.5 shadow-[0_8px_32px_rgba(0,0,0,0.08)] border border-border/20 ring-1 ring-black/[0.03]">
+                  {!imgLoaded && (
+                    <div className="w-52 h-52 flex flex-col items-center justify-center gap-2">
+                      <Loader2 className="h-7 w-7 text-primary animate-spin" />
+                      <span className="text-xs text-muted-foreground">Đang tải mã QR...</span>
+                    </div>
                   )}
+                  <img
+                    src={getVietQRUrl(amount, order.orderCode)}
+                    alt="QR chuyển khoản VietQR"
+                    className={`w-52 h-auto rounded-xl ${imgLoaded ? 'block' : 'hidden'}`}
+                    onLoad={() => setImgLoaded(true)}
+                    loading="eager"
+                  />
                 </div>
               </div>
-            ))}
-          </div>
 
-          {/* Confirm / Done */}
-          {!confirmationDone ? (
-            <Button
-              onClick={handleConfirmTransfer}
-              disabled={confirmingSent}
-              className="w-full gap-2 bg-gradient-eco text-white hover:bg-gradient-eco-hover h-12 text-[15px] font-semibold rounded-xl shadow-lg shadow-primary/20"
-            >
-              {confirmingSent ? (
-                <><Loader2 className="h-4 w-4 animate-spin" /> Đang gửi xác nhận...</>
-              ) : (
-                <><CheckCircle2 className="h-5 w-5" /> Tôi đã chuyển khoản</>
-              )}
-            </Button>
-          ) : (
-            <div className="bg-green-50 dark:bg-green-950/30 border border-green-200 dark:border-green-800/40 rounded-xl p-5 text-center">
-              <CheckCircle2 className="h-8 w-8 text-green-600 mx-auto mb-2" />
-              <p className="font-bold text-green-700 dark:text-green-400">Xác nhận thành công!</p>
-              <p className="text-sm text-green-600 dark:text-green-500 mt-1">Admin sẽ kiểm tra và xác nhận sớm nhất.</p>
+              <div className="text-center mb-5">
+                <div className="inline-flex items-baseline gap-1.5">
+                  <span className="text-sm text-muted-foreground">Số tiền:</span>
+                  <span className="text-[1.65rem] font-extrabold text-primary leading-none">{formatMoney(amount)}</span>
+                </div>
+                <p className="text-[11px] text-muted-foreground mt-1.5 font-medium">
+                  {depositType === 'paid_100' ? '💯 Thanh toán toàn bộ' : '5️⃣0️⃣ Đặt cọc 50% · Phần còn lại khi nhận hàng'}
+                </p>
+              </div>
+
+              <div className="rounded-xl border border-border/40 overflow-hidden mb-5">
+                {[
+                  { label: 'Ngân hàng', value: 'MB Bank', field: '', copyValue: '', accent: false },
+                  { label: 'Số tài khoản', value: BANK_INFO.accountNumber, field: 'stk', copyValue: BANK_INFO.accountNumber, accent: false },
+                  { label: 'Chủ tài khoản', value: BANK_INFO.accountName, field: '', copyValue: '', accent: false },
+                  { label: 'Nội dung CK', value: order.orderCode, field: 'ndck', copyValue: order.orderCode, accent: true },
+                ].map((row, i) => (
+                  <div key={row.label} className={`flex items-center justify-between px-4 py-3 transition-colors ${i % 2 === 0 ? 'bg-muted/10' : 'bg-muted/25'} ${row.accent ? 'bg-primary/[0.04]' : ''}`}>
+                    <span className="text-[13px] text-muted-foreground">{row.label}</span>
+                    <div className="flex items-center gap-1.5">
+                      <span className={`text-[13px] font-semibold ${row.field === 'stk' ? 'font-mono tracking-[0.15em] text-foreground' : row.field === 'ndck' ? 'font-mono bg-primary/10 text-primary px-2.5 py-0.5 rounded-md font-bold' : 'text-foreground'}`}>
+                        {row.value}
+                      </span>
+                      {row.copyValue && (
+                        <button type="button" onClick={() => copyToClipboard(row.copyValue, row.field, row.label)} className="p-1.5 rounded-lg hover:bg-muted transition-all active:scale-90" title={`Sao chép ${row.label}`}>
+                          {copiedField === row.field ? <Check className="h-3.5 w-3.5 text-green-600" /> : <Copy className="h-3.5 w-3.5 text-muted-foreground" />}
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <Button onClick={handleConfirmTransfer} disabled={confirmingSent} className="w-full gap-2 h-[3.25rem] text-[15px] font-semibold rounded-xl bg-gradient-to-r from-[#166534] to-[#15803d] text-white hover:from-[#14532d] hover:to-[#166534] shadow-lg shadow-green-900/20 transition-all active:scale-[0.98]">
+                {confirmingSent ? <><Loader2 className="h-4 w-4 animate-spin" /> Đang xác nhận...</> : <><CheckCircle2 className="h-5 w-5" /> Tôi đã chuyển khoản</>}
+              </Button>
+
+              <button type="button" onClick={handleSkipTransfer} className="w-full text-center text-[12px] text-muted-foreground/70 hover:text-muted-foreground transition-colors mt-3 py-1">
+                Tôi sẽ chuyển khoản sau →
+              </button>
             </div>
-          )}
+          </>
+        )}
 
-          <button
-            type="button"
-            onClick={onClose}
-            className="w-full text-center text-[13px] text-muted-foreground hover:text-foreground transition-colors mt-3 py-1.5"
-          >
-            Tôi sẽ chuyển khoản sau →
-          </button>
-        </div>
+        {phase === 'success' && (
+          <div className="bg-white dark:bg-card rounded-2xl px-6 py-10 text-center relative overflow-hidden">
+            <div className="absolute inset-0 bg-gradient-to-b from-green-50/80 via-transparent to-transparent dark:from-green-950/20 pointer-events-none" />
+            <div className="relative">
+              <div className="w-20 h-20 rounded-full bg-gradient-to-br from-[#166534] to-[#22c55e] flex items-center justify-center mx-auto mb-5 shadow-lg shadow-green-600/30" style={{ animation: 'success-check 0.5s cubic-bezier(0.16,1,0.3,1) forwards' }}>
+                <Check className="h-10 w-10 text-white stroke-[3]" />
+              </div>
+              <h2 className="text-2xl font-bold text-foreground mb-2">Đặt hàng thành công!</h2>
+              <p className="text-sm text-muted-foreground leading-relaxed max-w-[280px] mx-auto">
+                Cảm ơn bạn đã đặt hàng. Chúng tôi sẽ liên hệ xác nhận trong thời gian sớm nhất.
+              </p>
+              <div className="mt-6 mb-6 bg-muted/40 dark:bg-muted/20 rounded-xl p-5 border border-border/30">
+                <p className="text-xs text-muted-foreground uppercase tracking-wider font-medium mb-1.5">Mã đơn hàng</p>
+                <p className="text-3xl font-extrabold text-primary tracking-tight">{order.orderCode}</p>
+              </div>
+              <div className="inline-flex items-center gap-2 bg-green-50 dark:bg-green-950/30 border border-green-200 dark:border-green-800/40 rounded-full px-4 py-2 mb-6">
+                <CheckCircle2 className="h-4 w-4 text-green-600" />
+                <span className="text-sm font-medium text-green-700 dark:text-green-400">
+                  {depositType === 'paid_100' ? 'Đã xác nhận thanh toán 100%' : 'Đã xác nhận đặt cọc 50%'}
+                </span>
+              </div>
+              <div className="flex flex-col gap-2.5">
+                {user ? (
+                  <Link to="/orders" onClick={onDone}>
+                    <Button className="w-full h-11 gap-2 bg-gradient-to-r from-[#166534] to-[#15803d] text-white hover:from-[#14532d] hover:to-[#166534] rounded-xl font-semibold shadow-md">📦 Xem đơn hàng của tôi</Button>
+                  </Link>
+                ) : (
+                  <Link to={`/order-lookup?code=${order.orderCode}&phone=${phone}`} onClick={onDone}>
+                    <Button className="w-full h-11 gap-2 bg-gradient-to-r from-[#166534] to-[#15803d] text-white hover:from-[#14532d] hover:to-[#166534] rounded-xl font-semibold shadow-md">📦 Xem đơn hàng của tôi</Button>
+                  </Link>
+                )}
+                <Link to="/shop" onClick={onDone}>
+                  <Button variant="outline" className="w-full h-11 rounded-xl font-medium">🛍️ Tiếp tục mua sắm</Button>
+                </Link>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
@@ -275,8 +277,6 @@ const Checkout = () => {
   const discountRate = 0;
   const discountAmount = 0;
   const total = subtotal;
-
-  const transferAmount = depositType === 'paid_100' ? total : Math.round(total / 2);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -414,11 +414,9 @@ const Checkout = () => {
         <QRPaymentModal
           order={savedOrder}
           depositType={depositType}
-          onConfirm={() => {
-            setShowQRModal(false);
-            setOrderPlaced(true);
-          }}
-          onClose={() => {
+          user={user}
+          phone={form.phone}
+          onDone={() => {
             setShowQRModal(false);
             setOrderPlaced(true);
           }}
@@ -666,7 +664,7 @@ const Checkout = () => {
                     <span className="font-medium">
                       {depositType === 'paid_100' ? 'Thanh toán 100%:' : 'Đặt cọc 50%:'}
                     </span>
-                    <span className="font-bold">{formatMoney(transferAmount)}</span>
+                    <span className="font-bold">{formatMoney(depositType === 'paid_100' ? total : Math.round(total / 2))}</span>
                   </div>
                 )}
                 <div className="border-t border-border pt-2 flex justify-between">
