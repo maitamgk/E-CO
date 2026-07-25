@@ -44,13 +44,11 @@ const getVietQRUrl = (amount: number, orderCode: string) =>
 const QRPaymentModal = ({
   order,
   depositType,
-  transferAmount,
   onConfirm,
   onClose,
 }: {
   order: Order;
   depositType: 'deposit_50' | 'paid_100';
-  transferAmount: number;
   onConfirm: () => void;
   onClose: () => void;
 }) => {
@@ -58,10 +56,17 @@ const QRPaymentModal = ({
   const [confirmingSent, setConfirmingSent] = useState(false);
   const [confirmationDone, setConfirmationDone] = useState(false);
   const [imgLoaded, setImgLoaded] = useState(false);
+  const [copiedField, setCopiedField] = useState<string | null>(null);
 
-  const copyToClipboard = (text: string, label: string) => {
+  // Compute from saved order — NOT from cart (which is already cleared)
+  const orderTotal = order.totals.total;
+  const amount = depositType === 'paid_100' ? orderTotal : Math.round(orderTotal / 2);
+
+  const copyToClipboard = (text: string, field: string, label: string) => {
     navigator.clipboard.writeText(text).then(() => {
+      setCopiedField(field);
       toast({ title: '✅ Đã sao chép!', description: `${label}: ${text}` });
+      setTimeout(() => setCopiedField(null), 2000);
     });
   };
 
@@ -78,8 +83,7 @@ const QRPaymentModal = ({
         title: '✅ Đã gửi xác nhận!',
         description: 'Admin sẽ kiểm tra và xác nhận đơn hàng của bạn.',
       });
-      // Close modal after 2s
-      setTimeout(() => onConfirm(), 2000);
+      setTimeout(() => onConfirm(), 2500);
     } catch {
       toast({
         title: 'Lỗi gửi xác nhận',
@@ -91,7 +95,6 @@ const QRPaymentModal = ({
     }
   };
 
-  // Prevent body scroll when modal is open
   useEffect(() => {
     document.body.style.overflow = 'hidden';
     return () => { document.body.style.overflow = ''; };
@@ -100,141 +103,134 @@ const QRPaymentModal = ({
   return (
     <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4">
       {/* Backdrop */}
-      <div
-        className="absolute inset-0 bg-black/60 backdrop-blur-sm animate-in fade-in duration-300"
-        onClick={onClose}
-      />
+      <div className="absolute inset-0 bg-black/50 backdrop-blur-[6px]" onClick={onClose} />
 
       {/* Modal */}
-      <div className="relative w-full max-w-md max-h-[90vh] overflow-y-auto bg-white dark:bg-card rounded-2xl shadow-2xl animate-in zoom-in-95 slide-in-from-bottom-4 duration-300">
-        {/* Close button */}
+      <div
+        className="relative w-full max-w-[26rem] max-h-[92vh] overflow-y-auto rounded-2xl shadow-[0_32px_80px_rgba(0,0,0,0.25)]"
+        style={{ animation: 'qr-modal-in 0.35s cubic-bezier(0.16,1,0.3,1) forwards' }}
+      >
+        <style>{`
+          @keyframes qr-modal-in {
+            from { opacity: 0; transform: translateY(24px) scale(0.95); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+          }
+        `}</style>
+
+        {/* Close */}
         <button
           type="button"
           onClick={onClose}
-          className="absolute top-4 right-4 z-10 p-1.5 rounded-full bg-muted/80 hover:bg-muted transition-colors"
+          className="absolute top-3.5 right-3.5 z-10 p-1.5 rounded-full bg-white/20 hover:bg-white/30 text-white transition-colors"
         >
-          <X className="h-4 w-4 text-muted-foreground" />
+          <X className="h-4 w-4" />
         </button>
 
-        {/* Header */}
-        <div className="bg-gradient-to-br from-green-700 to-green-900 dark:from-green-800 dark:to-green-950 text-white px-6 pt-6 pb-8 rounded-t-2xl text-center">
-          <div className="w-12 h-12 bg-white/15 backdrop-blur rounded-xl flex items-center justify-center mx-auto mb-3">
-            <Building2 className="h-6 w-6" />
-          </div>
-          <h2 className="text-lg font-bold">Chuyển khoản thanh toán</h2>
-          <p className="text-sm text-white/70 mt-1">Quét mã QR hoặc chuyển khoản thủ công</p>
-          <div className="mt-3 inline-block px-3 py-1 bg-white/15 rounded-full text-xs font-semibold">
-            Mã đơn: #{order.orderCode}
+        {/* ─── Green Header ─── */}
+        <div className="relative bg-gradient-to-br from-[#166534] via-[#15803d] to-[#166534] text-white text-center px-6 pt-7 pb-16 rounded-t-2xl overflow-hidden">
+          {/* Decorative circles */}
+          <div className="absolute -top-8 -right-8 w-32 h-32 rounded-full bg-white/5" />
+          <div className="absolute -bottom-4 -left-6 w-24 h-24 rounded-full bg-white/5" />
+
+          <div className="relative">
+            <p className="text-sm font-medium text-white/80 mb-1">Đặt hàng thành công! 🎉</p>
+            <h2 className="text-xl font-bold tracking-tight">Chuyển khoản thanh toán</h2>
+            <div className="mt-3 inline-flex items-center gap-2 bg-white/15 backdrop-blur-sm rounded-full px-4 py-1.5">
+              <span className="text-xs text-white/70">Mã đơn</span>
+              <code className="text-sm font-bold">{order.orderCode}</code>
+            </div>
           </div>
         </div>
 
-        {/* Content */}
-        <div className="px-6 pb-6 -mt-4 space-y-5">
-          {/* QR Code */}
-          <div className="flex justify-center">
-            <div className="bg-white rounded-xl p-2.5 shadow-lg border border-border/30 -mt-0">
+        {/* ─── Body ─── */}
+        <div className="bg-white dark:bg-card rounded-b-2xl px-5 pb-5 -mt-10 relative">
+          {/* QR Card — overlapping header */}
+          <div className="flex justify-center mb-4">
+            <div className="bg-white rounded-2xl p-2 shadow-xl border border-border/20 ring-1 ring-black/5">
               {!imgLoaded && (
-                <div className="w-52 h-52 flex items-center justify-center">
-                  <Loader2 className="h-8 w-8 text-primary animate-spin" />
+                <div className="w-56 h-56 flex flex-col items-center justify-center gap-2">
+                  <Loader2 className="h-7 w-7 text-primary animate-spin" />
+                  <span className="text-xs text-muted-foreground">Đang tải mã QR...</span>
                 </div>
               )}
               <img
-                src={getVietQRUrl(transferAmount, order.orderCode)}
-                alt="QR chuyển khoản"
-                className={`w-52 h-auto rounded-lg ${imgLoaded ? 'block' : 'hidden'}`}
+                src={getVietQRUrl(amount, order.orderCode)}
+                alt="QR chuyển khoản VietQR"
+                className={`w-56 h-auto rounded-xl ${imgLoaded ? 'block' : 'hidden'}`}
                 onLoad={() => setImgLoaded(true)}
                 loading="eager"
               />
             </div>
           </div>
 
-          {/* Amount badge */}
-          <div className="text-center">
-            <div className="inline-flex items-center gap-2 bg-primary/8 border border-primary/15 rounded-full px-4 py-2">
-              <span className="text-sm text-muted-foreground">Số tiền CK:</span>
-              <span className="text-lg font-bold text-primary">{formatMoney(transferAmount)}</span>
-            </div>
-            <p className="text-xs text-muted-foreground mt-1.5">
+          {/* Amount + deposit type */}
+          <div className="text-center mb-5">
+            <p className="text-2xl font-extrabold text-primary tracking-tight">{formatMoney(amount)}</p>
+            <p className="text-xs text-muted-foreground mt-1">
               {depositType === 'paid_100'
-                ? '💯 Thanh toán 100%'
-                : '5️⃣0️⃣ Đặt cọc 50% — Phần còn lại thanh toán khi nhận hàng'}
+                ? '💯 Thanh toán toàn bộ 100%'
+                : '5️⃣0️⃣ Đặt cọc 50% · Phần còn lại thanh toán khi nhận hàng'}
             </p>
           </div>
 
-          {/* Bank details table */}
-          <div className="bg-muted/40 dark:bg-muted/20 rounded-xl divide-y divide-border/40">
-            <div className="flex justify-between items-center px-4 py-3">
-              <span className="text-sm text-muted-foreground">Ngân hàng</span>
-              <span className="font-semibold text-sm">MBBank</span>
-            </div>
-            <div className="flex justify-between items-center px-4 py-3">
-              <span className="text-sm text-muted-foreground">Số tài khoản</span>
-              <div className="flex items-center gap-2">
-                <span className="font-bold text-base tracking-widest font-mono">{BANK_INFO.accountNumber}</span>
-                <button
-                  type="button"
-                  onClick={() => copyToClipboard(BANK_INFO.accountNumber, 'STK')}
-                  className="p-1 rounded-md hover:bg-background transition-colors"
-                >
-                  <Copy className="h-3.5 w-3.5 text-primary" />
-                </button>
+          {/* Bank details */}
+          <div className="rounded-xl border border-border/50 divide-y divide-border/40 mb-5 overflow-hidden">
+            {[
+              { label: 'Ngân hàng', value: 'MB Bank (Quân đội)', field: '', copyValue: '' },
+              { label: 'Số tài khoản', value: BANK_INFO.accountNumber, field: 'stk', copyValue: BANK_INFO.accountNumber },
+              { label: 'Chủ tài khoản', value: BANK_INFO.accountName, field: '', copyValue: '' },
+              { label: 'Nội dung CK', value: order.orderCode, field: 'ndck', copyValue: order.orderCode },
+            ].map(row => (
+              <div key={row.label} className="flex items-center justify-between px-4 py-3 bg-muted/20 hover:bg-muted/40 transition-colors">
+                <span className="text-[13px] text-muted-foreground">{row.label}</span>
+                <div className="flex items-center gap-1.5">
+                  <span className={`text-[13px] font-semibold ${row.field === 'stk' ? 'font-mono tracking-widest text-foreground' : row.field === 'ndck' ? 'font-mono bg-primary/10 text-primary px-2 py-0.5 rounded' : 'text-foreground'}`}>
+                    {row.value}
+                  </span>
+                  {row.copyValue && (
+                    <button
+                      type="button"
+                      onClick={() => copyToClipboard(row.copyValue, row.field, row.label)}
+                      className="p-1.5 rounded-lg hover:bg-muted transition-colors"
+                      title={`Sao chép ${row.label}`}
+                    >
+                      {copiedField === row.field ? (
+                        <Check className="h-3.5 w-3.5 text-green-600" />
+                      ) : (
+                        <Copy className="h-3.5 w-3.5 text-primary/60" />
+                      )}
+                    </button>
+                  )}
+                </div>
               </div>
-            </div>
-            <div className="flex justify-between items-center px-4 py-3">
-              <span className="text-sm text-muted-foreground">Chủ tài khoản</span>
-              <span className="font-semibold text-sm">{BANK_INFO.accountName}</span>
-            </div>
-            <div className="flex justify-between items-center px-4 py-3">
-              <span className="text-sm text-muted-foreground">Nội dung CK</span>
-              <div className="flex items-center gap-2">
-                <code className="bg-primary/10 text-primary px-2.5 py-0.5 rounded-md font-bold text-sm">{order.orderCode}</code>
-                <button
-                  type="button"
-                  onClick={() => copyToClipboard(order.orderCode, 'Nội dung CK')}
-                  className="p-1 rounded-md hover:bg-background transition-colors"
-                >
-                  <Copy className="h-3.5 w-3.5 text-primary" />
-                </button>
-              </div>
-            </div>
+            ))}
           </div>
 
-          {/* Confirm button */}
+          {/* Confirm / Done */}
           {!confirmationDone ? (
             <Button
               onClick={handleConfirmTransfer}
               disabled={confirmingSent}
-              className="w-full gap-2 bg-gradient-eco text-white hover:bg-gradient-eco-hover h-12 text-base"
+              className="w-full gap-2 bg-gradient-eco text-white hover:bg-gradient-eco-hover h-12 text-[15px] font-semibold rounded-xl shadow-lg shadow-primary/20"
             >
               {confirmingSent ? (
-                <>
-                  <Loader2 className="h-4 w-4 animate-spin" />
-                  Đang gửi xác nhận...
-                </>
+                <><Loader2 className="h-4 w-4 animate-spin" /> Đang gửi xác nhận...</>
               ) : (
-                <>
-                  <CheckCircle2 className="h-5 w-5" />
-                  Tôi đã chuyển khoản
-                </>
+                <><CheckCircle2 className="h-5 w-5" /> Tôi đã chuyển khoản</>
               )}
             </Button>
           ) : (
-            <div className="bg-green-50 dark:bg-green-950/30 border border-green-200 dark:border-green-800/40 rounded-xl p-4 text-center space-y-1">
-              <CheckCircle2 className="h-7 w-7 text-green-600 mx-auto" />
-              <p className="font-semibold text-green-700 dark:text-green-400">
-                Đã gửi xác nhận thành công!
-              </p>
-              <p className="text-sm text-green-600 dark:text-green-500">
-                Admin sẽ kiểm tra và xác nhận sớm nhất.
-              </p>
+            <div className="bg-green-50 dark:bg-green-950/30 border border-green-200 dark:border-green-800/40 rounded-xl p-5 text-center">
+              <CheckCircle2 className="h-8 w-8 text-green-600 mx-auto mb-2" />
+              <p className="font-bold text-green-700 dark:text-green-400">Xác nhận thành công!</p>
+              <p className="text-sm text-green-600 dark:text-green-500 mt-1">Admin sẽ kiểm tra và xác nhận sớm nhất.</p>
             </div>
           )}
 
-          {/* Skip button */}
           <button
             type="button"
             onClick={onClose}
-            className="w-full text-center text-sm text-muted-foreground hover:text-foreground transition-colors py-1"
+            className="w-full text-center text-[13px] text-muted-foreground hover:text-foreground transition-colors mt-3 py-1.5"
           >
             Tôi sẽ chuyển khoản sau →
           </button>
@@ -243,6 +239,7 @@ const QRPaymentModal = ({
     </div>
   );
 };
+
 
 /* ══════════════════════════════════════════════════════
    Main Checkout Component
@@ -417,7 +414,6 @@ const Checkout = () => {
         <QRPaymentModal
           order={savedOrder}
           depositType={depositType}
-          transferAmount={transferAmount}
           onConfirm={() => {
             setShowQRModal(false);
             setOrderPlaced(true);
