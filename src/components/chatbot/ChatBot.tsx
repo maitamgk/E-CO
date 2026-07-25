@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect, useCallback, type FormEvent, type KeyboardEvent } from 'react';
-import { Send, X } from 'lucide-react';
+import { Send, X, ChevronDown } from 'lucide-react';
 import chatbotAvatar from '@/assets/chatbot-avatar.png';
 import './chatbot.css';
 
@@ -14,18 +14,18 @@ interface ChatMessage {
 const MAX_INPUT_LEN = 500;
 
 const QUICK_REPLIES = [
-  'Sản phẩm bán chạy nhất?',
-  'Giá sỉ cho doanh nghiệp?',
-  'Hướng dẫn đặt hàng',
-  'Khắc logo doanh nghiệp',
-  'Sản phẩm B-ECO Art',
+  '🍃 Sản phẩm bán chạy?',
+  '💰 Báo giá sỉ',
+  '🛒 Cách đặt hàng',
+  '🏢 Khắc logo DN',
+  '🎨 B-ECO Art',
 ];
 
 const WELCOME_MSG: ChatMessage = {
   id: 'welcome',
   role: 'assistant',
   content:
-    'Xin chào! 🌿 Tôi là trợ lý tư vấn AI của B-ECO. Tôi có thể giúp bạn tìm hiểu về sản phẩm sinh thái từ lá bàng biển, tư vấn giá cả, hoặc hướng dẫn đặt hàng. Bạn cần tôi giúp gì?',
+    'Xin chào! 🌿 Tôi là trợ lý tư vấn AI của B-ECO.\n\nTôi có thể giúp bạn:\n• Tìm hiểu sản phẩm sinh thái từ lá bàng biển\n• Tư vấn giá lẻ, giá sỉ & doanh nghiệp\n• Hướng dẫn đặt hàng\n\nBạn cần tôi giúp gì? 🍃',
 };
 
 /* ── Helpers ─────────────────────────────────────────── */
@@ -40,7 +40,9 @@ export const ChatBot = () => {
   const [isStreaming, setIsStreaming] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [hasUnread, setHasUnread] = useState(true);
+  const [showScrollBtn, setShowScrollBtn] = useState(false);
 
+  const messagesRef = useRef<HTMLDivElement>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const abortRef = useRef<AbortController | null>(null);
@@ -54,10 +56,22 @@ export const ChatBot = () => {
     scrollToBottom();
   }, [messages, scrollToBottom]);
 
+  /* Detect scroll position for "scroll to bottom" button */
+  useEffect(() => {
+    const container = messagesRef.current;
+    if (!container) return;
+    const handleScroll = () => {
+      const { scrollTop, scrollHeight, clientHeight } = container;
+      setShowScrollBtn(scrollHeight - scrollTop - clientHeight > 100);
+    };
+    container.addEventListener('scroll', handleScroll, { passive: true });
+    return () => container.removeEventListener('scroll', handleScroll);
+  }, [isOpen]);
+
   /* Focus input when opening */
   useEffect(() => {
     if (isOpen && inputRef.current) {
-      setTimeout(() => inputRef.current?.focus(), 350);
+      setTimeout(() => inputRef.current?.focus(), 400);
     }
   }, [isOpen]);
 
@@ -96,7 +110,6 @@ export const ChatBot = () => {
     setError(null);
     setInput('');
 
-    // Reset textarea height
     if (inputRef.current) {
       inputRef.current.style.height = 'auto';
     }
@@ -107,13 +120,11 @@ export const ChatBot = () => {
     setMessages(prev => [...prev, userMsg]);
     setIsStreaming(true);
 
-    // Build history for API (exclude welcome, only include user/assistant messages)
     const historyForApi = [...messages.filter(m => m.id !== 'welcome'), userMsg].map(m => ({
       role: m.role,
       content: m.content,
     }));
 
-    // Add empty bot message for streaming
     setMessages(prev => [...prev, { id: botMsgId, role: 'assistant', content: '' }]);
 
     try {
@@ -131,7 +142,6 @@ export const ChatBot = () => {
         throw new Error(errData.error || `Lỗi ${response.status}`);
       }
 
-      // Process SSE stream
       const reader = response.body?.getReader();
       if (!reader) throw new Error('Không thể đọc response');
 
@@ -169,7 +179,6 @@ export const ChatBot = () => {
         }
       }
 
-      // If no content received, show fallback
       if (!accumulated) {
         setMessages(prev =>
           prev.map(m =>
@@ -181,7 +190,6 @@ export const ChatBot = () => {
       }
     } catch (err: unknown) {
       if (err instanceof DOMException && err.name === 'AbortError') {
-        // User cancelled
         setMessages(prev => prev.filter(m => m.id !== botMsgId));
       } else {
         const errorMessage =
@@ -207,17 +215,16 @@ export const ChatBot = () => {
     }
   };
 
-  const handleQuickReply = (text: string) => {
-    sendMessage(text);
-  };
-
-  /* Show quick replies only when there are few messages and not streaming */
   const showQuickReplies = messages.length <= 2 && !isStreaming;
 
   const charCountClass = [
     'chatbot-char-count',
     input.length > 0 ? 'chatbot-char-count--visible' : '',
-    input.length >= MAX_INPUT_LEN ? 'chatbot-char-count--limit' : input.length >= MAX_INPUT_LEN * 0.8 ? 'chatbot-char-count--warn' : '',
+    input.length >= MAX_INPUT_LEN
+      ? 'chatbot-char-count--limit'
+      : input.length >= MAX_INPUT_LEN * 0.8
+        ? 'chatbot-char-count--warn'
+        : '',
   ]
     .filter(Boolean)
     .join(' ');
@@ -232,9 +239,13 @@ export const ChatBot = () => {
           onClick={handleOpen}
           aria-label="Mở chatbot B-ECO"
         >
-          <span className="chatbot-trigger-label">Hỏi B-ECO AI</span>
+          <span className="chatbot-trigger-label">Hỏi B-ECO AI ✨</span>
           <span className="chatbot-trigger-icon">
-            <img src={chatbotAvatar} alt="" className="h-7 w-7 rounded-md object-cover" />
+            <img
+              src={chatbotAvatar}
+              alt=""
+              className="h-full w-full rounded-full object-cover"
+            />
             {hasUnread && <span className="chatbot-unread" />}
           </span>
         </button>
@@ -250,7 +261,11 @@ export const ChatBot = () => {
           {/* Header */}
           <div className="chatbot-header">
             <div className="chatbot-avatar">
-              <img src={chatbotAvatar} alt="B-ECO AI" className="h-6 w-6 rounded-md object-cover" />
+              <img
+                src={chatbotAvatar}
+                alt="B-ECO AI"
+                className="h-full w-full rounded-[inherit] object-cover"
+              />
             </div>
             <div className="chatbot-header-info">
               <div className="chatbot-header-title">B-ECO AI</div>
@@ -265,20 +280,23 @@ export const ChatBot = () => {
               onClick={handleClose}
               aria-label="Đóng chatbot"
             >
-              <X className="h-4 w-4" />
+              <X className="h-[18px] w-[18px] stroke-[2]" />
             </button>
           </div>
 
           {/* Messages */}
-          <div className="chatbot-messages">
+          <div className="chatbot-messages" ref={messagesRef}>
             {/* Welcome Section */}
             {messages.length <= 1 && (
               <div className="chatbot-welcome">
-                <img src={chatbotAvatar} alt="" className="h-16 w-16 rounded-2xl object-cover shadow-md" />
-                <h3 className="chatbot-welcome-title">Chào mừng đến B-ECO!</h3>
+                <img
+                  src={chatbotAvatar}
+                  alt=""
+                  className="chatbot-welcome-avatar"
+                />
+                <h3 className="chatbot-welcome-title">Chào mừng đến B-ECO! 🌿</h3>
                 <p className="chatbot-welcome-text">
-                  Tôi có thể giúp bạn tìm sản phẩm sinh thái từ lá bàng biển, báo giá sỉ & lẻ, hoặc
-                  hướng dẫn đặt hàng.
+                  Trợ lý AI sẵn sàng tư vấn sản phẩm sinh thái từ lá bàng biển, báo giá & hỗ trợ đặt hàng.
                 </p>
               </div>
             )}
@@ -291,27 +309,33 @@ export const ChatBot = () => {
               >
                 {msg.role === 'assistant' && (
                   <div className="chatbot-msg-avatar">
-                    <img src={chatbotAvatar} alt="" className="h-full w-full rounded-[inherit] object-cover" />
+                    <img
+                      src={chatbotAvatar}
+                      alt=""
+                      className="h-full w-full rounded-full object-cover"
+                    />
                   </div>
                 )}
                 <div className="chatbot-msg-bubble">
                   {msg.content}
-                  {/* Streaming cursor */}
                   {isStreaming &&
                     msg.id !== 'welcome' &&
                     msg.role === 'assistant' &&
-                    msg === messages[messages.length - 1] && (
-                      <span className="inline-block w-[5px] h-[14px] ml-[2px] align-text-bottom bg-current opacity-60 animate-pulse" />
-                    )}
+                    msg === messages[messages.length - 1] &&
+                    msg.content !== '' && <span className="chatbot-cursor" />}
                 </div>
               </div>
             ))}
 
-            {/* Typing indicator (before first content arrives) */}
+            {/* Typing indicator */}
             {isStreaming && messages[messages.length - 1]?.content === '' && (
               <div className="chatbot-msg chatbot-msg--bot">
                 <div className="chatbot-msg-avatar">
-                  <img src={chatbotAvatar} alt="" className="h-full w-full rounded-[inherit] object-cover" />
+                  <img
+                    src={chatbotAvatar}
+                    alt=""
+                    className="h-full w-full rounded-full object-cover"
+                  />
                 </div>
                 <div className="chatbot-msg-bubble">
                   <div className="chatbot-typing">
@@ -326,6 +350,18 @@ export const ChatBot = () => {
             <div ref={messagesEndRef} />
           </div>
 
+          {/* Scroll to bottom button */}
+          {showScrollBtn && (
+            <button
+              type="button"
+              onClick={scrollToBottom}
+              className="absolute left-1/2 -translate-x-1/2 bottom-[8.5rem] z-10 flex h-8 w-8 items-center justify-center rounded-full border border-border/60 bg-card shadow-md transition-all hover:shadow-lg hover:scale-110"
+              aria-label="Cuộn xuống"
+            >
+              <ChevronDown className="h-4 w-4 text-muted-foreground" />
+            </button>
+          )}
+
           {/* Error */}
           {error && <div className="chatbot-error">{error}</div>}
 
@@ -337,7 +373,7 @@ export const ChatBot = () => {
                   key={text}
                   type="button"
                   className="chatbot-quick-reply"
-                  onClick={() => handleQuickReply(text)}
+                  onClick={() => sendMessage(text)}
                   disabled={isStreaming}
                 >
                   {text}
@@ -362,7 +398,7 @@ export const ChatBot = () => {
               }}
               onKeyDown={handleKeyDown}
               className="chatbot-input"
-              placeholder="Nhập tin nhắn..."
+              placeholder="Nhập câu hỏi về sản phẩm B-ECO..."
               rows={1}
               disabled={isStreaming}
               aria-label="Nhập tin nhắn cho chatbot"
@@ -373,7 +409,7 @@ export const ChatBot = () => {
               disabled={!input.trim() || isStreaming}
               aria-label="Gửi tin nhắn"
             >
-              <Send className="h-[17px] w-[17px] stroke-[1.8]" />
+              <Send className="h-[16px] w-[16px] stroke-[2]" />
             </button>
           </form>
 
