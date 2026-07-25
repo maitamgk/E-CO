@@ -36,6 +36,8 @@ export interface Cart {
 
 // Order types
 export type OrderStatus = 'pending' | 'confirmed' | 'shipped' | 'delivered' | 'cancelled';
+export type PaymentMethod = 'COD' | 'BANK_TRANSFER';
+export type PaymentStatus = 'unpaid' | 'deposit_50' | 'paid_100';
 
 export interface OrderCustomer {
   fullName: string;
@@ -58,7 +60,8 @@ export interface Order {
   customer: OrderCustomer;
   items: CartItem[];
   totals: OrderTotals;
-  paymentMethod: 'COD';
+  paymentMethod: PaymentMethod;
+  paymentStatus: PaymentStatus;
   status: OrderStatus;
   notes: string;
   createdAt: Date;

@@ -11,6 +11,7 @@ export const mockInitialOrders: Order[] = [
     items: [{ productId: '1', nameSnapshot: 'Chén lá bàng tròn 12cm', priceSnapshot: 3500, imageUrlSnapshot: '', qty: 100 }],
     totals: { subtotal: 350000, discountRate: 0, discountAmount: 0, total: 350000, totalQty: 100 },
     paymentMethod: 'COD',
+    paymentStatus: 'unpaid',
     status: 'shipped',
     notes: '',
     createdAt: new Date('2024-01-15'),
@@ -24,6 +25,7 @@ export const mockInitialOrders: Order[] = [
     items: [{ productId: '8', nameSnapshot: 'Combo tiệc 50 người', priceSnapshot: 450000, imageUrlSnapshot: '', qty: 3 }],
     totals: { subtotal: 1350000, discountRate: 0, discountAmount: 0, total: 1350000, totalQty: 3 },
     paymentMethod: 'COD', // Changed to match type
+    paymentStatus: 'unpaid',
     status: 'pending',
     notes: 'Giao giờ hành chính',
     createdAt: new Date('2024-01-20'),
@@ -37,6 +39,7 @@ export const mockInitialOrders: Order[] = [
     items: [{ productId: '3', nameSnapshot: 'Khay lá bàng chữ nhật', priceSnapshot: 6000, imageUrlSnapshot: '', qty: 200 }],
     totals: { subtotal: 1200000, discountRate: 0, discountAmount: 0, total: 1200000, totalQty: 200 },
     paymentMethod: 'COD', // Changed to match type
+    paymentStatus: 'unpaid',
     status: 'delivered',
     notes: '',
     createdAt: new Date('2024-01-10'),

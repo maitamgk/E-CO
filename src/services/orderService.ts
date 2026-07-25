@@ -1,5 +1,5 @@
 import { supabase } from '@/lib/supabase';
-import { Order, OrderStatus } from '@/types';
+import { Order, OrderStatus, PaymentMethod, PaymentStatus } from '@/types';
 import { orderStorage } from '@/utils/orderStorage';
 
 export const orderService = {
@@ -41,6 +41,7 @@ export const orderService = {
       items: order.items,
       totals: order.totals,
       payment_method: order.paymentMethod,
+      payment_status: order.paymentStatus,
       status: order.status,
       notes: order.notes,
       created_at: order.createdAt.toISOString(),
@@ -125,7 +126,8 @@ interface OrderRow {
   customer_info: Order['customer'];
   items: Order['items'];
   totals: Order['totals'];
-  payment_method: 'COD';
+  payment_method: PaymentMethod;
+  payment_status: PaymentStatus;
   status: OrderStatus;
   notes: string;
   created_at: string;
@@ -141,6 +143,7 @@ const parseOrder = (data: OrderRow): Order => ({
   items: data.items,
   totals: data.totals,
   paymentMethod: data.payment_method,
+  paymentStatus: data.payment_status,
   status: data.status,
   notes: data.notes,
   createdAt: new Date(data.created_at),

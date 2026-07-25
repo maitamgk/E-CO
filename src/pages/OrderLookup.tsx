@@ -354,7 +354,9 @@ const OrderLookup = () => {
                       </div>
                       <div className="flex items-center justify-between gap-4">
                         <span className="flex items-center gap-2 text-muted-foreground"><CreditCard className="h-4 w-4" /> Phương thức</span>
-                        <span className="font-semibold uppercase">{order.paymentMethod}</span>
+                        <span className="font-semibold">
+                          {order.paymentMethod === 'BANK_TRANSFER' ? '🏦 Chuyển khoản' : '💵 COD'}
+                        </span>
                       </div>
                       {order.notes && (
                         <div className="border-t border-border pt-4">
