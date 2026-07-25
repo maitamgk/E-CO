@@ -6,7 +6,7 @@ export const ZaloFloatingButton = () => (
     target="_blank"
     rel="noreferrer"
     aria-label="Nhắn tin với B-ECO qua Zalo"
-    className="group fixed bottom-5 right-4 z-50 flex items-center gap-3 md:bottom-7 md:right-7"
+    className="group fixed bottom-24 right-4 z-50 flex items-center gap-3 md:bottom-28 md:right-7"
   >
     <span className="hidden rounded-xl bg-white px-3.5 py-2.5 text-sm font-semibold text-slate-700 shadow-lg ring-1 ring-slate-200 transition-all group-hover:-translate-x-1 group-hover:text-[#0068ff] sm:block">
       Chat với B-ECO
