@@ -51,7 +51,7 @@ const About = () => (
         src={aboutHero}
         alt="Sản phẩm B-ECO từ lá bàng biển bên bờ biển Phú Yên"
         className="absolute inset-0 h-full w-full object-cover object-[62%_center]"
-        fetchPriority="high"
+        {...{ fetchpriority: 'high' }}
       />
       <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(14,30,21,0.92)_0%,rgba(14,30,21,0.68)_34%,rgba(14,30,21,0.18)_64%,rgba(14,30,21,0.08)_100%)]" />
       <div className="relative mx-auto w-full max-w-[1500px] px-5 pb-16 pt-24 sm:px-8 sm:pb-20 lg:px-14 lg:pb-24">

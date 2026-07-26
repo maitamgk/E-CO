@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useCallback, useEffect, useState, useRef } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { Layout } from '@/components/layout/Layout';
 import { useProducts } from '@/context/ProductsContext';
@@ -6,6 +6,8 @@ import { useCart } from '@/context/CartContext';
 import { formatMoney, formatNumber } from '@/utils/money';
 import { TIER_LABELS, pricingSourceFromProduct, resolveTier, shortUnit } from '@/utils/pricing';
 import { SITE_URL, Seo } from '@/components/Seo';
+import { EMPTY_SUMMARY, reviewService } from '@/services/reviewService';
+import type { ReviewSummary } from '@/types';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -65,6 +67,19 @@ const ProductDetail = () => {
   const [showLightbox, setShowLightbox] = useState(false);
 
   const imageContainerRef = useRef<HTMLDivElement>(null);
+
+  // Thống kê đánh giá nằm ở đây vì cả tab, JSON-LD và component đánh giá
+  // đều cần — tải một lần rồi truyền xuống thay vì mỗi nơi gọi một lần.
+  const [reviewSummary, setReviewSummary] = useState<ReviewSummary>(EMPTY_SUMMARY);
+
+  const loadSummary = useCallback(async () => {
+    if (!product?.id) return;
+    setReviewSummary(await reviewService.getSummary(product.id));
+  }, [product?.id]);
+
+  useEffect(() => {
+    void loadSummary();
+  }, [loadSummary]);
 
   // Generate gallery from product image + related images
   const productGallery = product
@@ -156,6 +171,18 @@ const ProductDetail = () => {
       itemCondition: 'https://schema.org/NewCondition',
       seller: { '@type': 'Organization', name: 'B-ECO' },
     },
+    // Chỉ khai báo khi có đánh giá thật — Google phạt rich snippet bịa số liệu.
+    ...(reviewSummary.total > 0
+      ? {
+          aggregateRating: {
+            '@type': 'AggregateRating',
+            ratingValue: reviewSummary.average,
+            reviewCount: reviewSummary.total,
+            bestRating: 5,
+            worstRating: 1,
+          },
+        }
+      : {}),
   };
 
   return (
@@ -509,7 +536,7 @@ const ProductDetail = () => {
               </TabsTrigger>
               <TabsTrigger value="reviews" className="h-full rounded-lg text-sm font-semibold data-[state=active]:bg-secondary data-[state=active]:text-primary data-[state=active]:shadow-none">
                 <MessageSquare className="h-4 w-4 mr-2 stroke-[1.5]" />
-                Đánh giá (200)
+                Đánh giá ({reviewSummary.total})
               </TabsTrigger>
             </TabsList>
 
@@ -588,7 +615,11 @@ const ProductDetail = () => {
             </TabsContent>
 
             <TabsContent value="reviews" className="mt-8">
-              <ProductReviews productId={product.id} />
+              <ProductReviews
+                productId={product.id}
+                summary={reviewSummary}
+                onReviewSubmitted={loadSummary}
+              />
             </TabsContent>
           </Tabs>
         </div>

@@ -56,7 +56,7 @@ const Home = () => {
         description="B-ECO — chén, dĩa, quà tặng sinh học từ lá bàng biển Phú Yên. 100% tự nhiên, an toàn thực phẩm, phân hủy sinh học trong 45 ngày."
       />
       <section className="relative isolate flex min-h-[calc(100dvh-104px)] max-h-[760px] items-center overflow-hidden bg-primary">
-        <img src={heroImage} alt="Bộ đĩa và chén B-ECO từ lá bàng biển trong không gian thiên nhiên" className="absolute inset-0 h-full w-full object-cover" fetchPriority="high" />
+        <img src={heroImage} alt="Bộ đĩa và chén B-ECO từ lá bàng biển trong không gian thiên nhiên" className="absolute inset-0 h-full w-full object-cover" {...{ fetchpriority: 'high' }} />
         <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(15,31,22,0.9)_0%,rgba(15,31,22,0.67)_38%,rgba(15,31,22,0.14)_68%,rgba(15,31,22,0.05)_100%)]" />
         <div className="relative mx-auto w-full max-w-[1500px] px-5 py-16 sm:px-8 lg:px-14">
           <MotionReveal className="max-w-[760px] text-[#f8f4ea]">

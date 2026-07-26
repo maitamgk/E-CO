@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Package, CheckCircle, Truck, XCircle, Clock, Send } from 'lucide-react';
 import { orderService } from '@/services/orderService';
+import { ReviewModeration } from '@/components/admin/ReviewModeration';
 import { supabase } from '@/lib/supabase';
 import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
@@ -336,6 +337,8 @@ const Admin = () => {
               </table>
             </div>
           </div>
+
+          <ReviewModeration />
         </div>
       </div>
     </Layout>

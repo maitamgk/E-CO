@@ -115,6 +115,38 @@ export interface Order {
   updatedAt: Date;
 }
 
+// Review types
+export type ReviewStatus = 'pending' | 'approved' | 'rejected';
+
+export interface ProductReview {
+  id: string;
+  productId: string;
+  authorName: string;
+  rating: number;
+  content: string;
+  status: ReviewStatus;
+  /** DB tự xác minh từ bảng orders — client không đặt được giá trị này. */
+  verified: boolean;
+  helpfulCount: number;
+  createdAt: Date;
+}
+
+export interface ReviewSummary {
+  total: number;
+  average: number;
+  /** Số lượt theo từng mức sao, index 0 = 1 sao. */
+  distribution: [number, number, number, number, number];
+}
+
+export interface ReviewDraft {
+  productId: string;
+  authorName: string;
+  rating: number;
+  content: string;
+  orderCode?: string;
+  phone?: string;
+}
+
 // User types
 export type UserRole = 'admin' | 'user';
 
