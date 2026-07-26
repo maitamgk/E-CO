@@ -28,8 +28,7 @@ dist-ssr
 .env.*
 !.env.example
 
-# Local SQL dumps (keep schema/migration tracked for Supabase setup)
+# Local SQL dumps. Mọi script setup/migration của Supabase đều phải được
+# track — danh sách whitelist cứng trước đây khiến migration mới bị bỏ quên.
 *.sql
-!supabase_schema.sql
-!supabase_auth_migration.sql
-!supabase_seed_admin.sql
+!supabase_*.sql
