@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect, useCallback, type FormEvent, type KeyboardEvent } from 'react';
 import { Send, X, ChevronDown } from 'lucide-react';
-import chatbotAvatar from '@/assets/chatbot-avatar.png';
+import chatbotAvatar from '@/assets/chatbot-avatar.webp';
 import './chatbot.css';
 
 /* ── Types ──────────────────────────────────────────── */

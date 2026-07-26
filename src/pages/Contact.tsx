@@ -6,8 +6,9 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/hooks/use-toast';
-import zaloCard from '@/assets/contact/zalo-card.png';
-import collectionDisplay from '@/assets/products/collection-display-1.jpg';
+import zaloCard from '@/assets/contact/zalo-card.webp';
+import collectionDisplay from '@/assets/products/collection-display-1.webp';
+import { Seo } from '@/components/Seo';
 
 const ZALO_URL = 'https://zalo.me/0382548419';
 
@@ -33,6 +34,10 @@ const Contact = () => {
 
   return (
     <Layout>
+      <Seo
+        title="Liên hệ B-ECO"
+        description="Liên hệ B-ECO để nhận báo giá sỉ, đặt hàng doanh nghiệp hoặc khắc logo theo yêu cầu. Hotline 0382 548 419."
+      />
       <section className="px-4 pb-12 pt-6 sm:px-6 sm:pb-16 lg:px-8">
         <div className="mx-auto grid max-w-[1400px] overflow-hidden rounded-2xl border border-border bg-card lg:grid-cols-[0.9fr_1.1fr]">
           <div className="flex items-center p-8 sm:p-12 lg:p-14">

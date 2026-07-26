@@ -4,13 +4,14 @@ import { Layout } from '@/components/layout/Layout';
 import { MotionReveal } from '@/components/home/MotionReveal';
 import { ProductGrid } from '@/components/product/ProductGrid';
 import { useProducts } from '@/context/ProductsContext';
-import heroImage from '@/assets/generated/beco-editorial-hero.png';
-import leafVariety from '@/assets/products/leaf-plates-variety.jpg';
-import leafCloseup from '@/assets/products/leaf-plates-closeup.jpg';
-import collectionDisplay from '@/assets/products/collection-display-1.jpg';
-import exhibitionDisplay from '@/assets/products/exhibition-display.jpg';
-import customLogo from '@/assets/products/custom-logo-beco.jpg';
-import artClock from '@/assets/products/art-clock.png';
+import heroImage from '@/assets/generated/beco-editorial-hero.webp';
+import leafVariety from '@/assets/products/leaf-plates-variety.webp';
+import leafCloseup from '@/assets/products/leaf-plates-closeup.webp';
+import collectionDisplay from '@/assets/products/collection-display-1.webp';
+import exhibitionDisplay from '@/assets/products/exhibition-display.webp';
+import customLogo from '@/assets/products/custom-logo-beco.webp';
+import artClock from '@/assets/products/art-clock.webp';
+import { Seo } from '@/components/Seo';
 
 const categoryCards = [
   { name: 'Đĩa sinh học', image: leafCloseup, to: '/shop?category=dia' },
@@ -50,6 +51,10 @@ const Home = () => {
 
   return (
     <Layout>
+      <Seo
+        title="Sản Phẩm Sinh Học Từ Lá Bàng Biển"
+        description="B-ECO — chén, dĩa, quà tặng sinh học từ lá bàng biển Phú Yên. 100% tự nhiên, an toàn thực phẩm, phân hủy sinh học trong 45 ngày."
+      />
       <section className="relative isolate flex min-h-[calc(100dvh-104px)] max-h-[760px] items-center overflow-hidden bg-primary">
         <img src={heroImage} alt="Bộ đĩa và chén B-ECO từ lá bàng biển trong không gian thiên nhiên" className="absolute inset-0 h-full w-full object-cover" fetchPriority="high" />
         <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(15,31,22,0.9)_0%,rgba(15,31,22,0.67)_38%,rgba(15,31,22,0.14)_68%,rgba(15,31,22,0.05)_100%)]" />

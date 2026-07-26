@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useCallback, useEffect, ReactNode } from 'react';
+import { createContext, useContext, useState, useCallback, useEffect, ReactNode } from 'react';
 import { User } from '@/types';
 import { supabase } from '@/lib/supabase';
 import { profileService } from '@/services/profileService';

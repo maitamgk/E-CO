@@ -24,8 +24,9 @@ import { orderService } from '@/services/orderService';
 import { supabase } from '@/lib/supabase';
 import { Order, OrderStatus } from '@/types';
 import { formatMoney } from '@/utils/money';
-import collectionDisplay from '@/assets/products/collection-display-1.jpg';
+import collectionDisplay from '@/assets/products/collection-display-1.webp';
 import { DeliveryTrackingMap } from '@/components/order/DeliveryTrackingMap';
+import { Seo } from '@/components/Seo';
 
 const statusTimeline: { status: OrderStatus; label: string; desc: string; icon: React.ElementType }[] = [
   { status: 'pending', label: 'Chờ xác nhận', desc: 'B-ECO tiếp nhận đơn hàng', icon: Clock },
@@ -154,6 +155,10 @@ const OrderLookup = () => {
 
   return (
     <Layout>
+      <Seo
+        title="Tra cứu đơn hàng"
+        description="Nhập mã đơn hàng và số điện thoại để theo dõi trạng thái giao hàng B-ECO theo thời gian thực."
+      />
       <main className="min-h-[calc(100dvh-104px)] bg-background text-foreground">
         {/* Search Hero Header */}
         <section className="border-b border-border px-5 py-12 sm:px-8 sm:py-16 lg:px-14 lg:py-20">

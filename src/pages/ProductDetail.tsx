@@ -3,7 +3,9 @@ import { useParams, useNavigate, Link } from 'react-router-dom';
 import { Layout } from '@/components/layout/Layout';
 import { useProducts } from '@/context/ProductsContext';
 import { useCart } from '@/context/CartContext';
-import { formatMoney } from '@/utils/money';
+import { formatMoney, formatNumber } from '@/utils/money';
+import { TIER_LABELS, pricingSourceFromProduct, resolveTier, shortUnit } from '@/utils/pricing';
+import { SITE_URL, Seo } from '@/components/Seo';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -32,10 +34,10 @@ import { cn } from '@/lib/utils';
 import { getCategoryName } from '@/data/mockProducts';
 
 // Import all product images for gallery
-import collectionDisplay1 from '@/assets/products/collection-display-1.jpg';
-import exhibitionDisplay from '@/assets/products/exhibition-display.jpg';
-import leafPlatesCloseup from '@/assets/products/leaf-plates-closeup.jpg';
-import leafPlatesVariety from '@/assets/products/leaf-plates-variety.jpg';
+import collectionDisplay1 from '@/assets/products/collection-display-1.webp';
+import exhibitionDisplay from '@/assets/products/exhibition-display.webp';
+import leafPlatesCloseup from '@/assets/products/leaf-plates-closeup.webp';
+import leafPlatesVariety from '@/assets/products/leaf-plates-variety.webp';
 
 // Gallery images pool for demo
 const galleryImages = [
@@ -128,9 +130,43 @@ const ProductDetail = () => {
 
   const savingsPercent = Math.round((1 - product.priceWholesale / product.priceRetail) * 100);
   const categoryName = getCategoryName(product.category);
+  const unitLabel = product.salesUnit ?? 'cái';
+  const qtyUnit = shortUnit(product.salesUnit);
+  // Số lượng đang được chọn: đã trong giỏ thì lấy theo giỏ, chưa thì lấy ô chọn.
+  const selectedQty = cartItem ? cartItem.qty : quantity;
+  const activeTier = resolveTier(pricingSourceFromProduct(product), selectedQty);
+
+  // Dữ liệu có cấu trúc để Google hiển thị giá và tình trạng hàng trong kết quả tìm kiếm.
+  const productJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    name: product.name,
+    description: product.description,
+    sku: product.sku,
+    image: `${SITE_URL}${product.imageUrl}`,
+    brand: { '@type': 'Brand', name: 'B-ECO' },
+    category: categoryName,
+    offers: {
+      '@type': 'Offer',
+      url: `${SITE_URL}/product/${product.id}`,
+      priceCurrency: 'VND',
+      price: product.priceRetail,
+      availability:
+        product.stock > 0 ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock',
+      itemCondition: 'https://schema.org/NewCondition',
+      seller: { '@type': 'Organization', name: 'B-ECO' },
+    },
+  };
 
   return (
     <Layout>
+      <Seo
+        title={product.name}
+        description={product.description}
+        image={product.imageUrl}
+        type="product"
+        jsonLd={productJsonLd}
+      />
       <div className="px-4 pt-8 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-[1400px]">
           <Link
@@ -285,28 +321,70 @@ const ProductDetail = () => {
               {product.description}
             </p>
 
-            {/* Prices */}
+            {/* Prices — bậc giá áp dụng theo số lượng đang chọn */}
             <div className="space-y-3 rounded-2xl border border-border bg-card p-6 shadow-[0_18px_48px_hsl(var(--primary)/0.07)]">
-              <div className="flex items-end gap-4">
+              <div className="flex flex-wrap items-end gap-x-4 gap-y-1">
                 <span className="text-3xl font-heading text-primary">
-                  {formatMoney(product.priceRetail)}
+                  {formatMoney(activeTier.unitPrice)}
                 </span>
-                <span className="text-muted-foreground font-light mb-1">/ {product.salesUnit ?? 'cái'}</span>
+                <span className="text-muted-foreground font-light mb-1">/ {unitLabel}</span>
+                {activeTier.unitPrice < product.priceRetail && (
+                  <span className="mb-1.5 text-sm text-muted-foreground line-through">
+                    {formatMoney(product.priceRetail)}
+                  </span>
+                )}
+                {activeTier.tier !== 'retail' && (
+                  <Badge className="mb-1 rounded-lg bg-primary/10 text-xs font-semibold text-primary hover:bg-primary/10">
+                    Đang áp {TIER_LABELS[activeTier.tier].toLowerCase()}
+                  </Badge>
+                )}
               </div>
 
-              <div className="flex items-center gap-2 text-sm">
+              <div className="flex flex-wrap items-center gap-2 text-sm">
                 <Sparkles className="h-4 w-4 text-primary stroke-[1.5]" />
-                <span className="text-muted-foreground font-light">Giá phân phối từ {product.wholesaleThresholdLabel ?? `${product.wholesaleMinQty} cái`}:</span>
+                <span className="text-muted-foreground font-light">
+                  Giá sỉ từ {formatNumber(product.wholesaleMinQty)} {qtyUnit}:
+                </span>
                 <span className="font-heading text-primary">{formatMoney(product.priceWholesale)}</span>
-                <Badge className="ml-2 rounded-lg bg-secondary text-xs font-semibold text-primary hover:bg-secondary">
+                <Badge className="rounded-lg bg-secondary text-xs font-semibold text-primary hover:bg-secondary">
                   Tiết kiệm {savingsPercent}%
                 </Badge>
               </div>
+
               {product.priceEnterprise !== undefined && (
-                <div className="flex items-center gap-2 text-sm border-t border-border/40 pt-3">
-                  <span className="text-muted-foreground font-light">Giá doanh nghiệp:</span>
+                <div className="flex flex-wrap items-center gap-2 border-t border-border/40 pt-3 text-sm">
+                  <span className="text-muted-foreground font-light">
+                    Giá doanh nghiệp
+                    {product.enterpriseMinQty
+                      ? ` từ ${formatNumber(product.enterpriseMinQty)} ${qtyUnit}:`
+                      : ':'}
+                  </span>
                   <span className="font-heading text-primary">{formatMoney(product.priceEnterprise)}</span>
-                  <span className="text-xs text-muted-foreground">/ {product.salesUnit ?? 'cái'} · liên hệ điều kiện áp dụng</span>
+                  {!product.enterpriseMinQty && (
+                    <span className="text-xs text-muted-foreground">liên hệ để chốt điều kiện áp dụng</span>
+                  )}
+                </div>
+              )}
+
+              {activeTier.nextTier && activeTier.nextTier.qtyNeeded > 0 && (
+                <p className="rounded-xl bg-emerald-50 px-3 py-2 text-xs leading-5 text-emerald-800 dark:bg-emerald-950/30 dark:text-emerald-300">
+                  Chọn thêm <strong>{formatNumber(activeTier.nextTier.qtyNeeded)} {qtyUnit}</strong> để hạ xuống{' '}
+                  <strong>{formatMoney(activeTier.nextTier.unitPrice)}</strong>/{unitLabel} — tiết kiệm{' '}
+                  {formatMoney(
+                    (product.priceRetail - activeTier.nextTier.unitPrice) * activeTier.nextTier.minQty,
+                  )}{' '}
+                  cho {formatNumber(activeTier.nextTier.minQty)} {qtyUnit}.
+                </p>
+              )}
+
+              {selectedQty > 0 && (
+                <div className="flex items-center justify-between border-t border-border/40 pt-3 text-sm">
+                  <span className="text-muted-foreground font-light">
+                    Thành tiền cho {formatNumber(selectedQty)} {qtyUnit}:
+                  </span>
+                  <span className="font-heading text-lg text-primary">
+                    {formatMoney(activeTier.unitPrice * selectedQty)}
+                  </span>
                 </div>
               )}
             </div>

@@ -4,7 +4,7 @@ import { Menu, Moon, Search, ShoppingBag, Sun, User, X } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
 import { useCart } from '@/context/CartContext';
 import { cn } from '@/lib/utils';
-import logo from '@/assets/products/logo.png';
+import logo from '@/assets/products/logo.webp';
 
 const navLinks = [
   { to: '/shop', label: 'Sản phẩm' },

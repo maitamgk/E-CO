@@ -5,6 +5,7 @@ import { CartSummary } from '@/components/cart/CartSummary';
 import { Button } from '@/components/ui/button';
 import { useCart } from '@/context/CartContext';
 import { ShoppingBag, ArrowRight, Trash2 } from 'lucide-react';
+import { Seo } from '@/components/Seo';
 
 const Cart = () => {
   const { items, itemCount, clearCart } = useCart();
@@ -32,6 +33,11 @@ const Cart = () => {
 
   return (
     <Layout>
+      <Seo
+        title="Giỏ hàng"
+        description="Xem lại sản phẩm trong giỏ hàng B-ECO trước khi thanh toán."
+        noindex
+      />
       <div className="px-4 pb-10 pt-12 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-[1400px]">
           <h1 className="text-4xl font-extrabold tracking-[-0.05em] text-foreground sm:text-5xl">
@@ -87,7 +93,7 @@ const Cart = () => {
               </Link>
 
               <p className="text-xs text-muted-foreground text-center mt-3">
-                Giá cuối cùng sẽ được tính tại bước thanh toán
+                Chưa gồm phí vận chuyển — B-ECO sẽ báo phí khi xác nhận đơn
               </p>
             </div>
           </div>

@@ -5,7 +5,8 @@ import { toast } from 'sonner';
 import { Product } from '@/types';
 import { useCart } from '@/context/CartContext';
 import { getCategoryName } from '@/data/mockProducts';
-import { formatMoney } from '@/utils/money';
+import { formatMoney, formatNumber } from '@/utils/money';
+import { TIER_LABELS, pricingSourceFromProduct, resolveTier, shortUnit } from '@/utils/pricing';
 import { cn } from '@/lib/utils';
 
 interface ProductCardProps {
@@ -19,7 +20,14 @@ export const ProductCard = ({ product, showWholesale = false }: ProductCardProps
   const [isAdding, setIsAdding] = useState(false);
   const [imageLoaded, setImageLoaded] = useState(false);
   const cartItem = items[product.id];
-  const displayPrice = showWholesale ? product.priceWholesale : product.priceRetail;
+  // Khi sản phẩm đã nằm trong giỏ, hiện đúng đơn giá của số lượng đang chọn.
+  const tierInfo = resolveTier(pricingSourceFromProduct(product), cartItem?.qty ?? 0);
+  const displayPrice = cartItem
+    ? tierInfo.unitPrice
+    : showWholesale
+      ? product.priceWholesale
+      : product.priceRetail;
+  const isDiscounted = displayPrice < product.priceRetail;
 
   const handleAddToCart = () => {
     setIsAdding(true);
@@ -76,8 +84,26 @@ export const ProductCard = ({ product, showWholesale = false }: ProductCardProps
         <div className="mt-4 flex items-end gap-2 border-t border-border pt-4">
           <strong className="text-base font-bold text-primary">{formatMoney(displayPrice)}</strong>
           <span className="pb-0.5 text-xs text-muted-foreground">/ {product.salesUnit ?? 'cái'}</span>
+          {isDiscounted && (
+            <span className="pb-0.5 text-xs text-muted-foreground line-through">{formatMoney(product.priceRetail)}</span>
+          )}
+          {cartItem && tierInfo.tier !== 'retail' && (
+            <span className="mb-0.5 rounded-full bg-primary/10 px-2 py-0.5 text-[10px] font-semibold text-primary">
+              {TIER_LABELS[tierInfo.tier]}
+            </span>
+          )}
         </div>
-        {showWholesale && <p className="mt-2 text-xs leading-5 text-muted-foreground">Áp dụng từ {product.wholesaleThresholdLabel ?? `${product.wholesaleMinQty} cái`}</p>}
+        {showWholesale && !cartItem && (
+          <p className="mt-2 text-xs leading-5 text-muted-foreground">
+            Áp dụng từ {formatNumber(product.wholesaleMinQty)} {shortUnit(product.salesUnit)}
+          </p>
+        )}
+        {cartItem && tierInfo.nextTier && tierInfo.nextTier.qtyNeeded > 0 && (
+          <p className="mt-2 text-xs leading-5 text-emerald-700 dark:text-emerald-400">
+            Thêm {formatNumber(tierInfo.nextTier.qtyNeeded)} {shortUnit(product.salesUnit)} nữa →{' '}
+            {formatMoney(tierInfo.nextTier.unitPrice)}
+          </p>
+        )}
 
         {cartItem && (
           <div className="mt-4 flex h-11 items-center justify-between border border-border bg-card">

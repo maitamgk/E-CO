@@ -1,9 +1,17 @@
-const BOT_TOKEN = '8928288666:AAFBOwn5ebX4n_ZPlU1i6JmoLgDEJ0_f0lk';
-const CHAT_ID = '-5133794263';
+// Token và chat id đọc từ biến môi trường — không hardcode secret vào file được commit.
+//   PowerShell: $env:TELEGRAM_BOT_TOKEN="..."; $env:TELEGRAM_CHAT_ID="..."; node test-telegram.js
+//   Bash:       TELEGRAM_BOT_TOKEN=... TELEGRAM_CHAT_ID=... node test-telegram.js
+const BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
+const CHAT_ID = process.env.TELEGRAM_CHAT_ID;
+
+if (!BOT_TOKEN || !CHAT_ID) {
+  console.error('Thiếu TELEGRAM_BOT_TOKEN hoặc TELEGRAM_CHAT_ID trong biến môi trường.');
+  process.exit(1);
+}
 
 const order = {
-  orderCode: 'BCOMPF26ZOT',
-  customer: { fullName: 'MAI TRAN THIEN TAM', phone: '0877724374', address: '392 Đường Cao Thắng' },
+  orderCode: 'BCO-260726-TEST1',
+  customer: { fullName: 'Khách Hàng Thử Nghiệm', phone: '0900000000', address: 'Địa chỉ thử nghiệm' },
   paymentMethod: 'COD',
   notes: 'Giao hàng giờ hành chính',
   items: [

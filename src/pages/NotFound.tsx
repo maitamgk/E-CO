@@ -2,12 +2,18 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Layout } from '@/components/layout/Layout';
 import { Button } from '@/components/ui/button';
 import { Home, ArrowLeft, Leaf } from 'lucide-react';
+import { Seo } from '@/components/Seo';
 
 const NotFound = () => {
   const navigate = useNavigate();
 
   return (
     <Layout>
+      <Seo
+        title="Không tìm thấy trang"
+        description="Trang bạn tìm không tồn tại. Quay lại trang chủ B-ECO để tiếp tục khám phá sản phẩm sinh học từ lá bàng biển."
+        noindex
+      />
       <div className="min-h-[80vh] flex items-center justify-center bg-background relative overflow-hidden">
         <div className="container mx-auto px-4 py-20 relative z-10">
           <div className="max-w-2xl mx-auto text-center">

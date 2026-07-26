@@ -10,7 +10,8 @@ import { Switch } from '@/components/ui/switch';
 import { useProducts } from '@/context/ProductsContext';
 import { categories } from '@/data/mockProducts';
 import { cn } from '@/lib/utils';
-import leafVariety from '@/assets/products/leaf-plates-variety.jpg';
+import leafVariety from '@/assets/products/leaf-plates-variety.webp';
+import { Seo } from '@/components/Seo';
 
 const Shop = () => {
   const { products, isLoading } = useProducts();
@@ -37,6 +38,10 @@ const Shop = () => {
 
   return (
     <Layout>
+      <Seo
+        title="Cửa hàng sản phẩm B-ECO"
+        description="Toàn bộ sản phẩm sinh học và mỹ nghệ từ lá bàng biển: chén, dĩa, combo, khắc logo doanh nghiệp và dòng B-ECO Art. Ba mức giá minh bạch."
+      />
       <section className="px-4 pb-8 pt-6 sm:px-6 lg:px-8">
         <div className="mx-auto grid max-w-[1400px] overflow-hidden rounded-2xl border border-border bg-card lg:grid-cols-[0.86fr_1.14fr]">
           <div className="flex items-center p-8 sm:p-12 lg:p-14">

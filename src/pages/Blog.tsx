@@ -4,12 +4,13 @@ import { ScrollAnimate } from '@/components/ui/scroll-animate';
 import { ArrowRight } from 'lucide-react';
 
 // Thumbnails
-import collection2 from '@/assets/products/collection-display-1.jpg';
-import exhibition from '@/assets/products/exhibition-display.jpg';
-import variety from '@/assets/products/leaf-plates-variety.jpg';
-import closeup from '@/assets/products/leaf-plates-closeup.jpg';
-import customLogo from '@/assets/products/custom-logo-beco.jpg';
-import hero2 from '@/assets/hero/hero2.jpg';
+import collection2 from '@/assets/products/collection-display-1.webp';
+import exhibition from '@/assets/products/exhibition-display.webp';
+import variety from '@/assets/products/leaf-plates-variety.webp';
+import closeup from '@/assets/products/leaf-plates-closeup.webp';
+import customLogo from '@/assets/products/custom-logo-beco.webp';
+import hero2 from '@/assets/hero/hero2.webp';
+import { Seo } from '@/components/Seo';
 
 const blogTags = ["TẤT CẢ", "HÀNH TRÌNH XANH", "TIÊU DÙNG BỀN VỮNG", "MÔI TRƯỜNG", "NGUYÊN LIỆU"];
 
@@ -73,6 +74,10 @@ const Blog = () => {
 
   return (
     <Layout>
+      <Seo
+        title="Blog B-ECO"
+        description="Câu chuyện về lá bàng biển, kinh tế tuần hoàn và hành trình gieo mầm xanh từ Phú Yên."
+      />
       <div className="min-h-[100dvh] px-4 py-12 sm:px-6 sm:py-16 lg:px-8">
         <div className="mx-auto max-w-[1400px]">
           

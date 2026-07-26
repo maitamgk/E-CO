@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { Mail, MapPin, Phone } from 'lucide-react';
-import logo from '@/assets/products/logo.png';
+import logo from '@/assets/products/logo.webp';
 
 const productLinks = [
   { to: '/shop?category=dia', label: 'Đĩa sinh học' },

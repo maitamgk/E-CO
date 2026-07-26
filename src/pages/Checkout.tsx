@@ -7,7 +7,16 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { useCart } from '@/context/CartContext';
 import { useAuth } from '@/context/AuthContext';
+import { useProducts } from '@/context/ProductsContext';
 import { formatMoney } from '@/utils/money';
+import {
+  TIER_LABELS,
+  lineTotal,
+  pricingSourceFromCartItem,
+  resolveTier,
+  shortUnit,
+} from '@/utils/pricing';
+import { generateOrderCode } from '@/utils/orderCode';
 import { validatePhone, validateRequired } from '@/utils/validators';
 import { useToast } from '@/hooks/use-toast';
 import {
@@ -26,6 +35,7 @@ import { orderService } from '@/services/orderService';
 import { telegramService } from '@/services/telegramService';
 import { discordService } from '@/services/discordService';
 import type { Order, PaymentMethod, PaymentStatus } from '@/types';
+import { Seo } from '@/components/Seo';
 
 /* ── Bank Transfer Constants ─────────────────────── */
 const BANK_INFO = {
@@ -248,7 +258,8 @@ const QRPaymentModal = ({
    ══════════════════════════════════════════════════════ */
 const Checkout = () => {
   const navigate = useNavigate();
-  const { items, itemCount, getSubtotal, getTotalQty, clearCart } = useCart();
+  const { items, itemCount, totals, clearCart } = useCart();
+  const { getProduct } = useProducts();
   const { user } = useAuth();
   const { toast } = useToast();
 
@@ -272,11 +283,8 @@ const Checkout = () => {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const formRef = useRef<HTMLFormElement>(null);
 
-  const subtotal = getSubtotal();
-  const totalQty = getTotalQty();
-  const discountRate = 0;
-  const discountAmount = 0;
-  const total = subtotal;
+  // Toàn bộ số tiền lấy từ pricing engine — đã áp bậc giá sỉ/doanh nghiệp.
+  const { retailSubtotal, subtotal, discountRate, discountAmount, total, totalQty } = totals;
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -293,15 +301,39 @@ const Checkout = () => {
     return Object.keys(newErrors).length === 0;
   };
 
+  /**
+   * Chặn đơn vượt tồn kho ngay trước khi gửi. Tồn kho có thể đã đổi kể từ lúc
+   * khách thêm vào giỏ, và giỏ hàng còn được khôi phục từ localStorage.
+   */
+  const findStockIssue = (): string | null => {
+    for (const item of Object.values(items)) {
+      const product = getProduct(item.productId);
+      if (!product) continue;
+      if (product.stock <= 0) {
+        return `"${item.nameSnapshot}" đã hết hàng. Vui lòng xóa khỏi giỏ hàng.`;
+      }
+      if (item.qty > product.stock) {
+        return `"${item.nameSnapshot}" chỉ còn ${product.stock} ${product.salesUnit ?? 'sản phẩm'}. Vui lòng giảm số lượng.`;
+      }
+    }
+    return null;
+  };
+
   /* Submit order */
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!validate()) return;
 
+    const stockIssue = findStockIssue();
+    if (stockIssue) {
+      toast({ title: 'Không đủ hàng', description: stockIssue, variant: 'destructive' });
+      return;
+    }
+
     setIsSubmitting(true);
 
     try {
-      const code = 'BCO' + Date.now().toString(36).toUpperCase();
+      const code = generateOrderCode();
 
       const paymentStatus: PaymentStatus =
         paymentMethod === 'COD' ? 'unpaid' : depositType;
@@ -316,7 +348,7 @@ const Checkout = () => {
           address: form.address,
         },
         items: Object.values(items),
-        totals: { subtotal, discountRate, discountAmount, total, totalQty },
+        totals: { retailSubtotal, subtotal, discountRate, discountAmount, total, totalQty },
         paymentMethod,
         paymentStatus,
         status: 'pending' as const,
@@ -409,6 +441,11 @@ const Checkout = () => {
   /* ── Checkout Form ─────────────────────────────── */
   return (
     <Layout>
+      <Seo
+        title="Thanh toán"
+        description="Hoàn tất thông tin giao hàng và thanh toán đơn hàng B-ECO."
+        noindex
+      />
       {/* QR Payment Modal */}
       {showQRModal && savedOrder && (
         <QRPaymentModal
@@ -623,27 +660,40 @@ const Checkout = () => {
               <h2 className="text-xl font-heading text-gradient-eco mb-6 font-semibold">Đơn hàng của bạn</h2>
 
               <div className="space-y-3 max-h-64 overflow-y-auto mb-4">
-                {Object.values(items).map(item => (
-                  <div key={item.productId} className="flex gap-3">
-                    <div className="w-12 h-12 rounded bg-muted overflow-hidden flex-shrink-0">
-                      <img
-                        src={item.imageUrlSnapshot}
-                        alt={item.nameSnapshot}
-                        className="w-full h-full object-cover object-center"
-                        loading="lazy"
-                      />
+                {Object.values(items).map(item => {
+                  // Lấy giá từ pricing engine, không đọc thẳng priceSnapshot,
+                  // để dòng hàng luôn khớp với tổng tiền bên dưới.
+                  const source = pricingSourceFromCartItem(item);
+                  const { tier, unitPrice } = resolveTier(source, item.qty);
+
+                  return (
+                    <div key={item.productId} className="flex gap-3">
+                      <div className="w-12 h-12 rounded bg-muted overflow-hidden flex-shrink-0">
+                        <img
+                          src={item.imageUrlSnapshot}
+                          alt={item.nameSnapshot}
+                          className="w-full h-full object-cover object-center"
+                          loading="lazy"
+                          decoding="async"
+                        />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm font-medium truncate">{item.nameSnapshot}</p>
+                        <p className="text-sm text-muted-foreground">
+                          {item.qty} {shortUnit(item.salesUnitSnapshot)} × {formatMoney(unitPrice)}
+                        </p>
+                        {tier !== 'retail' && (
+                          <span className="text-[11px] font-semibold text-primary">
+                            {TIER_LABELS[tier]}
+                          </span>
+                        )}
+                      </div>
+                      <span className="text-sm font-medium">
+                        {formatMoney(lineTotal(source, item.qty))}
+                      </span>
                     </div>
-                    <div className="flex-1 min-w-0">
-                      <p className="text-sm font-medium truncate">{item.nameSnapshot}</p>
-                      <p className="text-sm text-muted-foreground">
-                        {item.qty} {item.salesUnitSnapshot ?? 'sản phẩm'} × {formatMoney(item.priceSnapshot)}
-                      </p>
-                    </div>
-                    <span className="text-sm font-medium">
-                      {formatMoney(item.qty * item.priceSnapshot)}
-                    </span>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
 
               <div className="border-t border-border pt-4 space-y-2">
@@ -652,9 +702,17 @@ const Checkout = () => {
                   <span>{totalQty} đơn vị bán</span>
                 </div>
                 <div className="flex justify-between text-sm">
-                  <span className="text-muted-foreground">Tạm tính:</span>
-                  <span>{formatMoney(subtotal)}</span>
+                  <span className="text-muted-foreground">Tạm tính (giá lẻ):</span>
+                  <span className={discountAmount > 0 ? 'text-muted-foreground line-through' : ''}>
+                    {formatMoney(retailSubtotal)}
+                  </span>
                 </div>
+                {discountAmount > 0 && (
+                  <div className="flex justify-between text-sm text-primary">
+                    <span className="font-medium">Ưu đãi số lượng ({Math.round(discountRate * 100)}%):</span>
+                    <span className="font-semibold">-{formatMoney(discountAmount)}</span>
+                  </div>
+                )}
                 <div className="flex justify-between text-sm">
                   <span className="text-muted-foreground">Phí vận chuyển:</span>
                   <span>Liên hệ</span>

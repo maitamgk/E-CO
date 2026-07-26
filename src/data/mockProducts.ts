@@ -1,16 +1,25 @@
 import { Product } from '@/types';
 
 // Import product images
-import collectionDisplay1 from '@/assets/products/collection-display-1.jpg';
-import exhibitionDisplay from '@/assets/products/exhibition-display.jpg';
-import leafPlatesCloseup from '@/assets/products/leaf-plates-closeup.jpg';
-import leafPlatesVariety from '@/assets/products/leaf-plates-variety.jpg';
-import customLogoBeco from '@/assets/products/custom-logo-beco.jpg';
-import artClock from '@/assets/products/art-clock.png';
-import artFan from '@/assets/products/art-fan.png';
-import artPortrait from '@/assets/products/art-portrait.png';
-import artDecor from '@/assets/products/art-decor.png';
+import collectionDisplay1 from '@/assets/products/collection-display-1.webp';
+import exhibitionDisplay from '@/assets/products/exhibition-display.webp';
+import leafPlatesCloseup from '@/assets/products/leaf-plates-closeup.webp';
+import leafPlatesVariety from '@/assets/products/leaf-plates-variety.webp';
+import customLogoBeco from '@/assets/products/custom-logo-beco.webp';
+import artClock from '@/assets/products/art-clock.webp';
+import artFan from '@/assets/products/art-fan.webp';
+import artPortrait from '@/assets/products/art-portrait.webp';
+import artDecor from '@/assets/products/art-decor.webp';
 
+/**
+ * Ngưỡng số lượng được tính theo ĐƠN VỊ BÁN của từng sản phẩm
+ * (sản phẩm bán theo "gói 10 cái" thì wholesaleMinQty: 100 nghĩa là 100 gói).
+ *
+ * `enterpriseMinQty` chỉ khai báo cho dòng B-ECO Daily vì đây là nhóm duy nhất
+ * đã công bố ngưỡng doanh nghiệp (≥1.000). Các sản phẩm còn lại vẫn hiển thị
+ * giá doanh nghiệp nhưng hệ thống KHÔNG tự hạ giá — khách phải liên hệ chốt.
+ * Muốn mở bậc doanh nghiệp cho sản phẩm nào thì chỉ cần thêm enterpriseMinQty.
+ */
 export const mockProducts: Product[] = [
   {
     id: '1',
@@ -21,6 +30,7 @@ export const mockProducts: Product[] = [
     priceWholesale: 28000,
     priceEnterprise: 25000,
     wholesaleMinQty: 100,
+    enterpriseMinQty: 1000,
     salesUnit: 'gói 10 cái',
     wholesaleThresholdLabel: '1.000 cái',
     stock: 5000,
@@ -39,6 +49,7 @@ export const mockProducts: Product[] = [
     priceWholesale: 26000,
     priceEnterprise: 22000,
     wholesaleMinQty: 100,
+    enterpriseMinQty: 1000,
     salesUnit: 'gói 10 cái',
     wholesaleThresholdLabel: '1.000 cái',
     stock: 3000,
@@ -57,6 +68,7 @@ export const mockProducts: Product[] = [
     priceWholesale: 22000,
     priceEnterprise: 19000,
     wholesaleMinQty: 100,
+    enterpriseMinQty: 1000,
     salesUnit: 'gói 10 cái',
     wholesaleThresholdLabel: '1.000 cái',
     stock: 2500,
@@ -75,6 +87,7 @@ export const mockProducts: Product[] = [
     priceWholesale: 19000,
     priceEnterprise: 16000,
     wholesaleMinQty: 100,
+    enterpriseMinQty: 1000,
     salesUnit: 'gói 10 cái',
     wholesaleThresholdLabel: '1.000 cái',
     stock: 2000,

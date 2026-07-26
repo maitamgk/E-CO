@@ -1,9 +1,14 @@
 import { Layout } from '@/components/layout/Layout';
 import { ShieldCheck, RefreshCw, Lock, Mail, Phone } from 'lucide-react';
+import { Seo } from '@/components/Seo';
 
 const Policies = () => {
   return (
     <Layout>
+      <Seo
+        title="Chính sách mua hàng"
+        description="Chính sách vận chuyển, đổi trả, bảo quản và thanh toán khi mua sản phẩm sinh học B-ECO."
+      />
       <section className="px-4 pb-12 pt-12 sm:px-6 sm:pb-16 sm:pt-16 lg:px-8">
         <div className="mx-auto max-w-[1400px]">
           <h1 className="max-w-3xl text-4xl font-extrabold tracking-[-0.05em] text-foreground sm:text-6xl">

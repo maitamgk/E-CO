@@ -38,7 +38,7 @@ export const useScrollAnimation = (options: UseScrollAnimationOptions = {}) => {
 };
 
 // Hook for staggered animations
-export const useStaggerAnimation = (itemCount: number, baseDelay: number = 100) => {
+export const useStaggerAnimation = (baseDelay: number = 100) => {
   const getDelay = (index: number) => `${index * baseDelay}ms`;
   return { getDelay };
 };

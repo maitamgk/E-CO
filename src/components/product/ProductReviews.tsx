@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { toast } from 'sonner';
 import { Star, ThumbsUp, User, CheckCircle2, MessageSquare } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
@@ -102,7 +103,7 @@ interface ProductReviewsProps {
   productId: string;
 }
 
-export const ProductReviews = ({ productId }: ProductReviewsProps) => {
+export const ProductReviews = ({ productId: _productId }: ProductReviewsProps) => {
   const [showReviewForm, setShowReviewForm] = useState(false);
   const [userRating, setUserRating] = useState(0);
   const [hoverRating, setHoverRating] = useState(0);
@@ -117,8 +118,13 @@ export const ProductReviews = ({ productId }: ProductReviewsProps) => {
   };
 
   const handleSubmitReview = () => {
-    // In a real app, this would submit to the backend
-    console.log('Submitting review:', { rating: userRating, content: reviewText, productId });
+    // Chưa có bảng đánh giá trong DB. Trước đây form này chỉ console.log rồi
+    // đóng lại — khách tưởng đã gửi thành công nhưng nội dung bị vứt đi.
+    // Trong khi chờ backend, hướng khách sang kênh liên hệ thật.
+    toast.info('Cảm ơn bạn đã muốn chia sẻ!', {
+      description: 'Đánh giá trực tuyến đang được hoàn thiện. Bạn gửi giúp B-ECO qua Zalo 0382 548 419 nhé.',
+      duration: 6000,
+    });
     setShowReviewForm(false);
     setUserRating(0);
     setReviewText('');

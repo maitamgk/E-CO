@@ -6,11 +6,12 @@ import { formatMoney } from '@/utils/money';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Package, CheckCircle, Truck, XCircle, Clock, MapPin, Send, Navigation } from 'lucide-react';
+import { Package, CheckCircle, Truck, XCircle, Clock, Send } from 'lucide-react';
 import { orderService } from '@/services/orderService';
 import { supabase } from '@/lib/supabase';
 import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
+import { Seo } from '@/components/Seo';
 
 const statusConfig: Record<OrderStatus, { label: string; color: string; icon: React.ElementType }> = {
   pending: { label: 'Chờ xác nhận', color: 'bg-yellow-500', icon: Clock },
@@ -120,6 +121,11 @@ const Admin = () => {
 
   return (
     <Layout>
+      <Seo
+        title="Quản trị đơn hàng"
+        description="Bảng điều khiển quản trị đơn hàng B-ECO."
+        noindex
+      />
       <div className="bg-background min-h-screen pb-20">
         {/* Header Dashboard */}
         <div className="bg-background border-b border-border/40 py-12 text-center">

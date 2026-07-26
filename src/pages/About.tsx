@@ -2,17 +2,18 @@ import { Link } from 'react-router-dom';
 import { ArrowRight, Leaf, Recycle, Users } from 'lucide-react';
 import { Layout } from '@/components/layout/Layout';
 import { MotionReveal } from '@/components/home/MotionReveal';
-import aboutHero from '@/assets/generated/beco-about-origin.png';
-import phuYenCoast from '@/assets/products/anh1.jpg';
-import coastalSource from '@/assets/products/anh2.jpg';
-import collectionDisplay from '@/assets/products/collection-display-1.jpg';
-import leafCloseup from '@/assets/products/leaf-plates-closeup.jpg';
-import leafVariety from '@/assets/products/leaf-plates-variety.jpg';
-import customLogoBeco from '@/assets/products/custom-logo-beco.jpg';
-import customLogoNtt from '@/assets/products/custom-logo-ntt.jpg';
-import customLogoVanHien from '@/assets/products/custom-logo-vanhien.jpg';
-import artDecor from '@/assets/products/art-decor.png';
-import artClock from '@/assets/products/art-clock.png';
+import aboutHero from '@/assets/generated/beco-about-origin.webp';
+import phuYenCoast from '@/assets/products/anh1.webp';
+import coastalSource from '@/assets/products/anh2.webp';
+import collectionDisplay from '@/assets/products/collection-display-1.webp';
+import leafCloseup from '@/assets/products/leaf-plates-closeup.webp';
+import leafVariety from '@/assets/products/leaf-plates-variety.webp';
+import customLogoBeco from '@/assets/products/custom-logo-beco.webp';
+import customLogoNtt from '@/assets/products/custom-logo-ntt.webp';
+import customLogoVanHien from '@/assets/products/custom-logo-vanhien.webp';
+import artDecor from '@/assets/products/art-decor.webp';
+import artClock from '@/assets/products/art-clock.webp';
+import { Seo } from '@/components/Seo';
 
 const facts = [
   ['100%', 'lá bàng biển tự nhiên'],
@@ -41,6 +42,10 @@ const materialJourney = [
 
 const About = () => (
   <Layout>
+    <Seo
+      title="Câu chuyện B-ECO"
+      description="Hành trình biến lá bàng biển rụng ở Phú Yên thành sản phẩm sinh học: mô hình kinh tế tuần hoàn, tạo sinh kế địa phương và giảm rác thải nhựa."
+    />
     <section className="relative isolate flex min-h-[620px] items-end overflow-hidden bg-primary sm:min-h-[700px]">
       <img
         src={aboutHero}

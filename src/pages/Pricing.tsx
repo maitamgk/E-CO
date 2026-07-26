@@ -4,14 +4,20 @@ import { Layout } from '@/components/layout/Layout';
 import { Button } from '@/components/ui/button';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { useProducts } from '@/context/ProductsContext';
-import { formatMoney } from '@/utils/money';
-import customLogo from '@/assets/products/custom-logo-beco.jpg';
+import { formatMoney, formatNumber } from '@/utils/money';
+import { shortUnit } from '@/utils/pricing';
+import customLogo from '@/assets/products/custom-logo-beco.webp';
+import { Seo } from '@/components/Seo';
 
 const Pricing = () => {
   const { products } = useProducts();
 
   return (
     <Layout>
+      <Seo
+        title="Bảng giá sỉ và giá doanh nghiệp"
+        description="Bảng giá đầy đủ 11 mã sản phẩm B-ECO: giá lẻ, giá sỉ và giá doanh nghiệp kèm điều kiện số lượng áp dụng."
+      />
       <section className="px-4 pb-12 pt-6 sm:px-6 sm:pb-16 lg:px-8">
         <div className="mx-auto grid max-w-[1400px] overflow-hidden rounded-2xl border border-border bg-card lg:grid-cols-[0.92fr_1.08fr]">
           <div className="flex items-center p-8 sm:p-12 lg:p-14">
@@ -82,8 +88,9 @@ const Pricing = () => {
                   <TableHead className="whitespace-nowrap font-bold text-foreground">Đơn vị</TableHead>
                   <TableHead className="whitespace-nowrap text-right font-bold text-foreground">Bán lẻ</TableHead>
                   <TableHead className="whitespace-nowrap text-right font-bold text-foreground">Phân phối</TableHead>
-                  <TableHead className="whitespace-nowrap text-right font-bold text-foreground">Điều kiện</TableHead>
+                  <TableHead className="whitespace-nowrap text-right font-bold text-foreground">Từ SL</TableHead>
                   <TableHead className="whitespace-nowrap text-right font-bold text-foreground">Doanh nghiệp</TableHead>
+                  <TableHead className="whitespace-nowrap text-right font-bold text-foreground">Từ SL</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -94,8 +101,15 @@ const Pricing = () => {
                     <TableCell className="whitespace-nowrap text-muted-foreground">{product.salesUnit ?? 'cái'}</TableCell>
                     <TableCell className="whitespace-nowrap text-right">{formatMoney(product.priceRetail)}</TableCell>
                     <TableCell className="whitespace-nowrap text-right font-bold text-primary">{formatMoney(product.priceWholesale)}</TableCell>
-                    <TableCell className="whitespace-nowrap text-right text-muted-foreground">{product.wholesaleThresholdLabel ?? product.wholesaleMinQty}</TableCell>
+                    <TableCell className="whitespace-nowrap text-right text-muted-foreground">
+                      {formatNumber(product.wholesaleMinQty)} {shortUnit(product.salesUnit)}
+                    </TableCell>
                     <TableCell className="whitespace-nowrap text-right font-semibold">{product.priceEnterprise !== undefined ? formatMoney(product.priceEnterprise) : 'Liên hệ'}</TableCell>
+                    <TableCell className="whitespace-nowrap text-right text-muted-foreground">
+                      {product.enterpriseMinQty
+                        ? `${formatNumber(product.enterpriseMinQty)} ${shortUnit(product.salesUnit)}`
+                        : 'Liên hệ'}
+                    </TableCell>
                   </TableRow>
                 ))}
               </TableBody>

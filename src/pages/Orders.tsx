@@ -9,51 +9,7 @@ import { cn } from '@/lib/utils';
 import { formatMoney } from '@/utils/money';
 import { Package, ArrowRight, Clock, CheckCircle, Truck, XCircle } from 'lucide-react';
 import { orderService } from '@/services/orderService';
-
-// Mock orders data
-const _mockOrders: Order[] = [
-  {
-    id: '1',
-    orderCode: 'BCO001',
-    userId: 'user1',
-    customer: {
-      fullName: 'Nguyễn Văn A',
-      phone: '0901234567',
-      address: '123 Đường ABC, Phường XYZ, TP.HCM',
-    },
-    items: [
-      { productId: '1', nameSnapshot: 'Chén lá bàng tròn 12cm', priceSnapshot: 3500, imageUrlSnapshot: '', qty: 100 },
-      { productId: '2', nameSnapshot: 'Chén lá bàng tròn 15cm', priceSnapshot: 4500, imageUrlSnapshot: '', qty: 50 },
-    ],
-    totals: { subtotal: 575000, discountRate: 0, discountAmount: 0, total: 575000, totalQty: 150 },
-    paymentMethod: 'COD',
-    paymentStatus: 'unpaid',
-    status: 'shipped',
-    notes: '',
-    createdAt: new Date('2024-01-15'),
-    updatedAt: new Date('2024-01-16'),
-  },
-  {
-    id: '2',
-    orderCode: 'BCO002',
-    userId: 'user1',
-    customer: {
-      fullName: 'Nguyễn Văn A',
-      phone: '0901234567',
-      address: '123 Đường ABC, Phường XYZ, TP.HCM',
-    },
-    items: [
-      { productId: '8', nameSnapshot: 'Combo tiệc 50 người', priceSnapshot: 450000, imageUrlSnapshot: '', qty: 3 },
-    ],
-    totals: { subtotal: 1350000, discountRate: 0, discountAmount: 0, total: 1350000, totalQty: 3 },
-    paymentMethod: 'COD',
-    paymentStatus: 'unpaid',
-    status: 'pending',
-    notes: '',
-    createdAt: new Date('2024-01-20'),
-    updatedAt: new Date('2024-01-20'),
-  },
-];
+import { Seo } from '@/components/Seo';
 
 const statusConfig: Record<OrderStatus, { label: string; color: string; icon: React.ElementType }> = {
   pending: { label: 'Chờ xác nhận', color: 'bg-yellow-500', icon: Clock },
@@ -106,6 +62,11 @@ const Orders = () => {
 
   return (
     <Layout>
+      <Seo
+        title="Đơn hàng của tôi"
+        description="Danh sách đơn hàng đã đặt tại B-ECO."
+        noindex
+      />
       {/* Hero Section */}
       <div className="relative bg-background border-b border-border/40 py-16 text-center">
         <div className="container mx-auto px-4 relative z-10">

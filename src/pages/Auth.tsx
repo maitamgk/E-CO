@@ -8,7 +8,8 @@ import { Label } from '@/components/ui/label';
 import { useAuth } from '@/context/AuthContext';
 import { useToast } from '@/hooks/use-toast';
 import { validateEmail } from '@/utils/validators';
-import adminVisual from '@/assets/generated/beco-about-origin.png';
+import adminVisual from '@/assets/generated/beco-about-origin.webp';
+import { Seo } from '@/components/Seo';
 
 type LoginErrors = {
   email?: string;
@@ -64,6 +65,11 @@ const Auth = () => {
 
   return (
     <Layout>
+      <Seo
+        title="Đăng nhập quản trị"
+        description="Khu vực đăng nhập dành cho quản trị viên B-ECO."
+        noindex
+      />
       <main className="border-b border-border bg-background">
         <div className="mx-auto grid min-h-[calc(100dvh-104px)] max-w-[1500px] grid-cols-1 lg:grid-cols-[0.86fr_1.14fr]">
           <section className="flex items-center px-5 py-12 sm:px-10 sm:py-16 lg:px-16 xl:px-24" aria-labelledby="admin-login-title">
