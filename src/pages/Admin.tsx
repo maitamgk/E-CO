@@ -6,9 +6,11 @@ import { formatMoney } from '@/utils/money';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Package, CheckCircle, Truck, XCircle, Clock, Send } from 'lucide-react';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Package, CheckCircle, Truck, XCircle, Clock, Send, Boxes, MessageSquare } from 'lucide-react';
 import { orderService } from '@/services/orderService';
 import { ReviewModeration } from '@/components/admin/ReviewModeration';
+import { ProductManagement } from '@/components/admin/ProductManagement';
 import { supabase } from '@/lib/supabase';
 import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
@@ -137,6 +139,37 @@ const Admin = () => {
         </div>
 
         <div className="container mx-auto px-6 mt-12">
+          <Tabs defaultValue="orders" className="w-full">
+            <TabsList className="inline-flex h-auto items-center gap-1 rounded-lg border border-border/40 bg-background p-1 w-full sm:w-auto justify-start overflow-x-auto">
+              <TabsTrigger
+                value="orders"
+                className="rounded-md px-4 py-2 text-sm font-medium text-muted-foreground data-[state=active]:bg-primary data-[state=active]:text-primary-foreground flex items-center gap-1.5 flex-shrink-0"
+              >
+                <Package className="w-4 h-4" />
+                Đơn hàng
+                {orders.filter(o => o.status === 'pending').length > 0 && (
+                  <span className="rounded-full bg-yellow-500 px-1.5 py-0.5 text-[10px] font-semibold text-white">
+                    {orders.filter(o => o.status === 'pending').length}
+                  </span>
+                )}
+              </TabsTrigger>
+              <TabsTrigger
+                value="products"
+                className="rounded-md px-4 py-2 text-sm font-medium text-muted-foreground data-[state=active]:bg-primary data-[state=active]:text-primary-foreground flex items-center gap-1.5 flex-shrink-0"
+              >
+                <Boxes className="w-4 h-4" />
+                Sản phẩm &amp; Tồn kho
+              </TabsTrigger>
+              <TabsTrigger
+                value="reviews"
+                className="rounded-md px-4 py-2 text-sm font-medium text-muted-foreground data-[state=active]:bg-primary data-[state=active]:text-primary-foreground flex items-center gap-1.5 flex-shrink-0"
+              >
+                <MessageSquare className="w-4 h-4" />
+                Đánh giá
+              </TabsTrigger>
+            </TabsList>
+
+            <TabsContent value="orders" className="mt-8">
           {/* Summary Cards */}
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12">
             {[
@@ -338,7 +371,16 @@ const Admin = () => {
             </div>
           </div>
 
-          <ReviewModeration />
+            </TabsContent>
+
+            <TabsContent value="products" className="mt-8">
+              <ProductManagement />
+            </TabsContent>
+
+            <TabsContent value="reviews" className="mt-8">
+              <ReviewModeration />
+            </TabsContent>
+          </Tabs>
         </div>
       </div>
     </Layout>

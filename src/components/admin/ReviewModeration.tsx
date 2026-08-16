@@ -83,7 +83,7 @@ export const ReviewModeration = () => {
   const pendingCount = countByStatus('pending');
 
   return (
-    <div className="mt-12 bg-white border border-border/40 shadow-sm rounded-lg overflow-hidden">
+    <div className="bg-white border border-border/40 shadow-sm rounded-lg overflow-hidden">
       <div className="p-6 border-b border-border/40 bg-background">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>

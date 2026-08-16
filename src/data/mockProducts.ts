@@ -1,17 +1,23 @@
 import { Product } from '@/types';
 
-// Import product images
-import collectionDisplay1 from '@/assets/products/collection-display-1.webp';
-import exhibitionDisplay from '@/assets/products/exhibition-display.webp';
-import leafPlatesCloseup from '@/assets/products/leaf-plates-closeup.webp';
-import leafPlatesVariety from '@/assets/products/leaf-plates-variety.webp';
-import customLogoBeco from '@/assets/products/custom-logo-beco.webp';
-import artClock from '@/assets/products/art-clock.webp';
-import artFan from '@/assets/products/art-fan.webp';
-import artPortrait from '@/assets/products/art-portrait.webp';
-import artDecor from '@/assets/products/art-decor.webp';
+// Ảnh sản phẩm phục vụ từ /public/images/products (URL ổn định, không bị Vite
+// hash tên file) để dữ liệu fallback phía client trùng khớp với bản seed
+// trong bảng products của Supabase — xem supabase_migration_products.sql.
+const collectionDisplay1 = '/images/products/collection-display-1.webp';
+const exhibitionDisplay = '/images/products/exhibition-display.webp';
+const leafPlatesCloseup = '/images/products/leaf-plates-closeup.webp';
+const leafPlatesVariety = '/images/products/leaf-plates-variety.webp';
+const customLogoBeco = '/images/products/custom-logo-beco.webp';
+const artClock = '/images/products/art-clock.webp';
+const artFan = '/images/products/art-fan.webp';
+const artPortrait = '/images/products/art-portrait.webp';
+const artDecor = '/images/products/art-decor.webp';
 
 /**
+ * Danh mục sản phẩm fallback — chỉ dùng khi bảng `products` trên Supabase
+ * chưa được tạo (chưa chạy supabase_migration_products.sql). Nguồn dữ liệu
+ * chính thức của website là Supabase, quản lý qua trang Admin.
+ *
  * Ngưỡng số lượng được tính theo ĐƠN VỊ BÁN của từng sản phẩm
  * (sản phẩm bán theo "gói 10 cái" thì wholesaleMinQty: 100 nghĩa là 100 gói).
  *
